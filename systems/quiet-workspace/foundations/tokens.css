@@ -1,0 +1,132 @@
+[data-ui-system="quiet-workspace"] {
+  --qw-font-sans: "Segoe UI Variable", "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
+  --qw-font-mono: "Cascadia Code", "Segoe UI Mono", ui-monospace, monospace;
+
+  --qw-color-paper: #fcfcfb;
+  --qw-color-surface-strong: #ffffff;
+  --qw-color-surface-subtle: #f1f3f0;
+  --qw-color-surface-selected: #e5e9e4;
+  --qw-color-text-primary: #262623;
+  --qw-color-text-secondary: #686a65;
+  --qw-color-text-muted: #73736e;
+  --qw-color-text-quiet: #6f736d;
+  --qw-color-text-inverse: #ffffff;
+  --qw-color-border: #e4e4e0;
+  --qw-color-border-strong: #d7d9d4;
+  --qw-color-brand-deep: #2d5a55;
+  --qw-color-brand: #477d71;
+  --qw-color-brand-soft: #dce9e4;
+  --qw-color-attention: #e87d75;
+  --qw-color-attention-soft: #f7e1df;
+  --qw-color-attention-text: #93413c;
+  --qw-color-running: #f0ad4e;
+  --qw-color-running-soft: #f7ead4;
+  --qw-color-running-text: #7c4d0e;
+  --qw-color-success: #4d8f65;
+  --qw-color-success-soft: #e4f0e7;
+  --qw-color-success-text: #2f6b43;
+  --qw-color-offline: #979993;
+  --qw-color-offline-soft: #ecedea;
+  --qw-color-offline-text: #5f625d;
+  --qw-quota-healthy-surface: #f4f9f2;
+  --qw-quota-healthy-surface-hover: #eff6ed;
+  --qw-quota-healthy-surface-pressed: #e9f1e6;
+  --qw-quota-healthy-border: #d3e2cf;
+  --qw-quota-healthy-text: #4d6650;
+  --qw-quota-caution-surface: #fff8eb;
+  --qw-quota-caution-surface-hover: #fdf4e2;
+  --qw-quota-caution-surface-pressed: #f9edd8;
+  --qw-quota-caution-border: #edd8b1;
+  --qw-quota-caution-text: #7a6238;
+  --qw-quota-critical-surface: #fff4f2;
+  --qw-quota-critical-surface-hover: #fdeeeb;
+  --qw-quota-critical-surface-pressed: #f9e7e3;
+  --qw-quota-critical-border: #eecdc8;
+  --qw-quota-critical-text: #854c48;
+  --qw-quota-neutral-surface: #f7f8f5;
+  --qw-quota-neutral-surface-hover: #f1f3ef;
+  --qw-quota-neutral-surface-pressed: #ebece8;
+  --qw-quota-neutral-border: #dfe1dc;
+  --qw-quota-neutral-text: #5f625d;
+  --qw-color-chart-1: #b8cec7;
+  --qw-color-chart-2: #96b9ae;
+  --qw-color-chart-3: #73a397;
+  --qw-color-chart-4: #477d71;
+  --qw-color-chart-5: #2d5a55;
+  --qw-color-chart-grid: #e4e4e0;
+
+  --qw-font-size-caption: 11px;
+  --qw-font-size-label: 12px;
+  --qw-font-size-body-sm: 12px;
+  --qw-font-size-body: 14px;
+  --qw-font-size-title: 16px;
+  --qw-font-size-heading: 24px;
+  --qw-font-size-display: 40px;
+  --qw-line-height-caption: 16px;
+  --qw-line-height-label: 16px;
+  --qw-line-height-body-sm: 18px;
+  --qw-line-height-body: 22px;
+  --qw-line-height-title: 24px;
+  --qw-line-height-heading: 32px;
+  --qw-line-height-display: 48px;
+
+  --qw-space-1: 4px;
+  --qw-space-2: 8px;
+  --qw-space-3: 12px;
+  --qw-space-4: 16px;
+  --qw-space-5: 20px;
+  --qw-space-6: 24px;
+  --qw-space-8: 32px;
+  --qw-space-10: 40px;
+  --qw-space-12: 48px;
+
+  --qw-radius-sm: 4px;
+  --qw-radius-md: 8px;
+  --qw-radius-lg: 12px;
+  --qw-radius-xl: 16px;
+  --qw-radius-pill: 999px;
+
+  --qw-shadow-raised: 0 2px 8px rgb(38 53 54 / 12%);
+  --qw-shadow-floating: 0 20px 56px rgb(5 12 16 / 18%), 0 4px 12px rgb(5 12 16 / 10%);
+  --qw-shadow-dialog: 0 28px 80px rgb(5 12 16 / 24%), 0 6px 18px rgb(5 12 16 / 12%);
+  --qw-duration-fast: 140ms;
+  --qw-duration-normal: 180ms;
+  --qw-duration-slow: 240ms;
+  --qw-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --qw-focus-ring: 0 0 0 3px rgb(71 125 113 / 24%);
+  --qw-icon-compact: 16px;
+  --qw-icon-comfortable: 18px;
+  --qw-icon-navigation: 20px;
+  --qw-icon-display: 24px;
+
+  --qw-density-control-height: 40px;
+  --qw-density-row-height: 52px;
+  --qw-density-panel-padding: 20px;
+  --qw-density-inline-gap: 12px;
+
+  color: var(--qw-color-text-primary);
+  font-family: var(--qw-font-sans);
+}
+
+[data-ui-system="quiet-workspace"][data-density="compact"],
+[data-ui-system="quiet-workspace"] [data-density="compact"] {
+  --qw-density-control-height: 32px;
+  --qw-density-row-height: 40px;
+  --qw-density-panel-padding: 12px;
+  --qw-density-inline-gap: 8px;
+}
+
+[data-ui-system="quiet-workspace"][data-density="comfortable"],
+[data-ui-system="quiet-workspace"] [data-density="comfortable"] {
+  --qw-density-control-height: 40px;
+  --qw-density-row-height: 52px;
+  --qw-density-panel-padding: 20px;
+  --qw-density-inline-gap: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ui-system="quiet-workspace"] {
+    --qw-duration-fast: 0ms;
+    --qw-duration-normal: 0ms;
+  }
+}
