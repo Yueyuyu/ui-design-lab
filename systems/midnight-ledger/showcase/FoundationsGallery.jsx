@@ -1,0 +1,13 @@
+import { Copy, Moon, TrendDown, TrendUp } from "@phosphor-icons/react";
+import { GalleryBlock, SectionHeader } from "../../../src/gallery/SectionHeader.jsx";
+import { LedgerStatusBadge } from "../web/index.js";
+
+const colors = [["画布", "--ml-surface-canvas", "#171B2E"], ["面板", "--ml-surface-panel", "#22273D"], ["奶油账页", "--ml-surface-ledger", "#E8D8B3"], ["主要操作", "--ml-brand", "#EF5B32"], ["正收益", "--ml-positive", "#9DCE8E"], ["负收益", "--ml-negative", "#E57763"], ["信息", "--ml-info", "#73BED0"], ["期权", "--ml-option", "#BD8DDE"]];
+
+export function FoundationsGallery({ onNotify }) {
+  return <><SectionHeader eyebrow="FOUNDATIONS" title="基础规范" description="色彩、字体、空间、形状和密度均从两张母版抽取，并补齐可访问性与响应式约束。" aside={<LedgerStatusBadge tone="info"><Moon size={13} />Dark first</LedgerStatusBadge>} />
+    <GalleryBlock eyebrow="COLOR" title="颜色 Token" description="点击任一色块复制 Token 名称。"><div className="ml-color-grid">{colors.map(([name, token, color]) => <button type="button" key={token} onClick={() => { navigator.clipboard?.writeText(`var(${token})`); onNotify?.(`${token} 已复制`); }}><i style={{ backgroundColor: color }} /><span><strong>{name}</strong><code>{token}</code><small>{color}</small></span><Copy size={15} /></button>)}</div></GalleryBlock>
+    <div className="ml-foundation-split"><GalleryBlock eyebrow="TYPE" title="字体与数字"><div className="ml-type-specimen"><strong>$24,615<small>.83</small></strong><span>48 / 52 · 800</span><h3>累计收益率 +31.8%</h3><p>持仓、风险和计划信息需要在高密度界面中保持清楚。</p><code>NVDA 150C · 2026-08-31 14:32</code></div></GalleryBlock><GalleryBlock eyebrow="SEMANTICS" title="涨跌方向"><div className="ml-direction-spec"><article><TrendUp size={22} /><strong>+$1,241.31</strong><span>正值同时显示 + 号</span></article><article><TrendDown size={22} /><strong>-$136.52</strong><span>负值同时显示 - 号</span></article></div></GalleryBlock></div>
+    <div className="ml-foundation-split"><GalleryBlock eyebrow="SPACING" title="4px 空间基准"><div className="ml-space-scale">{[4,8,12,16,24,32].map((value) => <span key={value}><i style={{ width: `${value * 2}px` }} /><code>{value}px</code></span>)}</div></GalleryBlock><GalleryBlock eyebrow="SHAPE" title="圆角层级"><div className="ml-radius-scale"><span><i data-radius="small" /><b>6px 控件</b></span><span><i data-radius="medium" /><b>10px 数据面</b></span><span><i data-radius="large" /><b>16px 面板</b></span></div></GalleryBlock></div>
+    <GalleryBlock eyebrow="DENSITY" title="舒适与紧凑"><div className="ml-density-table"><header><span>模式</span><span>控件</span><span>表格行</span><span>面板内边距</span></header><div><strong>comfortable</strong><span>38px</span><span>46px</span><span>16px</span></div><div><strong>compact</strong><span>32px</span><span>38px</span><span>12px</span></div></div></GalleryBlock></>;
+}

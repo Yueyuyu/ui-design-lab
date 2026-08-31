@@ -1,7 +1,7 @@
 import { ArrowRight, Eye, ShieldCheck, Sparkle, Stack } from "@phosphor-icons/react";
-import referenceImage from "../../references/quiet-workspace-source.png";
-import { QuietButton, QuietStatusChip } from "../../systems/quiet-workspace/web/index.js";
-import { GalleryBlock, SectionHeader } from "./SectionHeader.jsx";
+import referenceImage from "../../../references/quiet-workspace-source.png";
+import { QuietButton, QuietStatusChip } from "../web/index.js";
+import { GalleryBlock, SectionHeader } from "../../../src/gallery/SectionHeader.jsx";
 
 const principles = [
   {

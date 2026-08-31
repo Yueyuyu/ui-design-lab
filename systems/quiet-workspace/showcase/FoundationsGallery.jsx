@@ -1,6 +1,6 @@
 import { Check, Copy, Eye, TextT } from "@phosphor-icons/react";
-import { QuietButton, QuietField } from "../../systems/quiet-workspace/web/index.js";
-import { GalleryBlock, SectionHeader } from "./SectionHeader.jsx";
+import { QuietButton, QuietField } from "../web/index.js";
+import { GalleryBlock, SectionHeader } from "../../../src/gallery/SectionHeader.jsx";
 
 const colors = [
   { name: "Paper", token: "--qw-color-paper", value: "#FCFCFB", role: "主内容底色" },

@@ -1,14 +1,27 @@
 {
   "name": "ui-design-lab",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./systems/index.js",
+    "./quiet-workspace": "./systems/quiet-workspace/web/index.js",
+    "./quiet-workspace/tokens.css": "./systems/quiet-workspace/foundations/tokens.css",
+    "./quiet-workspace/components.css": "./systems/quiet-workspace/web/components.css",
+    "./midnight-ledger": "./systems/midnight-ledger/web/index.js",
+    "./midnight-ledger/tokens.css": "./systems/midnight-ledger/foundations/tokens.css",
+    "./midnight-ledger/components.css": "./systems/midnight-ledger/web/components.css"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/prepare-sites-build.mjs",
     "preview": "vite preview",
-    "test:tokens": "node scripts/validate-design-system.mjs",
-    "check": "npm run test:tokens && npm run build",
+    "suite:list": "node scripts/list-suites.mjs",
+    "suite:new": "node scripts/create-suite.mjs",
+    "suite:design": "node scripts/generate-design-md.mjs",
+    "suite:check": "node scripts/validate-suites.mjs",
+    "test:tokens": "npm run suite:check",
+    "check": "npm run suite:check && npm run build",
     "test:sites": "node --test tests/sites-worker.test.mjs"
   },
   "dependencies": {

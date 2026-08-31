@@ -1,0 +1,20 @@
+{
+  "version": "0.1.0",
+  "requiredStates": ["default", "hover", "pressed", "focus", "disabled", "loading", "error"],
+  "components": {
+    "button": { "default": "base", "hover": "raised", "pressed": "compressed", "focus": "focus-ring", "disabled": "muted", "loading": "spinner", "error": "negative" },
+    "iconButton": { "default": "base", "hover": "raised", "pressed": "compressed", "focus": "focus-ring", "disabled": "muted", "loading": "spinner", "error": "negative" },
+    "statusBadge": { "default": "semantic", "hover": "brightened", "pressed": "compressed", "focus": "focus-ring", "disabled": "muted", "loading": "pending", "error": "negative" },
+    "input": { "default": "base", "hover": "strong-border", "pressed": "selected", "focus": "focus-ring", "disabled": "muted", "loading": "pending", "error": "negative-border" },
+    "select": { "default": "base", "hover": "strong-border", "pressed": "selected", "focus": "focus-ring", "disabled": "muted", "loading": "pending", "error": "negative-border" },
+    "toggle": { "default": "off", "hover": "raised", "pressed": "compressed", "focus": "focus-ring", "disabled": "muted", "loading": "pending", "error": "negative" },
+    "panel": { "default": "panel", "hover": "raised", "pressed": "selected", "focus": "focus-ring", "disabled": "muted", "loading": "skeleton", "error": "negative-border" },
+    "dialog": { "default": "panel", "hover": "owned-control", "pressed": "owned-control", "focus": "focus-trap", "disabled": "muted", "loading": "pending", "error": "negative-banner" },
+    "table": { "default": "rows", "hover": "row-highlight", "pressed": "row-selected", "focus": "row-focus", "disabled": "row-muted", "loading": "skeleton", "error": "inline-retry" },
+    "notification": { "default": "semantic", "hover": "raised", "pressed": "compressed", "focus": "focus-ring", "disabled": "muted", "loading": "pending", "error": "negative" },
+    "emptyState": { "default": "guidance", "hover": "owned-action", "pressed": "owned-action", "focus": "owned-action-focus", "disabled": "muted", "loading": "pending", "error": "retry" },
+    "lineChart": { "default": "line", "hover": "point-tooltip", "pressed": "range-anchor", "focus": "focus-marker", "disabled": "muted", "loading": "skeleton", "error": "plot-message" },
+    "metric": { "default": "value", "hover": "raised", "pressed": "selected", "focus": "focus-ring", "disabled": "muted", "loading": "skeleton", "error": "negative" },
+    "terminalPreview": { "default": "live", "hover": "owned-controls", "pressed": "owned-controls", "focus": "owned-control-focus", "disabled": "muted", "loading": "panel-skeleton", "error": "risk-banner" }
+  }
+}

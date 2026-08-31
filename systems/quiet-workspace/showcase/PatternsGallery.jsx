@@ -1,6 +1,6 @@
 import { ArrowsOut, CheckCircle, Compass, WarningCircle } from "@phosphor-icons/react";
-import { QuietStatusChip, QuietTaskLight, QuietWorkspacePreview } from "../../systems/quiet-workspace/web/index.js";
-import { GalleryBlock, SectionHeader } from "./SectionHeader.jsx";
+import { QuietStatusChip, QuietTaskLight, QuietWorkspacePreview } from "../web/index.js";
+import { GalleryBlock, SectionHeader } from "../../../src/gallery/SectionHeader.jsx";
 
 const patternRules = [
   { icon: Compass, title: "固定结构", copy: "左侧导航、单一内容主轴、稳定的顶部上下文。" },

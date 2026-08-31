@@ -1,0 +1,43 @@
+{
+  "$schema": "../../schemas/suite.schema.json",
+  "id": "quiet-workspace",
+  "order": 1,
+  "displayName": "Quiet Workspace",
+  "localizedName": "静谧工作台",
+  "shortCode": "QW",
+  "prefix": "qw",
+  "version": "0.3.0",
+  "status": "stable",
+  "description": "温润、克制、Windows 友好的桌面效率工具设计系统。",
+  "styleLabel": "Warm Editorial Utility",
+  "platforms": ["web", "desktop"],
+  "modes": ["light"],
+  "densities": ["comfortable", "compact"],
+  "tags": ["warm", "editorial", "utility", "windows-friendly", "data-dense"],
+  "swatches": ["#FCFCFB", "#477D71", "#F0AD4E"],
+  "galleryShell": {
+    "surface": "#EDF0EC",
+    "sidebar": "#F3F5F1",
+    "topbar": "#FBFCFA",
+    "text": "#2D3531",
+    "muted": "#69716C",
+    "border": "#D9DED8",
+    "active": "#DFE8E2",
+    "accent": "#2D5A55",
+    "onAccent": "#FFFFFF"
+  },
+  "referenceImage": "references/quiet-workspace-source.png",
+  "scope": "[data-ui-system=\"quiet-workspace\"]",
+  "designDocument": "./DESIGN.md",
+  "tokens": "./foundations/tokens.json",
+  "tokensCss": "./foundations/tokens.css",
+  "components": "./web/index.js",
+  "showcase": "./showcase/index.jsx",
+  "validation": "./validation.mjs",
+  "capabilities": {
+    "foundations": ["color", "typography", "spacing", "shape", "motion", "density", "icons", "accessibility"],
+    "components": ["button", "icon-button", "field", "select", "toggle", "card", "dialog", "table", "notification", "empty-state", "status-chip", "bar-chart", "task-light", "quota-pill"],
+    "patterns": ["workspace-shell", "floating-utility", "settings-form", "data-table"],
+    "standards": ["accessibility", "component-states", "icons", "data-visualization", "chinese-copy", "motion", "status-semantics"]
+  }
+}

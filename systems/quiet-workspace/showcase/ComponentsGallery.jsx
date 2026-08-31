@@ -20,8 +20,8 @@ import {
   QuietTaskLight,
   QuietToggle,
   quietInteractionStates,
-} from "../../systems/quiet-workspace/web/index.js";
-import { GalleryBlock, SectionHeader } from "./SectionHeader.jsx";
+} from "../web/index.js";
+import { GalleryBlock, SectionHeader } from "../../../src/gallery/SectionHeader.jsx";
 
 const stateLabels = {
   default: "默认",

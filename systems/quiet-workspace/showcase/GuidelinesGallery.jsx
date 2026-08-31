@@ -13,15 +13,15 @@ import {
   XCircle,
 } from "@phosphor-icons/react";
 import { useState } from "react";
-import referenceImage from "../../references/quiet-workspace-source.png";
+import referenceImage from "../../../references/quiet-workspace-source.png";
 import {
   QuietBarChart,
   QuietButton,
   QuietQuotaPill,
   QuietStatusChip,
   QuietTaskLight,
-} from "../../systems/quiet-workspace/web/index.js";
-import { GalleryBlock, SectionHeader } from "./SectionHeader.jsx";
+} from "../web/index.js";
+import { GalleryBlock, SectionHeader } from "../../../src/gallery/SectionHeader.jsx";
 
 const iconSamples = [
   { icon: Gear, label: "设置", name: "Gear" },
