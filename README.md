@@ -4,7 +4,7 @@
 
 一个“单仓库、多套系、强隔离”的 UI 设计系统实验室。每套视觉系统拥有独立的 Token、组件、模式、规范、资产和版本边界；只有 Gallery 与构建工具可以共享。
 
-当前公开版本为 [`v0.3.0`](https://github.com/Yueyuyu/ui-design-lab/releases/tag/v0.3.0)。
+当前工作区版本为 `v1.0.0`；这表示本地合同和验收目标，不代表已经创建 Git Tag 或 GitHub Release。最近公开版本仍为 [`v0.3.0`](https://github.com/Yueyuyu/ui-design-lab/releases/tag/v0.3.0)。
 
 ## 仓库定位
 
@@ -14,6 +14,23 @@
 - 在 Gallery 中集中查看 Token、组件、状态、密度和页面模式；
 - 让后续项目按明确边界复用，而不是每个项目重新决定颜色、字体、图标和动效；
 - 允许未来新增完全不同的视觉套系，同时避免套系之间互相污染。
+
+## 多套系 Gallery
+
+Gallery 通过 `systems/*/suite.json` 自动发现设计套系，不在应用外壳中写死套系列表。每套设计拥有稳定的 Suite ID、独立 Token 前缀、CSS 作用域、组件入口、展示模块和 Agent 文档。
+
+主要入口：
+
+- `#/systems`：全部套系目录；
+- `#/compare`：同一内容的跨套系对比；
+- `#/systems/quiet-workspace/overview`：套系总览；
+- `#/systems/quiet-workspace/components`：组件与七态矩阵；
+- `#/systems/quiet-workspace/playground`：密度、视口和边界场景检查；
+- `#/systems/quiet-workspace/usage`：组件导入与 Codex 指令。
+- `#/systems/midnight-ledger/overview`：第二套系统总览与三份视觉来源；
+- `#/systems/midnight-ledger/patterns`：资产总览、紧凑交易台和信号驾驶舱。
+
+Suite、Theme 和 Density 是不同层级：完整视觉语言才创建新 Suite；明暗模式和舒适/紧凑密度属于现有 Suite 的变体。
 
 ## Suite 01 · Quiet Workspace / 静谧工作台
 
@@ -69,6 +86,19 @@ Quiet Workspace 是一套 light-first、Windows-friendly 的效率工具视觉�
 - [动效](systems/quiet-workspace/standards/motion.md)
 - [状态语义与额度胶囊](systems/quiet-workspace/standards/status-semantics.md)
 
+## Suite 02 · Midnight Ledger / 午夜账盘
+
+Midnight Ledger 是 dark-first、高密度的金融数据产品视觉系统。视觉来源包括两张 TradeGenius 截图与 [CluesAI 驾驶舱](https://theclues.pro/cockpit) 的现场页面；现场采样得到 `#1C223A` 画布、`#20263C` 侧栏、`#252A40` 面板、`#E5D4B6` 奶油文字、Inter 14px 和 12px 面板圆角。
+
+它提供资产总览、紧凑交易控制台、信号驾驶舱、持仓表、日历热图、折线图、柱状图和 14 个七态组件。机器识别合同为：
+
+- 套系 ID：`midnight-ledger`
+- CSS 作用域：`[data-ui-system="midnight-ledger"]`
+- Token 前缀：`--ml-`
+- 组件前缀：`Ledger*` / `.ml-`
+
+三份视觉来源分别保存在 `references/midnight-ledger-source.png`、`references/midnight-ledger-compact-source.png` 和 `references/midnight-ledger-live-source.png`。
+
 ## 复用边界
 
 Quiet Workspace 的命名空间为：
@@ -96,6 +126,17 @@ npm run check
 npm run test:sites
 ```
 
+套系管理：
+
+```powershell
+npm run suite:list
+npm run suite:check
+npm run suite:design -- quiet-workspace
+npm run suite:new -- midnight-console --name="Midnight Console" --zh="午夜控制台" --prefix=mc
+```
+
+新套系由脚手架以 `draft` 状态创建。视觉母版确认、组件七态补齐、Showcase 建立并通过校验后，才可升级为 `experimental` 或 `stable`。
+
 ## 新增视觉套系
 
 1. 在 `systems/<suite-id>/` 建立独立目录。
@@ -112,6 +153,8 @@ npm run test:sites
 - `MINOR`：向后兼容地新增 Token、组件、规范或 Gallery 能力；
 - `PATCH`：向后兼容的问题修复、文档完善或视觉微调。
 
-根目录 [`VERSION`](VERSION) 是人和自动化读取的项目版本；它与 `package.json`、`package-lock.json`、套系 Token 和状态契约中的版本保持一致。正式版本使用 `vX.Y.Z` Git Tag，并在 [GitHub Releases](https://github.com/Yueyuyu/ui-design-lab/releases) 中记录变化。
+根目录 [`VERSION`](VERSION) 是人和自动化读取的项目版本，并与 `package.json`、`package-lock.json` 保持一致。单个套系拥有独立版本，记录该套系 Token、组件和视觉规范的变化。正式项目版本使用 `vX.Y.Z` Git Tag，并在 [GitHub Releases](https://github.com/Yueyuyu/ui-design-lab/releases) 中记录变化。
+
+公共导出和稳定性合同见 [COMPATIBILITY.md](COMPATIBILITY.md)，发布验收顺序见 [RELEASE.md](RELEASE.md)。
 
 历史变化见 [CHANGELOG.md](CHANGELOG.md)。
