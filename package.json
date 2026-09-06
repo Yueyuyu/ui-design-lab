@@ -42,7 +42,7 @@
     "suite:design": "node scripts/generate-design-md.mjs",
     "suite:check": "node scripts/validate-suites.mjs",
     "test:tokens": "npm run suite:check",
-    "check": "npm run suite:check && npm test && npm run build:package && npm run test:types && npm run build",
+    "check": "npm run suite:check && npm run build:package && npm run test:types && npm run build && npm test",
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "test": "node --test tests/*.test.mjs",
     "test:e2e": "playwright test",

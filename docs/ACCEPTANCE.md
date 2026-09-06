@@ -7,7 +7,7 @@
 - `a9fe276`：开源许可、第三方素材与付费交付边界，已推送至 `origin/main`。
 - `3ad9115`：四套 UI、组件分发、Beta Starter 与测试，已推送至 `origin/main`。
 - 推送前再次运行 `npm run check`（含 21 项 Node 测试）及 `npm run test:sites`（4/4），均通过；四个 Sites 基础文件保持不变。
-- 持续集成配置随本文入库；记录此状态时首次远端验证尚未开始，最新结果以 [GitHub Actions](https://github.com/Yueyuyu/ui-design-lab/actions/workflows/quality.yml) 的对应提交为准。
+- `025a926`：持续集成与交付文档，已推送至 `origin/main`。首次远端验证发现 `check` 在构建之前执行 Sites 产物测试；本机已有构建产物掩盖了这一顺序问题。已将构建前置，保留原有测试断言；修复后的实际结果以 [GitHub Actions](https://github.com/Yueyuyu/ui-design-lab/actions/workflows/quality.yml) 的对应提交为准。
 
 源码推送、远端验证、Release、npm 发布、网站部署和真实试用分别记录，不能相互替代。
 
