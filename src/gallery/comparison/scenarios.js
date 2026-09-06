@@ -63,33 +63,8 @@ export const comparisonModules = [
   { id: "buttons", label: "按钮状态" },
 ];
 
-export const sharedSceneData = {
-  metrics: [
-    { id: "revenue", label: "本月收入", value: "¥284,600", delta: "+12.4%", direction: "up" },
-    { id: "refund", label: "退款率", value: "1.8%", delta: "下降 0.3%", direction: "down" },
-    { id: "customers", label: "活跃客户", value: "1,248", delta: "+86", direction: "up" },
-  ],
-  revenue: [
-    { label: "3月", value: 32 },
-    { label: "4月", value: 46 },
-    { label: "5月", value: 39 },
-    { label: "6月", value: 61 },
-    { label: "7月", value: 54 },
-    { label: "8月", value: 72 },
-  ],
-  tableRows: [
-    { id: "C-1048", customer: "南风工作室", amount: "¥86,400", owner: "林简", status: "已确认" },
-    { id: "C-1047", customer: "远山科技", amount: "¥72,800", owner: "周宁", status: "待复核" },
-    { id: "C-1046", customer: "海岸零售", amount: "¥61,200", owner: "许安", status: "已确认" },
-    { id: "C-1045", customer: "辰光教育", amount: "¥44,600", owner: "顾言", status: "需跟进" },
-  ],
-  detailItems: [
-    { label: "复盘周期", value: "2026年8月" },
-    { label: "负责人", value: "林简" },
-    { label: "交付时间", value: "9月3日 18:00" },
-    { label: "数据口径", value: "已结算订单" },
-  ],
-};
+export { sharedSceneData } from "./scene-data.js";
+export { buildSuiteInstruction } from "./scene-context.js";
 
 export function getScenarioById(id) {
   return comparisonScenarios.find((scenario) => scenario.id === id) ?? comparisonScenarios[0];
@@ -119,35 +94,6 @@ export function getSuiteMarkColor(suite) {
     return (red * .2126 + green * .7152 + blue * .0722) < .42;
   });
   return darkSwatch ?? swatches[1] ?? swatches[0] ?? "#47524d";
-}
-
-export function buildSuiteInstruction({ suite, scenario, visualState, density, viewport, formName }) {
-  const metricLines = sharedSceneData.metrics.map((item) => `- ${item.label}：${item.value}（${item.delta}）`).join("\n");
-  const revenueLine = sharedSceneData.revenue.map((item) => `${item.label} ${item.value}万`).join("、");
-
-  return `# ${suite.displayName} / ${scenario.label}
-
-请使用 UI Design Lab 的 \`${suite.id}\` 套系实现“${scenario.label}”场景。
-
-1. 套系约束
-- 读取 \`systems/${suite.id}/suite.json\`、\`DESIGN.md\`、\`foundations/\`、\`standards/\` 与 \`web/index.js\`
-- 使用作用域 \`${suite.scope}\`，只使用该套系 Token 和现有组件
-- 禁止混入其他套系的 Token、组件、模式或资产
-
-2. 当前上下文
-- 视口：${viewport === "mobile" ? "移动端" : "桌面端"}
-- 密度：${density === "compact" ? "紧凑" : "舒适"}
-- 状态：${getStateLabel(visualState)}
-- 复盘名称：${formName}
-
-3. 固定数据（切换套系时保持不变）
-${metricLines}
-- 近六月收入：${revenueLine}
-
-4. 交互要求
-- 切换套系后保留数据、表单值、状态与滚动位置
-- 加载和错误状态保持原组件尺寸
-- 完成后运行 \`npm run suite:check\``;
 }
 
 export const consistencyChecks = [

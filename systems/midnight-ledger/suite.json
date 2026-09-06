@@ -8,13 +8,33 @@
   "prefix": "ml",
   "version": "0.1.0",
   "status": "experimental",
-  "description": "来自 TradeGenius 与 CluesAI 驾驶舱的深色高密度金融产品设计系统，以奶油文字、深蓝账盘和克制的涨跌语义建立辨识度。",
+  "description": "深蓝与奶油文字构成的数据设计，适合分析、监控与运营报表。",
   "styleLabel": "Nocturnal Financial Console",
-  "platforms": ["web", "desktop"],
-  "modes": ["dark"],
-  "densities": ["comfortable", "compact"],
-  "tags": ["dark", "financial", "dense", "terminal", "data-rich"],
-  "swatches": ["#171B2E", "#E8D8B3", "#9DCE8E", "#EF5B32", "#E57763"],
+  "platforms": [
+    "web",
+    "desktop"
+  ],
+  "modes": [
+    "dark"
+  ],
+  "densities": [
+    "comfortable",
+    "compact"
+  ],
+  "tags": [
+    "dark",
+    "financial",
+    "dense",
+    "terminal",
+    "data-rich"
+  ],
+  "swatches": [
+    "#171B2E",
+    "#E8D8B3",
+    "#9DCE8E",
+    "#EF5B32",
+    "#E57763"
+  ],
   "galleryShell": {
     "surface": "#171B2E",
     "sidebar": "#13182A",
@@ -27,7 +47,11 @@
     "onAccent": "#171B2E"
   },
   "referenceImage": "references/midnight-ledger-source.png",
-  "referenceImages": ["references/midnight-ledger-source.png", "references/midnight-ledger-compact-source.png", "references/midnight-ledger-live-source.png"],
+  "referenceImages": [
+    "references/midnight-ledger-source.png",
+    "references/midnight-ledger-compact-source.png",
+    "references/midnight-ledger-live-source.png"
+  ],
   "scope": "[data-ui-system=\"midnight-ledger\"]",
   "designDocument": "./DESIGN.md",
   "tokens": "./foundations/tokens.json",
@@ -36,9 +60,136 @@
   "showcase": "./showcase/index.jsx",
   "validation": "./validation.mjs",
   "capabilities": {
-    "foundations": ["color", "typography", "spacing", "shape", "motion", "density", "icons", "accessibility"],
-    "components": ["button", "icon-button", "field", "select", "toggle", "panel", "dialog", "table", "notification", "empty-state", "status-badge", "line-chart", "metric", "terminal-preview"],
-    "patterns": ["portfolio-overview", "compact-trade-console", "signal-cockpit", "position-ledger", "calendar-heatmap"],
-    "standards": ["accessibility", "component-states", "icons", "data-visualization", "chinese-copy", "motion", "status-semantics"]
-  }
+    "foundations": [
+      "color",
+      "typography",
+      "spacing",
+      "shape",
+      "motion",
+      "density",
+      "icons",
+      "accessibility"
+    ],
+    "components": [
+      "button",
+      "icon-button",
+      "field",
+      "select",
+      "toggle",
+      "panel",
+      "dialog",
+      "table",
+      "notification",
+      "empty-state",
+      "status-badge",
+      "line-chart",
+      "metric",
+      "terminal-preview",
+      "shell",
+      "data-table",
+      "textarea",
+      "checkbox",
+      "radio-group",
+      "combobox",
+      "multi-select",
+      "date-picker",
+      "date-range",
+      "tabs",
+      "breadcrumb",
+      "pagination",
+      "dropdown-menu",
+      "tooltip",
+      "popover",
+      "drawer",
+      "progress",
+      "skeleton",
+      "toast-queue",
+      "bar-chart"
+    ],
+    "patterns": [
+      "portfolio-overview",
+      "compact-trade-console",
+      "signal-cockpit",
+      "position-ledger",
+      "calendar-heatmap"
+    ],
+    "standards": [
+      "accessibility",
+      "component-states",
+      "icons",
+      "data-visualization",
+      "chinese-copy",
+      "motion",
+      "status-semantics"
+    ]
+  },
+  "comparison": {
+    "entry": "./comparison/index.jsx",
+    "scenarios": [
+      "monthly-review",
+      "data-table",
+      "settings-form",
+      "detail-page",
+      "empty-state"
+    ],
+    "modules": [
+      "metrics",
+      "chart",
+      "form",
+      "buttons"
+    ]
+  },
+  "selection": {
+    "suitableFor": [
+      "数据分析与运营台",
+      "高密度监控与报表"
+    ],
+    "limitations": [
+      "实验阶段，API 可能调整",
+      "暂未提供浅色模式"
+    ],
+    "previewKind": "components",
+    "thumbnail": "references/thumbnails/midnight-ledger.png"
+  },
+  "tokenBindings": "./foundations/token-bindings.json",
+  "themeControls": [
+    {
+      "label": "品牌色",
+      "type": "color",
+      "role": "brand",
+      "token": "--ml-brand",
+      "default": "#ef5b32"
+    },
+    {
+      "label": "正文颜色",
+      "type": "color",
+      "role": "text",
+      "token": "--ml-text-primary",
+      "default": "#e5d4b6"
+    },
+    {
+      "label": "面板颜色",
+      "type": "color",
+      "role": "surface",
+      "token": "--ml-surface-panel",
+      "default": "#252a40"
+    },
+    {
+      "label": "圆角",
+      "type": "radius",
+      "token": "--ml-radius-md",
+      "default": "10px"
+    },
+    {
+      "label": "字体",
+      "type": "font",
+      "token": "--ml-font-ui",
+      "default": "Inter, \"Segoe UI\", \"Microsoft YaHei UI\", sans-serif",
+      "options": [
+        "\"Segoe UI Variable\", \"Segoe UI\", \"Microsoft YaHei UI\", system-ui, sans-serif",
+        "Inter, \"Segoe UI\", \"Microsoft YaHei UI\", sans-serif",
+        "system-ui, sans-serif"
+      ]
+    }
+  ]
 }

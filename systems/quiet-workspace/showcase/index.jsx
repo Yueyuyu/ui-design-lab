@@ -1,3 +1,4 @@
+import { BusinessPage, WorkflowPage, ThemePage } from "./WorkbenchPages.jsx";
 import "../foundations/tokens.css";
 import "../web/components.css";
 import { ComponentsGallery } from "./ComponentsGallery.jsx";
@@ -9,6 +10,7 @@ import { PlaygroundGallery } from "./PlaygroundGallery.jsx";
 import { UsageGallery } from "./UsageGallery.jsx";
 
 export const navigation = [
+ {id:"components-plus",label:"业务组件",index:"08"},{id:"workflows",label:"完整场景",index:"09"},{id:"theme",label:"主题编辑",index:"10"},
   { id: "overview", label: "总览", index: "01" },
   { id: "foundations", label: "基础规范", index: "02" },
   { id: "components", label: "组件与状态", index: "03" },
@@ -19,6 +21,7 @@ export const navigation = [
 ];
 
 export const pages = {
+ "components-plus":BusinessPage, workflows:WorkflowPage, theme:ThemePage,
   overview: OverviewGallery,
   foundations: FoundationsGallery,
   components: ComponentsGallery,

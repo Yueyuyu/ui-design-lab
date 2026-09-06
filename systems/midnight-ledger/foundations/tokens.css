@@ -61,6 +61,22 @@
   color: var(--ml-text-primary);
   background: var(--ml-surface-canvas);
   font-family: var(--ml-font-ui);
+  --ml-chart-positive: #9DCE8E;
+  --ml-chart-negative: #E57763;
+  --ml-chart-baseline: #515873;
+  --ml-font-body-small: 12px;
+  --ml-line-height-caption: 15px;
+  --ml-line-height-label: 16px;
+  --ml-line-height-body-small: 18px;
+  --ml-line-height-body: 21px;
+  --ml-line-height-title: 22px;
+  --ml-line-height-heading: 30px;
+  --ml-line-height-display: 52px;
+  --ml-space-10: 40px;
+  --ml-icon-compact: 15px;
+  --ml-icon-comfortable: 17px;
+  --ml-icon-navigation: 19px;
+  --ml-icon-display: 24px;
 }
 
 [data-ui-system="midnight-ledger"][data-density="compact"] {

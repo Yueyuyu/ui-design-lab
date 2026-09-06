@@ -46,3 +46,13 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - A/B comparison keeps scene data, component state, form values, settings, and the canvas scroll position unchanged while switching suites.
 - Detailed comparison happens at the corresponding module level with shared row heights. Each suite keeps its own component anatomy; the Gallery must not force complete pages into identical heights.
 - Suite A/B selectors consume `src/registry/suites.js` and must continue to work when more suites are registered. A suite without a comparison renderer is declared unsupported instead of being silently imitated.
+
+- Homepage selection metadata (maturity, suitable tasks, limitations, reference thumbnail) belongs in suite.json. The directory searches every suite, including featured entries; mobile retains public navigation and the suite directory entry.
+- Comparison renderers live in each suite's comparison/index.jsx and are loaded by the registry. Exported Codex instructions carry a scene-specific JSON snapshot, preserving edited values and false settings.
+- Dialogs use suite-local Portal/native modal implementations with focus containment, background scroll locking, and focus restoration. Loading/disabled content is inert while the close control remains available.
+- Token changes update foundations/token-bindings.json and must pass bidirectional JSON/CSS checks. Component distribution is a local ESM tarball with types; third-party references are excluded and remain governed by NOTICE.md.
+
+- 首页所有套系的宣传封面采用一致的展示规范，统一尺寸比例、构图方式、裁切规则，以及卡片标题、说明和元数据的字体层级；新增套系同样遵循，不能每套自行设计一张不相干的宣传图。
+- 首页套系展示应更紧凑，避免大幅封面挤占首屏，并适应后续套系数量增长。先统一公共展示规范，再扩展套系；套系内部仍保留各自的视觉语言。
+
+- 用户已授权完整路线初步实施，常规实现与选稿由代理自主完成。新增 Clearline Console / 澄明后台（clearline-console，cc-，Clear*）采用白色表格与侧向详情；Signal Studio / 信号创作间（signal-studio，ss-，Signal*）采用横向导航、衬线标题与原创内容封面。两者仅浅色，不把主题改色计为新套系。选定来源分别为 references/clearline-console-source.png、references/signal-studio-source.png。

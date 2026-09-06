@@ -8,13 +8,31 @@
   "prefix": "qw",
   "version": "0.3.0",
   "status": "stable",
-  "description": "温润、克制、Windows 友好的桌面效率工具设计系统。",
+  "description": "温润、易读的桌面效率设计，适合任务、资料与内容工作台。",
   "styleLabel": "Warm Editorial Utility",
-  "platforms": ["web", "desktop"],
-  "modes": ["light"],
-  "densities": ["comfortable", "compact"],
-  "tags": ["warm", "editorial", "utility", "windows-friendly", "data-dense"],
-  "swatches": ["#FCFCFB", "#477D71", "#F0AD4E"],
+  "platforms": [
+    "web",
+    "desktop"
+  ],
+  "modes": [
+    "light"
+  ],
+  "densities": [
+    "comfortable",
+    "compact"
+  ],
+  "tags": [
+    "warm",
+    "editorial",
+    "utility",
+    "windows-friendly",
+    "data-dense"
+  ],
+  "swatches": [
+    "#FCFCFB",
+    "#477D71",
+    "#F0AD4E"
+  ],
   "galleryShell": {
     "surface": "#EDF0EC",
     "sidebar": "#F3F5F1",
@@ -35,9 +53,136 @@
   "showcase": "./showcase/index.jsx",
   "validation": "./validation.mjs",
   "capabilities": {
-    "foundations": ["color", "typography", "spacing", "shape", "motion", "density", "icons", "accessibility"],
-    "components": ["button", "icon-button", "field", "select", "toggle", "card", "dialog", "table", "notification", "empty-state", "status-chip", "bar-chart", "task-light", "quota-pill"],
-    "patterns": ["workspace-shell", "floating-utility", "settings-form", "data-table"],
-    "standards": ["accessibility", "component-states", "icons", "data-visualization", "chinese-copy", "motion", "status-semantics"]
-  }
+    "foundations": [
+      "color",
+      "typography",
+      "spacing",
+      "shape",
+      "motion",
+      "density",
+      "icons",
+      "accessibility"
+    ],
+    "components": [
+      "button",
+      "icon-button",
+      "field",
+      "select",
+      "toggle",
+      "card",
+      "dialog",
+      "table",
+      "notification",
+      "empty-state",
+      "status-chip",
+      "bar-chart",
+      "task-light",
+      "quota-pill",
+      "shell",
+      "data-table",
+      "textarea",
+      "checkbox",
+      "radio-group",
+      "combobox",
+      "multi-select",
+      "date-picker",
+      "date-range",
+      "tabs",
+      "breadcrumb",
+      "pagination",
+      "dropdown-menu",
+      "tooltip",
+      "popover",
+      "drawer",
+      "progress",
+      "skeleton",
+      "toast-queue",
+      "file-upload",
+      "tree"
+    ],
+    "patterns": [
+      "workspace-shell",
+      "floating-utility",
+      "settings-form",
+      "data-table"
+    ],
+    "standards": [
+      "accessibility",
+      "component-states",
+      "icons",
+      "data-visualization",
+      "chinese-copy",
+      "motion",
+      "status-semantics"
+    ]
+  },
+  "comparison": {
+    "entry": "./comparison/index.jsx",
+    "scenarios": [
+      "monthly-review",
+      "data-table",
+      "settings-form",
+      "detail-page",
+      "empty-state"
+    ],
+    "modules": [
+      "metrics",
+      "chart",
+      "form",
+      "buttons"
+    ]
+  },
+  "selection": {
+    "suitableFor": [
+      "研究与写作工具",
+      "任务监控与设置"
+    ],
+    "limitations": [
+      "暂未提供深色模式",
+      "远程数据、存储和通知由业务方接入"
+    ],
+    "previewKind": "components",
+    "thumbnail": "references/thumbnails/quiet-workspace.png"
+  },
+  "tokenBindings": "./foundations/token-bindings.json",
+  "themeControls": [
+    {
+      "label": "品牌色",
+      "type": "color",
+      "role": "brand",
+      "token": "--qw-color-brand",
+      "default": "#477d71"
+    },
+    {
+      "label": "正文颜色",
+      "type": "color",
+      "role": "text",
+      "token": "--qw-color-text-primary",
+      "default": "#262623"
+    },
+    {
+      "label": "面板颜色",
+      "type": "color",
+      "role": "surface",
+      "token": "--qw-color-paper",
+      "default": "#fcfcfb"
+    },
+    {
+      "label": "圆角",
+      "type": "radius",
+      "token": "--qw-radius-md",
+      "default": "8px"
+    },
+    {
+      "label": "字体",
+      "type": "font",
+      "token": "--qw-font-sans",
+      "default": "\"Segoe UI Variable\", \"Segoe UI\", \"Microsoft YaHei UI\", system-ui, sans-serif",
+      "options": [
+        "\"Segoe UI Variable\", \"Segoe UI\", \"Microsoft YaHei UI\", system-ui, sans-serif",
+        "Inter, \"Segoe UI\", \"Microsoft YaHei UI\", sans-serif",
+        "system-ui, sans-serif"
+      ]
+    }
+  ]
 }

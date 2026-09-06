@@ -2,6 +2,8 @@ import { access, readFile, readdir } from "node:fs/promises";
 import { constants } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import Ajv2020 from "ajv/dist/2020.js";
+import { resolveWithin, validateTokenBindings, validateSuiteSources } from "./lib/suite-integrity.mjs";
 
 const root = process.cwd();
 const systemsDir = resolve(root, "systems");
@@ -9,6 +11,8 @@ const requiredStates = ["default", "hover", "pressed", "focus", "disabled", "loa
 const allowedStatuses = new Set(["draft", "experimental", "stable", "deprecated"]);
 const idPattern = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
 const prefixPattern = /^[a-z][a-z0-9]{1,5}$/;
+const manifestSchema = JSON.parse(await readFile(resolve(root, "schemas/suite.schema.json"), "utf8"));
+const validateManifest = new Ajv2020({ allErrors: true, strict: false }).compile(manifestSchema);
 
 async function exists(path) {
   try {
@@ -20,7 +24,7 @@ async function exists(path) {
 }
 
 function resolveManifestPath(suiteDir, value) {
-  return resolve(suiteDir, value.replace(/^\.\//, ""));
+  return resolveWithin(suiteDir, value);
 }
 
 async function loadSuites() {
@@ -54,6 +58,8 @@ function assertUnique(suites, field) {
 
 async function validateSuite(suite) {
   const { folderName, manifest, suiteDir } = suite;
+  if (!validateManifest(manifest)) throw new Error(folderName + ": manifest schema 校验失败 " + JSON.stringify(validateManifest.errors));
+  if (manifest.scope !== `[data-ui-system="${manifest.id}"]`) throw new Error(folderName + ": scope 与 id 不一致");
   if (manifest.id !== folderName || !idPattern.test(manifest.id)) {
     throw new Error(`${folderName}: id 必须与目录同名并使用 kebab-case`);
   }
@@ -67,7 +73,7 @@ async function validateSuite(suite) {
     throw new Error(`${manifest.id}: order 必须是正整数`);
   }
 
-  const requiredFiles = ["designDocument", "tokens", "tokensCss", "components", "showcase"];
+  const requiredFiles = ["designDocument", "tokens", "tokensCss", "components", "showcase", "tokenBindings"];
   for (const field of requiredFiles) {
     if (!manifest[field] || !(await exists(resolveManifestPath(suiteDir, manifest[field])))) {
       throw new Error(`${manifest.id}: ${field} 指向的文件不存在`);
@@ -82,6 +88,15 @@ async function validateSuite(suite) {
   const tokenCss = await readFile(tokensCssPath, "utf8");
   const designDocument = await readFile(designPath, "utf8");
   const interactionStates = JSON.parse(await readFile(statesPath, "utf8"));
+  const bindings = JSON.parse(await readFile(resolveManifestPath(suiteDir, manifest.tokenBindings), "utf8"));
+  validateTokenBindings(tokens, tokenCss, bindings);
+  await validateSuiteSources(suiteDir, suites.map((item) => item.manifest));
+  if (manifest.status !== "draft") {
+    if (!manifest.referenceImage || !(await exists(resolveWithin(root, manifest.referenceImage)))) throw new Error(manifest.id + ": 缺少视觉来源");
+    if (!manifest.selection?.thumbnail || !(await exists(resolveWithin(root, manifest.selection.thumbnail)))) throw new Error(manifest.id + ": 缺少选型缩略图");
+    if (Object.keys(interactionStates.components).length === 0) throw new Error(manifest.id + ": 正式套系不能缺少组件状态");
+  }
+  if (manifest.comparison && !(await exists(resolveManifestPath(suiteDir, manifest.comparison.entry)))) throw new Error(manifest.id + ": 比较适配器不存在");
 
   if (tokens.id !== manifest.id || tokens.prefix !== manifest.prefix || tokens.version !== manifest.version) {
     throw new Error(`${manifest.id}: suite.json 与 tokens.json 的 id、prefix 或 version 不一致`);
@@ -120,6 +135,7 @@ async function validateSuite(suite) {
 }
 
 const suites = await loadSuites();
+try {
 if (suites.length === 0) {
   throw new Error("未发现任何包含 suite.json 的设计套系");
 }
@@ -136,4 +152,9 @@ for (const suite of suites) {
 console.log(`设计套系校验通过（${suites.length} 套）：`);
 for (const summary of summaries) {
   console.log(`- ${summary}`);
+}
+
+} catch (error) {
+  console.error(error.message);
+  process.exitCode = 1;
 }

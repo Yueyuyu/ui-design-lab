@@ -34,7 +34,7 @@ export function LedgerSelect({ label, options, hint, error, loading, visualState
 
 export function LedgerToggle({ checked, onChange, label, description, error, loading, visualState, disabled }) {
   const state = resolveLedgerState({ visualState, loading, error, disabled });
-  return <label className="ml-toggle-row" data-state={state} data-visual-state={visualState}><span className="ml-toggle-row__copy"><strong>{label}</strong>{description ? <small>{description}</small> : null}{error ? <small className="ml-toggle-row__error">{error}</small> : null}</span><button type="button" role="switch" aria-checked={checked} className="ml-toggle" data-on={checked ? "true" : "false"} disabled={disabled || loading || visualState === "disabled"} onClick={() => onChange?.(!checked)}>{loading ? <CircleNotch size={13} className="ml-spin" aria-hidden="true" /> : <span className="ml-toggle__thumb" />}</button></label>;
+  return <label className="ml-toggle-row" data-state={state} data-visual-state={visualState}><span className="ml-toggle-row__copy"><strong>{label}</strong>{description ? <small>{description}</small> : null}{error ? <small className="ml-toggle-row__error">{error}</small> : null}</span><button type="button" role="switch" aria-label={label} aria-checked={checked} className="ml-toggle" data-on={checked ? "true" : "false"} disabled={disabled || loading || visualState === "disabled"} onClick={() => onChange?.(!checked)}>{loading ? <CircleNotch size={13} className="ml-spin" aria-hidden="true" /> : <span className="ml-toggle__thumb" />}</button></label>;
 }
 
 export function LedgerPanel({ title, eyebrow, action, children, tone = "default", visualState, loading, error, disabled, className = "", ...props }) {

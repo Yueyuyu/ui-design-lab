@@ -26,7 +26,7 @@ const defaultTasks = [
   },
 ];
 
-function TaskGroup({ label, state, tasks }) {
+function TaskGroup({ label, state, tasks, onTaskActivate }) {
   if (tasks.length === 0) {
     return null;
   }
@@ -38,7 +38,7 @@ function TaskGroup({ label, state, tasks }) {
         <span>{tasks.length}</span>
       </header>
       {tasks.map((task) => (
-        <article className="qw-task-row" key={task.id} tabIndex={0}>
+        <article className="qw-task-row" key={task.id} tabIndex={onTaskActivate?0:-1} role={onTaskActivate?"button":undefined} onClick={()=>onTaskActivate?.(task)} onKeyDown={event=>{if(onTaskActivate&&["Enter"," "].includes(event.key)){event.preventDefault();onTaskActivate(task);}}}>
           <span className={`qw-task-row__rail qw-task-row__rail--${state}`} aria-hidden="true" />
           <span className="qw-task-row__copy">
             <strong>{task.title}</strong>
@@ -53,11 +53,13 @@ function TaskGroup({ label, state, tasks }) {
 
 export function QuietTaskLight({
   tasks = defaultTasks,
+  title = "Codex 活动任务",
   defaultOpen = true,
   loading = false,
   error,
   disabled = false,
   onRetry,
+  onTaskActivate,
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const [topMost, setTopMost] = useState(true);
@@ -95,10 +97,10 @@ export function QuietTaskLight({
       </button>
 
       {open ? (
-        <section className="qw-task-panel" aria-label="Codex 活动任务">
+        <section className="qw-task-panel" aria-label={title}>
           <header className="qw-task-panel__header">
             <span>
-              <h3>Codex 活动任务</h3>
+              <h3>{title}</h3>
               <span className="qw-task-panel__chips">
                 {loading ? <QuietStatusChip tone="neutral" state="loading">正在同步</QuietStatusChip> : null}
                 {error ? <QuietStatusChip tone="attention" state="error">读取失败</QuietStatusChip> : null}
@@ -127,8 +129,8 @@ export function QuietTaskLight({
             {isIdle ? <div className="qw-task-panel__message"><span className="qw-signal qw-signal--success" aria-hidden="true" />当前没有执行中的任务。</div> : null}
             {!loading && !error && !disabled && !isIdle ? (
               <>
-                <TaskGroup label="需要处理" state="attention" tasks={attentionTasks} />
-                <TaskGroup label="执行中" state="running" tasks={runningTasks} />
+                <TaskGroup onTaskActivate={onTaskActivate} label="需要处理" state="attention" tasks={attentionTasks} />
+                <TaskGroup onTaskActivate={onTaskActivate} label="执行中" state="running" tasks={runningTasks} />
               </>
             ) : null}
           </div>

@@ -36,7 +36,8 @@ if (manifests.some((manifest) => manifest.id === suiteId || manifest.prefix === 
 }
 
 const order = Math.max(0, ...manifests.map((manifest) => manifest.order)) + 1;
-const shortCode = suiteId.split("-").map((part) => part[0]).join("").slice(0, 4).toUpperCase();
+const shortCode = prefix.toUpperCase();
+if (manifests.some((manifest) => manifest.shortCode === shortCode)) throw new Error("prefix 对应短码已存在");
 await mkdir(suiteDir);
 await mkdir(resolve(suiteDir, "foundations"));
 await mkdir(resolve(suiteDir, "standards"));
@@ -64,6 +65,9 @@ const manifest = {
   designDocument: "./DESIGN.md",
   tokens: "./foundations/tokens.json",
   tokensCss: "./foundations/tokens.css",
+  tokenBindings: "./foundations/token-bindings.json",
+  comparison: null,
+  selection: { suitableFor: ["视觉来源确认后填写"], limitations: ["草案尚未提供可复用组件或比较场景"], previewKind: "reference" },
   components: "./web/index.js",
   showcase: "./showcase/index.jsx",
   capabilities: { foundations: [], components: [], patterns: [], standards: [] }
@@ -82,12 +86,19 @@ const tokens = {
   }
 };
 
+const tokenBindings = { base: {
+  [`--${prefix}-color-canvas`]: "color.surface.canvas",
+  [`--${prefix}-color-text`]: "color.text.primary",
+  [`--${prefix}-color-brand`]: "color.brand.default",
+} };
+
 const states = {
   version: "0.1.0",
   requiredStates: ["default", "hover", "pressed", "focus", "disabled", "loading", "error"],
   components: {}
 };
 
+await writeFile(resolve(suiteDir, "foundations/token-bindings.json"), `${JSON.stringify(tokenBindings, null, 2)}\n`);
 await writeFile(resolve(suiteDir, "suite.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 await writeFile(resolve(suiteDir, "foundations/tokens.json"), `${JSON.stringify(tokens, null, 2)}\n`);
 await writeFile(resolve(suiteDir, "foundations/interaction-states.json"), `${JSON.stringify(states, null, 2)}\n`);

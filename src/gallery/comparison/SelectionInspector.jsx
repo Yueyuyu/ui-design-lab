@@ -1,3 +1,4 @@
+import { recordEvent } from "../telemetry.js";
 import {
   ArrowSquareOut,
   CheckCircle,
@@ -17,7 +18,7 @@ export function SelectionInspector({ suite, scenario, density, visualState, prom
 
   const copyInstruction = async () => {
     try {
-      await copyText(prompt);
+      await copyText(prompt); recordEvent("instruction_copy");
       onNotify(`${suite.displayName} 套系指令已复制`);
     } catch {
       onNotify("复制失败，请手动复制指令预览");
@@ -51,7 +52,7 @@ export function SelectionInspector({ suite, scenario, density, visualState, prom
           <small>场景与状态</small>
           <dl className="comparison-inspector__context">
             <div><dt>场景</dt><dd>{scenario.label}</dd></div>
-            <div><dt>状态</dt><dd>{getStateLabel(visualState)}（初始加载态）</dd></div>
+            <div><dt>状态</dt><dd>{getStateLabel(visualState)}</dd></div>
           </dl>
         </section>
 

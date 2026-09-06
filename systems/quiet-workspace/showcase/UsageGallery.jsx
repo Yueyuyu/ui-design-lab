@@ -2,24 +2,18 @@ import { CheckCircle, Copy, Package, TerminalWindow } from "@phosphor-icons/reac
 import { copyText } from "../../../src/gallery/copyText.js";
 import { QuietButton, QuietStatusChip } from "../web/index.js";
 import { GalleryBlock, SectionHeader } from "../../../src/gallery/SectionHeader.jsx";
-
-const codexPrompt = `使用 UI Design Lab 的设计套系 quiet-workspace 实现当前页面。
-
-开始前读取：
-- systems/quiet-workspace/suite.json
-- systems/quiet-workspace/DESIGN.md
-- systems/quiet-workspace/foundations/
-- systems/quiet-workspace/standards/
-- systems/quiet-workspace/web/index.js
-
-必须使用 data-ui-system="quiet-workspace"、--qw-* Token 和现有 Quiet Workspace 组件。禁止混入其他套系。完成后运行 npm run suite:check。`;
+import { suiteUsage } from "../../../src/gallery/usage-content.js";
 
 const importExample = `import {
   QuietButton,
   QuietStatusChip
-} from "./systems/quiet-workspace/web/index.js";
-import "./systems/quiet-workspace/foundations/tokens.css";
-import "./systems/quiet-workspace/web/components.css";`;
+} from "ui-design-lab/quiet-workspace";
+import "ui-design-lab/quiet-workspace/tokens.css";
+import "ui-design-lab/quiet-workspace/components.css";
+
+<section data-ui-system="quiet-workspace" data-density="comfortable">
+  <QuietButton onClick={() => console.log("已点击")}>保存</QuietButton>
+</section>;`;
 
 async function copyUsageText(value, message, onNotify) {
   try {
@@ -30,14 +24,15 @@ async function copyUsageText(value, message, onNotify) {
   }
 }
 
-export function UsageGallery({ onNotify }) {
+export function UsageGallery({ suite, onNotify }) {
+  const { install, prompt } = suiteUsage(suite);
   return (
     <>
       <SectionHeader
         eyebrow="USAGE & AGENT HANDOFF"
         title="使用 Quiet Workspace"
         description="套系 ID 是稳定入口；编号只用于展示，不能代替机器标识。"
-        aside={<QuietStatusChip tone="success" dot>Stable · v0.3.0</QuietStatusChip>}
+        aside={<QuietStatusChip tone="success" dot>{suite.status} · v{suite.version}</QuietStatusChip>}
       />
 
       <div className="usage-summary-grid">
@@ -46,14 +41,17 @@ export function UsageGallery({ onNotify }) {
         <article><CheckCircle size={21} aria-hidden="true" /><strong>Token 前缀</strong><code>--qw-*</code></article>
       </div>
 
-      <GalleryBlock eyebrow="CODEX" title="复制给 Codex" description="这段指令让 Codex 先解析套系合同，再实现页面。">
+      <GalleryBlock eyebrow="INSTALL" title="安装到新项目" description="React 19.2+；先构建并打包，再在消费项目安装生成的 tgz。当前未发布到 npm。">
+        <div className="usage-code-block"><pre><code>{install}</code></pre><QuietButton variant="secondary" icon={Copy} onClick={() => copyUsageText(install, "安装步骤已复制", onNotify)}>复制安装步骤</QuietButton></div>
+      </GalleryBlock>
+      <GalleryBlock eyebrow="CODEX" title="复制给 Codex" description="指令包含仓库和已安装包两种目录位置。">
         <div className="usage-code-block">
-          <pre><code>{codexPrompt}</code></pre>
-          <QuietButton variant="secondary" icon={Copy} onClick={() => copyUsageText(codexPrompt, "Codex 指令已复制", onNotify)}>复制 Codex 指令</QuietButton>
+          <pre><code>{prompt}</code></pre>
+          <QuietButton variant="secondary" icon={Copy} onClick={() => copyUsageText(prompt, "Codex 指令已复制", onNotify)}>复制 Codex 指令</QuietButton>
         </div>
       </GalleryBlock>
 
-      <GalleryBlock eyebrow="IMPORT" title="直接复用组件" description="当前阶段通过仓库路径复用；稳定包入口将在 v1.0.0 建立。">
+      <GalleryBlock eyebrow="IMPORT" title="直接复用组件" description="完整可运行项目位于 examples/consumer；组件参数、回调和状态见 systems/quiet-workspace/API.md。">
         <div className="usage-code-block">
           <pre><code>{importExample}</code></pre>
           <QuietButton variant="secondary" icon={Copy} onClick={() => copyUsageText(importExample, "导入示例已复制", onNotify)}>复制导入示例</QuietButton>

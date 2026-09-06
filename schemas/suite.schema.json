@@ -20,22 +20,257 @@
     "tokens",
     "tokensCss",
     "components",
-    "showcase"
+    "showcase",
+    "description",
+    "styleLabel",
+    "tags",
+    "swatches",
+    "capabilities",
+    "tokenBindings"
   ],
   "properties": {
-    "id": { "type": "string", "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$" },
-    "order": { "type": "integer", "minimum": 1 },
-    "displayName": { "type": "string", "minLength": 2 },
-    "localizedName": { "type": "string", "minLength": 2 },
-    "shortCode": { "type": "string", "pattern": "^[A-Z0-9]{2,5}$" },
-    "prefix": { "type": "string", "pattern": "^[a-z][a-z0-9]{1,5}$" },
-    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
-    "status": { "enum": ["draft", "experimental", "stable", "deprecated"] },
-    "platforms": { "type": "array", "minItems": 1, "items": { "type": "string" } },
-    "modes": { "type": "array", "minItems": 1, "items": { "type": "string" } },
-    "densities": { "type": "array", "minItems": 1, "items": { "type": "string" } },
-    "swatches": { "type": "array", "minItems": 3, "maxItems": 5, "items": { "type": "string" } },
-    "capabilities": { "type": "object" }
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "order": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "displayName": {
+      "type": "string",
+      "minLength": 2
+    },
+    "localizedName": {
+      "type": "string",
+      "minLength": 2
+    },
+    "shortCode": {
+      "type": "string",
+      "pattern": "^[A-Z0-9]{2,5}$"
+    },
+    "prefix": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]{1,5}$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "experimental",
+        "stable",
+        "deprecated"
+      ]
+    },
+    "platforms": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "modes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "light",
+          "dark"
+        ]
+      },
+      "minItems": 1
+    },
+    "densities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "comfortable",
+          "compact"
+        ]
+      },
+      "minItems": 1
+    },
+    "swatches": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 5,
+      "items": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$"
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "required": [
+        "foundations",
+        "components",
+        "patterns",
+        "standards"
+      ],
+      "properties": {
+        "foundations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "components": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "patterns": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "standards": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "styleLabel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "designDocument": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tokens": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tokensCss": {
+      "type": "string",
+      "minLength": 1
+    },
+    "components": {
+      "type": "string",
+      "minLength": 1
+    },
+    "showcase": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tokenBindings": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "comparison": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "entry",
+        "scenarios",
+        "modules"
+      ],
+      "properties": {
+        "entry": {
+          "const": "./comparison/index.jsx"
+        },
+        "scenarios": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "monthly-review",
+              "data-table",
+              "settings-form",
+              "detail-page",
+              "empty-state"
+            ]
+          }
+        },
+        "modules": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "metrics",
+              "chart",
+              "form",
+              "buttons"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "selection": {
+      "type": "object",
+      "required": [
+        "suitableFor",
+        "limitations",
+        "previewKind"
+      ],
+      "properties": {
+        "suitableFor": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "previewKind": {
+          "enum": ["reference", "components"]
+        },
+        "thumbnail": {
+          "type": "string",
+          "pattern": "^references/thumbnails/[a-z0-9-]+\\.(webp|png)$"
+        }
+      },
+      "additionalProperties": false
+    }
   },
   "additionalProperties": true
 }

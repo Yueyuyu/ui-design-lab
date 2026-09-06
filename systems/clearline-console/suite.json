@@ -1,0 +1,173 @@
+{
+  "$schema": "../../schemas/suite.schema.json",
+  "id": "clearline-console",
+  "order": 3,
+  "displayName": "Clearline Console",
+  "localizedName": "澄明后台",
+  "shortCode": "CC",
+  "prefix": "cc",
+  "componentPrefix": "Clear",
+  "version": "0.1.0",
+  "status": "experimental",
+  "description": "清爽、对齐严谨的企业后台，专注项目、表格、权限与设置。",
+  "styleLabel": "Clear Enterprise Operations",
+  "platforms": [
+    "web",
+    "desktop"
+  ],
+  "modes": [
+    "light"
+  ],
+  "densities": [
+    "comfortable",
+    "compact"
+  ],
+  "tags": [
+    "enterprise",
+    "admin",
+    "table",
+    "forms"
+  ],
+  "swatches": [
+    "#f3f5f8",
+    "#2457d6",
+    "#18243b",
+    "#ffffff"
+  ],
+  "galleryShell": {
+    "surface": "#f3f5f8",
+    "sidebar": "#ffffff",
+    "topbar": "#ffffff",
+    "text": "#18243b",
+    "muted": "#5e6b80",
+    "border": "#d7dee8",
+    "active": "#f3f5f8",
+    "accent": "#2457d6",
+    "onAccent": "#ffffff"
+  },
+  "referenceImage": "references/clearline-console-source.png",
+  "scope": "[data-ui-system=\"clearline-console\"]",
+  "designDocument": "./DESIGN.md",
+  "tokens": "./foundations/tokens.json",
+  "tokensCss": "./foundations/tokens.css",
+  "tokenBindings": "./foundations/token-bindings.json",
+  "components": "./web/index.js",
+  "showcase": "./showcase/index.jsx",
+  "capabilities": {
+    "foundations": [
+      "color",
+      "typography",
+      "spacing",
+      "shape",
+      "density",
+      "motion"
+    ],
+    "components": [
+      "button",
+      "field",
+      "select",
+      "toggle",
+      "panel",
+      "badge",
+      "bar-chart",
+      "shell",
+      "data-table",
+      "textarea",
+      "checkbox",
+      "radio-group",
+      "combobox",
+      "multi-select",
+      "date-picker",
+      "date-range",
+      "tabs",
+      "breadcrumb",
+      "pagination",
+      "dropdown-menu",
+      "tooltip",
+      "popover",
+      "drawer",
+      "progress",
+      "skeleton",
+      "toast-queue"
+    ],
+    "patterns": [
+      "project-workbench",
+      "task-workflow"
+    ],
+    "standards": [
+      "accessibility",
+      "component-states",
+      "icons",
+      "data-visualization",
+      "chinese-copy",
+      "motion"
+    ]
+  },
+  "comparison": {
+    "entry": "./comparison/index.jsx",
+    "scenarios": [
+      "monthly-review",
+      "data-table",
+      "settings-form",
+      "detail-page",
+      "empty-state"
+    ],
+    "modules": [
+      "metrics",
+      "chart",
+      "form",
+      "buttons"
+    ]
+  },
+  "selection": {
+    "suitableFor": [
+      "企业后台与项目管理",
+      "数据表格与表单"
+    ],
+    "limitations": [
+      "新增实验套系，API 可能调整",
+      "仅浅色；暂未提供上传与目录树"
+    ],
+    "previewKind": "components",
+    "thumbnail": "references/thumbnails/clearline-console.png"
+  },
+  "themeControls": [
+    {
+      "label": "品牌色",
+      "type": "color",
+      "role": "brand",
+      "token": "--cc-brand",
+      "default": "#2457d6"
+    },
+    {
+      "label": "正文颜色",
+      "type": "color",
+      "role": "text",
+      "token": "--cc-text",
+      "default": "#18243b"
+    },
+    {
+      "label": "面板颜色",
+      "type": "color",
+      "role": "surface",
+      "token": "--cc-surface",
+      "default": "#ffffff"
+    },
+    {
+      "label": "圆角",
+      "type": "radius",
+      "token": "--cc-radius",
+      "default": "6px"
+    },
+    {
+      "label": "字体",
+      "type": "font",
+      "token": "--cc-font",
+      "default": "\"Segoe UI\", \"Microsoft YaHei UI\", sans-serif",
+      "options": [
+        "\"Segoe UI\", \"Microsoft YaHei UI\", sans-serif",
+        "system-ui, sans-serif"
+      ]
+    }
+  ]
+}

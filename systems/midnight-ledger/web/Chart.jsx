@@ -1,102 +1,39 @@
-import { ArrowClockwise, CircleNotch, WarningCircle } from "@phosphor-icons/react";
-
-function chartPoints(values, width = 640, height = 220) {
-  const min = Math.min(...values); const max = Math.max(...values); const range = Math.max(1, max - min);
-  return values.map((value, index) => `${(index / (values.length - 1)) * width},${height - ((value - min) / range) * (height - 24) - 12}`).join(" ");
+import { useState } from "react";
+import { lineCoordinates, validSeries, barGeometry } from "./chart-data.js";
+function Message({ state, invalid, onRetry }) {
+  return <div className="ml-line-chart__error" role={state === "error" || invalid ? "alert" : "status"}>
+    <span>{state === "loading" ? "正在加载数据…" : invalid ? "数据包含缺失或非法数值，请检查数据源。" : state === "error" ? "数据加载失败，当前输入仍保留。" : "当前条件下暂无数据。"}</span>
+    {state === "error" && onRetry ? <button type="button" onClick={onRetry}>重新加载</button> : null}
+  </div>;
 }
-
-export function LedgerLineChart({
-  title = "累计收益",
-  value = "+31.8%",
-  data = [8, 12, 14, 18, 17, 21, 19, 24, 29, 27, 33, 35, 41],
-  state = "default",
-  onRetry
-}) {
-  const points = chartPoints(data);
-  const lastY = points.split(" ").at(-1).split(",")[1];
-  const displayValue = state === "error" ? "—" : state === "loading" ? "同步中" : value;
-
-  return (
-    <figure
-      className="ml-line-chart"
-      data-state={state}
-      tabIndex={state === "disabled" ? -1 : 0}
-      aria-busy={state === "loading" ? "true" : undefined}
-    >
-      <figcaption>
-        <span><strong>{title}</strong><small>30D · 收盘价口径</small></span>
-        <b>{displayValue}</b>
-      </figcaption>
-      <div className="ml-line-chart__plot">
-        {state === "loading" ? (
-          <div className="ml-line-chart__loading" role="status">
-            <span className="ml-line-chart__skeleton" aria-hidden="true">
-              <i /><i /><i /><i />
-            </span>
-            <span><strong>正在同步行情</strong><small>正在获取最新收盘数据…</small></span>
-          </div>
-        ) : state === "error" ? (
-          <div className="ml-line-chart__error" role="alert">
-            <WarningCircle size={24} weight="fill" aria-hidden="true" />
-            <span><strong>行情暂不可用</strong><small>图表已暂停更新，请稍后重试。</small></span>
-            {onRetry ? (
-              <button type="button" onClick={onRetry}>
-                <ArrowClockwise size={14} weight="bold" aria-hidden="true" />
-                重新加载
-              </button>
-            ) : null}
-          </div>
-        ) : (
-          <svg viewBox="0 0 640 220" role="img" aria-label={`${title} ${value}`} preserveAspectRatio="none">
-            <line x1="0" y1="208" x2="640" y2="208" />
-            <polyline points={points} />
-            <circle cx="640" cy={lastY} r="5" />
-          </svg>
-        )}
-      </div>
-    </figure>
-  );
+export function LedgerLineChart({ title = "趋势", value, data = [], labels = [], unit = "", description, period, source, updatedAt, state = "default", onRetry }) {
+  const [active, setActive] = useState(null);
+  const [visible, setVisible] = useState(true);
+  const invalid = !validSeries(data);
+  const points = lineCoordinates(data);
+  const ready = !invalid && points.length > 0 && !["empty","loading","error"].includes(state);
+  const selected = points[active] ?? points.at(-1);
+  return <figure className="ml-line-chart" data-state={state} aria-busy={state === "loading" || undefined}>
+    <figcaption><span><strong>{title}</strong><small>{[description,period,source,updatedAt].filter(Boolean).join(" · ")}</small></span><b>{ready ? value ?? data.at(-1) + unit : "—"}</b></figcaption>
+    <button type="button" className="ml-chart-legend" aria-pressed={visible} disabled={!ready || state === "disabled"} onClick={() => setVisible(!visible)}>{visible ? "隐藏" : "显示"} {title}</button>
+    <div className="ml-line-chart__plot">
+      {!ready ? <Message state={state} invalid={invalid} onRetry={onRetry}/> : visible ? <svg viewBox="0 0 640 220" role="group" aria-label={title} preserveAspectRatio="none">
+        <polyline points={points.map(p => p.x + "," + p.y).join(" ")}/>
+        {points.map((point,index) => <circle key={index} cx={point.x} cy={point.y} r={active === index ? 7 : 4} tabIndex={state === "disabled" ? -1 : 0} role="img" aria-label={(labels[index] ?? "第 " + (index+1) + " 项") + "：" + point.value + unit} onFocus={() => setActive(index)} onMouseEnter={() => setActive(index)}><title>{labels[index] ?? index+1}：{point.value}{unit}</title></circle>)}
+      </svg> : <p>系列已隐藏，可通过图例重新显示。</p>}
+    </div>
+    {ready && visible ? <p className="ml-chart-summary" role="status">{labels[active ?? data.length-1] ?? "第 " + ((active ?? data.length-1)+1) + " 项"}：{selected.value}{unit} · 最低 {Math.min(...data)}{unit} / 最高 {Math.max(...data)}{unit}</p> : null}
+  </figure>;
 }
-
-export function LedgerBarChart({
-  values = [3.2, -1.4, 6.8, 4.5, 7.5, 7.1],
-  data,
-  title = "月度收益",
-  unit = "%",
-  state = "default",
-  onRetry,
-}) {
-  const source = data ?? values.map((value, index) => ({ label: `${index + 2}月`, value }));
-  const max = Math.max(...source.map((item) => Math.abs(item.value)), 1);
-  const displayData = state === "loading"
-    ? source.map((item, index) => ({ ...item, value: 30 + index * 7 }))
-    : source;
-
-  return (
-    <figure className="ml-bar-chart" data-state={state} aria-busy={state === "loading" || undefined}>
-      <figcaption>{title}</figcaption>
-      {state === "error" ? (
-        <div className="ml-bar-chart__message" role="alert">
-          <WarningCircle size={22} weight="fill" aria-hidden="true" />
-          <span><strong>图表加载失败</strong><small>收入数据暂不可用，请稍后重试。</small></span>
-          {onRetry ? <button type="button" onClick={onRetry}><ArrowClockwise size={14} weight="bold" aria-hidden="true" />重新加载</button> : null}
-        </div>
-      ) : (
-        <div>
-          {displayData.map((item, index) => (
-            <span
-              key={`${item.label}-${index}`}
-              data-negative={item.value < 0 ? "true" : "false"}
-              data-loading={state === "loading" ? "true" : "false"}
-              style={{ "--ml-bar-height": `${Math.max(20, (Math.abs(item.value) / max) * 118)}px` }}
-            >
-              <b>{state === "loading" ? <CircleNotch size={12} className="ml-spin" aria-hidden="true" /> : `${item.value > 0 && unit === "%" ? "+" : ""}${item.value}${unit}`}</b>
-              <i />
-              <small>{state === "loading" ? "—" : item.label}</small>
-            </span>
-          ))}
-        </div>
-      )}
-    </figure>
-  );
+export function LedgerBarChart({ values, data, title = "数据分布", unit = "", description, period, source, updatedAt, state = "default", onRetry }) {
+  const rows = data ?? (values?.map((value,index) => ({label:String(index+1),value})) ?? []);
+  const invalid = !validSeries(rows);
+  const bars = barGeometry(rows);
+  const ready = !invalid && bars.length > 0 && !["empty","loading","error"].includes(state);
+  return <figure className="ml-bar-chart" data-state={state} aria-busy={state === "loading" || undefined}>
+    <figcaption>{title}<small>{[description,period,source,updatedAt].filter(Boolean).join(" · ")}</small></figcaption>
+    {!ready ? <Message state={state} invalid={invalid} onRetry={onRetry}/> : <div className="ml-signed-bars">{bars.map((item,index) => <button type="button" key={index} disabled={state === "disabled"} aria-label={item.label + "：" + item.value + unit}>
+      <b>{item.value}{unit}</b><span className="ml-signed-track"><i style={{top:item.top+"%",height:item.height+"%"}} data-negative={item.value < 0}/><hr style={{top:item.baseline+"%"}}/></span><small>{item.label}</small>
+    </button>)}</div>}
+  </figure>;
 }

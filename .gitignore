@@ -21,3 +21,9 @@ artifacts-*.log
 
 .DS_Store
 Thumbs.db
+
+*.tgz
+playwright-report/
+test-results/
+
+.local-cache/

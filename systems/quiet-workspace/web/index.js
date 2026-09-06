@@ -15,3 +15,11 @@ export { QuietQuotaPill } from "./QuotaPill.jsx";
 export { QuietTaskLight } from "./TaskLight.jsx";
 export { QuietWorkspacePreview } from "./WorkspacePreview.jsx";
 export { quietInteractionStates } from "./state.js";
+export * from "./Inputs.jsx";
+export * from "./Navigation.jsx";
+export * from "./DataTable.jsx";
+export * from "./Overlays.jsx";
+export * from "./FeedbackControls.jsx";
+
+export { QuietFileUpload } from "./FileUpload.jsx";
+export { QuietTree } from "./Tree.jsx";

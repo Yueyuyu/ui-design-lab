@@ -1,0 +1,17 @@
+[data-ui-system="clearline-console"] {
+  --cc-canvas: #f3f5f8;
+  --cc-surface: #ffffff;
+  --cc-text: #18243b;
+  --cc-muted: #5e6b80;
+  --cc-brand: #2457d6;
+  --cc-border: #d7dee8;
+  --cc-negative: #a32d3b;
+  --cc-radius: 6px;
+  --cc-font: "Segoe UI", "Microsoft YaHei UI", sans-serif;
+  --cc-heading: "Segoe UI", "Microsoft YaHei UI", sans-serif;
+  --cc-space: 16px;
+  --cc-control: 40px;
+  --cc-row: 48px;
+  --cc-duration: 120ms;
+  color:var(--cc-text);font-family:var(--cc-font);
+}

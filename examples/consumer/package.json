@@ -1,0 +1,23 @@
+{
+  "name": "ui-design-lab-starter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5174 --strictPort",
+    "build": "vite build",
+    "test:types": "tsc --noEmit --strict --skipLibCheck --jsx react-jsx --module nodenext --target es2022 src/typecheck.tsx"
+  },
+  "dependencies": {
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "ui-design-lab": "file:../../ui-design-lab-1.0.0-beta.1.tgz"
+  },
+  "devDependencies": {
+    "vite": "6.4.2",
+    "@vitejs/plugin-react": "5.0.4",
+    "typescript": "^5.9.3",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0"
+  }
+}

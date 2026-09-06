@@ -1,0 +1,174 @@
+{
+  "$schema": "../../schemas/suite.schema.json",
+  "id": "signal-studio",
+  "order": 4,
+  "displayName": "Signal Studio",
+  "localizedName": "信号创作间",
+  "shortCode": "SS",
+  "prefix": "ss",
+  "componentPrefix": "Signal",
+  "version": "0.1.0",
+  "status": "experimental",
+  "description": "衬线标题与紫色内容画布，适合素材、编辑与品牌内容工作台。",
+  "styleLabel": "Editorial Content Studio",
+  "platforms": [
+    "web",
+    "desktop"
+  ],
+  "modes": [
+    "light"
+  ],
+  "densities": [
+    "comfortable",
+    "compact"
+  ],
+  "tags": [
+    "content",
+    "editorial",
+    "assets",
+    "creative"
+  ],
+  "swatches": [
+    "#f7f3ea",
+    "#6335cf",
+    "#211f26",
+    "#fcfaf6"
+  ],
+  "galleryShell": {
+    "surface": "#f7f3ea",
+    "sidebar": "#fcfaf6",
+    "topbar": "#fcfaf6",
+    "text": "#211f26",
+    "muted": "#67616c",
+    "border": "#d9d1c5",
+    "active": "#f7f3ea",
+    "accent": "#6335cf",
+    "onAccent": "#ffffff"
+  },
+  "referenceImage": "references/signal-studio-source.png",
+  "scope": "[data-ui-system=\"signal-studio\"]",
+  "designDocument": "./DESIGN.md",
+  "tokens": "./foundations/tokens.json",
+  "tokensCss": "./foundations/tokens.css",
+  "tokenBindings": "./foundations/token-bindings.json",
+  "components": "./web/index.js",
+  "showcase": "./showcase/index.jsx",
+  "capabilities": {
+    "foundations": [
+      "color",
+      "typography",
+      "spacing",
+      "shape",
+      "density",
+      "motion"
+    ],
+    "components": [
+      "button",
+      "field",
+      "select",
+      "toggle",
+      "panel",
+      "badge",
+      "bar-chart",
+      "shell",
+      "data-table",
+      "textarea",
+      "checkbox",
+      "radio-group",
+      "combobox",
+      "multi-select",
+      "date-picker",
+      "date-range",
+      "tabs",
+      "breadcrumb",
+      "pagination",
+      "dropdown-menu",
+      "tooltip",
+      "popover",
+      "drawer",
+      "progress",
+      "skeleton",
+      "toast-queue"
+    ],
+    "patterns": [
+      "project-workbench",
+      "task-workflow",
+      "content-board"
+    ],
+    "standards": [
+      "accessibility",
+      "component-states",
+      "icons",
+      "data-visualization",
+      "chinese-copy",
+      "motion"
+    ]
+  },
+  "comparison": {
+    "entry": "./comparison/index.jsx",
+    "scenarios": [
+      "monthly-review",
+      "data-table",
+      "settings-form",
+      "detail-page",
+      "empty-state"
+    ],
+    "modules": [
+      "metrics",
+      "chart",
+      "form",
+      "buttons"
+    ]
+  },
+  "selection": {
+    "suitableFor": [
+      "内容运营与素材管理",
+      "品牌编辑工作台"
+    ],
+    "limitations": [
+      "新增实验套系，API 可能调整",
+      "仅浅色；暂未提供上传与目录树"
+    ],
+    "previewKind": "components",
+    "thumbnail": "references/thumbnails/signal-studio.png"
+  },
+  "themeControls": [
+    {
+      "label": "品牌色",
+      "type": "color",
+      "role": "brand",
+      "token": "--ss-brand",
+      "default": "#6335cf"
+    },
+    {
+      "label": "正文颜色",
+      "type": "color",
+      "role": "text",
+      "token": "--ss-text",
+      "default": "#211f26"
+    },
+    {
+      "label": "面板颜色",
+      "type": "color",
+      "role": "surface",
+      "token": "--ss-surface",
+      "default": "#fcfaf6"
+    },
+    {
+      "label": "圆角",
+      "type": "radius",
+      "token": "--ss-radius",
+      "default": "2px"
+    },
+    {
+      "label": "字体",
+      "type": "font",
+      "token": "--ss-font",
+      "default": "\"Segoe UI\", \"Microsoft YaHei UI\", sans-serif",
+      "options": [
+        "\"Segoe UI\", \"Microsoft YaHei UI\", sans-serif",
+        "system-ui, sans-serif"
+      ]
+    }
+  ]
+}

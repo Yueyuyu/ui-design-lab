@@ -1,0 +1,18 @@
+{
+  "base": {
+    "--cc-canvas": "values.canvas",
+    "--cc-surface": "values.surface",
+    "--cc-text": "values.text",
+    "--cc-muted": "values.muted",
+    "--cc-brand": "values.brand",
+    "--cc-border": "values.border",
+    "--cc-negative": "values.negative",
+    "--cc-radius": "values.radius",
+    "--cc-font": "values.font",
+    "--cc-heading": "values.heading",
+    "--cc-space": "values.space",
+    "--cc-control": "values.control",
+    "--cc-row": "values.row",
+    "--cc-duration": "values.duration"
+  }
+}

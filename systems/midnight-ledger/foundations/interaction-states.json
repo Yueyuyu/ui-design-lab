@@ -1,20 +1,311 @@
 {
   "version": "0.1.0",
-  "requiredStates": ["default", "hover", "pressed", "focus", "disabled", "loading", "error"],
+  "requiredStates": [
+    "default",
+    "hover",
+    "pressed",
+    "focus",
+    "disabled",
+    "loading",
+    "error"
+  ],
   "components": {
-    "button": { "default": "base", "hover": "raised", "pressed": "compressed", "focus": "focus-ring", "disabled": "muted", "loading": "spinner", "error": "negative" },
-    "iconButton": { "default": "base", "hover": "raised", "pressed": "compressed", "focus": "focus-ring", "disabled": "muted", "loading": "spinner", "error": "negative" },
-    "statusBadge": { "default": "semantic", "hover": "brightened", "pressed": "compressed", "focus": "focus-ring", "disabled": "muted", "loading": "pending", "error": "negative" },
-    "input": { "default": "base", "hover": "strong-border", "pressed": "selected", "focus": "focus-ring", "disabled": "muted", "loading": "pending", "error": "negative-border" },
-    "select": { "default": "base", "hover": "strong-border", "pressed": "selected", "focus": "focus-ring", "disabled": "muted", "loading": "pending", "error": "negative-border" },
-    "toggle": { "default": "off", "hover": "raised", "pressed": "compressed", "focus": "focus-ring", "disabled": "muted", "loading": "pending", "error": "negative" },
-    "panel": { "default": "panel", "hover": "raised", "pressed": "selected", "focus": "focus-ring", "disabled": "muted", "loading": "skeleton", "error": "negative-border" },
-    "dialog": { "default": "panel", "hover": "owned-control", "pressed": "owned-control", "focus": "focus-trap", "disabled": "muted", "loading": "pending", "error": "negative-banner" },
-    "table": { "default": "rows", "hover": "row-highlight", "pressed": "row-selected", "focus": "row-focus", "disabled": "row-muted", "loading": "skeleton", "error": "inline-retry" },
-    "notification": { "default": "semantic", "hover": "raised", "pressed": "compressed", "focus": "focus-ring", "disabled": "muted", "loading": "pending", "error": "negative" },
-    "emptyState": { "default": "guidance", "hover": "owned-action", "pressed": "owned-action", "focus": "owned-action-focus", "disabled": "muted", "loading": "pending", "error": "retry" },
-    "lineChart": { "default": "line", "hover": "point-tooltip", "pressed": "range-anchor", "focus": "focus-marker", "disabled": "muted", "loading": "skeleton", "error": "plot-message" },
-    "metric": { "default": "value", "hover": "raised", "pressed": "selected", "focus": "focus-ring", "disabled": "muted", "loading": "skeleton", "error": "negative" },
-    "terminalPreview": { "default": "live", "hover": "owned-controls", "pressed": "owned-controls", "focus": "owned-control-focus", "disabled": "muted", "loading": "panel-skeleton", "error": "risk-banner" }
+    "button": {
+      "default": "base",
+      "hover": "raised",
+      "pressed": "compressed",
+      "focus": "focus-ring",
+      "disabled": "muted",
+      "loading": "spinner",
+      "error": "negative"
+    },
+    "iconButton": {
+      "default": "base",
+      "hover": "raised",
+      "pressed": "compressed",
+      "focus": "focus-ring",
+      "disabled": "muted",
+      "loading": "spinner",
+      "error": "negative"
+    },
+    "statusBadge": {
+      "default": "semantic",
+      "hover": "brightened",
+      "pressed": "compressed",
+      "focus": "focus-ring",
+      "disabled": "muted",
+      "loading": "pending",
+      "error": "negative"
+    },
+    "input": {
+      "default": "base",
+      "hover": "strong-border",
+      "pressed": "selected",
+      "focus": "focus-ring",
+      "disabled": "muted",
+      "loading": "pending",
+      "error": "negative-border"
+    },
+    "select": {
+      "default": "base",
+      "hover": "strong-border",
+      "pressed": "selected",
+      "focus": "focus-ring",
+      "disabled": "muted",
+      "loading": "pending",
+      "error": "negative-border"
+    },
+    "toggle": {
+      "default": "off",
+      "hover": "raised",
+      "pressed": "compressed",
+      "focus": "focus-ring",
+      "disabled": "muted",
+      "loading": "pending",
+      "error": "negative"
+    },
+    "panel": {
+      "default": "panel",
+      "hover": "raised",
+      "pressed": "selected",
+      "focus": "focus-ring",
+      "disabled": "muted",
+      "loading": "skeleton",
+      "error": "negative-border"
+    },
+    "dialog": {
+      "default": "panel",
+      "hover": "owned-control",
+      "pressed": "owned-control",
+      "focus": "原生模态层中聚焦关闭按钮；Tab 与 Shift+Tab 在可用控件间循环；关闭后恢复触发器焦点。",
+      "disabled": "内容与提交区 inert，右上角关闭入口及 Escape 仍可用。",
+      "loading": "保留内容，显示处理进度；内容与提交区 inert，关闭入口可用。",
+      "error": "negative-banner"
+    },
+    "table": {
+      "default": "rows",
+      "hover": "row-highlight",
+      "pressed": "row-selected",
+      "focus": "row-focus",
+      "disabled": "row-muted",
+      "loading": "skeleton",
+      "error": "inline-retry"
+    },
+    "notification": {
+      "default": "semantic",
+      "hover": "raised",
+      "pressed": "compressed",
+      "focus": "focus-ring",
+      "disabled": "muted",
+      "loading": "pending",
+      "error": "negative"
+    },
+    "emptyState": {
+      "default": "guidance",
+      "hover": "owned-action",
+      "pressed": "owned-action",
+      "focus": "owned-action-focus",
+      "disabled": "muted",
+      "loading": "pending",
+      "error": "retry"
+    },
+    "lineChart": {
+      "default": "line",
+      "hover": "point-tooltip",
+      "pressed": "range-anchor",
+      "focus": "focus-marker",
+      "disabled": "muted",
+      "loading": "skeleton",
+      "error": "plot-message"
+    },
+    "metric": {
+      "default": "value",
+      "hover": "raised",
+      "pressed": "selected",
+      "focus": "focus-ring",
+      "disabled": "muted",
+      "loading": "skeleton",
+      "error": "negative"
+    },
+    "terminalPreview": {
+      "default": "live",
+      "hover": "owned-controls",
+      "pressed": "owned-controls",
+      "focus": "owned-control-focus",
+      "disabled": "muted",
+      "loading": "panel-skeleton",
+      "error": "risk-banner"
+    },
+    "shell": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "data-table": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "textarea": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "checkbox": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "radio-group": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "combobox": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "multi-select": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "date-picker": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "date-range": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "tabs": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "breadcrumb": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "pagination": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "dropdown-menu": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "tooltip": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "popover": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "drawer": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "progress": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "skeleton": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "toast-queue": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    }
   }
 }

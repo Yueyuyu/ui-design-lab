@@ -1,0 +1,111 @@
+[data-ui-system="clearline-console"] .cc-control { display:grid; gap:8px; margin:12px 0; padding:0; border:0; min-width:0; }
+[data-ui-system="clearline-console"] .cc-control small { font-size:12px; line-height:1.5; }
+[data-ui-system="clearline-console"] .cc-control input,
+[data-ui-system="clearline-console"] .cc-control select,
+[data-ui-system="clearline-console"] .cc-control textarea,
+[data-ui-system="clearline-console"] .cc-table-toolbar input { background:var(--cc-surface); color:var(--cc-text); border:1px solid var(--cc-border); border-radius:6px; padding:9px 12px; min-width:0; font:inherit; }
+[data-ui-system="clearline-console"] .cc-control textarea { min-height:100px; resize:vertical; }
+[data-ui-system="clearline-console"] .cc-check { display:flex; align-items:center; gap:8px; font-size:13px; }
+[data-ui-system="clearline-console"] .cc-check input { accent-color:var(--cc-brand); }
+[data-ui-system="clearline-console"] .cc-inline,
+[data-ui-system="clearline-console"] .cc-chips,
+[data-ui-system="clearline-console"] .cc-pagination { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+[data-ui-system="clearline-console"] .cc-options { display:grid; gap:10px; max-height:180px; overflow:auto; }
+[data-ui-system="clearline-console"] .cc-shell { display:grid; grid-template-columns:160px minmax(0,1fr); border:1px solid var(--cc-border); border-radius:12px; overflow:hidden; color:var(--cc-text); background:var(--cc-surface); min-height:420px; }
+[data-ui-system="clearline-console"] .cc-shell > aside { padding:20px 12px; background:var(--cc-canvas); border-right:1px solid var(--cc-border); }
+[data-ui-system="clearline-console"] .cc-shell > aside nav { display:grid; gap:8px; margin-top:22px; }
+[data-ui-system="clearline-console"] .cc-shell > aside nav button,
+[data-ui-system="clearline-console"] .cc-data-table button,
+[data-ui-system="clearline-console"] .cc-control button,
+[data-ui-system="clearline-console"] .cc-tabs button,
+[data-ui-system="clearline-console"] .cc-popover-anchor button,
+[data-ui-system="clearline-console"] .cc-drawer button,
+[data-ui-system="clearline-console"] .cc-toasts button { cursor:pointer; font:inherit; font-size:13px; padding:8px 10px; border-radius:6px; background:var(--cc-surface); color:var(--cc-text); border:1px solid var(--cc-border); }
+[data-ui-system="clearline-console"] button:disabled { cursor:not-allowed; opacity:.6; }
+[data-ui-system="clearline-console"] .cc-shell > aside nav button[aria-current],
+[data-ui-system="clearline-console"] .cc-tabs button[aria-selected="true"] { border-color:var(--cc-brand); box-shadow:inset 3px 0 var(--cc-brand); }
+[data-ui-system="clearline-console"] .cc-shell-main { min-width:0; }
+[data-ui-system="clearline-console"] .cc-shell-main>header { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; border-bottom:1px solid var(--cc-border); }
+[data-ui-system="clearline-console"] .cc-shell-main h2 { margin:0; font-size:18px; }
+[data-ui-system="clearline-console"] .cc-shell-main>main { padding:20px; }
+[data-ui-system="clearline-console"] .cc-table-toolbar { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; }
+[data-ui-system="clearline-console"] .cc-table-toolbar details label { display:flex; gap:6px; padding:5px; }
+[data-ui-system="clearline-console"] .cc-data-table { min-width:0; }
+[data-ui-system="clearline-console"] .cc-data-table table { width:100%; border-collapse:collapse; text-align:left; font-size:13px; }
+[data-ui-system="clearline-console"] .cc-data-table th,
+[data-ui-system="clearline-console"] .cc-data-table td { padding:12px 8px; border-bottom:1px solid var(--cc-border); white-space:nowrap; }
+[data-ui-system="clearline-console"] .cc-data-table caption { text-align:left; padding:12px 0; font-weight:600; }
+[data-ui-system="clearline-console"] .cc-table-scroll { overflow-x:auto; margin-bottom:14px; }
+[data-ui-system="clearline-console"] .cc-tabs { display:flex; gap:8px; overflow:auto; margin:16px 0; }
+[data-ui-system="clearline-console"] .cc-breadcrumb ol { display:flex; flex-wrap:wrap; gap:12px; padding:0; list-style:none; }
+[data-ui-system="clearline-console"] .cc-breadcrumb li+li::before { content:"/"; margin-right:12px; }
+[data-ui-system="clearline-console"] .cc-popover-anchor { display:inline-block; position:relative; }
+[data-ui-system="clearline-console"] .cc-popup { z-index:30; position:absolute; inset-block-start:calc(100% + 8px); inset-inline-end:0; width:max-content; max-width:min(280px,80vw); padding:12px; display:grid; gap:8px; color:var(--cc-text); background:var(--cc-surface); border:1px solid var(--cc-border); border-radius:8px; box-shadow:0 8px 30px #0002; }
+[data-ui-system="clearline-console"] .cc-drawer { position:fixed; inset:0 0 0 auto; margin:0; height:100dvh; max-height:100dvh; max-width:100vw; width:440px; border:0; border-left:1px solid var(--cc-border); padding:24px; color:var(--cc-text); background:var(--cc-surface); overflow:auto; }
+[data-ui-system="clearline-console"] .cc-drawer::backdrop { background:#0006; }
+[data-ui-system="clearline-console"] .cc-drawer header { display:flex; justify-content:space-between; align-items:center; }
+[data-ui-system="clearline-console"] .cc-drawer footer { margin-top:24px; }
+[data-ui-system="clearline-console"] .cc-skeleton { display:grid; gap:10px; }
+[data-ui-system="clearline-console"] .cc-skeleton i { height:16px; background:var(--cc-border); border-radius:4px; }
+[data-ui-system="clearline-console"] .cc-toasts { display:grid; gap:8px; padding:0; list-style:none; }
+[data-ui-system="clearline-console"] .cc-toasts li { display:flex; gap:10px; padding:12px; border:1px solid var(--cc-border); border-radius:8px; }
+[data-ui-system="clearline-console"] .cc-signed-bars { display:flex!important; height:auto!important; gap:12px; padding:16px 0; }
+[data-ui-system="clearline-console"] .cc-signed-bars button { flex:1; min-width:0; display:grid; gap:10px; border:0; background:transparent; color:var(--cc-text); font:inherit; font-size:12px; }
+[data-ui-system="clearline-console"] .cc-signed-track { height:128px; display:block; position:relative; }
+[data-ui-system="clearline-console"] .cc-signed-track i { position:absolute; left:15%; width:70%; background:var(--cc-brand); border-radius:3px; }
+[data-ui-system="clearline-console"] .cc-signed-track i[data-negative="true"] { background:var(--cc-negative); }
+[data-ui-system="clearline-console"] .cc-signed-track hr { position:absolute; width:100%; margin:0; border:0; border-top:1px solid var(--cc-border); }
+[data-ui-system="clearline-console"] .cc-chart-summary { font-size:12px; }
+@media(max-width:680px) { [data-ui-system="clearline-console"] .cc-shell { grid-template-columns:1fr; } [data-ui-system="clearline-console"] .cc-shell > aside { border-right:0; padding:12px; } [data-ui-system="clearline-console"] .cc-shell > aside nav { display:flex; flex-wrap:wrap; margin-top:12px; } [data-ui-system="clearline-console"] .cc-shell-main>main { padding:12px; } }
+@media(prefers-reduced-motion:reduce) { [data-ui-system="clearline-console"] .cc-skeleton i { animation:none; } }
+
+[data-ui-system="clearline-console"] .cc-button {display:inline-flex;align-items:center;gap:8px;background:var(--cc-brand);color:white;border:1px solid transparent;border-radius:var(--cc-radius);padding:10px 16px;font:inherit;font-size:14px;cursor:pointer;}
+[data-ui-system="clearline-console"] .cc-button--secondary, [data-ui-system="clearline-console"] .cc-button--ghost {background:transparent;color:var(--cc-text);border-color:var(--cc-border);}
+[data-ui-system="clearline-console"] .cc-button--danger {background:var(--cc-negative);}
+[data-ui-system="clearline-console"] button:hover:not(:disabled){filter:brightness(.95);}
+[data-ui-system="clearline-console"] button:active:not(:disabled){transform:translateY(1px);}
+[data-ui-system="clearline-console"] :is(button,input,select,textarea,a,summary):focus-visible {outline:3px solid var(--cc-brand);outline-offset:3px;}
+[data-ui-system="clearline-console"] .cc-panel {padding:var(--cc-space);background:var(--cc-surface);border-block:1px solid var(--cc-border);margin:16px 0;}
+[data-ui-system="clearline-console"] .cc-panel>header {display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+[data-ui-system="clearline-console"] h3 {margin:0;font:600 20px var(--cc-heading);}
+[data-ui-system="clearline-console"] .cc-badge {display:inline-flex;border:1px solid var(--cc-border);border-radius:var(--cc-radius);padding:3px 7px;font-size:12px;}
+[data-ui-system="clearline-console"] .cc-check small {display:block;}
+[data-ui-system="clearline-console"][data-density="compact"] .cc-data-table td {padding:8px;}
+[data-ui-system="clearline-console"][data-density="compact"] .cc-control input {padding:6px 10px;}
+
+[data-ui-system="clearline-console"] .cc-shell {grid-template-columns:200px minmax(0,1fr);border:0;border-radius:0;}
+[data-ui-system="clearline-console"] .cc-shell-main>header {border-bottom:0;padding:28px;}
+[data-ui-system="clearline-console"] .cc-shell-main>header h2 {font-size:30px;}
+[data-ui-system="clearline-console"] .cc-shell-main>main {padding:0 28px 28px;}
+[data-ui-system="clearline-console"] .cc-panel {border:0;padding:0;background:transparent;}
+
+@media(max-width:680px){[data-ui-system="clearline-console"] .cc-shell{grid-template-columns:1fr;}[data-ui-system="clearline-console"] .cc-shell > aside{flex-wrap:wrap;} }
+[data-ui-system="clearline-console"] .cc-project-grid { display:grid; grid-template-columns:minmax(0,1fr) 280px;gap:24px; }
+[data-ui-system="clearline-console"] .cc-project-detail { padding:20px;border:1px solid var(--cc-border);background:var(--cc-surface); }
+[data-ui-system="clearline-console"] .cc-project-detail>header { display:flex;align-items:center;gap:8px; }
+[data-ui-system="clearline-console"] .cc-project-detail dl {display:grid;grid-template-columns:85px 1fr;gap:18px;font-size:13px;}
+[data-ui-system="clearline-console"] .cc-project-detail dd {margin:0;overflow-wrap:anywhere;}
+@media(max-width:1000px){[data-ui-system="clearline-console"] .cc-project-grid{grid-template-columns:1fr;}}
+
+[data-ui-system="clearline-console"] .cc-data-table th button {border:0;background:transparent;padding:4px 0;box-shadow:none;}
+[data-ui-system="clearline-console"] .cc-pagination {display:flex;gap:10px;margin:0;}
+
+/* 项目目录保留平直导航与紧凑详情，窄容器下详情移至下一行。 */
+[data-ui-system="clearline-console"] .cc-shell{container-type:inline-size;}
+[data-ui-system="clearline-console"] .cc-shell>aside nav button{background:transparent;border:0;border-radius:0;text-align:left;padding:12px 14px;font-size:14px;}
+[data-ui-system="clearline-console"] .cc-shell>aside nav button[aria-current="page"]{color:var(--cc-brand);background:color-mix(in srgb,var(--cc-brand) 8%,transparent);}
+[data-ui-system="clearline-console"] .cc-project-detail>header h3{flex:1;min-width:0;font-size:18px;line-height:1.4;}
+[data-ui-system="clearline-console"] .cc-project-detail>header button{flex:none;padding:6px;}
+[data-ui-system="clearline-console"] .cc-project-detail .cc-tabs{margin:16px -20px;border-bottom:1px solid var(--cc-border);padding:0 20px;}
+[data-ui-system="clearline-console"] .cc-project-detail .cc-tabs button{border:0;box-shadow:none;border-radius:0;background:transparent;}
+[data-ui-system="clearline-console"] .cc-project-detail .cc-tabs button[aria-selected="true"]{color:var(--cc-brand);border-bottom:2px solid var(--cc-brand);}
+[data-ui-system="clearline-console"] button.cc-project-link{border:0;background:none;padding:0;color:var(--cc-brand);text-align:left;}
+[data-ui-system="clearline-console"] .cc-project-status:before{content:"";display:inline-block;width:7px;height:7px;background:var(--cc-brand);border-radius:50%;margin-right:7px;}
+[data-ui-system="clearline-console"] .cc-project-status[data-status="On track"]:before{background:#168047;}
+[data-ui-system="clearline-console"] .cc-project-status[data-status="At risk"]:before{background:#ac7200;}
+@container(max-width:1000px){[data-ui-system="clearline-console"] .cc-project-grid{grid-template-columns:1fr;}[data-ui-system="clearline-console"] .cc-project-detail{max-width:none;}}
+
+[data-ui-system="clearline-console"] .cc-shell>aside nav button{display:flex;align-items:center;gap:12px;}
+[data-ui-system="clearline-console"] .cc-data-table tr[data-selected="true"]{background:color-mix(in srgb,var(--cc-brand) 7%,var(--cc-surface));}
+
+[data-ui-system="clearline-console"] .cc-control progress{accent-color:var(--cc-brand);max-width:100%;}

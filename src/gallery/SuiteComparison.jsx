@@ -1,5 +1,10 @@
+import { recordEvent } from "./telemetry.js";
+import {suiteApiContext} from "./ai-context.js";
+import { ComparisonPersistence } from "./comparison/ComparisonPersistence.jsx";
 import { Info } from "@phosphor-icons/react";
-import { useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { AdapterProvider } from "./comparison/AdapterProvider.jsx";
+import { copyText } from "./copyText.js";
 import { suites } from "../registry/suites.js";
 import { ComparisonControls } from "./comparison/ComparisonControls.jsx";
 import { ModuleBreakdown } from "./comparison/ModuleBreakdown.jsx";
@@ -20,6 +25,26 @@ export function SuiteComparison({ onNotify, onOpenSuite }) {
   const [highlightDifferences, setHighlightDifferences] = useState(false);
   const [formName, setFormName] = useState("八月增长复盘");
   const [settings, setSettings] = useState({ owner: "林简", email: "review@example.com", autoSave: true, notify: true });
+  const scrollPosition = useRef(null);
+  const canvasRef = useRef(null);
+  const scrollTailRef = useRef(null);
+  const changeSlot = (slot) => {
+    scrollPosition.current = { x: window.scrollX, y: window.scrollY, canvas: canvasRef.current?.scrollTop ?? 0 };
+    setActiveSlot(slot);
+  };
+  useLayoutEffect(() => {
+    if (!scrollPosition.current) return;
+    // 短套系会缩小 document 的最大滚动位置。只补齐视口所需的底部余量，组件保持自身高度。
+    const tail = scrollTailRef.current;
+    const naturalHeight = document.documentElement.scrollHeight - (tail?.offsetHeight ?? 0);
+    if (tail) tail.style.height = Math.max(0, scrollPosition.current.y + window.innerHeight - naturalHeight) + "px";
+    window.scrollTo({ left: scrollPosition.current.x, top: scrollPosition.current.y, behavior: "instant" });
+    if (canvasRef.current) canvasRef.current.scrollTop = scrollPosition.current.canvas;
+    scrollPosition.current = null;
+  }, [activeSlot]);
+  useLayoutEffect(() => {
+    if (scrollTailRef.current) scrollTailRef.current.style.height = "0px";
+  }, [scenarioId, density, viewport]);
 
   const suiteA = suites.find((suite) => suite.id === suiteAId) ?? suites[0];
   const suiteB = suites.find((suite) => suite.id === suiteBId) ?? suites[1] ?? suites[0];
@@ -32,9 +57,14 @@ export function SuiteComparison({ onNotify, onOpenSuite }) {
     density,
     viewport,
     formName,
-  }), [activeSuite, density, formName, scenario, viewport, visualState]);
+    settings,
+  })+"\n"+suiteApiContext(activeSuite), [activeSuite, density, formName, settings, scenario, viewport, visualState]);
 
   const notify = (message) => onNotify?.(message);
+  const copyInstruction = async () => {
+    try { await copyText(prompt); recordEvent("instruction_copy"); notify("当前场景指令已复制"); }
+    catch { notify("复制失败，请手动选择右侧指令"); }
+  };
   const updateSettings = (key, value) => setSettings((current) => ({ ...current, [key]: value }));
 
   if (!suiteA || !suiteB || !activeSuite) {
@@ -42,10 +72,12 @@ export function SuiteComparison({ onNotify, onOpenSuite }) {
   }
 
   return (
-    <main className="suite-comparison">
+    <AdapterProvider suiteA={suiteA} suiteB={suiteB}><main className="suite-comparison">
       <SceneNavigation activeScenarioId={scenarioId} onSelect={setScenarioId} />
 
+
       <section className="comparison-workbench">
+<ComparisonPersistence snapshot={{schemaVersion:1,suiteAId,suiteBId,versions:{[suiteAId]:suiteA.version,[suiteBId]:suiteB.version},activeSlot,scenarioId,viewport,density,visualState,formName,settings}} onNotify={onNotify} onRestore={v=>{setSuiteAId(v.suiteAId);setSuiteBId(v.suiteBId);setActiveSlot(v.activeSlot);setScenarioId(v.scenarioId);setViewport(v.viewport);setDensity(v.density);setVisualState(v.visualState);setFormName(v.formName);setSettings(v.settings);}}/>
         <ComparisonControls
           suites={suites}
           suiteAId={suiteAId}
@@ -63,13 +95,13 @@ export function SuiteComparison({ onNotify, onOpenSuite }) {
 
         <div className="comparison-active-switcher">
           <div role="tablist" aria-label="当前画布套系">
-            <button type="button" role="tab" aria-selected={activeSlot === "a"} data-active={activeSlot === "a" ? "true" : "false"} onClick={() => setActiveSlot("a")}>{suiteA.displayName}</button>
-            <button type="button" role="tab" aria-selected={activeSlot === "b"} data-active={activeSlot === "b" ? "true" : "false"} onClick={() => setActiveSlot("b")}>{suiteB.displayName}</button>
+            <button type="button" role="tab" aria-selected={activeSlot === "a"} data-active={activeSlot === "a" ? "true" : "false"} onClick={() => changeSlot("a")}>{suiteA.displayName}</button>
+            <button type="button" role="tab" aria-selected={activeSlot === "b"} data-active={activeSlot === "b" ? "true" : "false"} onClick={() => changeSlot("b")}>{suiteB.displayName}</button>
           </div>
           <p><span>数据、表单值和滚动位置保持不变</span><Info size={15} aria-hidden="true" /></p>
         </div>
 
-        <section className="comparison-canvas" aria-live="polite">
+        <section ref={canvasRef} className="comparison-canvas" aria-live="polite">
           <SuiteSceneRenderer
             suite={activeSuite}
             scenario={scenario}
@@ -81,6 +113,8 @@ export function SuiteComparison({ onNotify, onOpenSuite }) {
             onFormNameChange={setFormName}
             onSettingsChange={updateSettings}
             onNotify={notify}
+            onCopy={copyInstruction}
+            onRetry={() => { setVisualState("default"); if (scenarioId === "empty-state") setScenarioId("monthly-review"); }}
           />
         </section>
 
@@ -96,6 +130,8 @@ export function SuiteComparison({ onNotify, onOpenSuite }) {
           onFormNameChange={setFormName}
           onHighlightChange={setHighlightDifferences}
           onNotify={notify}
+          onCopy={copyInstruction}
+          onRetry={() => setVisualState("default")}
         />
       </section>
 
@@ -108,6 +144,6 @@ export function SuiteComparison({ onNotify, onOpenSuite }) {
         onNotify={notify}
         onEnterSuite={(suiteId) => onOpenSuite?.(suiteId)}
       />
-    </main>
+    </main><div ref={scrollTailRef} aria-hidden="true" /></AdapterProvider>
   );
 }

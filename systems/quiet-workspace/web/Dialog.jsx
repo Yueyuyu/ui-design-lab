@@ -1,109 +1,39 @@
 import { CircleNotch, WarningCircle, X } from "@phosphor-icons/react";
-import { useEffect, useId, useRef } from "react";
-import { QuietIconButton } from "./primitives.jsx";
-import { resolveComponentState } from "./state.js";
+import { useId } from "react";
+import { createPortal } from "react-dom";
+import { useModalLifecycle } from "./useModalLifecycle.js";
 
 export function QuietDialog({
-  open,
-  onOpenChange,
-  title,
-  description,
-  children,
-  actions,
-  loading = false,
-  error,
-  disabled = false,
-  visualState,
+  open, onOpenChange, title, description, children, actions,
+  loading = false, error, disabled = false, visualState,
 }) {
   const titleId = useId();
   const descriptionId = useId();
-  const closeButtonRef = useRef(null);
-  const dialogRef = useRef(null);
-  const returnFocusRef = useRef(null);
-  const state = resolveComponentState({ visualState, loading, error, disabled });
-
-  useEffect(() => {
-    if (!open) return undefined;
-
-    returnFocusRef.current = document.activeElement;
-    const previousBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const frame = window.requestAnimationFrame(() => closeButtonRef.current?.querySelector("button")?.focus());
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") onOpenChange?.(false);
-      if (event.key === "Tab") {
-        const focusable = [...dialogRef.current?.querySelectorAll(
-          'button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])',
-        ) || []];
-        const first = focusable[0];
-        const last = focusable.at(-1);
-        if (event.shiftKey && document.activeElement === first) {
-          event.preventDefault();
-          last?.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-          event.preventDefault();
-          first?.focus();
-        }
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = previousBodyOverflow;
-      returnFocusRef.current?.focus?.();
-    };
-  }, [open, onOpenChange]);
-
-  if (!open) return null;
-
-  return (
-    <div
-      className="qw-dialog-layer"
-      role="presentation"
-      onMouseDown={(event) => {
-        if (event.target === event.currentTarget) onOpenChange?.(false);
-      }}
-    >
-      <section
-        ref={dialogRef}
-        className="qw-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        aria-describedby={description ? descriptionId : undefined}
-        aria-busy={loading || undefined}
-        aria-disabled={disabled || undefined}
-        data-state={state}
-        data-visual-state={visualState}
-      >
-        <header className="qw-dialog__header">
-          <span>
-            <h2 id={titleId}>{title}</h2>
-            {description ? <p id={descriptionId}>{description}</p> : null}
-          </span>
-          <span ref={closeButtonRef}>
-            <QuietIconButton icon={X} label="关闭对话框" onClick={() => onOpenChange?.(false)} />
-          </span>
-        </header>
-        <div className="qw-dialog__body">
-          {loading ? (
-            <div className="qw-dialog__status" role="status">
-              <CircleNotch className="qw-spin" size={18} aria-hidden="true" />
-              正在处理，请稍候…
+  const { anchorRef, dialogRef, scopeRef, close } = useModalLifecycle(open, onOpenChange);
+  const state = visualState ?? (error ? "error" : loading ? "loading" : disabled ? "disabled" : "default");
+  return <>
+    <span ref={anchorRef} hidden />
+    {open && typeof document !== "undefined" ? createPortal(
+      <div ref={scopeRef} data-ui-system="quiet-workspace" style={{ display: "contents" }}>
+        <dialog ref={dialogRef} className="qw-dialog-layer"
+          aria-labelledby={titleId} aria-describedby={description ? descriptionId : undefined}
+          aria-busy={loading || undefined} tabIndex={-1}
+          onCancel={(event) => { event.preventDefault(); close(); }}
+          onClick={(event) => { if (event.target === event.currentTarget) close(); }}>
+          <section className="qw-dialog" data-state={state} data-visual-state={visualState}>
+            <header className="qw-dialog__header">
+              <span><h2 id={titleId}>{title}</h2>{description ? <p id={descriptionId}>{description}</p> : null}</span>
+              <button type="button" className="qw-icon-button" aria-label="关闭对话框" onClick={close}><X size={17} aria-hidden="true" /></button>
+            </header>
+            <div className="qw-dialog__body">
+              {loading ? <div className="qw-dialog__status" role="status"><CircleNotch size={18} className="qw-spin" aria-hidden="true" />正在处理，请稍候…</div> : null}
+              {error ? <div className="qw-dialog__status qw-dialog__status--error" role="alert"><WarningCircle size={18} aria-hidden="true" />{typeof error === "string" ? error : "处理失败，请检查后重试。"}</div> : null}
+              <div inert={disabled || loading ? true : undefined}>{children}</div>
             </div>
-          ) : null}
-          {error ? (
-            <div className="qw-dialog__status qw-dialog__status--error" role="alert">
-              <WarningCircle size={18} weight="bold" aria-hidden="true" />
-              {error}
-            </div>
-          ) : null}
-          {children}
-        </div>
-        {actions ? <footer className="qw-dialog__footer">{actions}</footer> : null}
-      </section>
-    </div>
-  );
+            {actions ? <footer className="qw-dialog__footer"><div inert={disabled || loading ? true : undefined}>{actions}</div></footer> : null}
+          </section>
+        </dialog>
+      </div>, document.body,
+    ) : null}
+  </>;
 }

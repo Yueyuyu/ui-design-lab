@@ -1,0 +1,3 @@
+import {useState} from "react";
+import {WorkflowDemo} from "./WorkflowDemo.jsx";
+export function WorkflowGallery(props) { const [kind,setKind]=useState(()=>{const value=new URLSearchParams(location.hash.split("?")[1]).get("kit");return ["tasks","research","reports"].includes(value)?value:"tasks";});return <section><h1>完整场景工作台</h1><p>用真实交互检查连续页面、错误恢复与数据一致性。</p><label>场景包 <select value={kind} onChange={e=>setKind(e.target.value)}><option value="tasks">任务与用量</option><option value="research">研究与内容</option><option value="reports">运营分析与报表</option></select></label><WorkflowDemo key={kind} {...props} kind={kind}/></section>; }

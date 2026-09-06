@@ -1,0 +1,17 @@
+[data-ui-system="signal-studio"] {
+  --ss-canvas: #f7f3ea;
+  --ss-surface: #fcfaf6;
+  --ss-text: #211f26;
+  --ss-muted: #67616c;
+  --ss-brand: #6335cf;
+  --ss-border: #d9d1c5;
+  --ss-negative: #9d3248;
+  --ss-radius: 2px;
+  --ss-font: "Segoe UI", "Microsoft YaHei UI", sans-serif;
+  --ss-heading: Georgia, "Microsoft YaHei UI", serif;
+  --ss-space: 16px;
+  --ss-control: 40px;
+  --ss-row: 48px;
+  --ss-duration: 120ms;
+  color:var(--ss-text);font-family:var(--ss-font);
+}

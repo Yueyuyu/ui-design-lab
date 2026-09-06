@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, ChartBar, ChartLine, CheckCircle, Compass, Fire, Gauge, Money, Moon, Percent, Play, Rows, SignOut, Stop, Sun } from "@phosphor-icons/react";
+import { ArrowDown, ArrowUp, ChartBar, ChartLine, CheckCircle, Compass, Fire, Money, Moon, Percent, Play, Rows, SignOut, Stop, Sun } from "@phosphor-icons/react";
 import { useState } from "react";
 import { LedgerBarChart, LedgerLineChart } from "./Chart.jsx";
 import { LedgerButton, LedgerMetric, LedgerPanel, LedgerStatusBadge } from "./primitives.jsx";
@@ -23,7 +23,7 @@ function AssetPanel({ onNotify }) {
 
 function PerformancePanel() {
   const [period, setPeriod] = useState("30D");
-  return <LedgerPanel className="ml-terminal__performance"><div className="ml-terminal__metrics"><LedgerMetric label="累计收益率" value="+31.8%" tone="positive" /><LedgerMetric label="年化收益率" value="+59.1%" tone="positive" /><LedgerMetric label="最大回撤" value="-4.3%" tone="negative" /><LedgerMetric label="运行天数" value="217" /></div><div className="ml-terminal__periods" aria-label="收益周期">{["7D", "30D", "全部"].map((item) => <button type="button" key={item} data-active={period === item ? "true" : "false"} onClick={() => setPeriod(item)}>{item}</button>)}</div><LedgerLineChart title="累计收益率" value="+18.6%" /></LedgerPanel>;
+  return <LedgerPanel className="ml-terminal__performance"><div className="ml-terminal__metrics"><LedgerMetric label="累计收益率" value="+31.8%" tone="positive" /><LedgerMetric label="年化收益率" value="+59.1%" tone="positive" /><LedgerMetric label="最大回撤" value="-4.3%" tone="negative" /><LedgerMetric label="运行天数" value="217" /></div><div className="ml-terminal__periods" aria-label="收益周期">{["7D", "30D", "全部"].map((item) => <button type="button" key={item} data-active={period === item ? "true" : "false"} onClick={() => setPeriod(item)}>{item}</button>)}</div><LedgerLineChart title="累计收益率" data={period === "7D" ? [8,12,18.6] : period === "30D" ? [4,8,12,18.6] : [0,4,8,12,18.6]} unit="%" period={period} description="演示数据" /></LedgerPanel>;
 }
 
 function CalendarPanel() {
@@ -61,5 +61,5 @@ export function LedgerTerminalPreview({ mode = "overview", onNotify }) {
   const [dark, setDark] = useState(true);
   if (mode === "compact") return <CompactConsole onNotify={onNotify} />;
   if (mode === "cockpit") return <CockpitPreview onNotify={onNotify} />;
-  return <section className="ml-terminal-preview"><header className="ml-terminal__topbar"><span><strong>TradeGenius</strong><small>早安 · 2026年8月31日 星期一</small><LedgerStatusBadge>演示数据</LedgerStatusBadge></span><span><button type="button" className="ml-terminal__theme" aria-label="切换展示明暗" onClick={() => setDark(!dark)}>{dark ? <Moon size={17} weight="fill" /> : <Sun size={17} />}</button><LedgerStatusBadge tone="positive">市场情绪 · 美 68</LedgerStatusBadge></span></header><div className="ml-terminal-grid"><AssetPanel onNotify={onNotify} /><PerformancePanel /><HoldingsPanel /><CalendarPanel /><ExposurePanel /><StrategyPanel /><LedgerPanel className="ml-terminal__bars"><LedgerBarChart /></LedgerPanel></div></section>;
+  return <section className="ml-terminal-preview"><header className="ml-terminal__topbar"><span><strong>TradeGenius</strong><small>早安 · 2026年8月31日 星期一</small><LedgerStatusBadge>演示数据</LedgerStatusBadge></span><span><button type="button" className="ml-terminal__theme" aria-label="切换展示明暗" onClick={() => setDark(!dark)}>{dark ? <Moon size={17} weight="fill" /> : <Sun size={17} />}</button><LedgerStatusBadge tone="positive">市场情绪 · 美 68</LedgerStatusBadge></span></header><div className="ml-terminal-grid"><AssetPanel onNotify={onNotify} /><PerformancePanel /><HoldingsPanel /><CalendarPanel /><ExposurePanel /><StrategyPanel /><LedgerPanel className="ml-terminal__bars"><LedgerBarChart title="月度收益（演示）" values={[3.2,-1.4,6.8,4.5,7.5,7.1]} unit="%" /></LedgerPanel></div></section>;
 }

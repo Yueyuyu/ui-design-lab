@@ -1,16 +1,37 @@
 {
   "name": "ui-design-lab",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.1",
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./systems/index.js",
-    "./quiet-workspace": "./systems/quiet-workspace/web/index.js",
+    ".": {
+      "types": "./dist/package/index.d.ts",
+      "import": "./dist/package/index.js"
+    },
+    "./clearline-console": {
+      "types": "./systems/clearline-console/web/index.d.ts",
+      "import": "./dist/package/clearline-console.js"
+    },
+    "./clearline-console/tokens.css": "./systems/clearline-console/foundations/tokens.css",
+    "./clearline-console/components.css": "./systems/clearline-console/web/components.css",
+    "./midnight-ledger": {
+      "types": "./systems/midnight-ledger/web/index.d.ts",
+      "import": "./dist/package/midnight-ledger.js"
+    },
+    "./midnight-ledger/tokens.css": "./systems/midnight-ledger/foundations/tokens.css",
+    "./midnight-ledger/components.css": "./systems/midnight-ledger/web/components.css",
+    "./quiet-workspace": {
+      "types": "./systems/quiet-workspace/web/index.d.ts",
+      "import": "./dist/package/quiet-workspace.js"
+    },
     "./quiet-workspace/tokens.css": "./systems/quiet-workspace/foundations/tokens.css",
     "./quiet-workspace/components.css": "./systems/quiet-workspace/web/components.css",
-    "./midnight-ledger": "./systems/midnight-ledger/web/index.js",
-    "./midnight-ledger/tokens.css": "./systems/midnight-ledger/foundations/tokens.css",
-    "./midnight-ledger/components.css": "./systems/midnight-ledger/web/components.css"
+    "./signal-studio": {
+      "types": "./systems/signal-studio/web/index.d.ts",
+      "import": "./dist/package/signal-studio.js"
+    },
+    "./signal-studio/tokens.css": "./systems/signal-studio/foundations/tokens.css",
+    "./signal-studio/components.css": "./systems/signal-studio/web/components.css"
   },
   "scripts": {
     "dev": "vite",
@@ -21,14 +42,54 @@
     "suite:design": "node scripts/generate-design-md.mjs",
     "suite:check": "node scripts/validate-suites.mjs",
     "test:tokens": "npm run suite:check",
-    "check": "npm run suite:check && npm run build",
-    "test:sites": "node --test tests/sites-worker.test.mjs"
+    "check": "npm run suite:check && npm test && npm run build:package && npm run test:types && npm run build",
+    "test:sites": "node --test tests/sites-worker.test.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:e2e": "playwright test",
+    "test:types": "tsc -p tests/types/tsconfig.json",
+    "build:package": "node scripts/build-package.mjs",
+    "prepack": "npm run build:package",
+    "example:build": "vite build --config examples/consumer/vite.config.mjs",
+    "test:consumer": "npm run build:package && node scripts/verify-consumer.mjs",
+    "covers": "node scripts/capture-covers.mjs",
+    "release:prepare": "npm run check && npm run test:sites && node scripts/prepare-beta.mjs",
+    "test:compat": "playwright test --project=firefox --project=webkit",
+    "test:beta": "node scripts/verify-beta.mjs"
   },
   "dependencies": {
-    "@phosphor-icons/react": "^2.1.10",
+    "@phosphor-icons/react": "^2.1.10"
+  },
+  "description": "独立套系、可验证交互与可复用组件的 UI 设计系统实验室",
+  "license": "MIT",
+  "files": [
+    "dist/package",
+    "systems/*/web/**",
+    "systems/*/foundations/**",
+    "systems/*/standards/**",
+    "systems/*/DESIGN.md",
+    "systems/*/suite.json",
+    "systems/*/API.md",
+    "NOTICE.md",
+    "LICENSE",
+    "QUICKSTART.md",
+    "COMPATIBILITY.md",
+    "systems/*/assets/*.webp"
+  ],
+  "peerDependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
     "@vitejs/plugin-react": "5.0.4",
+    "vite": "6.4.2",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "vite": "6.4.2"
+    "@babel/parser": "7.29.7",
+    "postcss": "8.5.16",
+    "ajv": "8.17.1",
+    "@playwright/test": "1.62.1",
+    "typescript": "^5.9.3",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0"
   }
 }

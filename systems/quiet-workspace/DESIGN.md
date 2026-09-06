@@ -1,5 +1,5 @@
 ---
-version: alpha
+version: 0.3.0
 name: Quiet Workspace
 description: "A light-first, Windows-friendly editorial utility system for long-running desktop work. Warm paper surfaces, restrained sage accents, compact state tools, and explicit information hierarchy keep dense research and monitoring interfaces calm without becoming vague."
 colors:

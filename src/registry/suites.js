@@ -4,12 +4,15 @@ const manifestModules = import.meta.glob("../../systems/*/suite.json", {
 });
 
 const showcaseLoaders = import.meta.glob("../../systems/*/showcase/index.jsx");
+const coverLoaders = import.meta.glob("../../systems/*/cover/index.jsx");
+const comparisonLoaders = import.meta.glob("../../systems/*/comparison/index.jsx");
 
 const referenceImages = import.meta.glob("../../references/*-source.png", {
   eager: true,
   query: "?url",
   import: "default"
 });
+const thumbnails = import.meta.glob("../../references/thumbnails/*.{webp,png}", { eager: true, query: "?url", import: "default" });
 
 function resolveSuiteId(path) {
   return path.match(/systems\/([^/]+)\/suite\.json$/)?.[1];
@@ -33,7 +36,10 @@ export const suites = Object.entries(manifestModules)
       ...manifest,
       id,
       referenceImageUrl: resolveReferenceImage(manifest.referenceImage),
-      loadShowcase: showcaseLoaders[showcasePath]
+      thumbnailUrl: thumbnails[`../../${manifest.selection?.thumbnail}`] ?? null,
+      loadShowcase: showcaseLoaders[showcasePath],
+      loadCover: coverLoaders["../../systems/"+id+"/cover/index.jsx"],
+      loadComparison: manifest.comparison ? comparisonLoaders[`../../systems/${id}/comparison/index.jsx`] : null
     };
   })
   .sort((left, right) => left.order - right.order || left.displayName.localeCompare(right.displayName));

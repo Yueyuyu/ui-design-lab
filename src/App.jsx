@@ -1,3 +1,5 @@
+import {SuiteCover} from "./gallery/SuiteCover.jsx";
+import {recordEvent} from "./gallery/telemetry.js";
 import {
   ArrowsClockwise,
   CaretDown,
@@ -12,11 +14,13 @@ import {
   Monitor,
   SlidersHorizontal
 } from "@phosphor-icons/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { LoadBoundary } from "./gallery/LoadBoundary.jsx";
 import { LabSidebar } from "./gallery/LabSidebar.jsx";
 import { SuiteCatalog } from "./gallery/SuiteCatalog.jsx";
-import { SuiteComparison } from "./gallery/SuiteComparison.jsx";
 import { getSuiteById, suites } from "./registry/suites.js";
+const SuiteComparison = lazy(() => import("./gallery/SuiteComparison.jsx").then((module) => ({ default: module.SuiteComparison })));
+const ProductHub = lazy(()=>import("./gallery/ProductHub.jsx").then(m=>({default:m.ProductHub})));
 
 const viewportOptions = [
   { id: "desktop", label: "桌面", icon: Desktop },
@@ -25,7 +29,9 @@ const viewportOptions = [
 ];
 
 function readGalleryLocation() {
-  const parts = window.location.hash.slice(1).split("/").filter(Boolean);
+  const parts = window.location.hash.slice(1).split("?")[0].split("/").filter(Boolean);
+  if(parts[0]==="cover"&&getSuiteById(parts[1]))return {view:"cover",suiteId:parts[1],page:null,section:null};
+  if(parts[0]==="kits") return {view:"kits",suiteId:null,page:null,section:null};
   if (parts[0] === "compare") {
     return { view: "compare", suiteId: null, page: null, section: null };
   }
@@ -51,7 +57,7 @@ function replaceHash(hash) {
   window.dispatchEvent(new HashChangeEvent("hashchange"));
 }
 
-function PublicHeader({ activeView, onHome, onSystems, onCompare, onUsage }) {
+function PublicHeader({ activeView, onHome, onSystems, onCompare, onUsage, onDirectory }) {
   const BrandIcon = activeView === "compare" ? Clover : Flask;
   return (
     <header className="lab-public-header" data-view={activeView}>
@@ -60,11 +66,12 @@ function PublicHeader({ activeView, onHome, onSystems, onCompare, onUsage }) {
         <span><strong>UI Design Lab</strong><small>视觉系统实验室</small></span>
       </button>
       <nav aria-label="首页导航">
+        <a href="#kits" aria-current={activeView==="kits"?"page":undefined}>场景与接入</a>
         <button type="button" data-active={activeView === "catalog" ? "true" : "false"} aria-current={activeView === "catalog" ? "page" : undefined} onClick={onSystems}>设计系统</button>
         <button type="button" onClick={onUsage}>使用方式</button>
         <button type="button" data-active={activeView === "compare" ? "true" : "false"} aria-current={activeView === "compare" ? "page" : undefined} onClick={onCompare}>同场景对比</button>
       </nav>
-      <button type="button" className="lab-public-all" onClick={onSystems}>查看全部套系 <span aria-hidden="true">→</span></button>
+      <button type="button" className="lab-public-all" onClick={onDirectory}>查看全部套系 <span aria-hidden="true">→</span></button>
     </header>
   );
 }
@@ -102,7 +109,7 @@ function SuiteSwitcher({ currentSuite, isOpen, query, onQueryChange, onToggle, o
                 data-active={suite.id === currentSuite.id ? "true" : "false"}
                 onClick={() => onSelectSuite(suite.id)}
               >
-                {suite.referenceImageUrl ? <img src={suite.referenceImageUrl} alt="" aria-hidden="true" /> : null}
+                {suite.thumbnailUrl ? <img src={suite.thumbnailUrl} alt="" aria-hidden="true" loading="lazy" /> : null}
                 <span><strong>{suite.displayName}</strong><small>{suite.localizedName}</small></span>
                 {suite.id === currentSuite.id ? <Check size={18} weight="bold" aria-label="当前套系" /> : <span className="lab-suite-switcher__enter">进入</span>}
               </button>
@@ -118,6 +125,8 @@ function SuiteSwitcher({ currentSuite, isOpen, query, onQueryChange, onToggle, o
 export function App() {
   const [location, setLocation] = useState(() => readGalleryLocation());
   const [suiteModule, setSuiteModule] = useState(null);
+  const [suiteLoadError, setSuiteLoadError] = useState(false);
+  const [loadAttempt, setLoadAttempt] = useState(0);
   const [density, setDensity] = useState("comfortable");
   const [viewport, setViewport] = useState("desktop");
   const [toast, setToast] = useState("");
@@ -135,6 +144,7 @@ export function App() {
   useEffect(() => {
     let active = true;
     setSuiteModule(null);
+    setSuiteLoadError(false);
     if (!currentSuite?.loadShowcase) {
       return () => { active = false; };
     }
@@ -143,9 +153,9 @@ export function App() {
       if (active) {
         setSuiteModule(module);
       }
-    });
+    }).catch(() => { if (active) setSuiteLoadError(true); });
     return () => { active = false; };
-  }, [currentSuite]);
+  }, [currentSuite, loadAttempt]);
 
   useEffect(() => {
     if (!toast) {
@@ -210,6 +220,7 @@ export function App() {
   };
 
   const openSuite = (suiteId) => {
+    recordEvent("suite_open",{suiteId});
     replaceHash(`#systems/${suiteId}/overview`);
     setDensity("comfortable");
     setViewport("desktop");
@@ -226,6 +237,7 @@ export function App() {
     window.scrollTo({ top: 0, behavior: "auto" });
   };
 
+  if(location.view==="cover")return <div className="cover-export"><SuiteCover suite={getSuiteById(location.suiteId)}/></div>;
   if (location.view !== "suite") {
     return (
       <div className="lab-public-app" data-view={location.view}>
@@ -233,13 +245,14 @@ export function App() {
           activeView={location.view}
           onHome={openCatalog}
           onSystems={() => scrollHomeSection("design-systems")}
+          onDirectory={() => scrollHomeSection("suite-directory")}
           onUsage={() => scrollHomeSection("home-usage")}
           onCompare={openCompare}
         />
-        {location.view === "catalog" ? (
+        {location.view === "kits" ? <LoadBoundary><Suspense fallback={<p>正在加载场景与接入…</p>}><ProductHub/></Suspense></LoadBoundary> : location.view === "catalog" ? (
           <SuiteCatalog suites={suites} onOpenSuite={openSuite} onCompare={openCompare} />
         ) : (
-          <SuiteComparison onNotify={setToast} onOpenSuite={openSuite} />
+          <LoadBoundary><Suspense fallback={<div className="lab-loading" role="status">正在加载比较工作台…</div>}><SuiteComparison onNotify={setToast} onOpenSuite={openSuite} /></Suspense></LoadBoundary>
         )}
         {toast ? <div className="lab-toast" role="status"><Check size={15} weight="bold" aria-hidden="true" />{toast}</div> : null}
       </div>
@@ -322,10 +335,12 @@ export function App() {
 
         <div className="lab-preview-frame" data-viewport={viewport}>
           <main className="lab-content" data-ui-system={currentSuite.id} data-density={density} data-viewport={viewport}>
-            {ActivePage ? (
+            {suiteLoadError ? <div className="lab-load-error" role="alert"><h2>套系加载失败</h2><p>请检查连接后重试。</p><button type="button" onClick={() => setLoadAttempt((value) => value + 1)}>重新加载套系</button></div> : ActivePage ? (
               <div className="lab-page-enter" key={`${currentSuite.id}-${location.page}`}>
-                <ActivePage suite={currentSuite} density={density} onNotify={setToast} onNavigate={navigatePage} />
+                <LoadBoundary key={`${currentSuite.id}-${location.page}`}><ActivePage suite={currentSuite} density={density} onNotify={setToast} onNavigate={navigatePage} /></LoadBoundary>
               </div>
+            ) : suiteModule ? (
+              <div className="lab-load-error"><h2>此套系尚未提供展示页面</h2><p>当前状态：{currentSuite.status}。</p><button type="button" onClick={openCatalog}>返回套系目录</button></div>
             ) : (
               <div className="lab-loading">正在加载 {currentSuite.displayName}…</div>
             )}

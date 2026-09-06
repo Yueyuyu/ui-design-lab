@@ -1,3 +1,5 @@
+import { recordEvent } from "./telemetry.js";
+import { SuiteCover } from "./SuiteCover.jsx";
 import {
   ArrowRight,
   ArrowsLeftRight,
@@ -6,7 +8,8 @@ import {
   MagnifyingGlass,
   Stack
 } from "@phosphor-icons/react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { filterSuites, suiteStatusLabels } from "./catalog-data.js";
 
 function suiteModeLabel(suite) {
   if (suite.modes.includes("light") && !suite.modes.includes("dark")) {
@@ -22,13 +25,18 @@ function FeaturedSuiteCard({ suite, onOpenSuite }) {
   return (
     <article className="home-suite-card" data-suite-id={suite.id}>
       <figure className="home-suite-card__preview">
-        {suite.referenceImageUrl ? <img src={suite.referenceImageUrl} alt={`${suite.displayName} 视觉母版`} /> : null}
+        <SuiteCover suite={suite}/>
+        <figcaption>同一场景 · 真实组件预览</figcaption>
       </figure>
       <div className="home-suite-card__body">
         <span className="home-suite-card__identity">
           <strong>{suite.displayName} / {suite.localizedName}</strong>
           <small>{suite.description}</small>
         </span>
+        <div className="home-suite-facts">
+          <p><strong>{suiteStatusLabels[suite.status]} · v{suite.version}</strong><span>{suite.capabilities.components.length} 类组件</span></p>
+          <dl><div><dt>适合</dt><dd>{suite.selection?.suitableFor?.join("、") ?? "适用任务待确认"}</dd></div><div><dt>边界</dt><dd>{suite.selection?.limitations?.join("；") ?? "能力边界待确认"}</dd></div></dl>
+        </div>
         <div className="home-suite-card__footer">
           <span className="home-suite-card__tags" aria-label="套系特征">
             <i>{suiteModeLabel(suite)}</i>
@@ -52,7 +60,7 @@ function DirectorySuiteCard({ suite, onOpenSuite }) {
       </span>
       <span className="home-directory-card__name">
         <strong>{suite.displayName}</strong>
-        <small>{suite.localizedName} · {suite.styleLabel}</small>
+        <small>{suite.localizedName} · {suiteStatusLabels[suite.status]} · {suite.capabilities.components.length} 类组件</small>
       </span>
       <button type="button" onClick={() => onOpenSuite(suite.id)} aria-label={`进入 ${suite.displayName}`}>
         <ArrowRight size={16} weight="bold" aria-hidden="true" />
@@ -62,20 +70,12 @@ function DirectorySuiteCard({ suite, onOpenSuite }) {
 }
 
 export function SuiteCatalog({ suites, onOpenSuite, onCompare }) {
+  useEffect(()=>recordEvent("catalog_view"),[]);
   const [query, setQuery] = useState("");
   const featuredSuites = suites.slice(0, 2);
-  const directorySuites = suites.slice(2);
+  const directorySuites = suites;
   const filteredDirectory = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-    if (!normalizedQuery) {
-      return directorySuites;
-    }
-    return directorySuites.filter((suite) => [
-      suite.displayName,
-      suite.localizedName,
-      suite.styleLabel,
-      ...suite.tags
-    ].some((value) => value.toLowerCase().includes(normalizedQuery)));
+    return filterSuites(directorySuites, query);
   }, [directorySuites, query]);
 
   const scrollToSuites = () => document.getElementById("design-systems")?.scrollIntoView({ behavior: "smooth" });
@@ -87,11 +87,12 @@ export function SuiteCatalog({ suites, onOpenSuite, onCompare }) {
         <p className="home-eyebrow">CURATED UI SYSTEMS</p>
         <h1 id="home-title"><span>选择一套完整的</span><span>设计语言</span></h1>
         <p className="home-hero__description">
-          UI Design Lab 收录独立、完整的 UI 系统。预览、对比，并在进入套系后让 Codex
-          严格沿用同一套 Token、组件、状态与页面模式。
+          为独立开发者与小型 SaaS 团队提供可复用组件、完整页面流程和设计规范。先比较，再接入你的 React 项目；也可将真实 API 与规范交给开发工具使用。
         </p>
         <div className="home-hero__actions">
+          <a className="home-text-action" href="#kits">完整场景与接入 →</a>
           <button type="button" className="home-primary-action" onClick={scrollToSuites}>浏览设计系统</button>
+          <button type="button" className="home-text-action" onClick={onCompare}>同场景对比 <ArrowsLeftRight size={16} aria-hidden="true" /></button>
           <button type="button" className="home-text-action" onClick={scrollToUsage}>如何让 Codex 使用 <ArrowRight size={16} aria-hidden="true" /></button>
         </div>
       </section>
@@ -108,7 +109,7 @@ export function SuiteCatalog({ suites, onOpenSuite, onCompare }) {
             <span className="home-compare-action__icon"><ArrowsLeftRight size={22} aria-hidden="true" /></span>
             <span className="home-compare-action__copy">
               <strong>还没决定用哪一套？</strong>
-              <small>把同一个真实场景并排放进两套设计语言中，看清布局、密度与组件表达。</small>
+              <small>在同一个画布中切换设计语言，保留数据和编辑状态，看清布局、密度与组件表达。</small>
             </span>
             <span className="home-compare-action__cta">开始对比 <ArrowRight size={15} weight="bold" aria-hidden="true" /></span>
           </button>
@@ -116,12 +117,12 @@ export function SuiteCatalog({ suites, onOpenSuite, onCompare }) {
       </section>
 
       {directorySuites.length > 0 ? (
-        <section className="home-directory" aria-labelledby="directory-title">
+        <section id="suite-directory" className="home-directory" aria-labelledby="directory-title">
           <header className="home-section-heading">
             <span><small>ALL SYSTEMS</small><h2 id="directory-title">完整套系目录</h2></span>
             <label className="home-directory-search">
               <MagnifyingGlass size={17} aria-hidden="true" />
-              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索名称、风格或标签" />
+              <input aria-label="搜索全部套系" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索名称、任务或成熟度" />
             </label>
           </header>
           <div className="home-directory-grid">

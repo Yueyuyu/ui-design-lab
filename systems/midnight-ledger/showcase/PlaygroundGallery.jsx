@@ -1,11 +1,3 @@
-import { FloppyDisk } from "@phosphor-icons/react";
-import { useState } from "react";
-import { GalleryBlock, SectionHeader } from "../../../src/gallery/SectionHeader.jsx";
-import { LedgerButton, LedgerField, LedgerNotification, LedgerPanel, LedgerSelect, LedgerStatusBadge, LedgerToggle } from "../web/index.js";
-import { StateSelector } from "./ShowcaseParts.jsx";
-
-const markets = [{ value: "us", label: "美股" }, { value: "hk", label: "港股" }, { value: "crypto", label: "加密货币" }];
-export function PlaygroundGallery({ onNotify }) { const [scenario,setScenario] = useState("default"); const [market,setMarket] = useState("us"); const [auto,setAuto] = useState(true); const loading = scenario === "loading"; const error = scenario === "error"; return <><SectionHeader eyebrow="INTERACTIVE PLAYGROUND" title="交互试验场" description="用同一交易计划检查正常、加载和错误状态，以及密度切换带来的空间变化。" aside={<LedgerStatusBadge tone={error ? "negative" : loading ? "warning" : "positive"}>{error ? "行情中断" : loading ? "正在校验" : "市场正常"}</LedgerStatusBadge>} />
-  <GalleryBlock eyebrow="SCENARIO" title="场景状态"><StateSelector value={scenario} onChange={setScenario} /></GalleryBlock>
-  <div className="ml-playground-grid"><LedgerPanel title="交易计划"><div className="ml-playground-form"><LedgerField label="计划名称" defaultValue="趋势突破 3m" loading={loading} error={error ? "名称未保存，网络连接已中断。" : undefined} hint="显示在计划列表和通知中" /><LedgerSelect label="交易市场" value={market} onChange={(event) => setMarket(event.target.value)} options={markets} loading={loading} error={error ? "无法读取交易时段。" : undefined} /><LedgerField label="风险预算" defaultValue="2.5%" loading={loading} error={error ? "风险参数校验失败。" : undefined} /><LedgerToggle checked={auto} onChange={setAuto} label="自动执行" description="风险校验通过后提交" loading={loading} error={error ? "自动执行已暂停。" : undefined} /><div><LedgerButton icon={FloppyDisk} loading={loading} error={error} onClick={() => onNotify?.("交易计划已保存")}>保存计划</LedgerButton><LedgerButton variant="secondary">取消</LedgerButton></div></div></LedgerPanel><LedgerPanel title="状态反馈">{error ? <LedgerNotification error title="行情连接中断" description="计划仍保存在本地，新订单暂时无法提交。" actionLabel="重新连接" /> : <LedgerNotification tone={loading ? "warning" : "success"} loading={loading} title={loading ? "正在校验风险" : "计划可以执行"} description={loading ? "保持页面打开，完成后自动更新。" : "所有风险规则均已通过。"} />}</LedgerPanel></div></>;
-}
+import { SettingsPlayground } from "../../../src/gallery/SettingsPlayground.jsx";
+import { LedgerButton, LedgerField, LedgerSelect, LedgerToggle, LedgerPanel } from "../web/index.js";
+export function PlaygroundGallery({onNotify}) { return <SettingsPlayground suiteId="midnight-ledger" Button={LedgerButton} Field={LedgerField} Select={LedgerSelect} Toggle={LedgerToggle} Panel={LedgerPanel} onNotify={onNotify}/>; }
