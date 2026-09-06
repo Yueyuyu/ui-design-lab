@@ -3683,6 +3683,8 @@ button {
 }
 
 .comparison-suite-select {
+  /* 原生下拉框的内容宽度不能撑开窄屏网格，字体回退时也需要允许收缩。 */
+  min-width: 0;
   gap: 8px;
   padding-left: 9px;
 }

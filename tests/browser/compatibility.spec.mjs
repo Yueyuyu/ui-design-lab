@@ -25,6 +25,11 @@ for (const width of [320, 390, 720, 859]) test(`${width}px 首页、比较与四
     if (route.endsWith("workflows")) await expect(page.getByRole("searchbox", { name: "筛选任务列表" })).toBeVisible();
     if (route.endsWith("compare")) await expect(page.getByRole("heading", { name: "月度经营复盘", exact: true })).toBeVisible();
     await noOverflow(page);
+    if (width === 320 && route.endsWith("compare")) {
+      // 用较宽的回退字体覆盖平台字体差异，套系选择器仍应留在页面内。
+      await page.locator(".comparison-controls").evaluate(el => { el.style.fontFamily = "monospace"; });
+      await noOverflow(page);
+    }
     await expect(page.locator("vite-error-overlay")).toHaveCount(0);
   }
 });
