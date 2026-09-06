@@ -1,0 +1,42 @@
+name: Beta 接入反馈
+description: 报告安装、组件或真实项目接入中的卡点
+title: "[Beta] "
+body:
+  - type: markdown
+    attributes:
+      value: "请勿提交密钥、公司源码或私人文件。真实项目采用与独立示例安装请分别说明。"
+  - type: input
+    id: version
+    attributes:
+      label: Beta 版本与套系
+      placeholder: 1.0.0-beta.1 / quiet-workspace
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Node、React、浏览器版本与操作系统
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: 卡住的步骤
+      options:
+        - 安装
+        - 启动
+        - 修改字段或页面
+        - 交互或组件缺失
+        - 构建或部署
+        - 已接入，提供其他反馈
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 操作、预期结果和实际结果
+      description: 请提供可重复的最小步骤、错误信息，以及是在 Starter 还是自己的项目中发生。
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: 缺少的能力与后续是否愿意采用

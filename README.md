@@ -4,7 +4,18 @@
 
 一个“单仓库、多套系、强隔离”的 UI 设计系统实验室。每套视觉系统拥有独立的 Token、组件、模式、规范、资产和版本边界；只有 Gallery 与构建工具可以共享。
 
-当前工作区版本为 `v1.0.0`；这表示本地合同和验收目标，不代表已经创建 Git Tag 或 GitHub Release。最近公开版本仍为 [`v0.3.0`](https://github.com/Yueyuyu/ui-design-lab/releases/tag/v0.3.0)。
+当前源码版本为 `v1.0.0-beta.1`，已推送至本仓库；这是可送测的候选，不代表已经创建 Git Tag 或 GitHub Release。此前记录的公开版本为 [`v0.3.0`](https://github.com/Yueyuyu/ui-design-lab/releases/tag/v0.3.0)。
+
+Beta 接入：收到 Starter 后解压，运行 `npm install` 和 `npm run dev`；组件包随 vendor/ 交付。源码生成方式见 [快速开始](QUICKSTART.md)。[版本说明](docs/BETA-NOTES.md) · [20 分钟试用任务](docs/BETA-TRIAL.md)。
+
+## 2026-09-05 扩展（9 月 6 日推送源码）
+
+现有四套：Quiet Workspace（研究效率）、Midnight Ledger（运营分析）、Clearline Console（企业后台）、Signal Studio（内容创作）。新增两套为 experimental；它们是独立视觉语言，均接入注册、目录、比较、主题和本地分发。公开版本本轮未查询或变更。
+
+- 首页：统一 800×400 真实组件封面、紧凑精选和全量搜索。
+- 套系内：业务表格、表单、日期、菜单、提示、抽屉、通知与可保存主题。
+- `#kits`：任务/研究/运营三个完整 UI 示例、新项目 Starter 和已有项目接入。
+- [执行清单](ROADMAP.md) · [本轮验收](docs/ACCEPTANCE.md) · [商业边界](docs/COMMERCIAL.md) · [推广材料](docs/PROMOTION.md)。
 
 ## 仓库定位
 
@@ -143,7 +154,7 @@ npm run suite:new -- midnight-console --name="Midnight Console" --zh="午夜控�
 2. 为 Token、类名和组件使用独立前缀。
 3. 将全部 CSS 限定在独立的 `data-ui-system` 作用域内。
 4. 不引用其他套系的 Token、组件、模式或视觉资产。
-5. 只在 `src/` 的 Gallery 中注册展示入口。
+5. 在套系内提供 showcase/index.jsx；注册表自动发现，无需修改 Gallery 外壳。
 
 ## 版本规则
 
@@ -158,3 +169,13 @@ npm run suite:new -- midnight-console --name="Midnight Console" --zh="午夜控�
 公共导出和稳定性合同见 [COMPATIBILITY.md](COMPATIBILITY.md)，发布验收顺序见 [RELEASE.md](RELEASE.md)。
 
 历史变化见 [CHANGELOG.md](CHANGELOG.md)。
+
+## 独立项目接入与质量保证
+
+按 [QUICKSTART.md](QUICKSTART.md) 生成本地 tgz 并运行 [消费者示例](examples/consumer)。公共子路径提供 ESM、React peer dependencies 和 TypeScript 声明；当前保留 private，不代表已经发布 npm。参数与回调见 [Quiet API](systems/quiet-workspace/API.md) 和 [Ledger API](systems/midnight-ledger/API.md)。
+
+首页提供成熟度、适用任务、能力边界和全部套系搜索。比较页按需加载套系自己的 comparison/index.jsx，单画布切换保留编辑状态，复制指令携带当前场景的 JSON 快照。母版缩略图仅作视觉参考。
+
+`npm run check` 验证 JSON Schema、Token 双向绑定、套系源码隔离、脚手架扩展、场景导出、类型和构建。`npm run test:e2e` 验证目录、手机入口、模态生命周期和比较流程。`npm run test:consumer` 在仓库外安装、构建组件包。CI 配置见 [.github/workflows/quality.yml](.github/workflows/quality.yml)。
+
+授权范围见 [LICENSE](LICENSE) 和 [NOTICE.md](NOTICE.md)；参考截图不在 MIT 再授权或组件包范围内。贡献与安全报告分别见 [CONTRIBUTING.md](CONTRIBUTING.md)、[SECURITY.md](SECURITY.md)。
