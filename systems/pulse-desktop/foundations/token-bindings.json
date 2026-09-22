@@ -1,0 +1,31 @@
+{
+  "base": {
+    "--pd-surface": "color.surface",
+    "--pd-canvas": "color.canvas",
+    "--pd-ink": "color.ink",
+    "--pd-muted": "color.muted",
+    "--pd-line": "color.line",
+    "--pd-track": "color.track",
+    "--pd-green": "color.green",
+    "--pd-green-ink": "color.greenInk",
+    "--pd-green-soft": "color.greenSoft",
+    "--pd-amber": "color.amber",
+    "--pd-amber-soft": "color.amberSoft",
+    "--pd-red": "color.red",
+    "--pd-red-soft": "color.redSoft",
+    "--pd-focus": "color.focus",
+    "--pd-font": "font.family",
+    "--pd-text": "font.body",
+    "--pd-caption": "font.caption",
+    "--pd-radius-card": "shape.card",
+    "--pd-radius-pill": "shape.pill",
+    "--pd-ring": "size.ring",
+    "--pd-control": "size.control",
+    "--pd-inset": "space.inset",
+    "--pd-enter": "motion.enter",
+    "--pd-exit": "motion.exit",
+    "--pd-ease": "motion.ease",
+    "--pd-shadow": "elevation.shadow",
+    "--pd-spent": "color.spent"
+  }
+}

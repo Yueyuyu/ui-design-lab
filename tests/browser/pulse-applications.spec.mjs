@@ -1,0 +1,58 @@
+import {test,expect} from '@playwright/test';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+
+test('多应用独立图标、额度、关注及任务操作；贴边保持条目',async({page})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+  await page.goto('/#/systems/pulse-desktop/playground');
+  await expect(page).toHaveURL(/#\/systems\/pulse-desktop\/playground$/);
+  await expect(page).toHaveTitle('UI Design Lab · Visual Systems');
+  await expect(page.locator('.pd-stage-badge')).toContainText('示例数据');
+  await page.getByLabel('应用示例').selectOption('multiple');
+  const codex=page.locator('.pd-summary[data-application="codex"]');
+  const cursor=page.locator('.pd-summary[data-application="cursor-demo"]');
+  await expect(page.locator('.pd-summary')).toHaveCount(2);
+  await expect(codex.locator('.pd-value')).toHaveText('69%');
+  await expect(cursor.locator('.pd-value')).toHaveText('37%');
+  await codex.focus();await page.keyboard.press('Enter');
+  await page.getByRole('button',{name:'固定面板',exact:true}).click();
+  await page.getByRole('group',{name:'Codex图标样式'}).getByRole('button',{name:'品牌图标',exact:true}).click();
+  await expect(codex.locator('.pd-brand')).toBeVisible();
+  await cursor.focus();await page.keyboard.press('Enter');
+  await expect(page.locator('.pd-panel h2')).toHaveText('Cursor · 示例');
+  await expect(page.locator('.pd-quota-card strong')).toHaveText('37%');
+  await page.getByRole('group',{name:'Cursor · 示例图标样式'}).getByRole('button',{name:'机器人',exact:true}).click();
+  await expect(cursor.locator('.pd-bot')).toHaveAttribute('data-source','pulse-upstream');
+  await expect(codex.locator('.pd-brand')).toBeVisible();
+  await page.getByRole('button',{name:'关注：Cursor 示例 · 检查页面',exact:true}).click();
+  await expect(page.getByRole('button',{name:'取消关注：Cursor 示例 · 检查页面'})).toBeVisible();
+  await page.locator('.pd-task-open').click();
+  await expect(page.locator('.pd-status-message')).toContainText('cursor-demo');
+  await codex.focus();await page.keyboard.press('Enter');
+  await expect(page.locator('.pd-panel h2')).toHaveText('Codex');
+  await expect(page.locator('.pd-quota-card strong')).toHaveText('69%');
+  await expect(page.locator('.pd-task-title').filter({hasText:'Cursor 示例'})).toHaveCount(0);
+  await page.getByRole('button',{name:'贴边收起',exact:true}).click();
+  await page.locator('.pd-edge').focus();await page.keyboard.press('Enter');
+  await expect(page.locator('.pd-summary')).toHaveCount(2);
+  await expect(page.locator('.pd-rail')).toHaveCSS('height','226px');
+  const backdrop=await page.locator('.pd-stage-badge').boundingBox();
+  await page.mouse.click(backdrop.x+5,backdrop.y+5);
+  await expect(page.locator('.pd-dock')).toHaveAttribute('data-mode','expanded');
+  await page.screenshot({path:join(tmpdir(),'pulse-applications-desktop.png')});
+  await page.locator('.pd-positioner').screenshot({path:join(tmpdir(),'pulse-applications-widget.png')});
+  await expect(page.locator('vite-error-overlay')).toHaveCount(0);expect(errors).toEqual([]);
+});
+
+test('窄屏及双倍应用缩放仍可操作第二应用',async({page})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/#/systems/pulse-desktop/playground');
+  await page.getByLabel('应用示例').selectOption('multiple');
+  await page.getByLabel('渲染缩放').selectOption('2');
+  await page.locator('.pd-summary[data-application="cursor-demo"]').focus();await page.keyboard.press('Enter');
+  await expect(page.locator('.pd-panel h2')).toHaveText('Cursor · 示例');
+  await page.getByRole('button',{name:'收起面板',exact:true}).focus();await page.keyboard.press('Enter');
+  await expect(page.locator('.pd-dock')).toHaveAttribute('data-mode','compact');
+  expect(errors).toEqual([]);
+});

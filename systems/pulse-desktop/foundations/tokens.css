@@ -1,0 +1,29 @@
+[data-ui-system="pulse-desktop"] {
+  --pd-surface: #000000;
+  --pd-canvas: #151515;
+  --pd-ink: #FFFFFF;
+  --pd-muted: #A0A0A0;
+  --pd-line: #303030;
+  --pd-track: #2E2E2E;
+  --pd-green: #00E68C;
+  --pd-green-ink: #00E68C;
+  --pd-green-soft: #103027;
+  --pd-amber: #FFC226;
+  --pd-amber-soft: #362B12;
+  --pd-red: #FF4F42;
+  --pd-red-soft: #361B18;
+  --pd-focus: #FFFFFF;
+  --pd-font: "Segoe UI Variable", "Segoe UI", "Microsoft YaHei UI", sans-serif;
+  --pd-text: 13px;
+  --pd-caption: 12px;
+  --pd-radius-card: 20px;
+  --pd-radius-pill: 999px;
+  --pd-ring: 36px;
+  --pd-control: 32px;
+  --pd-inset: 18px;
+  --pd-enter: 180ms;
+  --pd-exit: 120ms;
+  --pd-ease: cubic-bezier(0.23,1,0.32,1);
+  --pd-shadow: none;
+  --pd-spent: #D91721;
+}

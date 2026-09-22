@@ -1,0 +1,4 @@
+/* 固定合成画布：开合只改变可见区域，不让 WebView 纹理和原生窗口反向位移。 */
+[data-ui-system="pulse-desktop"].pd-native { margin:6px; width:342px; min-height:560px; }
+[data-ui-system="pulse-desktop"].pd-native[data-side="right"] > .pd-dock { margin-left:auto; }
+[data-ui-system="pulse-desktop"] .pd-native-notice { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }

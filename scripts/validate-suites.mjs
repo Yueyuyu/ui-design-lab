@@ -120,7 +120,7 @@ async function validateSuite(suite) {
     }
   }
 
-  if (!designDocument.startsWith("---\n") || !designDocument.includes("## Overview") || !designDocument.includes("## Agent Usage")) {
+  if (!/^---\r?\n/.test(designDocument) || !designDocument.includes("## Overview") || !designDocument.includes("## Agent Usage")) {
     throw new Error(`${manifest.id}: DESIGN.md 缺少标准 front matter、Overview 或 Agent Usage`);
   }
 

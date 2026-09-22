@@ -1,0 +1,87 @@
+[data-ui-system="pulse-desktop"] { font-family:var(--pd-font); color:var(--pd-ink); }
+[data-ui-system="pulse-desktop"] .pd-dock { display:flex; flex-direction:row-reverse; align-items:flex-start; gap:8px; width:max-content; font-size:13px; line-height:1.4; color:#fff; }
+[data-ui-system="pulse-desktop"] .pd-dock[data-side="left"] { flex-direction:row; }
+[data-ui-system="pulse-desktop"] .pd-dock *, [data-ui-system="pulse-desktop"] .pd-ring { box-sizing:border-box; }
+[data-ui-system="pulse-desktop"] .pd-dock button { font:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+[data-ui-system="pulse-desktop"] .pd-dock button:focus-visible { outline:2px solid var(--pd-focus); outline-offset:3px; }
+[data-ui-system="pulse-desktop"] .pd-dock button:disabled { opacity:.45; cursor:default; }
+[data-ui-system="pulse-desktop"] .pd-rail { position:relative; width:64px; height:102px; flex:none; border-radius:32px; background:var(--pd-surface); }
+[data-ui-system="pulse-desktop"] .pd-drag { position:absolute; inset:0; border:0; border-radius:inherit; background:none; padding:0; touch-action:none; color:#666; }
+[data-ui-system="pulse-desktop"] .pd-grab-mark { position:absolute; top:9px; left:25px; width:14px; height:2px; border-radius:2px; background:currentColor; opacity:0; }
+[data-ui-system="pulse-desktop"] .pd-drag:focus-visible .pd-grab-mark { opacity:1; }
+[data-ui-system="pulse-desktop"] .pd-summary { position:absolute; top:22px; left:10px; width:44px; height:58px; display:flex; flex-direction:column; align-items:center; gap:6px; background:none; border:0; color:white; padding:0; }
+[data-ui-system="pulse-desktop"] .pd-ring { width:36px; height:36px; position:relative; display:inline-grid; place-items:center; flex:none; color:var(--pd-green); }
+[data-ui-system="pulse-desktop"] .pd-ring-svg { position:absolute; left:-2px; top:-2px; width:40px; height:40px; overflow:visible; fill:none; stroke-width:4; }
+[data-ui-system="pulse-desktop"] .pd-ring-track { stroke:var(--pd-track); }
+[data-ui-system="pulse-desktop"] .pd-ring-value { stroke:currentColor; stroke-linecap:round; }
+[data-ui-system="pulse-desktop"] .pd-value { font:500 13px/16px var(--pd-font); font-variant-numeric:tabular-nums; color:#fff; }
+[data-ui-system="pulse-desktop"] .pd-panel { position:relative; isolation:isolate; width:270px; flex:none; padding:18px 38px 18px 18px; }
+[data-ui-system="pulse-desktop"] .pd-dock[data-side="left"] .pd-panel { padding:18px 18px 18px 38px; }
+[data-ui-system="pulse-desktop"] .pd-panel-shape { position:absolute; inset:0; width:100%; height:100%; z-index:-1; fill:var(--pd-surface); pointer-events:none; }
+[data-ui-system="pulse-desktop"] :is(.pd-panel-header,.pd-service-title,.pd-actions) { display:flex; align-items:center; }
+[data-ui-system="pulse-desktop"] .pd-panel-header { justify-content:space-between; gap:4px; margin-bottom:14px; height:24px; }
+[data-ui-system="pulse-desktop"] .pd-service-title { gap:8px; }
+[data-ui-system="pulse-desktop"] .pd-service-title img { width:16px; height:16px; filter:brightness(0) invert(1); }
+[data-ui-system="pulse-desktop"] .pd-panel h2 { margin:0; font-size:14px; font-weight:600; }
+[data-ui-system="pulse-desktop"] .pd-actions { gap:2px; }
+[data-ui-system="pulse-desktop"] .pd-icon-button { display:grid; place-items:center; width:24px; height:28px; flex:none; border:0; background:none; color:var(--pd-muted); border-radius:6px; padding:0; }
+[data-ui-system="pulse-desktop"] .pd-icon-button[aria-pressed="true"] { color:white; }
+[data-ui-system="pulse-desktop"] .pd-watch[aria-pressed="true"] svg { fill:currentColor; }
+[data-ui-system="pulse-desktop"] .pd-quota-card { font-size:12px; }
+[data-ui-system="pulse-desktop"] .pd-quota-card > div:first-child { display:flex; justify-content:space-between; }
+[data-ui-system="pulse-desktop"] .pd-quota-card strong { font:500 12px var(--pd-font); }
+[data-ui-system="pulse-desktop"] .pd-quota-track { height:6px; background:var(--pd-track); border-radius:3px; overflow:hidden; margin:7px 0; }
+[data-ui-system="pulse-desktop"] .pd-quota-track > span { display:block; height:100%; background:var(--pd-green); border-radius:3px; }
+[data-ui-system="pulse-desktop"] .pd-quota-card p { margin:0; font-size:12px; color:var(--pd-muted); }
+[data-ui-system="pulse-desktop"] .pd-group-title { display:flex; justify-content:space-between; color:var(--pd-muted); font-size:12px; padding:14px 0 7px; }
+[data-ui-system="pulse-desktop"] .pd-task { display:flex; align-items:center; border-radius:6px; }
+[data-ui-system="pulse-desktop"] .pd-task-open { display:flex; align-items:center; gap:8px; flex:1; min-width:0; padding:7px 0; text-align:left; color:#fff; background:none; border:0; }
+[data-ui-system="pulse-desktop"] .pd-task-symbol { display:grid; place-items:center; color:var(--pd-green); flex:none; }
+[data-ui-system="pulse-desktop"] .pd-task-copy { flex:1; min-width:0; }
+[data-ui-system="pulse-desktop"] .pd-task-title { display:block; font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+[data-ui-system="pulse-desktop"] .pd-task-meta { display:block; font-size:12px; color:var(--pd-muted); margin-top:2px; }
+[data-ui-system="pulse-desktop"] .pd-task-arrow { display:none; }
+[data-ui-system="pulse-desktop"] .pd-task[data-state="attention"] .pd-task-symbol { color:var(--pd-amber); }
+[data-ui-system="pulse-desktop"] .pd-task[data-state="unavailable"] .pd-task-symbol { color:var(--pd-muted); }
+[data-ui-system="pulse-desktop"] .pd-task-list { max-height:280px; overflow:auto; scrollbar-width:thin; scrollbar-color:#555 #111; }
+[data-ui-system="pulse-desktop"] .pd-empty { font-size:12px; color:var(--pd-muted); }
+[data-ui-system="pulse-desktop"] .pd-panel-footer { display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--pd-line); padding-top:10px; margin-top:12px; color:var(--pd-muted); font-size:12px; }
+[data-ui-system="pulse-desktop"] .pd-text-button { display:inline-flex; align-items:center; gap:4px; background:none; color:#fff; border:0; padding:4px 0; font-size:12px!important; border-radius:4px; }
+[data-ui-system="pulse-desktop"] .pd-edge { width:20px; height:96px; display:flex; justify-content:flex-end; padding:0; border:0; background:none; touch-action:none; }
+[data-ui-system="pulse-desktop"] .pd-edge > span { display:block; width:6px; height:96px; background:#000; border-radius:6px 0 0 6px; }
+[data-ui-system="pulse-desktop"] .pd-dock[data-side="left"] .pd-edge { justify-content:flex-start; }
+[data-ui-system="pulse-desktop"] .pd-dock[data-side="left"] .pd-edge > span { border-radius:0 6px 6px 0; }
+[data-ui-system="pulse-desktop"] .pd-ring[data-tone="caution"] { color:var(--pd-amber); }
+[data-ui-system="pulse-desktop"] .pd-ring[data-tone="critical"] { color:var(--pd-red); }
+[data-ui-system="pulse-desktop"] .pd-ring[data-tone="spent"] { color:var(--pd-spent); }
+[data-ui-system="pulse-desktop"] [data-tone="spent"] .pd-value { color:var(--pd-spent); }
+[data-ui-system="pulse-desktop"] .pd-ring[data-tone="unknown"], [data-ui-system="pulse-desktop"] [data-tone="unknown"] .pd-value { color:var(--pd-muted); }
+[data-ui-system="pulse-desktop"] [data-tone="caution"] .pd-quota-track > span { background:var(--pd-amber); }
+[data-ui-system="pulse-desktop"] [data-tone="critical"] .pd-quota-track > span { background:var(--pd-red); }
+[data-ui-system="pulse-desktop"] [data-tone="spent"] .pd-quota-track > span { background:var(--pd-spent); }
+@media(hover:hover) and (pointer:fine) {
+  [data-ui-system="pulse-desktop"] .pd-task:hover, [data-ui-system="pulse-desktop"] .pd-icon-button:hover { background:#ffffff16; }
+  [data-ui-system="pulse-desktop"] .pd-rail:hover .pd-grab-mark { opacity:1; }
+}
+[data-ui-system="pulse-desktop"] .pd-dock[data-attached="true"] .pd-rail { height:150px; background:none; border-radius:0; }
+[data-ui-system="pulse-desktop"] .pd-dock[data-attached="true"] .pd-summary { top:46px; }
+[data-ui-system="pulse-desktop"] .pd-rail-shape { position:absolute; inset:0; width:64px; height:150px; fill:#000; }
+[data-ui-system="pulse-desktop"] .pd-dock[data-side="left"] .pd-rail-shape,
+[data-ui-system="pulse-desktop"] .pd-dock[data-side="left"] .pd-edge svg { transform:scaleX(-1); }
+[data-ui-system="pulse-desktop"] .pd-edge svg { fill:#000; flex:none; }
+[data-ui-system="pulse-desktop"] .pd-icon-choice { display:flex; gap:3px; padding:3px; margin-bottom:14px; border:1px solid var(--pd-line); border-radius:8px; }
+[data-ui-system="pulse-desktop"] .pd-icon-choice button { flex:1; border:0; border-radius:5px; padding:5px; background:none; color:var(--pd-muted); font-size:12px; }
+[data-ui-system="pulse-desktop"] .pd-icon-choice button[aria-pressed="true"] { color:white; background:#292929; }
+[data-ui-system="pulse-desktop"] .pd-brand-label { display:grid; place-items:center; color:white; font-size:14px; font-weight:600; }
+[data-ui-system="pulse-desktop"] .pd-pages { position:absolute; bottom:12px; left:4px; right:4px; display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--pd-muted); }
+[data-ui-system="pulse-desktop"] .pd-pages button { width:20px; height:28px; padding:0; border:0; border-radius:6px; background:none; color:white; font-size:18px; }
+[data-ui-system="pulse-desktop"] .pd-account-actions { display:flex; align-items:center; gap:12px; }
+[data-ui-system="pulse-desktop"] .pd-account-button { border:1px solid var(--pd-line); border-radius:8px; padding:8px 10px; background:#292929; color:white; transition:transform 160ms ease-out,background-color 160ms ease-out; }
+[data-ui-system="pulse-desktop"] .pd-account-button:active { transform:scale(.97); }
+[data-ui-system="pulse-desktop"] .pd-quota-extra { margin-top:12px; }
+[data-ui-system="pulse-desktop"] .pd-panel-content { min-height:0; overflow:auto; scrollbar-width:thin; scrollbar-color:#555 #111; }
+[data-ui-system="pulse-desktop"] .pd-panel { display:flex; flex-direction:column; max-height:400px; }
+[data-ui-system="pulse-desktop"] :is(.pd-panel-header,.pd-panel-footer) { flex-shrink:0; }
+@media (hover:hover) and (pointer:fine) { [data-ui-system="pulse-desktop"] :is(.pd-account-button,.pd-pages button):hover { background:#383838; } }
+@media (prefers-reduced-motion:reduce) { [data-ui-system="pulse-desktop"] .pd-account-button { transition:none; } [data-ui-system="pulse-desktop"] .pd-account-button:active { transform:none; } }
+@media (hover:hover) { [data-ui-system="pulse-desktop"] .pd-icon-choice button:hover { color:white; background:#ffffff16; } }

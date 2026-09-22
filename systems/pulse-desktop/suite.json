@@ -1,0 +1,91 @@
+{
+  "$schema": "../../schemas/suite.schema.json",
+  "id": "pulse-desktop",
+  "order": 8,
+  "displayName": "Pulse Desktop",
+  "localizedName": "脉点桌面",
+  "shortCode": "PD",
+  "prefix": "pd",
+  "componentPrefix": "Pulse",
+  "version": "0.1.0",
+  "status": "draft",
+  "description": "直接复用 Pulse 的黑色侧轨、额度环与机器人动作；独立 Windows 适配原型，保留 Companion 业务接口。",
+  "styleLabel": "Pulse · Obsidian Desktop",
+  "platforms": [
+    "web",
+    "windows-prototype"
+  ],
+  "modes": [
+    "dark"
+  ],
+  "densities": [
+    "compact"
+  ],
+  "tags": [
+    "desktop",
+    "pulse-inspired",
+    "quota",
+    "tasks"
+  ],
+  "swatches": [
+    "#000000",
+    "#00E68C",
+    "#FFC226",
+    "#FF4F42"
+  ],
+  "scope": "[data-ui-system=\"pulse-desktop\"]",
+  "designDocument": "./DESIGN.md",
+  "tokens": "./foundations/tokens.json",
+  "tokensCss": "./foundations/tokens.css",
+  "tokenBindings": "./foundations/token-bindings.json",
+  "components": "./web/index.js",
+  "showcase": "./showcase/index.jsx",
+  "comparison": null,
+  "selection": {
+    "suitableFor": [
+      "桌面额度监视器",
+      "常驻任务与重点关注"
+    ],
+    "limitations": [
+      "设计验证版，未替换 Companion 正式组件",
+      "网页使用示例数据；不连接账号、不发系统通知",
+      "黑色紧凑原型；机器人仅限本机预览，不进入公开包"
+    ],
+    "previewKind": "components"
+  },
+  "capabilities": {
+    "foundations": [
+      "color",
+      "typography",
+      "shape",
+      "motion"
+    ],
+    "components": [
+      "quota-ring",
+      "task-row",
+      "desktop-dock"
+    ],
+    "patterns": [
+      "desktop-playground"
+    ],
+    "standards": [
+      "accessibility",
+      "component-states",
+      "icons",
+      "chinese-copy",
+      "motion",
+      "composition"
+    ]
+  },
+  "galleryShell": {
+    "surface": "#151515",
+    "sidebar": "#101010",
+    "topbar": "#101010",
+    "text": "#FFFFFF",
+    "muted": "#A0A0A0",
+    "border": "#303030",
+    "active": "#292929",
+    "accent": "#00E68C",
+    "onAccent": "#000000"
+  }
+}

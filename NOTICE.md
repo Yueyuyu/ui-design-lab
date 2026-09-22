@@ -29,3 +29,10 @@
 references/clearline-console-source.png、references/signal-studio-source.png 为本项目通过内置图像生成工具生成并自主选定的设计参考；不包含第三方产品截图。Signal Studio 的 assets/field-notes.png、momentum.png、signals.png 为同流程生成的原创演示素材；应随分发保留本说明。它们不表示任何第三方品牌授权或商标清查。Phosphor 图标依其 MIT 许可，系统字体只声明字体栈，不捆绑商业字体文件。原两套参考截图仍仅供研究，未取得新的第三方再分发许可。首页使用真实组件封面，付费宣传不得直接使用未授权截图。
 
 Signal Studio 的同名 `.webp` 是上述原创 PNG 的缩放/压缩衍生，不改变艺术内容；组件包包含这些 WebP。封面可在本地服务运行后执行 `npm run covers` 重建（需要已安装 Playwright Chromium）；本轮由内置浏览器捕获同一导出路由。
+
+
+## Pulse Desktop 原版适配（本机验证）
+
+Pulse Desktop 的 OpenAI SVG 来自 qunqin24/Pulse / Lobe Icons，许可证与品牌声明位于 systems/pulse-desktop/licenses/Pulse-THIRD-PARTY-NOTICES.md。上游布局、配色、人格编排和动作移植遵循 Pulse Apache-2.0，许可证保存在同目录 Pulse-Apache-2.0.txt。修改为 JavaScript/SVG 和 Windows 宿主；无官方关联。
+
+机器人原始几何及同源引擎第三方素材授权未解决，仅在 gitignored .local-cache 本机资源中，不包含在普通 Gallery/组件包/公开发布中。详见 systems/pulse-desktop/UPSTREAM.md，不能把根许可证用于覆盖该素材。

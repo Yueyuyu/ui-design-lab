@@ -1,5 +1,23 @@
 # Prototype Instructions
 
+- 2026-09-22 额度授权：Companion 按本机接口/有效缓存→对应桌面登录→手动备用网页登录读取，默认不要求重复登录。共享 UI 显示受控来源、停止读取和恢复按钮；停止偏好由宿主持久化，页面不接收令牌、Cookie 或凭据路径。Lab 保持固定示例，不接账户。Pulse 造型/动效不因授权流程改画。
+
+- 2026-09-21 应用显隐：真实 Companion 只传入已打开的桌面应用；关闭即隐藏对应图标，全部关闭为空列表，不能自动补出 Codex 或示例。选中应用被移除时切换到仍存在的首项；该应用重新加入不抢回选择。登录与图标偏好由宿主保留。Lab 示例不读取真实进程。
+
+- 2026-09-21 桌面悬停稳定性：Companion renderer 使用固定宽度及预留高度的透明画布，使圆环在展开/收起时位置不变，避免 WebView 与宿主两次位移产生残影。此为 Windows 专用承载修正，不改变 Lab 侧轨造型与 320ms 收起约定；透明预留区必须排除原生鼠标命中。
+
+- 2026-09-21 后台与应用分项：桌面 Companion 获准迁移为登录后台自启、随 Codex 运行显隐；每个真实已接入应用独立一项，品牌图标/机器人选择按应用保存。Lab 仅演示多应用，不把示例当成 Cursor 已接入；沿用 Pulse 视觉，旧安装保留可回退。
+
+- 2026-09-21 Pulse 收起反馈：点击展开不等于固定。未固定时移出 320ms、点击外部、失去窗口焦点或打开任务后收起；只有显式固定才常驻。快速跨过轨道/面板间隙可取消收起，贴边来源退回贴边，键盘操作不因静止鼠标在外而关闭。
+
+- 2026-09-21 最新接入决定：Companion 桌面宿主获准连接真实只读业务；Lab Gallery/Playground 始终使用示例，不建立账户或本机业务通道。共享组件通过受控 props 接收额度与任务各自的读取状态、重置文案及来源标签；实时桌面不允许回落到 69% 或示例任务。
+
+- 2026-09-21 直接复用实施：Pulse 原版黑色配色优先于早期白色草稿；采用 64px 侧轨、环下百分比、现成 OpenAI SVG / Bot 资源及上游人格编排。Windows 使用 WebView2 共享 renderer，不再二次自绘。允许原版 hover 预览（320ms 离开宽限），同时保留点击、固定、键盘。机器人第三方授权未解决，仅放 gitignored .local-cache，不纳入公开 build/push。真实业务接入与替换旧安装仍待视觉确认。
+
+- 2026-09-21 最新纠正：用户要求直接复用 Pulse 已有完整设计，而非重新设计机器人或另造“小搭子”。“独立套件”指目录/Token/发布边界独立，不代表必须原创视觉。优先保留上游造型、颜色、比例与动效，通过适配器保留 Companion 业务；仅因平台差异移植渲染，不自行改画。先前自绘机器人只是未获认可的草稿，不作为下一阶段的视觉基准。沿用静态开关、低动态偏好与卸载清理；Quiet Workspace 与正式 Companion 不变。上游复用的来源、许可证及尚未解决的机器人素材权利见 systems/pulse-desktop/UPSTREAM.md；不能把 Pulse 根 Apache-2.0 许可证宣称为覆盖全部第三方素材。
+
+- 2026-09-21 用户明确授权新增独立 Pulse-inspired 桌面设计验证套件：`pulse-desktop` / 脉点桌面，`pd-` / `Pulse*`，当前 draft。先验证紧凑、展开、贴边三状态及真实 Windows 窗口，不覆盖 Quiet Workspace，不替换 Companion 正式组件。白色实体表面，额度与任务语义分离，点击而非悬停展开；关注完成项保留。示例数据必须持续标注；背景仅属 Gallery。真实桌面、多缩放验收与用户视觉确认后，再接现有只读业务能力。不得把本轮原型宣布为已安装或新正式版本。
+
 Run the local server yourself and open the preview in the browser available to this environment. Do not give the user server-start instructions when you can run it.
 
 Before making substantial visual changes, use the Product Design plugin's `get-context` skill when the visual source is unclear or no longer matches the current goal. When the user gives durable prototype-specific design feedback, preferences, or decisions, record them in `AGENTS.md`.
