@@ -1,4 +1,4 @@
-import type { ReactElement, PointerEventHandler } from 'react';
+import type { ReactElement, PointerEvent } from 'react';
 export type PulseMode = 'compact' | 'expanded' | 'docked';
 export type PulseDataState = 'ready' | 'loading' | 'error' | 'signed-out' | 'authorizing' | 'unsupported' | 'unavailable' | 'rate-limited';
 export type PulseBotMood = 'idle' | 'working' | 'happy' | 'attention' | 'loading' | 'offline' | 'spent';
@@ -14,10 +14,11 @@ export function PulseDesktopDock(props: {
   onApplicationWatchTask?: (applicationId: string, taskId: string) => void;
   onApplicationRefresh?: (applicationId: string) => void;
   mode?: PulseMode; remaining?: number | null; tasks?: PulseTask[]; pinned?: boolean;
+  autoDock?: boolean; onAutoDockChange?: (enabled: boolean) => void;
   dataState?: PulseDataState; disabled?: boolean; motionEnabled?: boolean; dockSide?: 'left' | 'right'; persona?: string; shape?: string; useLogo?: boolean;
   quotaState?: PulseDataState; taskState?: PulseDataState; resetLabel?: string; sourceLabel?: string; notice?: string;
   onModeChange?: (mode: PulseMode) => void; onPinnedChange?: (pinned: boolean) => void;
   onOpenTask?: (id: string) => void; onWatchTask?: (id: string) => void; onRetry?: () => void;
   onRefresh?: () => void;
-  onDragStart?: PointerEventHandler<HTMLButtonElement>;
+  onDragStart?: (event: PointerEvent<HTMLDivElement>) => boolean | void;
 }): ReactElement;

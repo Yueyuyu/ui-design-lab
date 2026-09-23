@@ -21,6 +21,7 @@ document.title=live?'Pulse · 应用状态':'Pulse Windows · 本地示例';
 function DesktopPreview(){
   const [mode,setMode]=useState('compact'),[scale,setScale]=useState(1),[side,setSide]=useState('right');
   const [tasks,setTasks]=useState(live?[]:demoTasks),[pinned,setPinned]=useState(false),[motion,setMotion]=useState(true);
+  const [autoDock,setAutoDock]=useState(false);
   const [notice,setNotice]=useState(''),[dataState,setDataState]=useState('ready');
   const [snapshot,setSnapshot]=useState(emptyApplicationState);
   const root=useRef(null);
@@ -35,6 +36,9 @@ function DesktopPreview(){
       if(data.type==='side' && ['left','right'].includes(data.value))setSide(data.value);
       if(data.type==='motion')setMotion(Boolean(data.value));
       if(data.type==='pinned')setPinned(Boolean(data.value));
+      if(data.type==='auto-dock'&&typeof data.value==='boolean')setAutoDock(data.value);
+      if(data.type==='window-notice'&&typeof data.value==='string')setNotice(data.value.slice(0,200));
+      if(data.type==='drag-ended')window.dispatchEvent(new Event('pulse:drag-end'));
       if(data.type==='pointer-inside'&&typeof data.value==='boolean')window.dispatchEvent(new CustomEvent('pulse:host-pointer',{detail:data.value}));
       if(data.type==='window-deactivated')window.dispatchEvent(new Event('blur'));
       if(live&&data.type==='snapshot'){
@@ -51,14 +55,19 @@ function DesktopPreview(){
   },[]);
   return <div data-ui-system="pulse-desktop" className="pd-native" data-side={side} data-source={live?'companion-live':'demo'} data-sequence={live?snapshot.sequence:undefined} style={{zoom:scale}} ref={root}>
     {(!live||snapshot.applications.length>0)&&<PulseDesktopDock mode={mode} dockSide={side} remaining={live?null:69} tasks={tasks} pinned={pinned} dataState={dataState} motionEnabled={motion}
-      applications={live?snapshot.applications.map(entry=>({...entry,brandIcon:brands[entry.id]??null,brandLabel:brandLabels[entry.id]})):undefined}
+      applications={live?snapshot.applications.map(entry=>({...entry,notice:notice||entry.notice,brandIcon:brands[entry.id]??null,brandLabel:brandLabels[entry.id]})):undefined}
       onApplicationAccountAction={live?(applicationId,type)=>sendHost({type,applicationId}):undefined}
       onApplicationIconChange={live?(applicationId,value)=>sendHost({type:'icon-mode',applicationId,value}):undefined}
       onApplicationRefresh={applicationId=>sendHost({type:'refresh',applicationId})}
       onApplicationWatchTask={(applicationId,id)=>sendHost({type:'watch',applicationId,id,watched:!snapshot.applications.find(a=>a.id===applicationId)?.tasks.find(t=>t.id===id)?.watched})}
       onApplicationOpenTask={(applicationId,id)=>sendHost({type:'open-task',applicationId,id})}
       onModeChange={setMode} onPinnedChange={value=>{if(!live)setPinned(value);sendHost({type:'pin',value});}}
-      onDragStart={()=>sendHost({type:'drag'})} onRetry={()=>live?sendHost({type:'refresh'}):setDataState('ready')}
+      autoDock={autoDock} onAutoDockChange={value=>{if(!live)setAutoDock(value);sendHost({type:'auto-dock',value});}}
+      onDragStart={()=>{
+        // 先提交解除贴边的布局，避免迟到的 size 消息把原生拖动拉回屏幕边缘。
+        requestAnimationFrame(()=>{root.current?.dispatchEvent(new Event('pulse:layout'));sendHost({type:'drag'});});
+        return true;
+      }} onRetry={()=>live?sendHost({type:'refresh'}):setDataState('ready')}
       onRefresh={live?()=>sendHost({type:'refresh'}):undefined}
       onWatchTask={id=>setTasks(current=>current.map(t=>t.id===id?{...t,watched:!t.watched}:t))}
       onOpenTask={id=>{setNotice('示例任务：'+tasks.find(t=>t.id===id).title);sendHost({type:'demo-open',id});}}/>}

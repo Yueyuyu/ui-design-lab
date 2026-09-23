@@ -85,3 +85,8 @@
 @media (hover:hover) and (pointer:fine) { [data-ui-system="pulse-desktop"] :is(.pd-account-button,.pd-pages button):hover { background:#383838; } }
 @media (prefers-reduced-motion:reduce) { [data-ui-system="pulse-desktop"] .pd-account-button { transition:none; } [data-ui-system="pulse-desktop"] .pd-account-button:active { transform:none; } }
 @media (hover:hover) { [data-ui-system="pulse-desktop"] .pd-icon-choice button:hover { color:white; background:#ffffff16; } }
+[data-ui-system="pulse-desktop"] .pd-rail { touch-action:none; user-select:none; }
+[data-ui-system="pulse-desktop"] .pd-rail .pd-summary { cursor:grab; }
+[data-ui-system="pulse-desktop"] .pd-dock[data-pressed="true"] .pd-rail button { cursor:grabbing; }
+[data-ui-system="pulse-desktop"] .pd-window-setting { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; font-size:var(--pd-caption); color:var(--pd-muted); }
+[data-ui-system="pulse-desktop"] .pd-window-setting input { color-scheme:dark; accent-color:var(--pd-green); width:16px; height:16px; cursor:pointer; }

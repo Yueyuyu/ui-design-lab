@@ -1,12 +1,12 @@
 import {useLayoutEffect, useRef} from 'react';
 
 // “打开方式”不等于固定；临时面板共享一份可取消的离开计时器。
-export function useDockDismissal(rootRef, {mode, pinned, attached, onModeChange}) {
+export function useDockDismissal(rootRef, {mode, pinned, attached, onModeChange, pressed = false}) {
   const change = useRef(onModeChange);
   change.current = onModeChange;
   useLayoutEffect(() => {
     const root = rootRef.current;
-    if (!root || mode !== 'expanded' || pinned) return;
+    if (!root || mode !== 'expanded' || pinned || pressed) return;
     let timer = null;
     const cancel = () => {clearTimeout(timer); timer = null;};
     const close = () => {cancel(); change.current?.(attached ? 'docked' : 'compact');};
@@ -42,5 +42,5 @@ export function useDockDismissal(rootRef, {mode, pinned, attached, onModeChange}
       window.removeEventListener('blur', close);
       window.removeEventListener('pulse:host-pointer', hostPointer);
     };
-  }, [rootRef, mode, pinned, attached]);
+  }, [rootRef, mode, pinned, attached, pressed]);
 }

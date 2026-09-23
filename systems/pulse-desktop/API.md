@@ -4,6 +4,9 @@
 - `PulseTaskRow({task,onOpen,onWatch,disabled})`：task = {id,title,state,watched}；打开、关注分别回调，完成不移除。
 - `PulseDesktopDock({mode,remaining,tasks,pinned,dataState,disabled,motionEnabled,dockSide,persona,shape,useLogo,onModeChange,onPinnedChange,onOpenTask,onWatchTask,onRetry,onDragStart})`：受控表现层。
 - mode：compact / expanded / docked；dataState：ready / loading / error；task.state：running / completed / attention / unavailable。
+- 整个侧轨（图标、额度环、百分比和分页区域）按住移动超过 6 个视口 CSS px 才调用 `onDragStart(event)`，回调接收根容器的 pointermove 事件。小移动仍按原按钮单击处理；拖动后的 click 被隔离，下一次按下恢复正常。详情任务区不参与拖动。
+- `onDragStart` 返回 true 表示原生宿主接管，结束或取消后必须触发 `pulse:drag-end`；接管期间暂停悬停切换、失焦及自动收起。浏览器宿主不返回 true，使用本地 pointerup/cancel 结束。
+- `autoDock=false` / `onAutoDockChange(enabled)` 为全局受控偏好。Companion 在详情与托盘中提供开关并持久化；Lab 只保留内存示例。关闭不禁用手动「贴边收起」。窗口保护基于侧轨，至少保留 16×24 CSS px 的可抓取区域，不为详情面板挪动胶囊。
 - 未固定时，悬停/点击展开都在移出 320ms 后收起；再次点击环、点击外部、窗口失焦和打开任务也会收起。固定才常驻；贴边来源退回细条。宿主不能再叠加第二套外部点击处理，以免覆盖返回状态。
 - persona：calm / eager / steady / curious / sleepy / playful / stoic / proud，默认 calm。
 - shape：blob / pebble / bean / egg / squircle / tablet / capsule / cylinder / hex / gem / crystal / wedge / shield / dome / arch / cloud / teardrop / leaf，默认 blob。

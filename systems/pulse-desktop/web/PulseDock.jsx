@@ -6,6 +6,7 @@ import { bubblePath, berthPath } from './upstream/pulse.js';
 import { BotMark } from './BotMark.jsx';
 import { botMood, newlyCompleted, quotaTone, quotaValue, taskLabels } from './model.js';
 import { useDockDismissal } from './useDockDismissal.js';
+import { useDockDrag } from './useDockDrag.js';
 
 export function PulseQuotaRing({ remaining, state = 'ready', botState = state, mood = 'idle', motionEnabled = true, celebrating = false, persona = 'calm', shape = 'blob', useLogo = false, brandIcon = openai, brandLabel, colorIndex = 0 }) {
   const value = state === 'ready' ? quotaValue(remaining) : null;
@@ -30,7 +31,7 @@ export function PulseTaskRow({ task, onOpen, onWatch, disabled = false, watchDis
   </div>;
 }
 
-export function PulseDesktopDock({ applications, onApplicationAccountAction, onApplicationIconChange, onApplicationOpenTask, onApplicationWatchTask, onApplicationRefresh, mode = 'compact', remaining = null, tasks = [], pinned = false, dataState = 'ready', quotaState = dataState, taskState = dataState, resetLabel = '示例 · 3 天 8 小时后重置', sourceLabel = '示例数据', notice = '', disabled = false, motionEnabled = true, onModeChange, onPinnedChange, onOpenTask, onWatchTask, onRetry, onRefresh, onDragStart, dockSide = 'right', persona = 'calm', shape = 'blob', useLogo = false }) {
+export function PulseDesktopDock({ applications, onApplicationAccountAction, onApplicationIconChange, onApplicationOpenTask, onApplicationWatchTask, onApplicationRefresh, mode = 'compact', remaining = null, tasks = [], pinned = false, autoDock = false, onAutoDockChange, dataState = 'ready', quotaState = dataState, taskState = dataState, resetLabel = '示例 · 3 天 8 小时后重置', sourceLabel = '示例数据', notice = '', disabled = false, motionEnabled = true, onModeChange, onPinnedChange, onOpenTask, onWatchTask, onRetry, onRefresh, onDragStart, dockSide = 'right', persona = 'calm', shape = 'blob', useLogo = false }) {
   const entries = applications?.length ? applications : [{id:'codex',name:'Codex',remaining,tasks,quotaState,taskState,resetLabel,sourceLabel,notice,iconMode:useLogo?'brand':'robot',persona,shape}];
   const [selectedId,setSelectedId]=useState(entries[0].id);
   const selectedIndex=Math.max(0,entries.findIndex(entry=>entry.id===selectedId));
@@ -53,9 +54,14 @@ export function PulseDesktopDock({ applications, onApplicationAccountAction, onA
   const railHeight=(attached?150:102)+(Math.min(entries.length,3)-1)*76+(pageCount>1?32:0);
   const panelOffset=(selectedIndex%3)*76;
   useLayoutEffect(()=>{if(mode==='docked') setAttached(true);},[mode]);
-  const startDrag=event=>{setAttached(false);onDragStart?.(event);};
+  const rootRef = useRef(null);
+  const drag=useDockDrag(rootRef,onDragStart?event=>{
+    setAttached(false);
+    if(mode==='docked')onModeChange?.('compact');
+    return onDragStart(event);
+  }:undefined);
   const hover=()=>{
-    if(mode!=='expanded' && matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    if(!drag.isPressed() && mode!=='expanded' && matchMedia('(hover:hover) and (pointer:fine)').matches) {
       if(rootRef.current)rootRef.current.dataset.keyboard='false';
       onModeChange?.('expanded');
     }
@@ -68,9 +74,8 @@ export function PulseDesktopDock({ applications, onApplicationAccountAction, onA
     const observer=new ResizeObserver(([entry])=>setPanelHeight(entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height));
     observer.observe(panelRef.current);return ()=>observer.disconnect();
   },[mode]);
-  const rootRef = useRef(null);
   useLayoutEffect(()=>{rootRef.current?.dispatchEvent(new Event('pulse:layout',{bubbles:true}));},[selected.id,railHeight,panelHeight,mode]);
-  useDockDismissal(rootRef,{mode,pinned,attached,onModeChange});
+  useDockDismissal(rootRef,{mode,pinned,attached,onModeChange,pressed:drag.pressed});
   useEffect(()=>{
     if(mode!=='expanded' || rootRef.current?.dataset.keyboard==='true') return;
     const animation=revealPanel(panelRef.current,dockSide);
@@ -104,18 +109,18 @@ export function PulseDesktopDock({ applications, onApplicationAccountAction, onA
   };
   const collapsedMode=attached?'docked':'compact';
   const openTask=id=>{onOpenTask?.(id);if(!pinned)onModeChange?.(collapsedMode);};
-  return <div ref={rootRef} className="pd-dock" data-mode={mode} data-side={dockSide} data-tone={quotaTone(value)} data-attached={attached} onPointerDown={()=>{if(rootRef.current)rootRef.current.dataset.keyboard='false';}} onKeyDown={event => {
+  return <div ref={rootRef} {...drag.handlers} className="pd-dock" data-pressed={drag.pressed} data-mode={mode} data-side={dockSide} data-tone={quotaTone(value)} data-attached={attached} onPointerDown={()=>{if(rootRef.current)rootRef.current.dataset.keyboard='false';}} onKeyDown={event => {
     if(rootRef.current)rootRef.current.dataset.keyboard='true';
     if (event.key === 'Escape' && mode === 'expanded') { event.stopPropagation(); changeMode(collapsedMode, true); }
   }}>
-    {mode === 'docked' ? <button type="button" className="pd-edge" onPointerEnter={hover} data-pd-primary aria-label={`展开桌面伴侣，${quotaLabel} ${value === null ? '未知' : `${value}%`}，${status}`} onClick={event => changeMode('expanded', event.detail === 0)} onPointerDown={startDrag}><svg width="6" height="96" viewBox="0 0 6 96" aria-hidden="true"><path d={berthPath(6,96,0)}/></svg></button> : <>
+    {mode === 'docked' ? <button type="button" className="pd-edge" onPointerEnter={hover} data-pd-primary aria-label={`展开桌面伴侣，${quotaLabel} ${value === null ? '未知' : `${value}%`}，${status}`} onClick={event => changeMode('expanded', event.detail === 0)}><svg width="6" height="96" viewBox="0 0 6 96" aria-hidden="true"><path d={berthPath(6,96,0)}/></svg></button> : <>
       <div className="pd-rail" style={{height:railHeight}}>
         {attached && <svg className="pd-rail-shape" style={{height:railHeight}} viewBox={`0 0 64 ${railHeight}`} aria-hidden="true"><path d={berthPath(64,railHeight)}/></svg>}
-        <button type="button" className="pd-drag" aria-label="拖动浮条；方向键移动，Home 复位" onPointerDown={startDrag}><span className="pd-grab-mark"/></button>
+        <button type="button" className="pd-drag" aria-label="按住拖动浮条，单击展开详情" onClick={event=>changeMode('expanded',event.detail===0)}><span className="pd-grab-mark"/></button>
         {visibleEntries.map((entry,index)=>{
           const entryValue=entry.quotaState==='ready'?quotaValue(entry.remaining):null;
           const active=entry.id===selected.id,entryMood=botMood(entry.tasks??[],entry.taskState);
-          return <button key={entry.id} type="button" className="pd-summary" data-application={entry.id} data-tone={quotaTone(entryValue)} style={{top:(attached?46:22)+index*76}} onPointerEnter={()=>{setSelectedId(entry.id);hover();}} data-pd-primary={active?true:undefined} aria-expanded={active&&mode==='expanded'} aria-controls={active&&mode==='expanded'?panelId:undefined} aria-label={`${entry.name}，${entry.quotaLabel??'周剩余额度'} ${entryValue===null?'未知':`${entryValue}%`}，${active?status:'查看状态'}，${active&&mode==='expanded'?'收起':'展开'}详情`} onClick={event=>{setSelectedId(entry.id);changeMode(active&&mode==='expanded'?collapsedMode:'expanded',event.detail===0);}}>
+          return <button key={entry.id} type="button" className="pd-summary" data-application={entry.id} data-tone={quotaTone(entryValue)} style={{top:(attached?46:22)+index*76}} onPointerEnter={()=>{if(!drag.isPressed()){setSelectedId(entry.id);hover();}}} data-pd-primary={active?true:undefined} aria-expanded={active&&mode==='expanded'} aria-controls={active&&mode==='expanded'?panelId:undefined} aria-label={`${entry.name}，${entry.quotaLabel??'周剩余额度'} ${entryValue===null?'未知':`${entryValue}%`}，${active?status:'查看状态'}，${active&&mode==='expanded'?'收起':'展开'}详情`} onClick={event=>{setSelectedId(entry.id);changeMode(active&&mode==='expanded'?collapsedMode:'expanded',event.detail===0);}}>
             <PulseQuotaRing remaining={entryValue} state={entry.quotaState} botState={entry.taskState} mood={active&&celebrating&&entryMood!=='attention'?'happy':entryMood} celebrating={active&&celebrating&&entryMood!=='attention'} motionEnabled={motionEnabled&&!disabled} persona={entry.persona??persona} shape={entry.shape??shape} useLogo={entry.iconMode==='brand'} brandIcon={entry.brandIcon===undefined?openai:entry.brandIcon} brandLabel={entry.brandLabel} colorIndex={page*3+index}/><span className="pd-value">{entryValue===null?'—':`${entryValue}%`}</span>
           </button>;
         })}
@@ -125,6 +130,7 @@ export function PulseDesktopDock({ applications, onApplicationAccountAction, onA
         <svg className="pd-panel-shape" viewBox={`0 0 270 ${panelHeight}`} preserveAspectRatio="none" aria-hidden="true"><path d={bubblePath(270,panelHeight,dockSide,attached?64:40)}/></svg>
         <header className="pd-panel-header"><div className="pd-service-title">{selected.brandIcon===null?<span aria-hidden="true" className="pd-brand-label">{selected.brandLabel}</span>:<img src={selected.brandIcon??openai} alt=""/>}<h2>{selected.name}</h2></div><div className="pd-actions"><button type="button" data-pd-primary className="pd-icon-button" aria-label={pinned ? '取消固定面板' : '固定面板'} aria-pressed={pinned} onClick={() => onPinnedChange?.(!pinned)}><PulseIcon name="pin"/></button><button type="button" className="pd-icon-button" aria-label="收起面板" onClick={event => changeMode(collapsedMode, event.detail === 0)}><PulseIcon name="close"/></button></div></header>
         <div className="pd-panel-content">
+        {onAutoDockChange&&<label className="pd-window-setting"><span>自动贴边</span><input type="checkbox" checked={autoDock} disabled={disabled} onChange={event=>onAutoDockChange(event.target.checked)}/></label>}
         {onApplicationIconChange&&<div className="pd-icon-choice" role="group" aria-label={`${selected.name}图标样式`}>{[['brand','品牌图标'],['robot','机器人']].map(([value,label])=><button type="button" key={value} disabled={disabled} aria-pressed={selected.iconMode===value} onClick={()=>onApplicationIconChange(selected.id,value)}>{label}</button>)}</div>}
         <div className="pd-quota-card" data-tone={quotaTone(value)}><div><span>{quotaLabel}</span><strong>{value === null ? '—' : `${value}%`}</strong></div><div className="pd-quota-track"><span style={{ width: `${value ?? 0}%` }}/></div><p>{quotaMessage[quotaState]??resetLabel}</p>{quotaState === 'error' && (!selected.canAuthorize||selected.authState==='connected') && <button type="button" className="pd-text-button" onClick={onRetry}>重新读取</button>}</div>
         {selected.quotaWindows?.slice(1).map((window,index)=><div className="pd-quota-card pd-quota-extra" key={`${window.label}-${index}`} data-tone={quotaTone(window.remaining)}><div><span>{window.label}</span><strong>{quotaValue(window.remaining)}%</strong></div><div className="pd-quota-track"><span style={{width:`${window.remaining}%`}}/></div><p>{window.resetLabel}</p></div>)}
