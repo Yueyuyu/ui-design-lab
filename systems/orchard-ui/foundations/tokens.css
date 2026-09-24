@@ -1,0 +1,42 @@
+[data-ui-system="orchard-ui"] {
+  --ou-icon-blue: #0066cc;
+  --ou-icon-rose: #bf3157;
+  --ou-icon-amber: #946000;
+  --ou-icon-green: #237346;
+  --ou-icon-violet: #7652b8;
+  --ou-icon-slate: #596574;
+
+  --ou-canvas: #f5f5f7;
+  --ou-surface: #ffffff;
+  --ou-sidebar: #f0f0f3;
+  --ou-text: #202124;
+  --ou-muted: #626268;
+  --ou-border: #dedee3;
+  --ou-accent: #0066cc;
+  --ou-on-accent: #ffffff;
+  --ou-soft: #e8f1fd;
+  --ou-error: #b42318;
+  --ou-success: #237346;
+  --ou-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei UI", sans-serif;
+  --ou-font-size: 14px;
+  --ou-line-height: 1.55;
+  --ou-radius: 7px;
+  --ou-panel-radius: 14px;
+  --ou-control-height: 36px;
+  --ou-control-x: 14px;
+  --ou-row-gap: 16px;
+  --ou-motion: 140ms;
+  --ou-space-1: 4px;
+  --ou-space-2: 8px;
+  --ou-space-3: 12px;
+  --ou-space-4: 16px;
+  --ou-space-6: 24px;
+}
+[data-ui-system="orchard-ui"][data-density="compact"], [data-ui-system="orchard-ui"] [data-density="compact"] {
+ --ou-control-height: 30px; --ou-row-gap: 10px;
+}
+@media (prefers-reduced-motion: reduce) {
+[data-ui-system="orchard-ui"] { --ou-motion: 0ms; }
+}
+
+[data-ui-system="orchard-ui"][data-density="comfortable"], [data-ui-system="orchard-ui"] [data-density="comfortable"] { --ou-control-height: 36px; --ou-row-gap: 16px; }

@@ -1,0 +1,9 @@
+[data-ui-system="clearline-console"] .cc-record-workflow { font:14px/1.6 var(--cc-font); color:var(--cc-text); padding:20px; background:var(--cc-canvas); }
+[data-ui-system="clearline-console"] .cc-record-layout { display:grid; gap:16px; grid-template-columns:minmax(0,1fr); align-items:start; }
+[data-ui-system="clearline-console"] .cc-record-layout[data-detail-open="true"] { grid-template-columns:minmax(0,1fr) 280px; }
+[data-ui-system="clearline-console"] .cc-record-filters, [data-ui-system="clearline-console"] .cc-record-actions { display:flex; flex-wrap:wrap; gap:12px; align-items:end; margin-bottom:16px; }
+[data-ui-system="clearline-console"] .cc-record-form fieldset { border:0; margin:0; padding:0; display:grid; gap:12px; min-width:0; }
+@media(max-width:1200px) { [data-ui-system="clearline-console"] .cc-record-layout[data-detail-open="true"] { grid-template-columns:minmax(0,1fr); } }
+
+[data-ui-system="clearline-console"] .cc-record-workflow { container-type:inline-size; }
+@container (max-width:760px) { [data-ui-system="clearline-console"] .cc-record-layout[data-detail-open="true"] { grid-template-columns:minmax(0,1fr); } }

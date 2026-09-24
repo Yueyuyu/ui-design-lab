@@ -1,3 +1,4 @@
+@import './control-styles.css';
 [data-ui-system="quiet-workspace"] .qw-button,
 [data-ui-system="quiet-workspace"] .qw-icon-button,
 [data-ui-system="quiet-workspace"] .qw-toggle,
@@ -1769,3 +1770,18 @@
 [data-ui-system="quiet-workspace"] .qw-pagination {display:flex;gap:10px;margin:0;}
 
 [data-ui-system="quiet-workspace"] .qw-control progress{accent-color:var(--qw-color-brand);max-width:100%;}
+
+/* 研究阅读有独立的正文宽度，资料目录不挤压编辑区。 */
+[data-ui-system="quiet-workspace"] .qw-preview-document{max-width:800px;margin-inline:auto;min-width:0}
+[data-ui-system="quiet-workspace"] .qw-preview-document__lead{max-width:64ch;line-height:1.75}
+[data-ui-system="quiet-workspace"] .research-layout{display:grid;grid-template-columns:minmax(160px,210px) minmax(0,760px);gap:var(--qw-space-6);align-items:start}
+[data-ui-system="quiet-workspace"] .research-layout>*{min-width:0}
+[data-ui-system="quiet-workspace"] .research-layout .qw-control textarea{min-height:280px;font-size:var(--qw-font-size-body);line-height:1.8}
+[data-ui-system="quiet-workspace"] .qw-shell-main>header{gap:12px;flex-wrap:wrap}
+[data-ui-system="quiet-workspace"] .qw-shell-main>main{padding:var(--qw-density-panel-padding)}
+[data-ui-system="quiet-workspace"] .qw-data-table td{height:var(--qw-density-row-height)}
+[data-ui-system="quiet-workspace"][data-density="compact"] .qw-table-toolbar{gap:var(--qw-density-inline-gap)}
+[data-ui-system="quiet-workspace"][data-density="compact"] .qw-data-table td{padding-block:6px}
+@media(max-width:850px){[data-ui-system="quiet-workspace"] .research-layout{grid-template-columns:minmax(0,1fr)}[data-ui-system="quiet-workspace"] .research-layout .qw-control textarea{min-height:220px}[data-ui-system="quiet-workspace"] .qw-signed-bars{gap:6px}}
+[data-ui-system="quiet-workspace"] .qw-signed-bars button{padding-inline:0}
+[data-ui-system="quiet-workspace"] .qw-signed-bars button b{white-space:nowrap}

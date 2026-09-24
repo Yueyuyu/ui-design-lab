@@ -8,6 +8,7 @@ import { defaults, validateTheme, themeCSS, contrast } from "../src/gallery/work
 import { businessExample } from "../src/gallery/workbench/usage-example.js";
 import { starterFiles } from "../scripts/lib/starter-files.mjs";
 import { ledgerFormat } from "../systems/midnight-ledger/web/format.js";
+import { readdirSync, readFileSync } from "node:fs";
 
 for (const id of ["quiet-workspace", "midnight-ledger", "clearline-console", "signal-studio"]) {
   const suite = JSON.parse(await readFile(new URL(`../systems/${id}/suite.json`, import.meta.url), "utf8"));
@@ -31,18 +32,46 @@ test("指标格式保留符号、精度及未知含义", () => {
   assert.equal(contrast("#000000", "#ffffff"), 21);
 });
 
-test("Starter 独立四套导入并拒绝覆盖已有目录", async () => {
+test("Starter 按各套真实入口导入并拒绝覆盖已有目录", async () => {
   const parent = await mkdtemp(join(tmpdir(), "ui-lab-starter-test-"));
   try {
     const target = join(parent, "new-project");
     const archive = join(parent, "fixture-package.tgz");
     await writeFile(archive, "测试包复制，不用于安装");
     const ids = await starterFiles(target, undefined, { packageFile: archive });
-    assert.equal(ids.length, 4);
+    const expectedIds = readdirSync(new URL('../systems/', import.meta.url), {withFileTypes:true}).filter(entry=>entry.isDirectory()).map(entry=>entry.name).filter(id => JSON.parse(readFileSync(new URL(`../systems/${id}/suite.json`, import.meta.url))).status !== 'draft');
+    assert.deepEqual([...ids].sort(), expectedIds.sort());
     const entry = await readFile(join(target, "src/main.jsx"), "utf8");
     for (const id of ids) assert.ok(entry.includes(`ui-design-lab/${id}`));
     assert.ok(!entry.includes("src/gallery"));
+    if (ids.includes('folio-workspace')) { assert.ok(entry.includes('.FolioWorkspace')); assert.ok(!entry.includes('.FolioDataTable')); }
+    parse(entry, { sourceType: 'module', plugins: ['jsx'] });
+    if (ids.includes('folio-workspace')) {
+      const folioTarget=join(parent,'folio-only');
+      await starterFiles(folioTarget, 'folio-workspace', {packageFile:archive});
+      const folioEntry=await readFile(join(folioTarget,'src/main.jsx'),'utf8');
+      parse(folioEntry, {sourceType:'module',plugins:['jsx']});
+      assert.ok(folioEntry.includes('.FolioWorkspace'));
+      assert.ok(!folioEntry.includes('WorkflowDemo'));
+      assert.ok(!folioEntry.includes('setKind'));
+      await assert.rejects(readFile(join(folioTarget,'src/workbench/demo-data.js')), {code:'ENOENT'});
+      const folioReadme=await readFile(join(folioTarget,'README.md'),'utf8');
+      assert.ok(folioReadme.includes('\n4. 在 src/main.jsx'));
+    }
     const manifest = JSON.parse(await readFile(join(target, "package.json"), "utf8"));
+    for (const [id, kitId, component] of [['clearline-console','projects','ClearProjectWorkspace'],['signal-studio','content','SignalContentBoard']]) {
+      const workspace = join(parent, id);
+      await starterFiles(workspace, id, { packageFile: archive, kitId });
+      const entry = await readFile(join(workspace, 'src/main.jsx'), 'utf8');
+      parse(entry, { sourceType:'module', plugins:['jsx'] });
+      assert.ok(entry.includes('.' + component));
+      assert.ok(!entry.includes('WorkflowDemo'));
+      assert.ok((await readFile(join(workspace, 'integration.md'), 'utf8')).includes('AbortSignal'));
+    }
+    const research = join(parent, 'research-starter');
+    await starterFiles(research, 'quiet-workspace', { packageFile: archive, kitId:'research' });
+    assert.ok((await readFile(join(research, 'src/main.jsx'), 'utf8')).includes('useState("research")'));
+    await assert.rejects(starterFiles(join(parent, 'wrong-kit'), 'folio-workspace', {packageFile:archive,kitId:'projects'}), /场景与套系不匹配/);
     assert.equal(manifest.dependencies["ui-design-lab"], "file:vendor/fixture-package.tgz");
     assert.equal(await readFile(join(target, "vendor/fixture-package.tgz"), "utf8"), "测试包复制，不用于安装");
     await assert.rejects(starterFiles(join(parent, "missing"), undefined, { packageFile: join(parent, "missing.tgz") }), /组件包不存在/);

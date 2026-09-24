@@ -36,11 +36,11 @@ export function BusinessGallery({
     id: crypto.randomUUID(),
     message
   }]);
-  return <section className="business-gallery"><h1>业务组件与能力</h1><p>可复用导出与真实交互示例 · 套系 v{suite.version} · 本地未发布扩展</p><U.Breadcrumb items={[{
+  return <section className="business-gallery"><h1>基础控件联调</h1><p>可复用导出与真实交互示例 · 套系 v{suite.version} · 本地未发布扩展</p><U.Breadcrumb items={[{
       label: "套系总览",
       href: "#systems/" + suiteId + "/overview"
     }, {
-      label: "业务组件"
+      label: "控件联调"
     }]} />
  <U.Tabs value={tab} onChange={setTab} items={[{
       id: "form",

@@ -1,0 +1,7 @@
+/* 公共层仅约束拍摄画幅；内部排版、组件和视觉语言由各套系负责。 */
+.suite-cover { position:relative; width:100%; aspect-ratio:760/480; overflow:hidden; }
+.suite-cover__canvas { position:absolute; top:0; left:0; transform-origin:top left; pointer-events:none; }
+.cover-export { width:1140px; height:720px; overflow:hidden; }
+.cover-export .suite-cover { height:720px; }
+.cover-export .suite-cover__canvas { transform:scale(1)!important; }
+.suite-cover__image { display:block; width:100%; height:100%; object-fit:contain; }

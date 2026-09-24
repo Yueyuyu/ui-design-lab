@@ -5,7 +5,7 @@ export type InteractionState = "default" | "hover" | "pressed" | "focus" | "disa
 export type DataState = InteractionState | "empty";
 export interface StateProps { visualState?: InteractionState; loading?: boolean; error?: boolean | string; disabled?: boolean; }
 export interface ButtonProps extends Omit<ComponentPropsWithoutRef<"button">, "size">, StateProps {
-  variant?: "primary" | "secondary" | "ghost" | "danger"; icon?: Icon; trailingIcon?: Icon;
+  variant?: "primary" | "secondary" | "ghost" | "danger" | "ledger"; icon?: Icon; trailingIcon?: Icon;
 }
 export interface IconButtonProps extends ComponentPropsWithoutRef<"button">, StateProps { label: string; icon: Icon; }
 export interface FieldProps extends ComponentPropsWithoutRef<"input">, Omit<StateProps, "error"> { label: string; hint?: string; error?: string; }
@@ -54,7 +54,7 @@ export declare function LedgerShell(props: {brand: ReactNode; navigation:Array<{
 export declare function LedgerTabs(props: {items:Array<{id:string;label:string;content?:ReactNode;disabled?:boolean}>; value:string; onChange?:(id:string)=>void; label?:string; disabled?:boolean}): JSX.Element;
 export declare function LedgerBreadcrumb(props:{items:Array<{label:string;href?:string;onClick?:()=>void}>;label?:string}):JSX.Element;
 export declare function LedgerPagination(props:{page:number;pageCount:number;onChange?:(page:number)=>void;disabled?:boolean}):JSX.Element;
-export declare function LedgerDataTable<T extends Row>(props: {rows:T[];columns:Array<Column<T>&{sortable?:boolean}>;caption?:string;pageSize?:number;selection?:T["id"][];onSelectionChange?:(ids:T["id"][])=>void;onBulkAction?:(ids:T["id"][])=>void;onRowActivate?:(row:T)=>void;loading?:boolean;disabled?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;
+export declare function LedgerDataTable<T extends Row>(props: {rows:T[];columns:Array<Column<T>&{sortable?:boolean}>;caption?:string;pageSize?:number;showToolbar?:boolean;selectable?:boolean;selection?:T["id"][];onSelectionChange?:(ids:T["id"][])=>void;onBulkAction?:(ids:T["id"][])=>void;onRowActivate?:(row:T)=>void;loading?:boolean;disabled?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;
 export declare function LedgerDrawer(props:DialogProps):JSX.Element;
 export declare function LedgerDropdownMenu(props:{label?:string;items:Array<{id:string;label:string;disabled?:boolean;danger?:boolean;onSelect?:()=>void}>;disabled?:boolean}):JSX.Element;
 export declare function LedgerPopover(props:{label:string;children?:ReactNode;disabled?:boolean}):JSX.Element;
@@ -65,3 +65,16 @@ export declare function LedgerToastQueue(props:{items:Array<{id:string;message:s
 
 
 export declare function ledgerFormat(value:number,options?:{kind?:"number"|"money"|"percent";currency?:string;digits?:number;sign?:boolean;locale?:string}):string;
+
+export interface LedgerDataPanelProps { loading?:boolean; error?:string; disabled?:boolean; onRetry?:()=>void; }
+export interface LedgerHolding { id:string; symbol:string; side:string; market:string; detail?:string; change:string; pnl:string; tone?:'positive'|'negative'|'neutral'; }
+export interface LedgerSummaryMetric { label:string; value:ReactNode; tone?:'positive'|'negative'|'neutral'; }
+export declare function LedgerAssetSummary(props:LedgerDataPanelProps & {balance?:number;currency?:string;today?:string;month?:string;totalReturn?:string;onDeposit?:()=>void;onWithdraw?:()=>void}):JSX.Element;
+export declare function LedgerPerformancePanel(props:LedgerDataPanelProps & {metrics?:LedgerSummaryMetric[];data?:number[];labels?:string[];period?:string;periods?:string[];onPeriodChange?:(period:string)=>void}):JSX.Element;
+export declare function LedgerHoldingsPanel(props:LedgerDataPanelProps & {rows?:LedgerHolding[];summary?:ReactNode;onRowActivate?:(row:LedgerHolding)=>void}):JSX.Element;
+export declare function LedgerPnlCalendar(props:LedgerDataPanelProps & {month:string;days?:Array<{date:string;value:number}>;selectedDate?:string;onSelectDate?:(date:string)=>void}):JSX.Element;
+export declare function LedgerExposurePanel(props:LedgerDataPanelProps & {items?:Array<{label:string;value:number}>}):JSX.Element;
+export declare function LedgerStrategyPanel(props:LedgerDataPanelProps & {metrics?:LedgerSummaryMetric[];trend?:number[];description?:string}):JSX.Element;
+export declare function LedgerMonthlyReturns(props:LedgerDataPanelProps & {data?:Array<{label:string;value:number}>}):JSX.Element;
+
+export declare function LedgerSlider(props:{label:string;value:number;min?:number;max?:number;step?:number;unit?:string;onChange?:(value:number)=>void;hint?:string;error?:string;loading?:boolean;disabled?:boolean}):JSX.Element;

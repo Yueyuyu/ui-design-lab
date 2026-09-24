@@ -1,0 +1,40 @@
+{
+  "base": {
+    "--du-canvas": "base.canvas",
+    "--du-surface": "base.surface",
+    "--du-sidebar": "base.sidebar",
+    "--du-text": "base.text",
+    "--du-muted": "base.muted",
+    "--du-border": "base.border",
+    "--du-accent": "base.accent",
+    "--du-on-accent": "base.on-accent",
+    "--du-soft": "base.soft",
+    "--du-error": "base.error",
+    "--du-success": "base.success",
+    "--du-font": "base.font",
+    "--du-font-size": "base.font-size",
+    "--du-line-height": "base.line-height",
+    "--du-radius": "base.radius",
+    "--du-panel-radius": "base.panel-radius",
+    "--du-control-height": "base.control-height",
+    "--du-control-x": "base.control-x",
+    "--du-row-gap": "base.row-gap",
+    "--du-motion": "base.motion",
+    "--du-space-1": "base.space-1",
+    "--du-space-2": "base.space-2",
+    "--du-space-3": "base.space-3",
+    "--du-space-4": "base.space-4",
+    "--du-space-6": "base.space-6"
+  },
+  "compact": {
+    "--du-control-height": "compact.control-height",
+    "--du-row-gap": "compact.row-gap"
+  },
+  "reducedMotion": {
+    "--du-motion": "reducedMotion.duration"
+  },
+  "comfortable": {
+    "--du-control-height": "base.control-height",
+    "--du-row-gap": "base.row-gap"
+  }
+}

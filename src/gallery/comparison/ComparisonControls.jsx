@@ -14,7 +14,7 @@ function SuiteSelect({ label, value, suites, onChange }) {
       <span className="comparison-control__label">{label}</span>
       <span className="comparison-suite-select">
         <i style={{ background: getSuiteMarkColor(suite ?? {}) }}>{suite?.shortCode ?? "?"}</i>
-        <select value={value} onChange={(event) => onChange(event.target.value)}>
+        <select aria-label={label} value={value} onChange={(event) => onChange(event.target.value)}>
           {suites.map((item) => <option value={item.id} key={item.id}>{item.displayName}</option>)}
         </select>
       </span>
@@ -27,7 +27,7 @@ function CompactSelect({ icon: Icon, value, options, label, onChange }) {
     <label className="comparison-compact-select">
       <span className="lab-visually-hidden">{label}</span>
       <Icon size={18} aria-hidden="true" />
-      <select value={value} onChange={(event) => onChange(event.target.value)} aria-label={label}>
+      <select aria-label={label} value={value} onChange={(event) => onChange(event.target.value)}>
         {options.map((option) => <option value={option.id} key={option.id}>{option.label}</option>)}
       </select>
     </label>
@@ -40,6 +40,7 @@ export function ComparisonControls({
   suiteBId,
   viewport,
   density,
+  densities = ["comfortable", "compact"],
   visualState,
   onSuiteAChange,
   onSuiteBChange,
@@ -56,7 +57,7 @@ export function ComparisonControls({
         <ArrowsLeftRight size={20} aria-hidden="true" />
       </button>
       <SuiteSelect label="Suite B" value={suiteBId} suites={suites} onChange={onSuiteBChange} />
-      <div className="comparison-controls__view-options">
+      <details className="comparison-view-details"><summary>视口、密度与状态</summary><div className="comparison-controls__view-options">
         <CompactSelect
           icon={ViewportIcon}
           label="预览视口"
@@ -68,7 +69,7 @@ export function ComparisonControls({
           icon={SlidersHorizontal}
           label="组件密度"
           value={density}
-          options={[{ id: "comfortable", label: "舒适" }, { id: "compact", label: "紧凑" }]}
+          options={[{ id: "comfortable", label: "舒适" }, { id: "compact", label: "紧凑" }].filter(item => densities.includes(item.id))}
           onChange={onDensityChange}
         />
         <CompactSelect
@@ -78,7 +79,7 @@ export function ComparisonControls({
           options={comparisonStates}
           onChange={onVisualStateChange}
         />
-      </div>
+      </div></details>
     </div>
   );
 }

@@ -1,0 +1,113 @@
+{
+  "version": "0.1.0",
+  "requiredStates": [
+    "default",
+    "hover",
+    "pressed",
+    "focus",
+    "disabled",
+    "loading",
+    "error"
+  ],
+  "components": {
+    "button": {
+      "default": "文字与小图标入口，solid 用于主要提交。",
+      "hover": "中性底色加深。",
+      "pressed": "进一步压低底色，不位移内容。",
+      "focus": "显示蓝色双像素轮廓。",
+      "disabled": "原生 disabled，无法触发。",
+      "loading": "loading 禁止重复操作，图标加可见进度文案。",
+      "error": "由邻近 Callout 呈现原因和重试，不仅改红色。"
+    },
+    "status": {
+      "default": "带文本的浅色状态标记。",
+      "hover": "静态属性没有 hover 动作。",
+      "pressed": "静态属性没有 pressed 动作。",
+      "focus": "不加入 Tab 顺序；详情中的状态 select 可聚焦。",
+      "disabled": "随父级禁用控件，不把静态状态当按钮。",
+      "loading": "由工作区保存状态表达，不修改原记录值。",
+      "error": "未知状态保持文本，不强制显示成功颜色。"
+    },
+    "callout": {
+      "default": "轻中性提示，不给每段正文套容器。",
+      "hover": "由可选 action 控件表达。",
+      "pressed": "由 action 控件表达。",
+      "focus": "错误由 alert 宣读；action 有清晰轮廓。",
+      "disabled": "action 自己声明禁用条件。",
+      "loading": "保留原因，action 显示进度。",
+      "error": "error 色面、警告图标、原因和恢复按钮。"
+    },
+    "page-header": {
+      "default": "图标、可编辑标题与辅助属性，标题无卡片外框。",
+      "hover": "标题出现轻灰编辑底色。",
+      "pressed": "由标题输入框表达文本选择。",
+      "focus": "标题输入框具有名称和可见轮廓。",
+      "disabled": "读取失败时标题输入禁用。",
+      "loading": "工作区状态提示正在本地保存。",
+      "error": "写入失败保留标题，读取失败不覆盖旧内容。"
+    },
+    "page-tree": {
+      "default": "嵌套列表呈现父子页面，当前项 aria-current=page。",
+      "hover": "每个页面入口显示中性底色。",
+      "pressed": "展开按钮和页面入口独立，不混用动作。",
+      "focus": "原生按钮按 Tab 顺序可达；展开状态可读。",
+      "disabled": "读取失败禁用新建，浏览仍可用。",
+      "loading": "加载由工作区保存/读取状态承担。",
+      "error": "搜索无结果提供明确文本；保存失败可重试。"
+    },
+    "breadcrumbs": {
+      "default": "由父级到当前页的轻量定位。",
+      "hover": "每项是可点击页面入口。",
+      "pressed": "按下打开对应页面，不清除草稿。",
+      "focus": "原生按钮及当前位置标识。",
+      "disabled": "导航仍可读，不承担编辑权限。",
+      "loading": "保持原路径，加载在工作区层表达。",
+      "error": "路径在存储验证时检查循环与无效父级。"
+    },
+    "block-editor": {
+      "default": "支持正文、标题、待办、折叠四类纯文本块。",
+      "hover": "手柄保持可发现，hover 增强；文本轻底色。",
+      "pressed": "块菜单转换、上下移动或删除。",
+      "focus": "菜单方向键、Home/End/Esc；中文组合输入不触发斜杠。",
+      "disabled": "控件禁用但正文可读，避免假可编辑。",
+      "loading": "本地保存不阻断持续输入，状态由工作区表达。",
+      "error": "删除可撤销一次；写入失败保留内存内容。"
+    },
+    "view-tabs": {
+      "default": "表格、看板、列表对应同一组记录。",
+      "hover": "文字标签轻底色。",
+      "pressed": "选中项底线与 aria-selected 同步。",
+      "focus": "左右方向键、Home/End 切换；单一 Tab 停靠。",
+      "disabled": "此只读视图切换保持可用，不承担编辑权限。",
+      "loading": "保留当前视图，加载状态由数据库或工作区提供。",
+      "error": "筛选空结果在对应面板给出清除入口。"
+    },
+    "database": {
+      "default": "表格轻分隔线、看板按状态分组、列表按行排版。",
+      "hover": "记录标题有局部底色。",
+      "pressed": "点击记录侧开；切换布局保留记录与视图独立配置。",
+      "focus": "语义 table、tablist 与原生筛选控件；行标题可键盘打开。",
+      "disabled": "读取失败禁用新建，搜索浏览保持可用。",
+      "loading": "保存只更新详情数据，不让所有行变成骨架。",
+      "error": "空集合可新建；筛选空结果可清除筛选。"
+    },
+    "record-detail": {
+      "default": "非模态 aside，独立草稿，不阻断列表。",
+      "hover": "字段与按钮表达 hover。",
+      "pressed": "保存提交当前记录；取消丢弃此草稿。",
+      "focus": "打开聚焦标题；Esc 关闭保留草稿；关闭恢复触发点。",
+      "disabled": "字段与提交禁用，关闭仍可用。",
+      "loading": "保存状态由工作区承担，当前输入保留。",
+      "error": "空标题给出行内错误并聚焦；读写失败不宣称已保存。"
+    },
+    "workspace": {
+      "default": "页面树、正文块与内嵌集合组合，支持独立 storageKey。",
+      "hover": "不让整个工作区出现装饰性 hover。",
+      "pressed": "由所属按钮和编辑器处理操作。",
+      "focus": "所有编辑可键盘完成，窄屏目录有常驻切换按钮。",
+      "disabled": "读取失败展示只读示例，禁止自动覆盖原始内容。",
+      "loading": "250ms 延迟保存有可见状态，卸载前补写。",
+      "error": "读写失败分别处理，重试读取/保存；JSON 导出备份。"
+    }
+  }
+}

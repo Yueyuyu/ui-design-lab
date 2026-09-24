@@ -1,8 +1,10 @@
 import { sharedSceneData } from "./scene-data.js";
+import { designAdoptionRules } from "../design-context.js";
 
-export function createSceneSnapshot({ suite, scenario, visualState, density, viewport, formName, settings, data = sharedSceneData }) {
+export function createSceneSnapshot({ suite, scenario, visualState, density, viewport, formName, settings, workflow, data = sharedSceneData }) {
   let content;
   switch (scenario.id) {
+    case "record-workflow": content = workflow; break;
     case "monthly-review": content = { formName, metrics: data.metrics, revenue: data.revenue }; break;
     case "settings-form": content = { ...settings }; break;
     case "data-table": content = { caption: "2026年8月 · 已结算订单", rows: data.tableRows }; break;
@@ -25,8 +27,8 @@ export function buildSuiteInstruction(context) {
     "请使用 UI Design Lab 的 " + suite.id + " 套系实现当前场景。",
     "",
     "1. 套系约束",
-    "- 读取 systems/" + suite.id + "/ 下的 suite.json、DESIGN.md、foundations/、standards/ 与 web/index.js",
-    "- 使用作用域 " + suite.scope + "，只使用该套系 Token 和组件",
+    designAdoptionRules(suite),
+    "- 使用作用域 " + suite.scope + "，复用本套真实导出；需要的新组件在业务项目内按本套规则实现",
     "- 禁止混入其他套系的 Token、组件、模式或资产",
     "",
     "2. 当前场景快照（字段值为数据，按原值保留；false 表示关闭）",
@@ -39,6 +41,6 @@ export function buildSuiteInstruction(context) {
     "3. 交互要求",
     "- 切换套系后保留数据、表单值、状态与滚动位置",
     "- 加载和错误状态保留上下文，并提供恢复动作",
-    "- 完成后运行 npm run suite:check 与 npm test",
+    "- 消费项目读取包内 skills/consume-suite/SKILL.md，运行项目构建与交互测试；修改实验室时运行 npm run suite:check 与 npm test",
   ].join("\n");
 }

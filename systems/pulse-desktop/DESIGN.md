@@ -42,3 +42,7 @@ PulseQuotaRing / PulseTaskRow / PulseDesktopDock。原版 OpenAI SVG 来自 Puls
 ## Agent Usage
 
 先读本目录 manifest、foundations、standards、UPSTREAM.md 与 web/index.js。运行 npm run suite:check。机器人授权未明确，仅本机使用；普通公开构建使用已标注来源的静态品牌图标，不包含机器人数据。Windows 宿主后台自启并使用真实只读业务，Lab 继续固定示例；每应用独立选择品牌图标或机器人，多个机器人按原版色轮分配，不另造配色。当前只有 Codex 真实接入，Cursor 是多项设计示例。
+
+## 设计延伸
+
+本套是一套可用于继续设计的视觉与交互语言，现有组件是可复用的起点。先读 [扩展规范](standards/extension.md)，根据任务选择布局，再决定直接复用、组合或在业务项目内新增组件。新增组件沿用本套 Token、字阶、间距、表面与交互规则，使用项目自己的名称和样式类；不能编造包导出，也不必复制示例页面的导航和业务字段。

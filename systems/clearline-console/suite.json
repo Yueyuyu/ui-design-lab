@@ -70,8 +70,6 @@
       "panel",
       "badge",
       "bar-chart",
-      "shell",
-      "data-table",
       "textarea",
       "checkbox",
       "radio-group",
@@ -82,17 +80,23 @@
       "tabs",
       "breadcrumb",
       "pagination",
-      "dropdown-menu",
-      "tooltip",
-      "popover",
+      "data-table",
       "drawer",
+      "dropdown-menu",
+      "popover",
+      "tooltip",
       "progress",
       "skeleton",
-      "toast-queue"
+      "toast-queue",
+      "project-table",
+      "project-details",
+      "slider"
     ],
     "patterns": [
       "project-workbench",
-      "task-workflow"
+      "task-workflow",
+      "shell",
+      "project-workspace"
     ],
     "standards": [
       "accessibility",
@@ -100,7 +104,9 @@
       "icons",
       "data-visualization",
       "chinese-copy",
-      "motion"
+      "motion",
+      "composition",
+      "extension"
     ]
   },
   "comparison": {
@@ -110,13 +116,15 @@
       "data-table",
       "settings-form",
       "detail-page",
-      "empty-state"
+      "empty-state",
+      "record-workflow"
     ],
     "modules": [
       "metrics",
       "chart",
       "form",
-      "buttons"
+      "buttons",
+      "record-detail"
     ]
   },
   "selection": {
@@ -128,8 +136,13 @@
       "新增实验套系，API 可能调整",
       "仅浅色；暂未提供上传与目录树"
     ],
-    "previewKind": "components",
-    "thumbnail": "references/thumbnails/clearline-console.png"
+    "previewKind": "scene-concept",
+    "thumbnail": "references/thumbnails/clearline-console.png",
+    "summary": "让表格、记录与操作，始终清楚。",
+    "scenePreview": {
+      "image": "references/scene-covers/clearline-console.png",
+      "title": "库存工作表"
+    }
   },
   "themeControls": [
     {
@@ -169,5 +182,9 @@
         "system-ui, sans-serif"
       ]
     }
-  ]
+  ],
+  "starter": {
+    "component": "ClearProjectWorkspace",
+    "props": {}
+  }
 }

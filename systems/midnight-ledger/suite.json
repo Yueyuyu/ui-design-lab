@@ -6,6 +6,7 @@
   "localizedName": "午夜账盘",
   "shortCode": "ML",
   "prefix": "ml",
+  "componentPrefix": "Ledger",
   "version": "0.1.0",
   "status": "experimental",
   "description": "深蓝与奶油文字构成的数据设计，适合分析、监控与运营报表。",
@@ -72,21 +73,19 @@
     ],
     "components": [
       "button",
-      "icon-button",
       "field",
-      "select",
-      "toggle",
+      "icon-button",
+      "metric",
       "panel",
+      "select",
+      "status-badge",
+      "toggle",
       "dialog",
       "table",
-      "notification",
       "empty-state",
-      "status-badge",
+      "notification",
+      "bar-chart",
       "line-chart",
-      "metric",
-      "terminal-preview",
-      "shell",
-      "data-table",
       "textarea",
       "checkbox",
       "radio-group",
@@ -97,21 +96,31 @@
       "tabs",
       "breadcrumb",
       "pagination",
-      "dropdown-menu",
-      "tooltip",
-      "popover",
+      "data-table",
       "drawer",
+      "dropdown-menu",
+      "popover",
+      "tooltip",
       "progress",
       "skeleton",
       "toast-queue",
-      "bar-chart"
+      "asset-summary",
+      "performance-panel",
+      "holdings-panel",
+      "pnl-calendar",
+      "exposure-panel",
+      "strategy-panel",
+      "monthly-returns",
+      "slider"
     ],
     "patterns": [
       "portfolio-overview",
       "compact-trade-console",
       "signal-cockpit",
       "position-ledger",
-      "calendar-heatmap"
+      "calendar-heatmap",
+      "terminal-preview",
+      "shell"
     ],
     "standards": [
       "accessibility",
@@ -120,7 +129,9 @@
       "data-visualization",
       "chinese-copy",
       "motion",
-      "status-semantics"
+      "status-semantics",
+      "composition",
+      "extension"
     ]
   },
   "comparison": {
@@ -148,8 +159,13 @@
       "实验阶段，API 可能调整",
       "暂未提供浅色模式"
     ],
-    "previewKind": "components",
-    "thumbnail": "references/thumbnails/midnight-ledger.png"
+    "previewKind": "scene-concept",
+    "thumbnail": "references/thumbnails/midnight-ledger.png",
+    "summary": "让复杂信息，一眼有序。",
+    "scenePreview": {
+      "image": "references/scene-covers/midnight-ledger.png",
+      "title": "交易工作台"
+    }
   },
   "tokenBindings": "./foundations/token-bindings.json",
   "themeControls": [

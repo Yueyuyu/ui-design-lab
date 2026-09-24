@@ -60,7 +60,7 @@ ${manifest.displayName} / ${manifest.localizedName}。此文件由 suite.json �
 
 ## Components
 
-优先复用 ${manifest.components} 导出的套系组件。
+优先复用 ${manifest.components} 的真实导出。现有组件不是设计范围的上限；缺少时可按本套规则在业务项目中新增，不编造库 API。
 
 ## Do's and Don'ts
 
@@ -69,7 +69,11 @@ ${manifest.displayName} / ${manifest.localizedName}。此文件由 suite.json �
 
 ## Agent Usage
 
-读取 suite.json、Token、标准和组件入口后再实现页面。完成后运行 npm run suite:check。
+先读 suite.json、本文、Token 与相关标准，理解设计原则后再读 API、类型及相近组件源码。根据用户任务选择布局，不机械继承示例外壳。
+
+正式交付前需根据本套来源补充 standards/extension.md，并登记到 manifest.capabilities.standards：说明设计不变量、布局取舍、新组件推导实例与验收；不能仅用本生成草案替代设计规则。
+
+消费项目运行自己的构建与相关交互检查；只有修改实验室源码时运行 npm run suite:check。
 `;
 
 if (outArg) {

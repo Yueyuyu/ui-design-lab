@@ -128,13 +128,13 @@
       "error": "negative"
     },
     "terminalPreview": {
-      "default": "live",
-      "hover": "owned-controls",
-      "pressed": "owned-controls",
-      "focus": "owned-control-focus",
-      "disabled": "muted",
-      "loading": "panel-skeleton",
-      "error": "risk-banner"
+      "default": "七个独立业务组件组合成演示页面。",
+      "hover": "由周期、持仓、日期和动作按钮表达。",
+      "pressed": "选择周期/日期更新本地状态，资金动作仅显示未接入提示。",
+      "focus": "按页面 DOM 顺序访问可用控件。",
+      "disabled": "页面没有全局 disabled 参数；单个业务组件可以禁用。",
+      "loading": "此整页为同步本地演示，不提供全局加载；业务组件支持 loading。",
+      "error": "此整页无远程请求；业务组件支持 error 和 onRetry。"
     },
     "shell": {
       "default": "标签、当前值、范围与操作入口同时显示。",
@@ -306,6 +306,87 @@
       "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
       "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
       "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "asset-summary": {
+      "default": "余额、今日/月度收益与累计收益；无数据时说明为空。",
+      "hover": "可选入金/出金按钮承担反馈。",
+      "pressed": "可选入金/出金按钮承担动作；面板本身不按压。",
+      "focus": "可选入金/出金按钮保留原生键盘访问；静态数据不占用 Tab。",
+      "disabled": "内容区 inert，当前数据继续可见。",
+      "loading": "显示正在读取该面板的文字，aria-busy；不展示虚构占位数字。",
+      "error": "就地说明失败原因，提供 onRetry 时显示重试；不执行真实业务动作。"
+    },
+    "performance-panel": {
+      "default": "指标行与对应周期收益曲线；无数据时说明为空。",
+      "hover": "周期按钮与图表数据点承担反馈。",
+      "pressed": "周期按钮与图表数据点承担动作；面板本身不按压。",
+      "focus": "周期按钮与图表数据点保留原生键盘访问；静态数据不占用 Tab。",
+      "disabled": "内容区 inert，当前数据继续可见。",
+      "loading": "显示正在读取该面板的文字，aria-busy；不展示虚构占位数字。",
+      "error": "就地说明失败原因，提供 onRetry 时显示重试；不执行真实业务动作。"
+    },
+    "holdings-panel": {
+      "default": "从 rows 计算数量并显示每条持仓；无数据时说明为空。",
+      "hover": "传入 onRowActivate 时的持仓行承担反馈。",
+      "pressed": "传入 onRowActivate 时的持仓行承担动作；面板本身不按压。",
+      "focus": "传入 onRowActivate 时的持仓行保留原生键盘访问；静态数据不占用 Tab。",
+      "disabled": "内容区 inert，当前数据继续可见。",
+      "loading": "显示正在读取该面板的文字，aria-busy；不展示虚构占位数字。",
+      "error": "就地说明失败原因，提供 onRetry 时显示重试；不执行真实业务动作。"
+    },
+    "pnl-calendar": {
+      "default": "按真实月份长度、周一开始排列日期；没有盈亏数据的日期标为无记录，不补零。",
+      "hover": "传入 onSelectDate 时的日期按钮承担反馈。",
+      "pressed": "传入 onSelectDate 时的日期按钮承担动作；面板本身不按压。",
+      "focus": "传入 onSelectDate 时的日期按钮保留原生键盘访问；静态数据不占用 Tab。",
+      "disabled": "内容区 inert，当前数据继续可见。",
+      "loading": "显示正在读取该面板的文字，aria-busy；不展示虚构占位数字。",
+      "error": "就地说明失败原因，提供 onRetry 时显示重试；不执行真实业务动作。"
+    },
+    "exposure-panel": {
+      "default": "环图和文字完整表达占比；无数据时说明为空。",
+      "hover": "静态环图不设置悬停动作，比例和图例持续可见。",
+      "pressed": "环图只表达占比，不响应点击或修改数据。",
+      "focus": "静态图表不占用 Tab；通过图表可访问名称和文字图例读取占比。",
+      "disabled": "内容区 inert，当前数据继续可见。",
+      "loading": "显示正在读取该面板的文字，aria-busy；不展示虚构占位数字。",
+      "error": "就地说明失败原因，提供 onRetry 时显示重试；不执行真实业务动作。"
+    },
+    "strategy-panel": {
+      "default": "迭代指标和数据驱动趋势；无数据时说明为空。",
+      "hover": "内置折线图数据点承担反馈。",
+      "pressed": "内置折线图数据点承担动作；面板本身不按压。",
+      "focus": "内置折线图数据点保留原生键盘访问；静态数据不占用 Tab。",
+      "disabled": "内容区 inert，当前数据继续可见。",
+      "loading": "显示正在读取该面板的文字，aria-busy；不展示虚构占位数字。",
+      "error": "就地说明失败原因，提供 onRetry 时显示重试；不执行真实业务动作。"
+    },
+    "monthly-returns": {
+      "default": "带月份标签的正负收益柱；无数据时说明为空。",
+      "hover": "柱图数据点承担反馈。",
+      "pressed": "柱图数据点承担动作；面板本身不按压。",
+      "focus": "柱图数据点保留原生键盘访问；静态数据不占用 Tab。",
+      "disabled": "内容区 inert，当前数据继续可见。",
+      "loading": "显示正在读取该面板的文字，aria-busy；不展示虚构占位数字。",
+      "error": "就地说明失败原因，提供 onRetry 时显示重试；不执行真实业务动作。"
+    },
+    "bar-chart": {
+      "default": "显示带单位的分类柱，正负方向基于零轴。",
+      "hover": "数据柱显示名称与数值；不隐去基础标签。",
+      "pressed": "柱图用于读取，不执行修改动作。",
+      "focus": "原生按钮可逐项读取无障碍名称。",
+      "disabled": "禁用数据柱按钮，数值继续可见。",
+      "loading": "state=loading 显示正在加载数据，aria-busy。",
+      "error": "state=error 显示原因与 onRetry；非法数值提示检查数据源。"
+    },
+    "slider": {
+      "default": "显示当前数值、单位和可调范围；value 由调用方持有。",
+      "hover": "轨道提供轻量反馈，不改变当前数值。",
+      "pressed": "拖动滑块更新数值，停止拖动不等于保存。",
+      "focus": "方向键按 step 调整，Home/End 到最小/最大值；保留可见焦点。",
+      "disabled": "禁用原生 range，保留当前读数。",
+      "loading": "禁用调整并说明正在读取，保留已有值。",
+      "error": "显示错误文字并通过 aria-describedby 关联输入；由调用方处理恢复。"
     }
   }
 }

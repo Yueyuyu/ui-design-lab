@@ -11,6 +11,37 @@ test.beforeEach(async ({ page }) => {
 test.afterEach(async ({ page }) => { expect(page.__appErrors).toEqual([]); });
 test("目录选型、全量搜索及直接比较", async ({ page }) => { await catalogFlow(driver(page)); });
 test("手机导航、目录和比较入口", async ({ page }) => { await page.setViewportSize({ width: 390, height: 844 }); await catalogFlow(driver(page)); });
+test("三个公共导航有独立页面、选中态和可刷新地址", async ({ page }) => {
+  await page.goto("/#/systems");
+  for (const [label, route, heading] of [["使用方式", "usage", "使用方式"], ["同场景对比", "compare", "月度经营复盘"], ["设计系统", "systems", "探索设计体系"]]) {
+    const link = page.getByRole("navigation", { name: "首页导航" }).getByRole("link", { name: label, exact: true });
+    await link.click();
+    await expect(page).toHaveURL(new RegExp("#\\/" + route + "$"));
+    await expect(link).toHaveAttribute("aria-current", "page");
+    await expect(page.locator('.lab-public-header [aria-current="page"]')).toHaveCount(1);
+    await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
+    await page.reload();
+    await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
+  }
+  await page.goBack();
+  await expect(page).toHaveURL(/#\/compare$/);
+});
+
+test("统一目录筛选、空结果恢复及套系预览入口", async ({ page }) => {
+  await page.goto("/#/systems");
+  await expect(page.locator(".catalog-card").first()).toBeVisible();
+  const initialCount = await page.locator(".catalog-card").count();
+  await page.getByRole("textbox", { name: "搜索全部套系" }).fill("库存");
+  await expect(page.locator(".catalog-card")).toHaveCount(1);
+  await expect(page.locator(".catalog-card")).toHaveAttribute("data-suite-id", "clearline-console");
+  await page.getByRole("textbox", { name: "搜索全部套系" }).fill("不存在的设计系统");
+  await expect(page.getByRole("heading", { name: "没有找到匹配的设计系统" })).toBeVisible();
+  await page.getByRole("button", { name: "重置筛选" }).click();
+  await expect(page.locator(".catalog-card")).toHaveCount(initialCount);
+  await page.getByRole("button", { name: "预览 Quiet Workspace 套系", exact: true }).click();
+  await expect(page).toHaveURL(/systems\/quiet-workspace\/components$/);
+  await expect(page.getByRole('heading', { name: '组件目录', exact: true })).toBeVisible();
+});
 test("场景编辑、切换、导出和错误恢复", async ({ page }) => { await comparisonFlow(driver(page)); });
 for (const suite of ["quiet-workspace", "midnight-ledger"]) {
   test(`${suite} 长页面模态、焦点、关键状态行为`, async ({ page }) => { await dialogFlow(driver(page), suite); });

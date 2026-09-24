@@ -1,0 +1,39 @@
+/* 表单控件拥有本套系的样式；保留原生输入、选择与键盘语义。 */
+[data-ui-system="clearline-console"] :is(.cc-field,.cc-control,.cc-table-toolbar,.cc-tree) :is(input:not([type="checkbox"],[type="radio"],[type="range"],[type="color"],[type="file"]),select,textarea) { box-sizing:border-box; width:100%; min-width:0; min-height:var(--cc-control); padding:9px 12px; border:1px solid var(--cc-border); border-radius:var(--cc-radius); color:var(--cc-text); background-color:var(--cc-surface); font:inherit; font-size:13px; line-height:1.5; transition:border-color 120ms,box-shadow 120ms; }
+[data-ui-system="clearline-console"] :is(.cc-field,.cc-control,.cc-table-toolbar,.cc-tree) :is(input:not([type="checkbox"],[type="radio"],[type="range"],[type="color"],[type="file"]),select,textarea):hover:not(:disabled) { border-color:color-mix(in srgb,var(--cc-text) 35%,var(--cc-border)); }
+[data-ui-system="clearline-console"] :is(.cc-field,.cc-control,.cc-table-toolbar,.cc-tree) :is(input:not([type="checkbox"],[type="radio"],[type="range"],[type="color"],[type="file"]),select,textarea):focus-visible { outline:2px solid var(--cc-brand); outline-offset:2px; }
+[data-ui-system="clearline-console"] :is(.cc-field,.cc-control,.cc-table-toolbar,.cc-tree) :is(input:not([type="checkbox"],[type="radio"],[type="range"],[type="color"],[type="file"]),select,textarea)[aria-invalid="true"] { border-color:var(--cc-negative); }
+[data-ui-system="clearline-console"] :is(.cc-field,.cc-control,.cc-table-toolbar,.cc-tree) :is(input:not([type="checkbox"],[type="radio"],[type="range"],[type="color"],[type="file"]),select,textarea):disabled { opacity:.5; cursor:not-allowed; }
+[data-ui-system="clearline-console"] :is(.cc-field,.cc-control,.cc-table-toolbar,.cc-tree) input::placeholder,[data-ui-system="clearline-console"] :is(.cc-field,.cc-control,.cc-table-toolbar,.cc-tree) textarea::placeholder { color:var(--cc-muted); opacity:.85; }
+[data-ui-system="clearline-console"] :is(.cc-field,.cc-control,.cc-table-toolbar,.cc-tree) select { cursor:pointer; padding-inline-end:30px; }
+[data-ui-system="clearline-console"] fieldset.cc-control { min-width:0; border:0; padding:0; margin:0; display:grid; gap:10px; }
+[data-ui-system="clearline-console"] .cc-control > legend { float:left; width:100%; padding:0; margin-bottom:8px; font-size:13px; }
+[data-ui-system="clearline-console"] .cc-control > small:empty { display:none; }
+[data-ui-system="clearline-console"] .cc-table-toolbar > label { display:grid; gap:8px; font-size:12px; color:var(--cc-muted); }
+[data-ui-system="clearline-console"] .cc-table-toolbar summary { cursor:pointer; padding:8px 10px; border-radius:var(--cc-radius); font-size:12px; }
+[data-ui-system="clearline-console"] .cc-table-toolbar summary:hover { background:color-mix(in srgb,var(--cc-text) 6%,transparent); }
+[data-ui-system="clearline-console"] :is(.cc-check,.cc-data-table) input:is([type="checkbox"],[type="radio"]) { width:16px; height:16px; accent-color:var(--cc-brand); flex-shrink:0; }
+[data-ui-system="clearline-console"] .cc-slider { display:grid; gap:10px; font-size:13px; min-width:0; }
+[data-ui-system="clearline-console"] .cc-slider-heading { display:flex; justify-content:space-between; gap:16px; align-items:center; }
+[data-ui-system="clearline-console"] .cc-slider output { font-variant-numeric:tabular-nums; color:var(--cc-muted); font-size:12px; }
+[data-ui-system="clearline-console"] .cc-slider input[type="range"] { appearance:none; width:100%; height:6px; min-height:0; padding:0; margin:10px 0; border:0; border-radius:99px; cursor:pointer; background:linear-gradient(to right,var(--cc-brand) var(--cc-slider-fill),var(--cc-border) var(--cc-slider-fill)); }
+[data-ui-system="clearline-console"] .cc-slider input::-webkit-slider-thumb { appearance:none; width:18px; height:18px; border-radius:50%; background:var(--cc-surface); border:2px solid var(--cc-brand); box-shadow:0 1px 4px #0002; }
+[data-ui-system="clearline-console"] .cc-slider input::-moz-range-thumb { width:14px; height:14px; border-radius:50%; background:var(--cc-surface); border:2px solid var(--cc-brand); box-shadow:0 1px 4px #0002; }
+[data-ui-system="clearline-console"] .cc-slider input:hover:not(:disabled) { filter:brightness(1.08); }
+[data-ui-system="clearline-console"] .cc-slider input:active:not(:disabled) { cursor:grabbing; }
+[data-ui-system="clearline-console"] .cc-slider input:focus-visible { outline:2px solid var(--cc-brand); outline-offset:6px; }
+[data-ui-system="clearline-console"] .cc-slider input:disabled { opacity:.45; cursor:not-allowed; }
+[data-ui-system="clearline-console"] .cc-slider small { font-size:12px; color:var(--cc-muted); }
+[data-ui-system="clearline-console"] .cc-slider small[role="alert"] { color:var(--cc-negative); }
+@supports(appearance:base-select) {
+ [data-ui-system="clearline-console"] select,[data-ui-system="clearline-console"] select::picker(select) { appearance:base-select; }
+ [data-ui-system="clearline-console"] select::picker(select) { font:inherit; font-size:13px; color:var(--cc-text); background:var(--cc-surface); border:1px solid var(--cc-border); border-radius:var(--cc-radius); padding:5px; box-shadow:0 8px 26px #0003; max-height:280px; }
+ [data-ui-system="clearline-console"] select option { padding:9px 10px; border-radius:4px; gap:10px; }
+ [data-ui-system="clearline-console"] select option:is(:hover,:focus-visible,:checked) { background:color-mix(in srgb,var(--cc-brand) 12%,var(--cc-surface)); }
+ [data-ui-system="clearline-console"] select::picker-icon { color:var(--cc-muted); }
+}
+@media(prefers-reduced-motion:reduce) { [data-ui-system="clearline-console"] :is(.cc-field,.cc-control,.cc-table-toolbar,.cc-tree) :is(input:not([type="checkbox"],[type="radio"],[type="range"],[type="color"],[type="file"]),select,textarea) { transition:none; } }
+
+/* 紧凑模式同步收紧内边距，避免内容高度抵消控件高度 Token。 */
+[data-ui-system="clearline-console"][data-density="compact"] :is(.cc-field,.cc-control,.cc-table-toolbar,.cc-tree) :is(input:not([type="checkbox"],[type="radio"],[type="range"],[type="color"],[type="file"]),select,textarea) { padding-block:4px; }
+[data-ui-system="clearline-console"][data-density="compact"] .cc-button { padding-block:4px; }

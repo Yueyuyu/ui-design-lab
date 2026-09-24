@@ -14,7 +14,7 @@ export function LedgerLineChart({ title = "趋势", value, data = [], labels = [
   const ready = !invalid && points.length > 0 && !["empty","loading","error"].includes(state);
   const selected = points[active] ?? points.at(-1);
   return <figure className="ml-line-chart" data-state={state} aria-busy={state === "loading" || undefined}>
-    <figcaption><span><strong>{title}</strong><small>{[description,period,source,updatedAt].filter(Boolean).join(" · ")}</small></span><b>{ready ? value ?? data.at(-1) + unit : "—"}</b></figcaption>
+    <figcaption><span><strong>{title}</strong>{[description,period,source,updatedAt].some(Boolean) && <small>{[description,period,source,updatedAt].filter(Boolean).join(" · ")}</small>}</span><b>{ready ? value ?? data.at(-1) + unit : "—"}</b></figcaption>
     <button type="button" className="ml-chart-legend" aria-pressed={visible} disabled={!ready || state === "disabled"} onClick={() => setVisible(!visible)}>{visible ? "隐藏" : "显示"} {title}</button>
     <div className="ml-line-chart__plot">
       {!ready ? <Message state={state} invalid={invalid} onRetry={onRetry}/> : visible ? <svg viewBox="0 0 640 220" role="group" aria-label={title} preserveAspectRatio="none">
@@ -31,7 +31,7 @@ export function LedgerBarChart({ values, data, title = "数据分布", unit = ""
   const bars = barGeometry(rows);
   const ready = !invalid && bars.length > 0 && !["empty","loading","error"].includes(state);
   return <figure className="ml-bar-chart" data-state={state} aria-busy={state === "loading" || undefined}>
-    <figcaption>{title}<small>{[description,period,source,updatedAt].filter(Boolean).join(" · ")}</small></figcaption>
+    <figcaption>{title}{[description,period,source,updatedAt].some(Boolean) && <small>{[description,period,source,updatedAt].filter(Boolean).join(" · ")}</small>}</figcaption>
     {!ready ? <Message state={state} invalid={invalid} onRetry={onRetry}/> : <div className="ml-signed-bars">{bars.map((item,index) => <button type="button" key={index} disabled={state === "disabled"} aria-label={item.label + "：" + item.value + unit}>
       <b>{item.value}{unit}</b><span className="ml-signed-track"><i style={{top:item.top+"%",height:item.height+"%"}} data-negative={item.value < 0}/><hr style={{top:item.baseline+"%"}}/></span><small>{item.label}</small>
     </button>)}</div>}

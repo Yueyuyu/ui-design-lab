@@ -1,4 +1,6 @@
 import type {JSX} from "react";
+import {FolioWorkspace, FolioBlockEditor, createFolioDocument} from 'ui-design-lab/folio-workspace';
+export const FolioExample:JSX.Element=<section data-ui-system="folio-workspace"><FolioWorkspace storageKey="external-typecheck"/><FolioBlockEditor blocks={createFolioDocument().pages[0].blocks} onChange={blocks=>void blocks[0]?.text}/></section>;
 import * as Quiet from "ui-design-lab/quiet-workspace";
 export const QuietExample:JSX.Element=<Quiet.QuietShell brand="示例" navigation={[{id:"tasks",label:"任务"}]} activeId="tasks" title="工作台"><Quiet.QuietDataTable rows={[{id:"1",name:"任务",amount:1}]} columns={[{key:"name",label:"任务"},{key:"amount",label:"用量",render:(value,row)=>String(value)+row.name}]} onRowActivate={row=>void row.name}/><Quiet.QuietDateRange label="日期" value={{start:"",end:""}} onChange={range=>void range.start}/><Quiet.QuietMultiSelect label="筛选" options={[]} value={[]} onChange={value=>void value.length}/><Quiet.QuietDrawer open={false} onOpenChange={()=>{}} title="详情"><Quiet.QuietProgress label="进度" value={0}/></Quiet.QuietDrawer></Quiet.QuietShell>;
 import * as Ledger from "ui-design-lab/midnight-ledger";
@@ -7,3 +9,10 @@ import * as Clear from "ui-design-lab/clearline-console";
 export const ClearExample:JSX.Element=<Clear.ClearShell brand="示例" navigation={[{id:"tasks",label:"任务"}]} activeId="tasks" title="工作台"><Clear.ClearDataTable rows={[{id:"1",name:"任务",amount:1}]} columns={[{key:"name",label:"任务"},{key:"amount",label:"用量",render:(value,row)=>String(value)+row.name}]} onRowActivate={row=>void row.name}/><Clear.ClearDateRange label="日期" value={{start:"",end:""}} onChange={range=>void range.start}/><Clear.ClearMultiSelect label="筛选" options={[]} value={[]} onChange={value=>void value.length}/><Clear.ClearDrawer open={false} onOpenChange={()=>{}} title="详情"><Clear.ClearProgress label="进度" value={0}/></Clear.ClearDrawer></Clear.ClearShell>;
 import * as Signal from "ui-design-lab/signal-studio";
 export const SignalExample:JSX.Element=<Signal.SignalShell brand="示例" navigation={[{id:"tasks",label:"任务"}]} activeId="tasks" title="工作台"><Signal.SignalDataTable rows={[{id:"1",name:"任务",amount:1}]} columns={[{key:"name",label:"任务"},{key:"amount",label:"用量",render:(value,row)=>String(value)+row.name}]} onRowActivate={row=>void row.name}/><Signal.SignalDateRange label="日期" value={{start:"",end:""}} onChange={range=>void range.start}/><Signal.SignalMultiSelect label="筛选" options={[]} value={[]} onChange={value=>void value.length}/><Signal.SignalDrawer open={false} onOpenChange={()=>{}} title="详情"><Signal.SignalProgress label="进度" value={0}/></Signal.SignalDrawer></Signal.SignalShell>;
+import './business-typecheck.js';
+import './sliders-typecheck.js';
+
+import "./workspaces-typecheck.js";
+
+import "./philosophy-typecheck.js";
+import "./orchard-icons-typecheck.js";

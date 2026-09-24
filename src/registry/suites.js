@@ -13,6 +13,7 @@ const referenceImages = import.meta.glob("../../references/*-source.png", {
   import: "default"
 });
 const thumbnails = import.meta.glob("../../references/thumbnails/*.{webp,png}", { eager: true, query: "?url", import: "default" });
+const scenePreviews = import.meta.glob("../../references/scene-covers/*.{webp,png}", { eager: true, query: "?url", import: "default" });
 
 function resolveSuiteId(path) {
   return path.match(/systems\/([^/]+)\/suite\.json$/)?.[1];
@@ -37,6 +38,7 @@ export const suites = Object.entries(manifestModules)
       id,
       referenceImageUrl: resolveReferenceImage(manifest.referenceImage),
       thumbnailUrl: thumbnails[`../../${manifest.selection?.thumbnail}`] ?? null,
+      scenePreviewUrl: scenePreviews[`../../${manifest.selection?.scenePreview?.image}`] ?? null,
       loadShowcase: showcaseLoaders[showcasePath],
       loadCover: coverLoaders["../../systems/"+id+"/cover/index.jsx"],
       loadComparison: manifest.comparison ? comparisonLoaders[`../../systems/${id}/comparison/index.jsx`] : null

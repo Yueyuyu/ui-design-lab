@@ -1,0 +1,124 @@
+{
+  "$schema": "../../schemas/suite.schema.json",
+  "id": "folio-workspace",
+  "order": 5,
+  "displayName": "Folio Workspace",
+  "localizedName": "页集工作台",
+  "shortCode": "FW",
+  "prefix": "fw",
+  "version": "0.1.0",
+  "status": "experimental",
+  "description": "以页面树、可编辑内容块与多视图集合，组织知识、研究和下一步。",
+  "styleLabel": "Content-first Knowledge Workspace",
+  "platforms": [
+    "web"
+  ],
+  "modes": [
+    "light"
+  ],
+  "densities": [
+    "comfortable"
+  ],
+  "tags": [
+    "notion-inspired",
+    "knowledge",
+    "blocks",
+    "database"
+  ],
+  "swatches": [
+    "#ffffff",
+    "#f7f7f5",
+    "#30302e",
+    "#e9e9e5"
+  ],
+  "scope": "[data-ui-system=\"folio-workspace\"]",
+  "designDocument": "./DESIGN.md",
+  "tokens": "./foundations/tokens.json",
+  "tokensCss": "./foundations/tokens.css",
+  "tokenBindings": "./foundations/token-bindings.json",
+  "comparison": {
+    "entry": "./comparison/index.jsx",
+    "scenarios": [
+      "record-workflow"
+    ],
+    "modules": [
+      "record-detail",
+      "buttons"
+    ]
+  },
+  "selection": {
+    "suitableFor": [
+      "知识库、个人手记与研究资料台",
+      "页面与结构化记录组合"
+    ],
+    "limitations": [
+      "实验套系，仅浅色与舒适密度",
+      "仅此浏览器保存；无协作、权限和富文本引擎",
+      "暂无拖拽、日历、关系属性及经营图表；对比支持记录整理"
+    ],
+    "previewKind": "scene-concept",
+    "thumbnail": "references/thumbnails/folio-workspace.png",
+    "summary": "把零散的知识，组织成清晰的下一步。",
+    "scenePreview": {
+      "image": "references/scene-covers/folio-workspace.png",
+      "title": "团队知识库"
+    }
+  },
+  "components": "./web/index.js",
+  "showcase": "./showcase/index.jsx",
+  "capabilities": {
+    "foundations": [
+      "color",
+      "typography",
+      "spacing",
+      "shape",
+      "motion"
+    ],
+    "components": [
+      "button",
+      "status",
+      "callout",
+      "page-header",
+      "page-tree",
+      "breadcrumbs",
+      "block-editor",
+      "view-tabs",
+      "database",
+      "record-detail"
+    ],
+    "patterns": [
+      "knowledge-workspace",
+      "research-collection",
+      "workspace"
+    ],
+    "standards": [
+      "accessibility",
+      "component-states",
+      "icons",
+      "chinese-copy",
+      "motion",
+      "data-views",
+      "composition",
+      "extension"
+    ]
+  },
+  "componentPrefix": "Folio",
+  "starter": {
+    "component": "FolioWorkspace",
+    "props": {
+      "storageKey": "folio-starter-v1"
+    }
+  },
+  "referenceImage": "references/folio-workspace-source.png",
+  "galleryShell": {
+    "surface": "#ffffff",
+    "sidebar": "#f7f7f5",
+    "topbar": "#ffffff",
+    "text": "#30302e",
+    "muted": "#6b6b65",
+    "border": "#e9e9e5",
+    "active": "#ededeb",
+    "accent": "#30302e",
+    "onAccent": "#ffffff"
+  }
+}

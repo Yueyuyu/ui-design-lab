@@ -1,0 +1,24 @@
+{
+  "base": {
+    "--fw-paper": "values.paper",
+    "--fw-sidebar": "values.sidebar",
+    "--fw-ink": "values.ink",
+    "--fw-muted": "values.muted",
+    "--fw-line": "values.line",
+    "--fw-hover": "values.hover",
+    "--fw-pressed": "values.pressed",
+    "--fw-focus": "values.focus",
+    "--fw-error": "values.error",
+    "--fw-error-surface": "values.error-surface",
+    "--fw-progress-text": "values.progress-text",
+    "--fw-progress-surface": "values.progress-surface",
+    "--fw-success-text": "values.success-text",
+    "--fw-success-surface": "values.success-surface",
+    "--fw-font": "values.font",
+    "--fw-body-size": "values.body-size",
+    "--fw-radius": "values.radius",
+    "--fw-motion": "values.motion",
+    "--fw-popover-shadow": "values.popover-shadow",
+    "--fw-reading-width": "values.reading-width"
+  }
+}

@@ -1,0 +1,30 @@
+/* 公共入口共用目录页的排版；不对套系画布内的标题与控件做通配覆盖。 */
+.lab-public-app[data-view], .public-design-context {
+  --public-font:"Segoe UI Variable Text", "Segoe UI", "Lab Noto Sans SC", "Microsoft YaHei UI", "PingFang SC", system-ui, sans-serif;
+  --public-text:#17202e;
+  --public-muted:#526078;
+  --public-secondary:#63718a;
+  --public-border:#dde1e6;
+  --public-subtle:#f5f6f8;
+  --public-accent:#242d38;
+  --public-focus:#345fe5;
+  color:var(--public-text);
+  background:#fdfdfd;
+  font-family:var(--public-font);
+}
+.lab-public-app .public-container { max-width:1487px; margin:auto; padding:0 54px 40px; }
+.public-intro { padding:56px 0 32px; text-align:center; }
+.public-intro h1 { margin:0; color:var(--public-text); font-size:48px; font-weight:700; line-height:1.3; letter-spacing:-.025em; }
+.public-intro > p { margin:14px 0 0; color:#788396; font-size:22px; font-weight:500; line-height:1.6; text-wrap:pretty; }
+.public-toolbar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; padding-bottom:24px; }
+.public-toolbar--end { justify-content:flex-end; }
+.lab-public-header[data-view="compare"] { position:relative; top:auto; backdrop-filter:none; }
+@media(max-width:1200px) { .lab-public-app .public-container { padding-inline:32px; } }
+@media(max-width:1000px) { .public-intro h1 { font-size:44px; } }
+@media(max-width:700px) {
+  .lab-public-app .public-container { padding:0 20px 28px; }
+  .public-intro { padding:38px 0 28px; }
+  .public-intro h1 { font-size:clamp(30px,8.5vw,40px); }
+  .public-intro > p { margin-top:12px; font-size:16px; }
+  .public-toolbar { gap:12px; padding-bottom:20px; }
+}

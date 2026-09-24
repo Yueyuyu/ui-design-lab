@@ -1,3 +1,4 @@
+// 通过原生属性设置 inert，兼容 React 18/19 的布尔属性差异。
 import { CircleNotch, WarningCircle, X } from "@phosphor-icons/react";
 import { useId } from "react";
 import { createPortal } from "react-dom";
@@ -28,9 +29,9 @@ export function QuietDialog({
             <div className="qw-dialog__body">
               {loading ? <div className="qw-dialog__status" role="status"><CircleNotch size={18} className="qw-spin" aria-hidden="true" />正在处理，请稍候…</div> : null}
               {error ? <div className="qw-dialog__status qw-dialog__status--error" role="alert"><WarningCircle size={18} aria-hidden="true" />{typeof error === "string" ? error : "处理失败，请检查后重试。"}</div> : null}
-              <div inert={disabled || loading ? true : undefined}>{children}</div>
+              <div ref={element => { if (element) element.inert = Boolean(disabled || loading); }}>{children}</div>
             </div>
-            {actions ? <footer className="qw-dialog__footer"><div inert={disabled || loading ? true : undefined}>{actions}</div></footer> : null}
+            {actions ? <footer className="qw-dialog__footer"><div ref={element => { if (element) element.inert = Boolean(disabled || loading); }}>{actions}</div></footer> : null}
           </section>
         </dialog>
       </div>, document.body,

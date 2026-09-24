@@ -15,3 +15,9 @@
   --cc-duration: 120ms;
   color:var(--cc-text);font-family:var(--cc-font);
 }
+
+[data-ui-system="clearline-console"][data-density="compact"] {
+  --cc-control: 32px;
+  --cc-row: 38px;
+  --cc-space: 12px;
+}

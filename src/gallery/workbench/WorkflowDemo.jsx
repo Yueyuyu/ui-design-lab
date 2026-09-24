@@ -6,6 +6,7 @@ export function WorkflowDemo({
   ui: U,
   suiteId,
   kind = "tasks",
+  standalone = false,
   onNotify = () => {}
 }) {
   const [page, setPage] = useState("list"),
@@ -127,7 +128,7 @@ export function WorkflowDemo({
       notify("没有可恢复的有效视图");
     }
   };
-  return <section className="workflow-demo"><p className="workbench-boundary">可运行 UI 示例 · 数据保存在当前演示会话；任务执行和上传使用明确的本地模拟适配器。</p>
+  return <section className="workflow-demo">{!standalone && <p className="workbench-boundary">可运行 UI 示例 · 数据保存在当前演示会话；任务执行和上传使用明确的本地模拟适配器。</p>}
  <U.Shell brand={kind === "tasks" ? "Task / 用量" : kind === "research" ? "Research / 内容" : "Operations / 分析"} navigation={nav} activeId={page} onNavigate={setPage} title={nav.find(n => n.id === page)?.label ?? "任务详情"} actions={<U.Popover label="交付边界">包含页面、状态、演示数据与接口示例。真实存储、任务服务、登录、邮件和支付由你的业务服务接入。</U.Popover>}>
  {notice ? <p role="status">{notice}</p> : null}
  {kind === "tasks" && page === "list" ? <>{U.TaskLight ? <U.TaskLight title="活动任务" tasks={tasks.filter(t => t.status !== "已完成" && t.status !== "已取消").map(t => ({

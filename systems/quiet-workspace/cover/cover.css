@@ -1,0 +1,12 @@
+[data-ui-system="quiet-workspace"] .qw-cover {height:720px;padding:30px 40px;background:var(--qw-color-surface-subtle)}
+[data-ui-system="quiet-workspace"] .qw-cover>header {margin-bottom:20px}
+[data-ui-system="quiet-workspace"] .qw-cover>header>span {font-size:13px;letter-spacing:.14em;color:var(--qw-color-text-secondary)}
+[data-ui-system="quiet-workspace"] .qw-cover h2 {margin:8px 0;font-size:32px;font-weight:600}
+[data-ui-system="quiet-workspace"] .qw-cover-collection {display:grid;grid-template-columns:1fr 1fr;gap:24px}
+[data-ui-system="quiet-workspace"] .qw-cover-collection>div {display:grid;align-content:start;gap:24px}
+[data-ui-system="quiet-workspace"] .qw-cover .qw-card {padding:10px}
+[data-ui-system="quiet-workspace"] .qw-cover .qw-task-light {width:100%}
+[data-ui-system="quiet-workspace"] .qw-cover-symbols {display:flex;justify-content:space-between;gap:16px;margin:16px 0}
+[data-ui-system="quiet-workspace"] .qw-cover-quota {display:flex;gap:22px;margin:22px 0}
+[data-ui-system="quiet-workspace"] .qw-cover .qw-tree li button {font-size:16px;padding:10px}
+[data-ui-system="quiet-workspace"] .qw-cover .qw-button {margin-right:10px}

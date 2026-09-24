@@ -1,0 +1,11 @@
+[data-ui-system="folio-workspace"] .fw-record-detail :is(input,select,textarea) { min-height:36px; border-color:var(--fw-line); transition:border-color var(--fw-motion),background var(--fw-motion); }
+[data-ui-system="folio-workspace"] .fw-record-detail :is(input,select,textarea):hover:not(:disabled) { border-color:var(--fw-muted); }
+[data-ui-system="folio-workspace"] .fw-record-detail :is(input,select,textarea):focus-visible { outline:2px solid var(--fw-focus); outline-offset:2px; }
+@supports(appearance:base-select) {
+ [data-ui-system="folio-workspace"] select,[data-ui-system="folio-workspace"] select::picker(select) { appearance:base-select; }
+ [data-ui-system="folio-workspace"] select { cursor:pointer; }
+ [data-ui-system="folio-workspace"] select::picker(select) { color:var(--fw-ink); background:var(--fw-paper); border:1px solid var(--fw-line); border-radius:var(--fw-radius); padding:4px; box-shadow:var(--fw-popover-shadow); font:13px var(--fw-font); }
+ [data-ui-system="folio-workspace"] select option { padding:8px 10px; border-radius:3px; gap:8px; }
+ [data-ui-system="folio-workspace"] select option:is(:hover,:focus-visible,:checked) { background:var(--fw-hover); }
+}
+@media(prefers-reduced-motion:reduce) { [data-ui-system="folio-workspace"] .fw-record-detail :is(input,select,textarea) { transition:none; } }

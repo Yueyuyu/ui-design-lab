@@ -54,7 +54,7 @@ export declare function QuietShell(props: {brand: ReactNode; navigation:Array<{i
 export declare function QuietTabs(props: {items:Array<{id:string;label:string;content?:ReactNode;disabled?:boolean}>; value:string; onChange?:(id:string)=>void; label?:string; disabled?:boolean}): JSX.Element;
 export declare function QuietBreadcrumb(props:{items:Array<{label:string;href?:string;onClick?:()=>void}>;label?:string}):JSX.Element;
 export declare function QuietPagination(props:{page:number;pageCount:number;onChange?:(page:number)=>void;disabled?:boolean}):JSX.Element;
-export declare function QuietDataTable<T extends Row>(props: {rows:T[];columns:Array<Omit<Column<T>,"render">&{sortable?:boolean;render?:(value:T[keyof T],row:T)=>ReactNode}>;caption?:string;pageSize?:number;selection?:T["id"][];onSelectionChange?:(ids:T["id"][])=>void;onBulkAction?:(ids:T["id"][])=>void;onRowActivate?:(row:T)=>void;loading?:boolean;disabled?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;
+export declare function QuietDataTable<T extends Row>(props: {rows:T[];columns:Array<Omit<Column<T>,"render">&{sortable?:boolean;render?:(value:T[keyof T],row:T)=>ReactNode}>;caption?:string;pageSize?:number;showToolbar?:boolean;selectable?:boolean;selection?:T["id"][];onSelectionChange?:(ids:T["id"][])=>void;onBulkAction?:(ids:T["id"][])=>void;onRowActivate?:(row:T)=>void;loading?:boolean;disabled?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;
 export declare function QuietDrawer(props:DialogProps):JSX.Element;
 export declare function QuietDropdownMenu(props:{label?:string;items:Array<{id:string;label:string;disabled?:boolean;danger?:boolean;onSelect?:()=>void}>;disabled?:boolean}):JSX.Element;
 export declare function QuietPopover(props:{label:string;children?:ReactNode;disabled?:boolean}):JSX.Element;
@@ -67,3 +67,5 @@ export declare function QuietToastQueue(props:{items:Array<{id:string;message:st
 export declare function QuietFileUpload(props: {upload:(file:File, context:{signal:AbortSignal;onProgress:(value:number)=>void})=>Promise<unknown>;accept?:string;multiple?:boolean;maxBytes?:number;disabled?:boolean;onComplete?:(result:unknown,file:File)=>void}):JSX.Element;
 export interface TreeNode {id:string;label:string;children?:TreeNode[];}
 export declare function QuietTree(props:{nodes:TreeNode[];value?:string;onChange?:(id:string)=>void;label?:string;disabled?:boolean}):JSX.Element;
+
+export declare function QuietSlider(props:{label:string;value:number;min?:number;max?:number;step?:number;unit?:string;onChange?:(value:number)=>void;hint?:string;error?:string;loading?:boolean;disabled?:boolean}):JSX.Element;

@@ -15,7 +15,7 @@ export function ClearTextarea({
   ...props
 }) {
   const id = useId();
-  return <label className="cc-control">{label}<textarea {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? "正在加载…" : hint} /></label>;
+  return <label className="cc-control">{label}<textarea {...props} aria-label={props["aria-label"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? "正在加载…" : hint} /></label>;
 }
 export function ClearCheckbox({
   label,

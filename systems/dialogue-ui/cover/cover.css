@@ -1,0 +1,10 @@
+[data-ui-system="dialogue-ui"] .du-cover {height:720px;padding:34px 40px;background:var(--du-sidebar)}
+[data-ui-system="dialogue-ui"] .du-cover-collection {display:grid;grid-template-columns:1.2fr 1fr;gap:26px}
+[data-ui-system="dialogue-ui"] .du-cover-collection>div {display:grid;align-content:start;gap:24px}
+[data-ui-system="dialogue-ui"] .du-cover .du-card {padding:20px}
+[data-ui-system="dialogue-ui"] .du-cover .du-card h3 {font-size:21px;margin-bottom:18px}
+[data-ui-system="dialogue-ui"] .du-cover .du-message {font-size:17px;margin:16px 0}
+[data-ui-system="dialogue-ui"] .du-cover .du-composer {margin-top:16px}
+[data-ui-system="dialogue-ui"] .du-cover .du-choice {margin-top:18px}
+[data-ui-system="dialogue-ui"] .du-cover .du-suggestions {display:grid;grid-template-columns:1fr;margin-bottom:18px}
+[data-ui-system="dialogue-ui"] .du-cover-tools {display:flex;justify-content:space-around;padding:20px;border-radius:20px;background:var(--du-surface)}

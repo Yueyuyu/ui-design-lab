@@ -8,14 +8,24 @@
 
 Beta 接入：收到 Starter 后解压，运行 `npm install` 和 `npm run dev`；组件包随 vendor/ 交付。源码生成方式见 [快速开始](QUICKSTART.md)。[版本说明](docs/BETA-NOTES.md) · [20 分钟试用任务](docs/BETA-TRIAL.md)。
 
+## 使用设计套系
+
+在 `#/usage` 选择套系，复制简短指令并交给 Codex、Claude Code、Cursor 等 Agent。Agent 从 [接入指南](skills/consume-suite/SKILL.md) 获取同一 GitHub 提交的套系规范，按项目技术栈完成接入，再根据业务需求设计页面与组件。用户无需复制完整文档或类型声明。
+
+当前目录包含七套可接入设计语言和一套开发中的 Pulse Desktop。`#/systems` 浏览全部套系，套系内的“应用示例”展示真实可操作场景；旧 `#/kits` 兼容回到目录，`#/scenes/<场景 ID>` 深链保留。使用页默认只需选套系与复制指令，组件包、Starter 和手动步骤收在“手动接入”。
+
+源码包含页集、果序、对谈及各套扩展规范；组件包由源码构建，不依赖 npm 已发布。真实业务采用与源码同步、本地检查分开记录，见 [采用验证流程](docs/ADOPTION-VALIDATION.md)。下方带日期的交付段落为历史记录。
+
 ## 2026-09-05 扩展（9 月 6 日推送源码）
 
 现有四套：Quiet Workspace（研究效率）、Midnight Ledger（运营分析）、Clearline Console（企业后台）、Signal Studio（内容创作）。新增两套为 experimental；它们是独立视觉语言，均接入注册、目录、比较、主题和本地分发。公开版本本轮未查询或变更。
 
-- 首页：统一 800×400 真实组件封面、紧凑精选和全量搜索。
+- 首页：统一 1140×720 画幅，各套展示自己的真实页面布局和组件；单一套系目录和全量搜索，桌面两列、手机一列，每套只出现一次。
 - 套系内：业务表格、表单、日期、菜单、提示、抽屉、通知与可保存主题。
-- `#kits`：任务/研究/运营三个完整 UI 示例、新项目 Starter 和已有项目接入。
-- [执行清单](ROADMAP.md) · [本轮验收](docs/ACCEPTANCE.md) · [商业边界](docs/COMMERCIAL.md) · [推广材料](docs/PROMOTION.md)。
+- `#/kits`：任务/研究/运营三个完整 UI 示例与交付边界。
+- `#/usage`：独立使用指南，包含新项目 Starter、已有项目接入和开发工具协作说明。
+- `#/usage/notion`：[Notion UI 设计研究](docs/design-references/notion-ui.md)，包含官方来源、块编辑与多视图规则、组件清单和分步落地建议；研究已落地为独立的第五套 Folio Workspace，详见 [套系规范](systems/folio-workspace/DESIGN.md)。
+- [执行清单](ROADMAP.md) · [本轮验收](docs/ACCEPTANCE.md) · [五套文档与组件审查](docs/DOCUMENTATION-AUDIT.md) · [商业边界](docs/COMMERCIAL.md) · [推广材料](docs/PROMOTION.md)。
 
 ## 仓库定位
 
@@ -33,6 +43,8 @@ Gallery 通过 `systems/*/suite.json` 自动发现设计套系，不在应用外
 主要入口：
 
 - `#/systems`：全部套系目录；
+- `#/kits`：兼容旧链接，显示设计系统目录；
+- `#/usage`：选套系并复制 Agent 接入指令，或展开手动接入；
 - `#/compare`：同一内容的跨套系对比；
 - `#/systems/quiet-workspace/overview`：套系总览；
 - `#/systems/quiet-workspace/components`：组件与七态矩阵；
@@ -123,6 +135,10 @@ Quiet Workspace 的命名空间为：
 
 ## 本地运行
 
+### Pulse-inspired 桌面设计验证
+
+新增独立草案 [Pulse Desktop / 脉点桌面](systems/pulse-desktop/README.md)，不覆盖 Quiet Workspace。运行后打开 `#/systems/pulse-desktop/playground`，可体验紧凑、展开、贴边三态、关注保留、拖动停靠，以及三种背景和四档渲染缩放。数据明确为样例，未接入账号；Windows 原生验证在 Companion 的 `prototypes/pulse-desktop` 中并行进行。视觉确认前不替换正式组件、不发布生产包。
+
 ```powershell
 git clone https://github.com/Yueyuyu/ui-design-lab.git
 cd .\ui-design-lab
@@ -179,3 +195,18 @@ npm run suite:new -- midnight-console --name="Midnight Console" --zh="午夜控�
 `npm run check` 验证 JSON Schema、Token 双向绑定、套系源码隔离、脚手架扩展、场景导出、类型和构建。`npm run test:e2e` 验证目录、手机入口、模态生命周期和比较流程。`npm run test:consumer` 在仓库外安装、构建组件包。CI 配置见 [.github/workflows/quality.yml](.github/workflows/quality.yml)。
 
 授权范围见 [LICENSE](LICENSE) 和 [NOTICE.md](NOTICE.md)；参考截图不在 MIT 再授权或组件包范围内。贡献与安全报告分别见 [CONTRIBUTING.md](CONTRIBUTING.md)、[SECURITY.md](SECURITY.md)。
+
+## Suite 05 · Folio Workspace / 页集工作台
+
+新增基于 Notion 产品界面研究的独立知识工作台。该阶段本地目录为五套；上方四套说明保留为 9 月 5 日历史交付记录。页面树、块编辑、三视图记录与非模态侧开详情组成新的内容结构，使用 20 个独立 Token；11 个公开 UI 导出分为 10 个组件和 1 个页面组合。入口：#/systems/folio-workspace/overview；[API](systems/folio-workspace/API.md) · [本地验收](docs/FOLIO-ACCEPTANCE.md)。本次新增内容尚未提交、推送或发布；不支持云协作、权限、拖拽及富文本引擎。
+
+## 场景与真实项目接入
+
+公共场景覆盖全部已注册套系。新增项目运营与内容编辑流程；Folio 与 Clearline 可对比记录整理，并保留编辑草稿、筛选与选中记录。对比按套系声明能力，不保证每套支持所有场景。
+
+工作台接入：[Clearline](systems/clearline-console/INTEGRATION.md) · [Signal](systems/signal-studio/INTEGRATION.md)。Agent 消费流程见 [消费技能](skills/consume-suite/SKILL.md)；该技能和静态入口检查随 tgz 分发。生成 Starter 时可用 --kit 选择场景，并读取随附 integration.md。
+
+
+## 2026-09-18 · Apple 与 ChatGPT 理念套系
+
+新增 [Orchard UI / 果序](systems/orchard-ui/DESIGN.md)（20 个组件）与 [Dialogue UI / 对谈](systems/dialogue-ui/DESIGN.md)（21 个组件），各带 1 个页面组合。两套均为 experimental，自主实现、独立 Token 与样式；参考产品名称只说明来源。首页、组件目录、设置/对话场景、下载接入和 Agent 消费路径均沿用注册机制。完整类型及异步接口见各套 API；[验收与边界](docs/EXPANSION-VALIDATION.md)。新套系尚未支持同场景比较，未宣称真实业务接入或 npm 发布。

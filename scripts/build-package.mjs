@@ -12,6 +12,8 @@ for (const dir of await readdir("systems", { withFileTypes: true })) {
 }
 await build({
   configFile: false,
+  // 库包只分发组件；网站下载目录不能再次进入自身的安装包。
+  publicDir: false,
   plugins: [react()],
   build: {
     outDir: "dist/package", emptyOutDir: true,
@@ -35,6 +37,17 @@ for (const id of Object.keys(entries)) {
   packageJson.exports["./" + id] = { types: "./systems/" + id + "/web/index.d.ts", import: "./dist/package/" + id + ".js" };
   packageJson.exports["./" + id + "/tokens.css"] = "./systems/" + id + "/foundations/tokens.css";
   packageJson.exports["./" + id + "/components.css"] = "./systems/" + id + "/web/components.css";
+  // 图像保持独立资源，按显式发布清单导出；不内联进组件 JS。
+  const assets = await readdir(resolve('systems', id, 'assets'), { withFileTypes: true }).catch(error => {
+    if (error.code === 'ENOENT') return [];
+    throw error;
+  });
+  for (const asset of assets) {
+    if (!asset.isFile()) continue;
+    const extension = asset.name.split('.').at(-1);
+    if (!packageJson.files.some(pattern => pattern === `systems/*/assets/*.${extension}` || pattern === `systems/${id}/assets/*.${extension}`)) continue;
+    packageJson.exports[`./${id}/assets/${asset.name}`] = `./systems/${id}/assets/${asset.name}`;
+  }
 }
 await writeFile(packagePath, JSON.stringify(packageJson, null, 2) + "\n");
 console.log("组件包已构建：" + Object.keys(entries).join(", "));

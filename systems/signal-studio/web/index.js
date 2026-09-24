@@ -6,3 +6,7 @@ export * from "./DataTable.jsx";
 export * from "./Overlays.jsx";
 export * from "./FeedbackControls.jsx";
 export { SignalContentBoard } from "./ContentBoard.jsx";
+
+export {SignalStoryCard,SignalRevisionList} from "./ContentComponents.jsx";
+
+export { SignalSlider } from './Slider.jsx';

@@ -77,3 +77,15 @@ loading、error 的实际含义以各组件类型和实现为准。例如 Field 
 DataTable 支持客户端筛选、排序、分页、跨页选择与列显隐，适合有限数据集；大规模远程数据由调用方请求与分页。危险操作由业务方通过 Dialog 二次确认。Combobox 使用搜索输入 + 原生 select，MultiSelect 使用原生 checkbox，保留系统键盘行为。DateRange 的 value 为日期字符串，不转换 UTC。ToastQueue 由调用方管理 id 与移除，不自动隐藏失败。
 
 DataTable 列 render(value, row) 接收单元格值与整行；它与早期静态 Table 的行渲染约定分开。菜单、Popover 和 Tooltip 使用原生 popover 顶层；目标浏览器须支持 Popover API。
+
+## 组件文档与业务组合
+
+组件目录位于 `#/systems/midnight-ledger/components`，每个公开 UI 导出都有独立详情、实际预览、七态和从 `web/index.d.ts` 提取的参数定义。整页示例归入页面组合，不计入基础/业务组件数量。
+
+业务面板：`LedgerAssetSummary`、`LedgerPerformancePanel`、`LedgerHoldingsPanel`、`LedgerPnlCalendar`、`LedgerExposurePanel`、`LedgerStrategyPanel`、`LedgerMonthlyReturns`。数据与操作由调用方提供，均支持 loading/error/disabled/onRetry，空数据就地解释。总览与封面复用同一份导出。日历 month 使用 YYYY-MM，days 使用 date/value；持仓 rows 提供稳定 id。
+
+## LedgerSlider
+
+受控数值滑块：label、value 必填；min/max/step 定义范围；unit 显示单位；onChange(value) 返回数值。支持 hint、error、loading、disabled，原生方向键和 Home/End 操作。保存由调用方负责。
+
+LedgerDataTable 可用 showToolbar=false 隐藏筛选与列设置、selectable=false 隐藏多选控件。目录简例使用精简形式，详情提供完整操作；只有多页数据才显示分页，存在选中项才显示清除选择。

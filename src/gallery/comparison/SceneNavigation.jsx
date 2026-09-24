@@ -5,7 +5,7 @@ export function SceneNavigation({ activeScenarioId, onSelect }) {
   return (
     <aside className="comparison-scenes" aria-label="比较场景">
       <div className="comparison-scenes__body">
-        <h1>场景</h1>
+        <h2>选择场景</h2>
         <nav>
           {comparisonScenarios.map((scenario) => {
             const Icon = scenario.icon;

@@ -1,0 +1,14 @@
+[data-ui-system="signal-studio"] .ss-cover {height:720px;padding:34px 42px;background:var(--ss-canvas)}
+[data-ui-system="signal-studio"] .ss-cover>header {display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+[data-ui-system="signal-studio"] .ss-cover h2 {margin:0;font-family:Georgia,serif;font-size:33px;font-weight:400}
+[data-ui-system="signal-studio"] .ss-cover>header>span {font-size:13px;letter-spacing:.1em;color:var(--ss-muted)}
+[data-ui-system="signal-studio"] .ss-cover-collection {display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:start}
+[data-ui-system="signal-studio"] .ss-cover-collection>div {display:grid;gap:24px}
+[data-ui-system="signal-studio"] .ss-cover .ss-story {min-height:0;height:auto}
+[data-ui-system="signal-studio"] .ss-cover .ss-story img {height:auto;min-height:0;object-fit:contain}
+[data-ui-system="signal-studio"] .ss-cover .ss-feature-action {font-size:12px;gap:8px;bottom:18px;left:18px}
+[data-ui-system="signal-studio"] .ss-cover .ss-panel {padding:24px}
+[data-ui-system="signal-studio"] .ss-cover .ss-control {margin:18px 0}
+[data-ui-system="signal-studio"] .ss-cover-symbols {display:flex;justify-content:space-between;margin:24px 0;color:var(--ss-brand)}
+[data-ui-system="signal-studio"] .ss-cover-badges {display:flex;gap:12px;margin:24px 0}
+[data-ui-system="signal-studio"] .ss-cover .ss-button {margin-right:10px}

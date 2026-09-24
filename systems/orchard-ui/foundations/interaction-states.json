@@ -1,0 +1,248 @@
+{
+  "version": "0.1.0",
+  "requiredStates": [
+    "default",
+    "hover",
+    "pressed",
+    "focus",
+    "disabled",
+    "loading",
+    "error"
+  ],
+  "components": {
+    "button": {
+      "default": "OrchardButton 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "icon-button": {
+      "default": "OrchardIconButton 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "field": {
+      "default": "OrchardField 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "textarea": {
+      "default": "OrchardTextarea 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "select": {
+      "default": "OrchardSelect 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "toggle": {
+      "default": "OrchardToggle 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "checkbox": {
+      "default": "OrchardCheckbox 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "slider": {
+      "default": "OrchardSlider 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "tabs": {
+      "default": "OrchardTabs 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "通过所属按钮或字段的 disabled 参数禁用；纯展示内容保持可读。",
+      "loading": "不提供 loading 参数；异步内容由调用方显示 Progress，等待时可传 disabled。",
+      "error": "不提供 error 参数；调用方在内容区域组合 Notification 说明失败。"
+    },
+    "segmented-control": {
+      "default": "OrchardSegmentedControl 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "通过所属按钮或字段的 disabled 参数禁用；纯展示内容保持可读。",
+      "loading": "不提供 loading 参数；异步内容由调用方显示 Progress，等待时可传 disabled。",
+      "error": "不提供 error 参数；调用方在内容区域组合 Notification 说明失败。"
+    },
+    "badge": {
+      "default": "OrchardBadge 按公开参数呈现真实值与内容。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "不提供 loading 参数；调用方通过内容槽或 Progress 表达读取过程。",
+      "error": "使用 tone=\"error\" 显示简短异常标签，详细恢复信息交给 Notification。"
+    },
+    "card": {
+      "default": "OrchardCard 按公开参数呈现真实值与内容。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "不提供 loading 参数；调用方通过内容槽或 Progress 表达读取过程。",
+      "error": "不提供 error 参数；调用方组合 Notification 或说明文字，不隐藏已有内容。"
+    },
+    "dropdown-menu": {
+      "default": "OrchardDropdownMenu 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "通过所属按钮或字段的 disabled 参数禁用；纯展示内容保持可读。",
+      "loading": "不提供 loading 参数；异步内容由调用方显示 Progress，等待时可传 disabled。",
+      "error": "不提供 error 参数；调用方在内容区域组合 Notification 说明失败。"
+    },
+    "dialog": {
+      "default": "open 控制模态显示；原生 dialog 限制背景交互并锁定页面滚动。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "焦点保留在模态内部；关闭或 Escape 后回到打开控件。",
+      "disabled": "内容及 footer inert，关闭按钮仍可操作。",
+      "loading": "显示正在处理说明，内容及 footer inert，关闭按钮仍可操作。",
+      "error": "对话框上方显示 error 文本，已有内容保留。"
+    },
+    "progress": {
+      "default": "label 描述任务；value/max 显示确定进度。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "省略 value 呈现原生不确定进度；保留可读 label。",
+      "error": "不提供 error 参数；调用方组合 Notification 或说明文字，不隐藏已有内容。"
+    },
+    "empty-state": {
+      "default": "OrchardEmptyState 按公开参数呈现真实值与内容。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "不提供 loading 参数；调用方通过内容槽或 Progress 表达读取过程。",
+      "error": "不提供 error 参数；调用方组合 Notification 或说明文字，不隐藏已有内容。"
+    },
+    "notification": {
+      "default": "OrchardNotification 按公开参数呈现真实值与内容。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "不提供 loading 参数；调用方通过内容槽或 Progress 表达读取过程。",
+      "error": "tone=\"error\" 采用 role=\"alert\"；description 说明原因，actionLabel/onAction 提供恢复入口。"
+    },
+    "navigation-list": {
+      "default": "以 items 与 value 呈现当前项；选择回调交给调用方。",
+      "hover": "鼠标悬停改变条目表面。",
+      "pressed": "点击触发 onChange；当前项使用 aria-current=\"page\"。",
+      "focus": "条目按 DOM 顺序进入键盘导航，并显示焦点描边。",
+      "disabled": "不提供整表 disabled 参数；异步期间是否允许切换由页面决定。",
+      "loading": "不提供 loading 参数；由调用方在列表邻近位置显示进度。",
+      "error": "不提供 error 参数；由调用方展示错误说明，已有列表不丢弃。"
+    },
+    "setting-row": {
+      "default": "OrchardSettingRow 按公开参数呈现真实值与内容。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "不提供 loading 参数；调用方通过内容槽或 Progress 表达读取过程。",
+      "error": "不提供 error 参数；调用方组合 Notification 或说明文字，不隐藏已有内容。"
+    },
+    "settings-group": {
+      "default": "OrchardSettingsGroup 按公开参数呈现真实值与内容。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "不提供 loading 参数；调用方通过内容槽或 Progress 表达读取过程。",
+      "error": "不提供 error 参数；调用方组合 Notification 或说明文字，不隐藏已有内容。"
+    },
+    "settings-workspace": {
+      "default": "分类、设置草稿、保存基线由页面持有，initialValues 仅初始化。",
+      "hover": "分类及所属控件提供反馈，分组面板保持稳定。",
+      "pressed": "保存提交草稿；取消恢复基线并中止请求。",
+      "focus": "按导航、表单、保存区排序；摘要模态关闭后恢复触发焦点。",
+      "disabled": "未修改时保存不可用；保存期间 fieldset 禁用，取消仍可用。",
+      "loading": "保存显示忙碌，不重复提交；取消和卸载后拒绝迟到结果。",
+      "error": "失败保留草稿，显示错误说明；重试成功后才更新保存基线。"
+    },
+    "symbol": {
+      "default": "显示语义符号或调用方图像；图像失败时回退到指定符号。",
+      "hover": "静态图像无独立悬停动作，由所属入口提供反馈。",
+      "pressed": "静态图像不执行动作，由所属按钮承接按下。",
+      "focus": "不增加 Tab 停靠点，有意义的图像提供 label。",
+      "disabled": "由所属入口的禁用状态表达，图像仍可辨认。",
+      "loading": "由所属入口的进度和忙碌状态表达，不伪造图片内容。",
+      "error": "自定义图片加载失败回退到语义符号；未知符号显示问号。"
+    },
+    "app-icon": {
+      "default": "显示语义符号或调用方图像；图像失败时回退到指定符号。",
+      "hover": "静态图像无独立悬停动作，由所属入口提供反馈。",
+      "pressed": "静态图像不执行动作，由所属按钮承接按下。",
+      "focus": "不增加 Tab 停靠点，有意义的图像提供 label。",
+      "disabled": "由所属入口的禁用状态表达，图像仍可辨认。",
+      "loading": "由所属入口的进度和忙碌状态表达，不伪造图片内容。",
+      "error": "自定义图片加载失败回退到语义符号；未知符号显示问号。"
+    },
+    "icon-picker": {
+      "default": "显示调用方数据和可操作候选；搜索只在本地筛选。",
+      "hover": "候选显示轻微表面反馈，静态容器不单独悬停。",
+      "pressed": "候选按钮按下反馈；点击回调只触发一次。",
+      "focus": "原生输入与按钮可聚焦，有明确轮廓；命令上下键、图标左右键移动。",
+      "disabled": "搜索与候选禁用；无回调时候选只读，不伪造可执行动作。",
+      "loading": "搜索与候选不可操作，并显示明确的忙碌文案或未知比例进度。",
+      "error": "保留搜索和已有内容，显示调用方传入的错误；允许继续尝试。"
+    },
+    "app-launcher": {
+      "default": "显示调用方数据和可操作候选；搜索只在本地筛选。",
+      "hover": "候选显示轻微表面反馈，静态容器不单独悬停。",
+      "pressed": "候选按钮按下反馈；点击回调只触发一次。",
+      "focus": "原生输入与按钮可聚焦，有明确轮廓；命令上下键、图标左右键移动。",
+      "disabled": "搜索与候选禁用；无回调时候选只读，不伪造可执行动作。",
+      "loading": "搜索与候选不可操作，并显示明确的忙碌文案或未知比例进度。",
+      "error": "保留搜索和已有内容，显示调用方传入的错误；允许继续尝试。"
+    },
+    "command-menu": {
+      "default": "显示调用方数据和可操作候选；搜索只在本地筛选。",
+      "hover": "候选显示轻微表面反馈，静态容器不单独悬停。",
+      "pressed": "候选按钮按下反馈；点击回调只触发一次。",
+      "focus": "原生输入与按钮可聚焦，有明确轮廓；命令上下键、图标左右键移动。",
+      "disabled": "搜索与候选禁用；无回调时候选只读，不伪造可执行动作。",
+      "loading": "搜索与候选不可操作，并显示明确的忙碌文案或未知比例进度。",
+      "error": "保留搜索和已有内容，显示调用方传入的错误；允许继续尝试。"
+    }
+  }
+}

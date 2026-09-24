@@ -1,0 +1,33 @@
+{
+  "selectedOn": "2026-09-23",
+  "scope": "公共页头和目录排版；标题后续精简为居中主标题与副标题，八套场景原图保留",
+  "header": {
+    "source": "exec-c91273b5-35dd-487d-9b13-f2924fe3b60b.png",
+    "file": "header-selected.png",
+    "concept": "分组胶囊",
+    "sha256": "4542c5e657b74efbce1de90153360a532a0ecbc7fbaccf395097ca2df2c84551"
+  },
+  "catalog": {
+    "source": "exec-94b2073a-f009-4a3e-b394-4710aa153c06.png",
+    "file": "catalog-selected.png",
+    "concept": "清晰产品字阶",
+    "sha256": "21efe782298b9b6a8cfad4c077e76ac7cb95de62f7cde286ea9da7b9bd058010"
+  },
+  "notes": [
+    "页头采用分组胶囊，GitHub 标志使用官方圆形图案。",
+    "目录生成图重绘的场景内容不替换已选封面。",
+    "2026-09-23 最新标题定稿见 intro-selected.png，替代此前保留旧 Hero 的决定。"
+  ],
+  "intro": {
+    "file": "intro-selected.png",
+    "heading": "探索设计体系",
+    "subtitle": "为你的产品，找到合适的设计语言。",
+    "source": "codex-clipboard-a9034381-b74b-4610-b37e-c8ac45b250d1.png"
+  },
+  "github": {
+    "asset": "src/gallery/assets/github-mark.svg",
+    "origin": "https://github.githubassets.com/favicons/favicon.svg",
+    "file": "github-selected.png",
+    "source": "codex-clipboard-20a45b81-ba5c-4407-bedf-e652c3d40077.png"
+  }
+}

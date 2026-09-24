@@ -1,0 +1,8 @@
+[data-ui-system="folio-workspace"] .fw-comparison { color:var(--fw-ink); background:var(--fw-paper); font:var(--fw-body-size)/1.6 var(--fw-font); padding:24px; }
+[data-ui-system="folio-workspace"] .fw-comparison>header { margin-bottom:24px; }
+[data-ui-system="folio-workspace"] .fw-comparison>header h2 { font-size:28px; margin:8px 0; }
+[data-ui-system="folio-workspace"] .fw-comparison .fw-writing-layout { gap:20px; }
+@media(max-width:700px) { [data-ui-system="folio-workspace"] .fw-comparison { padding:12px; } }
+
+[data-ui-system="folio-workspace"] .fw-comparison { container-type:inline-size; }
+@container (max-width:760px) { [data-ui-system="folio-workspace"] .fw-writing-layout[data-detail-open="true"] { grid-template-columns:minmax(0,1fr); } }

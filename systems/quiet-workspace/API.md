@@ -79,3 +79,9 @@ DataTable 支持客户端筛选、排序、分页、跨页选择与列显隐，�
 QuietTaskLight 支持 onTaskActivate(task)，可用鼠标/Enter/Space 打开业务详情。任务与结果来自调用方，不拥有任务执行器。
 
 DataTable 列 render(value, row) 接收单元格值与整行；它与早期静态 Table 的行渲染约定分开。菜单、Popover 和 Tooltip 使用原生 popover 顶层；目标浏览器须支持 Popover API。
+
+## QuietSlider
+
+受控数值滑块：label、value 必填；min/max/step 定义范围；unit 显示单位；onChange(value) 返回数值。支持 hint、error、loading、disabled，原生方向键和 Home/End 操作。保存由调用方负责。
+
+QuietDataTable 可用 showToolbar=false 隐藏筛选与列设置、selectable=false 隐藏多选控件。目录简例使用精简形式，详情提供完整操作；只有多页数据才显示分页，存在选中项才显示清除选择。

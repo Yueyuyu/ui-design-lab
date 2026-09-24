@@ -91,12 +91,18 @@ async function validateSuite(suite) {
   const bindings = JSON.parse(await readFile(resolveManifestPath(suiteDir, manifest.tokenBindings), "utf8"));
   validateTokenBindings(tokens, tokenCss, bindings);
   await validateSuiteSources(suiteDir, suites.map((item) => item.manifest));
+  if (manifest.selection?.scenePreview && !(await exists(resolveWithin(root, manifest.selection.scenePreview.image)))) {
+    throw new Error(manifest.id + ": 场景封面文件不存在");
+  }
   if (manifest.status !== "draft") {
     if (!manifest.referenceImage || !(await exists(resolveWithin(root, manifest.referenceImage)))) throw new Error(manifest.id + ": 缺少视觉来源");
     if (!manifest.selection?.thumbnail || !(await exists(resolveWithin(root, manifest.selection.thumbnail)))) throw new Error(manifest.id + ": 缺少选型缩略图");
     if (Object.keys(interactionStates.components).length === 0) throw new Error(manifest.id + ": 正式套系不能缺少组件状态");
   }
   if (manifest.comparison && !(await exists(resolveManifestPath(suiteDir, manifest.comparison.entry)))) throw new Error(manifest.id + ": 比较适配器不存在");
+  for (const standard of manifest.capabilities.standards) {
+    if (!(await exists(resolve(suiteDir, 'standards', standard + '.md')))) throw new Error(manifest.id + ': 声明的规范文件缺失 ' + standard);
+  }
 
   if (tokens.id !== manifest.id || tokens.prefix !== manifest.prefix || tokens.version !== manifest.version) {
     throw new Error(`${manifest.id}: suite.json 与 tokens.json 的 id、prefix 或 version 不一致`);

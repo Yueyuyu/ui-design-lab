@@ -1,0 +1,148 @@
+import { test, expect } from '@playwright/test';
+import { createFolioDocument } from '../../systems/folio-workspace/web/model.js';
+import { readFile } from 'node:fs/promises';
+const route = '/#/systems/folio-workspace/overview';
+const key = 'folio-workspace-v1';
+test.beforeEach(async ({page}) => { page.__errors=[]; page.on('pageerror',e=>page.__errors.push(e.message)); });
+test.afterEach(async ({page}) => { expect(page.__errors).toEqual([]); });
+const workspace = page => page.locator('.lab-content .fw-workspace');
+async function saved(page) { await expect(workspace(page).getByText('已保存到此浏览器',{exact:true})).toBeVisible(); }
+test('Folio 块菜单、中文输入、重排、删除撤销与页面持久化', async ({page}) => {
+  await page.goto(route);
+  const ui = workspace(page);
+  await ui.getByRole('button',{name:'添加子页面',exact:true}).click();
+  await ui.getByLabel('页面标题',{exact:true}).fill('本周设计观察');
+  await ui.getByRole('button',{name:'添加内容块',exact:true}).click();
+  await ui.getByRole('menuitem',{name:'正文',exact:true}).click();
+  const block = ui.getByRole('textbox',{name:'正文块 1',exact:true});
+  await block.dispatchEvent('compositionstart');
+  await block.dispatchEvent('keydown',{key:'/',isComposing:true,keyCode:229});
+  await expect(ui.getByRole('menu')).toHaveCount(0);
+  await block.dispatchEvent('compositionend');
+  await block.press('/');
+  await expect(ui.getByRole('menu')).toBeVisible();
+  await ui.getByRole('menuitem',{name:'正文',exact:true}).press('ArrowDown');
+  await page.keyboard.press('Enter');
+  await ui.getByRole('textbox',{name:'标题块 1'}).fill('中文标题与内容');
+  await ui.getByRole('button',{name:'添加内容块',exact:true}).click();
+  await ui.getByRole('menuitem',{name:'待办',exact:true}).click();
+  await ui.getByRole('textbox',{name:'待办块 2'}).fill('完成页面研究');
+  await ui.getByRole('checkbox',{name:'完成 完成页面研究'}).check();
+  await ui.getByRole('button',{name:'块 2 操作',exact:true}).click();
+  await ui.getByRole('menuitem',{name:'上移',exact:true}).click();
+  await expect(ui.getByRole('textbox',{name:'待办块 1'})).toHaveValue('完成页面研究');
+  await ui.getByRole('button',{name:'块 1 操作',exact:true}).click();
+  await ui.getByRole('menuitem',{name:'删除块',exact:true}).click();
+  await expect(ui.locator('.fw-block')).toHaveCount(1);
+  await ui.getByRole('button',{name:'撤销删除'}).click();
+  await expect(ui.locator('.fw-block')).toHaveCount(2);
+  await saved(page); await page.reload(); await workspace(page).waitFor({state:"visible"});
+  await expect(ui.getByLabel('页面标题',{exact:true})).toHaveValue('本周设计观察');
+  await expect(ui.getByRole('checkbox',{name:'完成 完成页面研究'})).toBeChecked();
+  await expect(ui.getByRole('navigation',{name:'页面路径'})).toContainText('设计是一场持续的观察');
+});
+test('Folio 多视图共享数据、独立筛选与非模态草稿生命周期', async ({page}) => {
+  await page.goto(route); const ui=workspace(page);
+  await ui.getByLabel('筛选状态').selectOption('进行中');
+  await expect(ui.locator('tbody tr')).toHaveCount(2);
+  await ui.getByRole('tab',{name:'看板',exact:true}).click();
+  await expect(ui.getByLabel('筛选状态')).toHaveValue('全部');
+  await expect(ui.locator('.fw-board article')).toHaveCount(4);
+  await ui.getByRole('button',{name:'打开 内容优先的页面结构',exact:true}).click();
+  await ui.getByLabel('记录标题',{exact:true}).fill('草稿中的结构');
+  await ui.getByRole('button',{name:'打开 一个集合，三种阅读方式',exact:true}).click();
+  await ui.getByRole('button',{name:'取消编辑',exact:true}).click();
+  await ui.getByRole('button',{name:'打开 内容优先的页面结构',exact:true}).click();
+  await expect(ui.getByLabel('记录标题',{exact:true})).toHaveValue('草稿中的结构');
+  await page.keyboard.press('Escape');
+  await expect(ui.getByRole('complementary',{name:'记录详情'})).toHaveCount(0);
+  await expect(ui.getByRole('button',{name:'打开 内容优先的页面结构',exact:true})).toBeFocused();
+  await saved(page); await page.reload(); await workspace(page).waitFor({state:"visible"});
+  await ui.locator('.fw-drafts').getByRole('button',{name:'草稿中的结构'}).click();
+  await ui.getByLabel('记录状态').selectOption('已完成');
+  await ui.getByRole('button',{name:'保存记录',exact:true}).click();
+  await expect(ui.locator('.fw-board article').filter({hasText:'草稿中的结构'})).toBeVisible();
+  await expect(ui.getByRole('tab',{name:'看板',exact:true})).toBeFocused();
+  await ui.getByRole('tab',{name:'列表',exact:true}).click();
+  await expect(ui.locator('.fw-record-list li').filter({hasText:'草稿中的结构'})).toContainText('已完成');
+  await ui.getByRole('tab',{name:'表格',exact:true}).click();
+  await expect(ui.getByLabel('筛选状态')).toHaveValue('进行中');
+  await expect(ui.locator('tbody tr')).toHaveCount(1);
+  await ui.getByRole('button',{name:'新建记录',exact:true}).click();
+  await ui.getByRole('button',{name:'保存记录',exact:true}).click();
+  await expect(ui.getByRole('alert')).toContainText('请填写记录标题');
+  await ui.getByLabel('记录标题',{exact:true}).fill('新建记录的验证');
+  await ui.getByLabel('记录状态').selectOption('进行中');
+  await ui.getByRole('button',{name:'保存记录',exact:true}).click();
+  await expect(ui.locator('tbody tr')).toHaveCount(2);
+  await saved(page); await page.reload(); await workspace(page).waitFor({state:"visible"});
+  await expect(ui.getByRole('button',{name:'打开 新建记录的验证',exact:true})).toBeVisible();
+});
+test('Folio 读取失败保护原始内容，重试读取恢复', async ({page}) => {
+  await page.addInitScript(({key}) => { if (!sessionStorage.getItem('fixture')) { localStorage.setItem(key,'malformed'); sessionStorage.setItem('fixture','1'); } },{key});
+  await page.goto(route); const ui=workspace(page);
+  await expect(ui.getByRole('alert')).toContainText('不会覆盖原始内容');
+  await expect(ui.getByLabel('页面标题',{exact:true})).toBeDisabled();
+  expect(await page.evaluate(key=>localStorage.getItem(key),key)).toBe('malformed');
+  const seed=createFolioDocument(); seed.pages[0].title='恢复的真实页面';
+  await page.evaluate(({key,seed})=>localStorage.setItem(key,JSON.stringify(seed)),{key,seed});
+  await ui.getByRole('button',{name:'重试读取'}).click();
+  await expect(ui.getByLabel('页面标题',{exact:true})).toHaveValue('恢复的真实页面');
+  await expect(ui.getByRole('alert')).toHaveCount(0);
+});
+test('Folio 写入失败保留编辑，重试保存与 JSON 导出', async ({page}) => {
+  await page.addInitScript(key=>{ window.folioOriginalSetItem=Storage.prototype.setItem; Storage.prototype.setItem=function(name,value){ if(name===key) throw new DOMException('quota','QuotaExceededError'); return window.folioOriginalSetItem.call(this,name,value); }; },key);
+  await page.goto(route); const ui=workspace(page);
+  await expect(ui.getByRole('alert')).toContainText('内容暂未保存');
+  await ui.getByRole('textbox',{name:'正文块 2'}).fill('失败后仍保留的中文内容');
+  // 等本次写入实际失败，再恢复存储；旧错误提示可能仍伴随正在保存的编辑。
+  await expect(ui.locator('.fw-save-status')).toHaveText('保存需要处理');
+  await expect(ui.getByRole('alert')).toContainText('内容暂未保存');
+  const download=page.waitForEvent('download'); await ui.getByRole('button',{name:'导出工作区 JSON'}).click();
+  const backup=await download;
+  expect(backup.suggestedFilename()).toBe('folio-workspace.json');
+  expect(JSON.parse(await readFile(await backup.path(),'utf8')).pages[0].blocks[1].text).toBe('失败后仍保留的中文内容');
+  await page.evaluate(()=>{Storage.prototype.setItem=window.folioOriginalSetItem;});
+  await ui.getByRole('button',{name:'重试保存'}).click(); await saved(page);
+  const stored=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
+  expect(stored.pages[0].blocks[1].text).toBe('失败后仍保留的中文内容');
+});
+test('Folio 七个栏目、目录入口与手机布局', async ({page}) => {
+  for (const name of ['overview','foundations','components','guidelines','patterns','playground','usage']) {
+    await page.goto(`/#/systems/folio-workspace/${name}`);
+    // 先等待异步套系模块加载；内容断言仍采用正常的短超时。
+    await page.locator('.lab-content h1').first().waitFor({state:'visible'});
+    await expect(page.locator('.lab-content h1').first()).toBeVisible();
+    await expect(page.locator('vite-error-overlay')).toHaveCount(0);
+  }
+  await page.goto(route);
+  await page.screenshot({path:'.local-cache/folio-desktop.png',fullPage:true});
+  for (const width of [320,390,720]) {
+    await page.setViewportSize({width,height:900}); const ui=workspace(page);
+    await expect(ui.getByRole('button',{name:'切换页面目录'})).toBeVisible();
+    await ui.getByRole('button',{name:'切换页面目录'}).click();
+    await ui.getByRole('navigation',{name:'工作区页面'}).getByRole('button',{name:'每周计划',exact:true}).click();
+    await expect(ui.getByLabel('页面标题',{exact:true})).toHaveValue('每周计划');
+    await ui.getByRole('button',{name:'新建记录',exact:true}).click();
+    await expect(ui.getByLabel('记录标题',{exact:true})).toBeFocused();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+    await ui.getByRole('button',{name:'取消编辑',exact:true}).click();
+  }
+  await page.setViewportSize({width:390,height:900});
+  await saved(page);
+  await page.evaluate(()=>window.scrollTo(0,0));
+  await page.screenshot({path:'.local-cache/folio-mobile.png',fullPage:true});
+});
+test('Notion 设计参考可下载，并连通新套系与场景入口', async ({page}) => {
+  await page.goto('/#/usage/notion');
+  await expect(page.getByRole('heading',{name:'让内容组织起工作台',exact:true})).toBeVisible();
+  const download=page.waitForEvent('download');
+  await page.getByRole('button',{name:'下载完整设计文档',exact:true}).click();
+  expect((await download).suggestedFilename()).toBe('notion-ui-design-reference.md');
+  await page.getByRole('link',{name:'打开 Folio Workspace / 页集工作台 →'}).click();
+  await expect(page.locator('.fw-workspace')).toBeVisible();
+  await page.goto('/#/systems/folio-workspace/patterns');
+  await page.locator('article').filter({has:page.getByRole('heading',{name:'页面与研究资料台',exact:true})}).getByRole('link',{name:'预览页面与研究资料台',exact:true}).click();
+  await expect(page).toHaveURL(/#\/scenes\/knowledge$/);
+  await expect(page.locator('.fw-workspace')).toBeVisible();
+});

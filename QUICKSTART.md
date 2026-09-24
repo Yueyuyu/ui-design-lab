@@ -1,8 +1,10 @@
 # 在新项目中使用 UI Design Lab
 
-需要 Node.js 22+、npm 和 React / React DOM 19.2+。当前候选版本为 1.0.0-beta.1。Chromium、Firefox 153 与 WebKit 26.5 已有本地自动化证据；具体覆盖范围见 COMPATIBILITY.md，WebKit 不代表 Safari 实机验收。
+需要 Node.js 22+ 和 npm；组件包支持同版本的 React / React DOM 18.2+（18.x）或 19.2+（19.x）。独立 Starter 默认使用 19.2.0，已有项目可保留 React 18。当前候选版本为 1.0.0-beta.1。Chromium、Firefox 153 与 WebKit 26.5 已有本地自动化证据；具体覆盖范围见 COMPATIBILITY.md，WebKit 不代表 Safari 实机验收。
 
-如果收到 Beta Starter：解压到空目录，在有 package.json 的目录执行 `npm install`、`npm run dev` 即可。组件包已包含在 vendor/，无需克隆原仓库。修改 `src/workbench/demo-data.js` 的任务名和 `WorkflowDemo.jsx` 的列定义，然后执行 `npm run build`。
+在网站 `#/usage` 选择套系和新建/已有项目，即可下载本次构建的版本组件包或 Starter；展开“完整性与版本”核对 SHA-256。源码方式见后文。
+
+如果收到 Beta Starter：解压到空目录，在有 package.json 的目录执行 `npm install`、`npm run dev` 即可。组件包已包含在 vendor/，无需克隆原仓库。Quiet / Midnight 可修改 `src/workbench/demo-data.js`；Clearline / Signal 在 `src/main.jsx` 配置数据与保存回调；Folio 支持本地页面编辑，详见随附 `integration.md`。然后执行 `npm run build`。
 
 ## 1. 生成本地组件包
 
@@ -24,7 +26,7 @@ npm install
 npm run dev
 ```
 
-示例运行于 http://127.0.0.1:5174，可切换四套 UI 和三个场景，包含任务、详情、用量、设置、研究资料与报表。它只导入组件包和组件 CSS，不依赖 Gallery。
+示例运行于 http://127.0.0.1:5174，按示例入口选择已接入套系与场景，包含任务、详情、用量、设置、研究资料与报表。它只导入组件包和组件 CSS，不依赖 Gallery。
 
 也可以把 `examples/consumer` 复制到新目录，然后将该项目的 `ui-design-lab` 依赖改为 tgz 的实际路径：
 
@@ -39,7 +41,7 @@ npm run build
 node scripts/create-starter.mjs --target=../my-workbench --suite=clearline-console
 ```
 
-省略 `--suite` 提供四套选择；进入新目录运行 npm install / npm run dev。生成文件独立，组件包复制到 vendor/ 并使用相对路径，可以将完整目录交给其他机器。生成前若未运行 npm pack，将报出缺失包路径且不创建半成品。任务、上传和报表业务接口边界见 [场景交付](docs/SCENARIO-DELIVERY.md)。
+省略 `--suite` 提供全部已注册非草案套系选择；进入新目录运行 npm install / npm run dev。生成文件独立，组件包复制到 vendor/ 并使用相对路径，可以将完整目录交给其他机器。生成前若未运行 npm pack，将报出缺失包路径且不创建半成品。任务、上传和报表业务接口边界见 [场景交付](docs/SCENARIO-DELIVERY.md)。
 
 ## 3. 在现有 React 项目中接入
 
@@ -71,7 +73,7 @@ Midnight Ledger 对应 `ui-design-lab/midnight-ledger`、`LedgerButton` 与 `dat
 - [Signal Studio API](systems/signal-studio/API.md)
 - 各套系 `web/index.d.ts`：参数类型、回调签名和泛型约束。
 
-给 Codex 的上下文位于本仓库 `systems/<suite-id>/`；安装后位于 `node_modules/ui-design-lab/systems/<suite-id>/`。优先读取 suite.json、DESIGN.md、foundations、standards、API.md 和 web 源码。
+给 Codex 的上下文位于本仓库 `systems/<suite-id>/`；安装后位于 `node_modules/ui-design-lab/systems/<suite-id>/`。先读 suite.json、DESIGN.md、standards/extension.md、foundations 与相关 standards，再读 API.md、类型和 web 源码。已有组件是可复用起点；Codex 可以沿本套配色语义、排版、布局与交互规则，在你的项目里设计新页面和新组件，不必复制示例工作台。品牌配色在项目主题层集中配置，新增组件从项目自身目录导入，不编造组件包 API。具体流程见包内 `skills/consume-suite/SKILL.md`。
 
 ## 5. 验证分发结果
 
@@ -85,4 +87,8 @@ npm run test:consumer
 
 ## 6. 生成 Beta 交付目录
 
-执行 `npm run release:prepare`，完成工程与 Sites 检查后在 dist/releases/ 下生成独立候选目录，含组件包、四套 Starter、静态演示站、说明及 SHA256SUMS.txt。浏览器测试和真实试用是另一个验收层；生成候选目录不会提交、推送或发布。
+执行 `npm run release:prepare`，完成工程与 Sites 检查后在 dist/releases/ 下生成独立候选目录，含组件包、各套 Starter、静态演示站、说明及 SHA256SUMS.txt。浏览器测试和真实试用是另一个验收层；生成候选目录不会提交、推送或发布。
+
+## 维护站内下载
+
+`npm run dev` 和 `npm run build` 会先从当前源码构建组件包，再生成 `public/downloads/manifest.json`、一个组件包、各套与八个场景的 Starter。也可运行 `npm run downloads:prepare`。该目录为生成物，不提交 Git；站点构建复制到 `dist/client/downloads/`。生成文件不等于 npm 发布或真实业务采用。

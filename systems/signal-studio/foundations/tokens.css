@@ -15,3 +15,9 @@
   --ss-duration: 120ms;
   color:var(--ss-text);font-family:var(--ss-font);
 }
+
+[data-ui-system="signal-studio"][data-density="compact"] {
+  --ss-control: 32px;
+  --ss-row: 38px;
+  --ss-space: 12px;
+}

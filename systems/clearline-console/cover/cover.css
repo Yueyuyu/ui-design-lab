@@ -1,0 +1,16 @@
+[data-ui-system="clearline-console"] .cc-cover {height:720px;padding:38px 44px;background:var(--cc-canvas)}
+[data-ui-system="clearline-console"] .cc-cover>header {display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+[data-ui-system="clearline-console"] .cc-cover>header>strong {font-size:19px}
+[data-ui-system="clearline-console"] .cc-cover>header>span {font-size:17px;color:var(--cc-muted)}
+[data-ui-system="clearline-console"] .cc-cover-collection {display:grid;grid-template-columns:1fr 1fr;gap:26px}
+[data-ui-system="clearline-console"] .cc-cover-collection>div {display:grid;align-content:start;gap:24px}
+[data-ui-system="clearline-console"] .cc-cover .cc-panel {padding:22px;margin:0;background:var(--cc-surface);border-radius:var(--cc-radius)}
+[data-ui-system="clearline-console"] .cc-cover .cc-check {margin:16px 0}
+[data-ui-system="clearline-console"] .cc-cover progress {width:100%;accent-color:var(--cc-brand)}
+[data-ui-system="clearline-console"] .cc-cover .cc-panel :is(.cc-control,.cc-choice) {margin:20px 0}
+[data-ui-system="clearline-console"] .cc-cover .cc-panel>header {margin-bottom:18px}
+[data-ui-system="clearline-console"] .cc-cover-checklist {margin:20px 0 30px}
+[data-ui-system="clearline-console"] .cc-cover-checklist p {display:flex;align-items:center;gap:14px;font-size:19px}
+[data-ui-system="clearline-console"] .cc-cover-checklist svg {color:var(--cc-brand)}
+[data-ui-system="clearline-console"] .cc-cover-symbols {display:flex;justify-content:space-between;margin:30px 0;color:var(--cc-muted)}
+[data-ui-system="clearline-console"] .cc-cover .cc-button {margin-right:10px}

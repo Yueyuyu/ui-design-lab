@@ -6,7 +6,7 @@ export function SettingsPlayground({ suiteId, Button, Field, Select, Toggle, Pan
   const pending = form.status === "saving" || scenario === "loading";
   return <section className="settings-playground">
     <h1>交互试验场</h1><p>修改会保存在当前浏览器。可模拟失败、保留输入并重试；取消恢复最近保存值。</p>
-    <label>场景状态 <select aria-label="场景状态" value={scenario} onChange={e=>setScenario(e.target.value)}><option value="default">正常</option><option value="loading">加载</option><option value="error">错误</option></select></label>
+    <div className="playground-scenario"><Select label="场景状态" value={scenario} onChange={e=>setScenario(e.target.value)} options={[{value:'default',label:'正常'},{value:'loading',label:'加载'},{value:'error',label:'错误'}]}/></div>
     <Panel title="工作区设置"><form onSubmit={async e=>{e.preventDefault(); if (await form.save(scenario === "error")) onNotify?.("设置已保存到本机");}}>
       <Field label="工作区名称" value={form.draft.name} onChange={e=>form.update("name",e.target.value)} loading={pending} error={form.error || undefined}/>
       <Select label="工作区类型" value={form.draft.workspace} onChange={e=>form.update("workspace",e.target.value)} options={[{value:"research",label:"研究工作区"},{value:"monitor",label:"监控工作区"},{value:"writing",label:"写作工作区"}]} loading={pending}/>

@@ -51,7 +51,12 @@
       "网页使用示例数据；不连接账号、不发系统通知",
       "黑色紧凑原型；机器人仅限本机预览，不进入公开包"
     ],
-    "previewKind": "components"
+    "previewKind": "scene-concept",
+    "summary": "轻轻一瞥，掌握任务与额度。",
+    "scenePreview": {
+      "image": "references/scene-covers/pulse-desktop.png",
+      "title": "开发中的状态查看"
+    }
   },
   "capabilities": {
     "foundations": [
@@ -74,7 +79,8 @@
       "icons",
       "chinese-copy",
       "motion",
-      "composition"
+      "composition",
+      "extension"
     ]
   },
   "galleryShell": {

@@ -6,6 +6,7 @@
   "localizedName": "静谧工作台",
   "shortCode": "QW",
   "prefix": "qw",
+  "componentPrefix": "Quiet",
   "version": "0.3.0",
   "status": "stable",
   "description": "温润、易读的桌面效率设计，适合任务、资料与内容工作台。",
@@ -65,21 +66,19 @@
     ],
     "components": [
       "button",
-      "icon-button",
-      "field",
-      "select",
-      "toggle",
       "card",
+      "field",
+      "icon-button",
+      "status-chip",
+      "toggle",
+      "select",
       "dialog",
       "table",
-      "notification",
       "empty-state",
-      "status-chip",
+      "notification",
       "bar-chart",
-      "task-light",
       "quota-pill",
-      "shell",
-      "data-table",
+      "task-light",
       "textarea",
       "checkbox",
       "radio-group",
@@ -90,21 +89,25 @@
       "tabs",
       "breadcrumb",
       "pagination",
-      "dropdown-menu",
-      "tooltip",
-      "popover",
+      "data-table",
       "drawer",
+      "dropdown-menu",
+      "popover",
+      "tooltip",
       "progress",
       "skeleton",
       "toast-queue",
       "file-upload",
-      "tree"
+      "tree",
+      "slider"
     ],
     "patterns": [
       "workspace-shell",
       "floating-utility",
       "settings-form",
-      "data-table"
+      "data-table",
+      "workspace-preview",
+      "shell"
     ],
     "standards": [
       "accessibility",
@@ -113,7 +116,9 @@
       "data-visualization",
       "chinese-copy",
       "motion",
-      "status-semantics"
+      "status-semantics",
+      "composition",
+      "extension"
     ]
   },
   "comparison": {
@@ -141,8 +146,13 @@
       "暂未提供深色模式",
       "远程数据、存储和通知由业务方接入"
     ],
-    "previewKind": "components",
-    "thumbnail": "references/thumbnails/quiet-workspace.png"
+    "previewKind": "scene-concept",
+    "thumbnail": "references/thumbnails/quiet-workspace.png",
+    "summary": "用温润、易读的界面，整理工作与日常。",
+    "scenePreview": {
+      "image": "references/scene-covers/quiet-workspace.png",
+      "title": "个人复盘"
+    }
   },
   "tokenBindings": "./foundations/token-bindings.json",
   "themeControls": [

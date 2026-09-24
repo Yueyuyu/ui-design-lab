@@ -1,0 +1,25 @@
+[data-ui-system="folio-workspace"] .fw-block-editor { padding:8px 0 20px; max-width:var(--fw-reading-width); }
+[data-ui-system="folio-workspace"] .fw-block { display:flex; align-items:flex-start; position:relative; margin:5px -9px 5px -22px; gap:2px; }
+[data-ui-system="folio-workspace"] .fw-block-handle { color:var(--fw-muted); padding:2px; min-height:30px; opacity:.5; }
+[data-ui-system="folio-workspace"] .fw-block:hover .fw-block-handle, [data-ui-system="folio-workspace"] .fw-block:focus-within .fw-block-handle { opacity:1; }
+[data-ui-system="folio-workspace"] .fw-block-content { flex:1; min-width:0; }
+[data-ui-system="folio-workspace"] .fw-block-line { display:flex; align-items:flex-start; gap:6px; }
+[data-ui-system="folio-workspace"] .fw-block-line textarea { width:100%; flex:1; min-width:0; background:transparent; border:1px solid transparent; resize:vertical; padding:3px 4px; min-height:30px; line-height:1.75; font-size:14px; border-radius:var(--fw-radius); field-sizing:content; }
+[data-ui-system="folio-workspace"] .fw-block-line textarea:hover:not(:disabled) { background:var(--fw-sidebar); }
+[data-ui-system="folio-workspace"] .fw-block-line textarea:focus { background:var(--fw-paper); }
+[data-ui-system="folio-workspace"] .fw-block[data-kind="heading"] { margin-top:14px; }
+[data-ui-system="folio-workspace"] .fw-block[data-kind="heading"] textarea { font-size:19px; font-weight:650; line-height:1.5; }
+[data-ui-system="folio-workspace"] .fw-block-line input[type="checkbox"] { accent-color:var(--fw-ink); width:16px; height:16px; margin:10px 0 0 5px; flex-shrink:0; }
+[data-ui-system="folio-workspace"] .fw-completed { text-decoration:line-through; color:var(--fw-muted); }
+[data-ui-system="folio-workspace"] .fw-toggle-content { margin:4px 0 8px 26px; width:calc(100% - 26px); background:transparent; border:0; border-left:2px solid var(--fw-line); padding:8px 12px; font-size:13px; resize:vertical; }
+[data-ui-system="folio-workspace"] .fw-block-add { position:relative; margin-top:10px; color:var(--fw-muted); }
+[data-ui-system="folio-workspace"] .fw-block-add>.fw-button { font-size:12px; }
+[data-ui-system="folio-workspace"] .fw-block-menu { position:absolute; top:32px; left:0; z-index:5; display:flex; flex-direction:column; background:var(--fw-paper); border:1px solid var(--fw-line); border-radius:6px; box-shadow:var(--fw-popover-shadow); width:190px; padding:6px; }
+[data-ui-system="folio-workspace"] .fw-block-menu small { padding:4px 8px; font-size:11px; color:var(--fw-muted); }
+[data-ui-system="folio-workspace"] .fw-block-menu .fw-button { justify-content:flex-start; }
+[data-ui-system="folio-workspace"] .fw-block-menu hr { border:0; border-top:1px solid var(--fw-line); width:100%; margin:5px 0; }
+[data-ui-system="folio-workspace"] .fw-undo { display:flex; gap:12px; align-items:center; font-size:12px; margin-top:10px; background:var(--fw-sidebar); padding:5px 10px; }
+@media (max-width:760px) {
+  [data-ui-system="folio-workspace"] .fw-block { margin-left:-7px; margin-right:0; }
+  [data-ui-system="folio-workspace"] .fw-block-handle { opacity:.8; }
+}

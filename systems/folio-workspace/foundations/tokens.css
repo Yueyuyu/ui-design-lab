@@ -1,0 +1,22 @@
+[data-ui-system="folio-workspace"] {
+  --fw-paper: #ffffff;
+  --fw-sidebar: #f7f7f5;
+  --fw-ink: #30302e;
+  --fw-muted: #6b6b65;
+  --fw-line: #e9e9e5;
+  --fw-hover: #ededeb;
+  --fw-pressed: #deded9;
+  --fw-focus: #2874a8;
+  --fw-error: #9f3434;
+  --fw-error-surface: #fff0ed;
+  --fw-progress-text: #765a23;
+  --fw-progress-surface: #f7edcd;
+  --fw-success-text: #365e4b;
+  --fw-success-surface: #e3eee7;
+  --fw-font: "Segoe UI Variable", "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
+  --fw-body-size: 14px;
+  --fw-radius: 4px;
+  --fw-motion: 120ms;
+  --fw-popover-shadow: 0 4px 18px #00000016;
+  --fw-reading-width: 760px;
+}

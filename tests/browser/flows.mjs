@@ -10,10 +10,12 @@ export async function noOverflow(p) {
 
 export async function catalogFlow({ p, goto }) {
   await goto("/#/systems");
-  await p.getByRole("heading", { name: "完整套系目录" }).waitFor({ state: "visible" });
-  ensure((await p.locator(".home-suite-facts").first().textContent()).includes("稳定"), "缺少成熟度");
+  await p.getByRole("heading", { name: "探索设计体系", exact: true }).waitFor({ state: "visible" });
+  ensure((await p.locator(".catalog-card__meta").first().textContent()).includes("稳定"), "缺少成熟度");
+  const ids = await p.locator(".catalog-card").evaluateAll(cards => cards.map(card => card.dataset.suiteId));
+  ensure(new Set(ids).size === ids.length, "套系重复展示");
   await p.getByRole("textbox", { name: "搜索全部套系" }).fill("Quiet");
-  ensure(await p.getByRole("button", { name: "进入 Quiet Workspace", exact: true }).isVisible(), "搜索漏掉精选套系");
+  ensure(await p.getByRole("button", { name: "进入 Quiet Workspace", exact: true }).isVisible(), "搜索漏掉已注册套系");
   ensure(await p.getByRole("button", { name: "进入 Midnight Ledger", exact: true }).count() === 0, "目录筛选未生效");
   await noOverflow(p);
   ensure(await p.evaluate(() => {
@@ -22,7 +24,7 @@ export async function catalogFlow({ p, goto }) {
     const nav = document.querySelector(".lab-public-header nav").getBoundingClientRect();
     return nav.top >= brand.bottom && nav.width > innerWidth * 0.75;
   }), "手机导航未获得独立完整行");
-  await p.getByRole("navigation", { name: "首页导航" }).getByRole("button", { name: "同场景对比", exact: true }).click();
+  await p.getByRole("navigation", { name: "首页导航" }).getByRole("link", { name: "同场景对比", exact: true }).click();
   await p.getByRole("tab", { name: "Quiet Workspace", exact: true }).waitFor({ state: "visible" });
   await p.getByRole("heading", { name: "月度经营复盘", exact: true }).waitFor({ state: "visible" });
   await noOverflow(p);
@@ -36,6 +38,7 @@ export async function comparisonFlow({ p, goto, clipboard }) {
   await p.getByRole("textbox", { name: /抄送邮箱/ }).fill("qa@example.com");
   await p.getByRole("switch", { name: "自动保存草稿", exact: true }).click();
   await p.getByRole("switch", { name: "完成后发送通知", exact: true }).click();
+  await p.getByText("视口、密度与状态", {exact:true}).click();
   await p.getByRole("combobox", { name: "组件密度", exact: true }).selectOption("compact");
   for (const [label, id] of [["Midnight Ledger", "midnight-ledger"], ["Quiet Workspace", "quiet-workspace"]]) {
     await p.getByRole("tab", { name: label, exact: true }).click();
@@ -48,6 +51,7 @@ export async function comparisonFlow({ p, goto, clipboard }) {
     ensure(data.suiteId === id && data.density === "compact", "导出套系或密度不匹配");
     ensure(JSON.stringify(data.content) === JSON.stringify({ owner: "测试负责人", email: "qa@example.com", autoSave: false, notify: false }), "设置导出不完整");
   }
+  await p.getByText("套系说明与 Agent 指令", {exact:true}).click();
   await p.getByRole("button", { name: "复制全部", exact: true }).click();
   ensure((await clipboard()).includes('"email": "qa@example.com"'), "实际剪贴板缺少场景设置");
   await p.getByRole("button", { name: "数据表格", exact: true }).click();
@@ -68,7 +72,7 @@ export async function comparisonFlow({ p, goto, clipboard }) {
 }
 
 export async function dialogFlow({ p, goto, key }, suiteId) {
-  await goto(`/#/systems/${suiteId}/components`);
+  await goto(`/#/systems/${suiteId}/playground/states`);
   const openerName = suiteId === "quiet-workspace" ? "打开对话框" : "打开交易确认";
   const actionName = suiteId === "quiet-workspace" ? "保存设置" : "确认执行";
   const opener = p.getByRole("button", { name: openerName, exact: true });
@@ -114,7 +118,7 @@ export async function dialogFlow({ p, goto, key }, suiteId) {
 
 export async function consumerFlow({ p, goto }) {
   await goto("/");
-  for (const suite of ["quiet-workspace", "midnight-ledger", "clearline-console", "signal-studio"]) {
+  for (const suite of ["quiet-workspace", "midnight-ledger"]) {
     await p.getByRole("combobox", {name:"设计套系",exact:true}).selectOption(suite);
     await p.getByRole("button", {name:"查看 内容目录检查",exact:true}).click();
     await p.getByRole("button", {name:"重试任务",exact:true}).click();

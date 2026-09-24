@@ -36,12 +36,22 @@ for (const id of manifest.suites) {
   const pkg = JSON.parse(await readFile(join(target, "package.json"), "utf8"));
   if (pkg.dependencies["ui-design-lab"] !== `file:vendor/ui-design-lab-${manifest.version}.tgz`) throw new Error("Starter 仍依赖外部路径");
   run(process.execPath, [process.env.npm_execpath, "install", "--ignore-scripts", "--no-audit", "--no-fund"], target);
-  const dataFile = join(target, "src/workbench/demo-data.js");
+  const suiteManifest = JSON.parse(await readFile(join(target, "node_modules/ui-design-lab/systems", id, "suite.json"), "utf8"));
+  const hasStandaloneWorkspace = !!suiteManifest.starter?.component;
+  const dataFile = join(target, hasStandaloneWorkspace ? "src/main.jsx" : "src/workbench/demo-data.js");
   const original = await readFile(dataFile, "utf8");
-  if (!original.includes("季度客户洞察")) throw new Error("待修改的示例任务不存在");
-  await writeFile(dataFile, original.replace("季度客户洞察", `Beta 字段验收 ${id}`));
+  let changedField;
+  if (hasStandaloneWorkspace) {
+    if (!original.includes('"storageKey":')) throw new Error("独立工作区缺少可配置的存储键");
+    await writeFile(dataFile, original.replace(/"storageKey":"[^"]+"/, '"storageKey":"beta-field-check-' + id + '"'));
+    changedField = "storageKey";
+  } else {
+    if (!original.includes("季度客户洞察")) throw new Error("待修改的示例任务不存在");
+    await writeFile(dataFile, original.replace("季度客户洞察", `Beta 字段验收 ${id}`));
+    changedField = "task.name";
+  }
   run(process.execPath, [process.env.npm_execpath, "run", "build"], target);
-  results.push({ suiteId: id, directory: target, changedTask: `Beta 字段验收 ${id}`, installed: true, built: true });
+  results.push({ suiteId: id, directory: target, changedField, installed: true, built: true });
   console.log(`${id}：校验、仓库外解压、相对依赖安装、修改字段与构建通过`);
 }
 await mkdir(".local-cache", { recursive: true });

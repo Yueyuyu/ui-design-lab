@@ -1,4 +1,4 @@
-const allowed = new Set(["catalog_view", "suite_open", "kit_view", "onboarding_start", "instruction_copy", "theme_export"]);
+const allowed = new Set(["catalog_view", "suite_open", "kit_view", "onboarding_start", "artifact_download", "instruction_copy", "theme_export"]);
 export function recordEvent(name, properties = {}) {
   try {
     if (localStorage.getItem("ui-lab-metrics-opt-in") !== "true" || !allowed.has(name)) return;

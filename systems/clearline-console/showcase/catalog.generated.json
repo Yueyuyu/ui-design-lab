@@ -1,0 +1,799 @@
+[
+  {
+    "id": "button",
+    "suffix": "Button",
+    "exportName": "ClearButton",
+    "kind": "basic",
+    "title": "按钮",
+    "description": "触发一个明确动作。",
+    "anatomy": "文字标签、可选图标、交互表面",
+    "usage": "主要动作保持唯一；提交中阻止重复操作。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearButton(props:ComponentPropsWithoutRef<\"button\">&StateProps&{variant?:\"primary\"|\"secondary\"|\"ghost\"|\"danger\";icon?:Icon}):JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function ClearButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"cc-button cc-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function ClearField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"cc-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function ClearSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"cc-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function ClearToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"cc-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function ClearPanel({title,eyebrow,action,children}) {return <section className=\"cc-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function ClearBadge({children}) {return <span className=\"cc-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "field",
+    "suffix": "Field",
+    "exportName": "ClearField",
+    "kind": "basic",
+    "title": "输入框",
+    "description": "录入单行文本。",
+    "anatomy": "标签、输入区、提示或错误",
+    "usage": "value 由调用方持有；错误说明放在字段附近。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearField(props:ComponentPropsWithoutRef<\"input\">&StateProps&{label:string;hint?:string}):JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function ClearButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"cc-button cc-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function ClearField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"cc-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function ClearSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"cc-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function ClearToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"cc-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function ClearPanel({title,eyebrow,action,children}) {return <section className=\"cc-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function ClearBadge({children}) {return <span className=\"cc-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "select",
+    "suffix": "Select",
+    "exportName": "ClearSelect",
+    "kind": "basic",
+    "title": "选择器",
+    "description": "从固定选项中选择一个值。",
+    "anatomy": "标签、原生 select、选项",
+    "usage": "少量选项优先使用；大量候选使用可搜索选择。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearSelect(props:ComponentPropsWithoutRef<\"select\">&StateProps&{label:string;hint?:string;options:Array<{label:string;value:string;disabled?:boolean}>}):JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function ClearButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"cc-button cc-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function ClearField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"cc-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function ClearSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"cc-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function ClearToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"cc-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function ClearPanel({title,eyebrow,action,children}) {return <section className=\"cc-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function ClearBadge({children}) {return <span className=\"cc-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "toggle",
+    "suffix": "Toggle",
+    "exportName": "ClearToggle",
+    "kind": "basic",
+    "title": "开关",
+    "description": "立即开启或关闭一个设置。",
+    "anatomy": "名称、说明、开关轨道",
+    "usage": "checked 与 onChange 配套，保存行为由页面负责。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearToggle(props:StateProps&{label:string;description?:string;checked:boolean;onChange?:(value:boolean)=>void}):JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function ClearButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"cc-button cc-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function ClearField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"cc-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function ClearSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"cc-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function ClearToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"cc-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function ClearPanel({title,eyebrow,action,children}) {return <section className=\"cc-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function ClearBadge({children}) {return <span className=\"cc-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "panel",
+    "suffix": "Panel",
+    "exportName": "ClearPanel",
+    "kind": "basic",
+    "title": "面板容器",
+    "description": "承载一个相关的信息区域。",
+    "anatomy": "标题区、动作槽、内容区",
+    "usage": "业务数据与请求由上层组件管理。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearPanel(props:{title?:ReactNode;eyebrow?:string;action?:ReactNode;children?:ReactNode}):JSX.Element;",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function ClearButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"cc-button cc-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function ClearField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"cc-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function ClearSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"cc-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function ClearToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"cc-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function ClearPanel({title,eyebrow,action,children}) {return <section className=\"cc-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function ClearBadge({children}) {return <span className=\"cc-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "badge",
+    "suffix": "Badge",
+    "exportName": "ClearBadge",
+    "kind": "basic",
+    "title": "标签",
+    "description": "表达一个短分类或状态。",
+    "anatomy": "短文本、语义底色",
+    "usage": "静态标记不应加入 Tab 顺序。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearBadge(props:{children?:ReactNode}):JSX.Element;",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function ClearButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"cc-button cc-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function ClearField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"cc-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function ClearSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"cc-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function ClearToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"cc-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function ClearPanel({title,eyebrow,action,children}) {return <section className=\"cc-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function ClearBadge({children}) {return <span className=\"cc-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "bar-chart",
+    "suffix": "BarChart",
+    "exportName": "ClearBarChart",
+    "kind": "basic",
+    "title": "柱状图",
+    "description": "比较离散类别的数值。",
+    "anatomy": "标题、带标签的数据、柱体、读数",
+    "usage": "传入实际单位与范围；负值保留方向，缺失不补零。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error",
+      "empty"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearBarChart(props:{title?:string;description?:string;period?:string;source?:string;updatedAt?:string;data?:Array<{label:string;value:number}>;unit?:string;state?:InteractionState|\"empty\";disabled?:boolean;onRetry?:()=>void}):JSX.Element;\n\nexport type InteractionState = \"default\"|\"hover\"|\"pressed\"|\"focus\"|\"disabled\"|\"loading\"|\"error\";",
+    "source": "web/Chart.jsx",
+    "sourceCode": "import { barGeometry, validSeries } from \"./chart-data.js\";\nimport { ClearButton } from \"./primitives.jsx\";\nexport function ClearBarChart({ title, description, data = [], unit = \"\", period, source, updatedAt, state = \"default\", disabled = false, onRetry }) {\n  const invalid = !validSeries(data), bars = barGeometry(data);\n  const ready = !invalid && bars.length > 0 && ![\"empty\",\"loading\",\"error\"].includes(state);\n  return <figure className=\"cc-chart\" data-state={disabled ? \"disabled\" : state} aria-busy={state === \"loading\" || undefined}>\n    <figcaption><span><strong>{title}</strong><small>{[description,period,source,updatedAt].filter(Boolean).join(\" · \")}</small></span></figcaption>\n    {!ready ? <div className=\"cc-chart__message\" role={invalid || state === \"error\" ? \"alert\" : \"status\"}>\n      <span>{state === \"loading\" ? \"正在加载数据…\" : invalid ? \"数据包含缺失或非法数值，请检查数据源。\" : state === \"error\" ? \"图表加载失败。请稍后重试。\" : \"当前筛选条件下暂无数据。\"}</span>\n      {state === \"error\" && onRetry ? <ClearButton onClick={onRetry}>重新加载</ClearButton> : null}\n    </div> : <div className=\"cc-signed-bars\">{bars.map((item,index) => <button type=\"button\" key={index} disabled={disabled || state === \"disabled\"} aria-label={item.label + \"：\" + item.value + unit}>\n      <b>{item.value}{unit}</b><span className=\"cc-signed-track\"><i style={{top:item.top+\"%\",height:item.height+\"%\"}} data-negative={item.value < 0}/><hr style={{top:item.baseline+\"%\"}}/></span><small>{item.label}</small>\n    </button>)}</div>}\n  </figure>;\n}\n"
+  },
+  {
+    "id": "textarea",
+    "suffix": "Textarea",
+    "exportName": "ClearTextarea",
+    "kind": "basic",
+    "title": "多行输入",
+    "description": "编辑一段说明或正文。",
+    "anatomy": "标签、多行输入、提示",
+    "usage": "不要把纯文本输入描述为富文本编辑器。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearTextarea(props: ComponentPropsWithoutRef<\"textarea\"> & StateProps & {label: string; hint?: string}): JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function ClearTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"cc-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function ClearCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"cc-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function ClearRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"cc-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function ClearCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function ClearMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"cc-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"cc-options\">{matches.map(o => <ClearCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function ClearDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"cc-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function ClearDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"cc-inline\"><ClearDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><ClearDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"cc-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "checkbox",
+    "suffix": "Checkbox",
+    "exportName": "ClearCheckbox",
+    "kind": "basic",
+    "title": "复选框",
+    "description": "独立勾选条件。",
+    "anatomy": "复选框、标签、可选提示",
+    "usage": "checked 是布尔值；多个选项可以同时成立。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearCheckbox(props: StateProps & {label: string; checked: boolean; onChange?: (value: boolean) => void; hint?: string}): JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function ClearTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"cc-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function ClearCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"cc-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function ClearRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"cc-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function ClearCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function ClearMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"cc-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"cc-options\">{matches.map(o => <ClearCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function ClearDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"cc-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function ClearDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"cc-inline\"><ClearDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><ClearDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"cc-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "radio-group",
+    "suffix": "RadioGroup",
+    "exportName": "ClearRadioGroup",
+    "kind": "basic",
+    "title": "单选组",
+    "description": "同时展示互斥选项。",
+    "anatomy": "组名、单选项、选中反馈",
+    "usage": "同组只允许一个值；原生键盘行为。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearRadioGroup(props: SearchSelectProps): JSX.Element;\n\nexport interface SearchSelectProps extends StateProps {label: string; options: Choice[]; value: string; onChange?: (value: string) => void;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}\n\nexport interface Choice { value: string; label: string; disabled?: boolean; }",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function ClearTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"cc-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function ClearCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"cc-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function ClearRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"cc-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function ClearCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function ClearMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"cc-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"cc-options\">{matches.map(o => <ClearCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function ClearDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"cc-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function ClearDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"cc-inline\"><ClearDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><ClearDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"cc-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "combobox",
+    "suffix": "Combobox",
+    "exportName": "ClearCombobox",
+    "kind": "basic",
+    "title": "可搜索选择",
+    "description": "搜索后选中一个候选项。",
+    "anatomy": "搜索框、候选列表、当前值",
+    "usage": "value 是选项标识；空结果需要保留搜索文本。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearCombobox(props: SearchSelectProps): JSX.Element;\n\nexport interface SearchSelectProps extends StateProps {label: string; options: Choice[]; value: string; onChange?: (value: string) => void;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}\n\nexport interface Choice { value: string; label: string; disabled?: boolean; }",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function ClearTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"cc-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function ClearCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"cc-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function ClearRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"cc-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function ClearCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function ClearMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"cc-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"cc-options\">{matches.map(o => <ClearCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function ClearDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"cc-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function ClearDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"cc-inline\"><ClearDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><ClearDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"cc-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "multi-select",
+    "suffix": "MultiSelect",
+    "exportName": "ClearMultiSelect",
+    "kind": "basic",
+    "title": "多项选择",
+    "description": "从候选中组合多个值。",
+    "anatomy": "组名、复选项、已选值",
+    "usage": "value 为数组；提交时由调用方校验选择范围。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearMultiSelect(props: Omit<SearchSelectProps,\"value\"|\"onChange\"> & {value: string[]; onChange?: (value: string[])=>void}): JSX.Element;\n\nexport interface SearchSelectProps extends StateProps {label: string; options: Choice[]; value: string; onChange?: (value: string) => void;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}\n\nexport interface Choice { value: string; label: string; disabled?: boolean; }",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function ClearTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"cc-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function ClearCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"cc-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function ClearRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"cc-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function ClearCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function ClearMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"cc-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"cc-options\">{matches.map(o => <ClearCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function ClearDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"cc-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function ClearDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"cc-inline\"><ClearDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><ClearDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"cc-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "date-picker",
+    "suffix": "DatePicker",
+    "exportName": "ClearDatePicker",
+    "kind": "basic",
+    "title": "日期选择",
+    "description": "选择单个日期。",
+    "anatomy": "标签、原生日期输入",
+    "usage": "使用 YYYY-MM-DD；不要把日期当作带时区时间戳。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearDatePicker(props: DatePickerProps): JSX.Element;\n\nexport interface DatePickerProps extends StateProps {label: string; value?: string; onChange?: (value: string)=>void; min?: string; max?: string;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function ClearTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"cc-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function ClearCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"cc-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function ClearRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"cc-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function ClearCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function ClearMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"cc-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"cc-options\">{matches.map(o => <ClearCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function ClearDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"cc-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function ClearDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"cc-inline\"><ClearDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><ClearDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"cc-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "date-range",
+    "suffix": "DateRange",
+    "exportName": "ClearDateRange",
+    "kind": "basic",
+    "title": "日期范围",
+    "description": "选择起止日期。",
+    "anatomy": "起始日期、结束日期、顺序校验",
+    "usage": "value 包含 start 和 end；跨时区统计规则由业务定义。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearDateRange(props: Omit<DatePickerProps,\"value\"|\"onChange\"> & {value: DateRangeValue; onChange?: (value:DateRangeValue)=>void}): JSX.Element;\n\nexport interface DatePickerProps extends StateProps {label: string; value?: string; onChange?: (value: string)=>void; min?: string; max?: string;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}\n\nexport interface DateRangeValue {start: string; end: string;}",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function ClearTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"cc-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function ClearCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"cc-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function ClearRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"cc-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function ClearCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function ClearMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"cc-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"cc-options\">{matches.map(o => <ClearCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function ClearDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"cc-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function ClearDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"cc-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"cc-inline\"><ClearDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><ClearDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"cc-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "shell",
+    "suffix": "Shell",
+    "exportName": "ClearShell",
+    "kind": "pattern",
+    "title": "工作区框架",
+    "description": "组织导航、上下文和内容区域。",
+    "anatomy": "套系导航、页面头、动作区、children",
+    "usage": "框架是页面骨架；导航内容由调用方定义。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearShell(props: {brand: ReactNode; navigation:Array<{id:string;label:string;icon?:ReactNode}>; activeId:string; onNavigate?:(id:string)=>void; title:ReactNode; actions?:ReactNode; children?:ReactNode}): JSX.Element;",
+    "source": "web/Navigation.jsx",
+    "sourceCode": "import { useId } from \"react\";\nexport function ClearShell({\n  brand,\n  navigation,\n  activeId,\n  onNavigate,\n  title,\n  actions,\n  children\n}) {\n  return <div className=\"cc-shell\"><aside><strong>{brand}</strong><nav aria-label=\"工作台导航\">{navigation.map(item => <button type=\"button\" key={item.id} aria-current={activeId === item.id ? \"page\" : undefined} onClick={() => onNavigate?.(item.id)}>{item.icon}{item.label}</button>)}</nav></aside><div className=\"cc-shell-main\"><header><h2>{title}</h2><div>{actions}</div></header><main>{children}</main></div></div>;\n}\nexport function ClearTabs({\n  items,\n  value,\n  onChange,\n  label = \"页面分区\",\n  disabled = false\n}) {\n  const id = useId(),\n    active = items.find(item => item.id === value) ?? items[0];\n  const change = (e, index) => {\n    const enabled = items.filter(i => !i.disabled);\n    const pos = enabled.findIndex(i => i.id === items[index].id);\n    const offset = e.key === \"ArrowRight\" ? 1 : e.key === \"ArrowLeft\" ? -1 : 0;\n    const next = e.key === \"Home\" ? enabled[0] : e.key === \"End\" ? enabled.at(-1) : offset ? enabled[(pos + offset + enabled.length) % enabled.length] : null;\n    if (next) {\n      e.preventDefault();\n      onChange?.(next.id);\n      document.getElementById(id + \"-\" + next.id)?.focus();\n    }\n  };\n  return <div><div className=\"cc-tabs\" role=\"tablist\" aria-label={label}>{items.map((item, index) => <button type=\"button\" role=\"tab\" id={id + \"-\" + item.id} aria-controls={id + \"-panel\"} key={item.id} aria-selected={active?.id === item.id} tabIndex={active?.id === item.id ? 0 : -1} disabled={disabled || item.disabled} onKeyDown={e => change(e, index)} onClick={() => onChange?.(item.id)}>{item.label}</button>)}</div><section role=\"tabpanel\" id={id + \"-panel\"} aria-labelledby={id + \"-\" + active?.id} tabIndex={0}>{active?.content}</section></div>;\n}\nexport function ClearBreadcrumb({\n  items,\n  label = \"当前位置\"\n}) {\n  return <nav className=\"cc-breadcrumb\" aria-label={label}><ol>{items.map((item, index) => <li key={index}>{index === items.length - 1 ? <span aria-current=\"page\">{item.label}</span> : <a href={item.href} onClick={item.onClick}>{item.label}</a>}</li>)}</ol></nav>;\n}\nexport function ClearPagination({\n  page,\n  pageCount,\n  onChange,\n  disabled\n}) {\n  const total = Math.max(1, pageCount),\n    current = Math.min(total, Math.max(1, page));\n  return <nav className=\"cc-pagination\" aria-label=\"分页\"><button type=\"button\" disabled={disabled || current <= 1} onClick={() => onChange?.(current - 1)}>上一页</button><span aria-live=\"polite\">第 {current} / {total} 页</span><button type=\"button\" disabled={disabled || current >= total} onClick={() => onChange?.(current + 1)}>下一页</button></nav>;\n}\n"
+  },
+  {
+    "id": "tabs",
+    "suffix": "Tabs",
+    "exportName": "ClearTabs",
+    "kind": "basic",
+    "title": "标签页",
+    "description": "在同一上下文中切换内容。",
+    "anatomy": "tablist、当前标签、内容面板",
+    "usage": "value 受控，切换不能冒充保存。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearTabs(props: {items:Array<{id:string;label:string;content?:ReactNode;disabled?:boolean}>; value:string; onChange?:(id:string)=>void; label?:string; disabled?:boolean}): JSX.Element;",
+    "source": "web/Navigation.jsx",
+    "sourceCode": "import { useId } from \"react\";\nexport function ClearShell({\n  brand,\n  navigation,\n  activeId,\n  onNavigate,\n  title,\n  actions,\n  children\n}) {\n  return <div className=\"cc-shell\"><aside><strong>{brand}</strong><nav aria-label=\"工作台导航\">{navigation.map(item => <button type=\"button\" key={item.id} aria-current={activeId === item.id ? \"page\" : undefined} onClick={() => onNavigate?.(item.id)}>{item.icon}{item.label}</button>)}</nav></aside><div className=\"cc-shell-main\"><header><h2>{title}</h2><div>{actions}</div></header><main>{children}</main></div></div>;\n}\nexport function ClearTabs({\n  items,\n  value,\n  onChange,\n  label = \"页面分区\",\n  disabled = false\n}) {\n  const id = useId(),\n    active = items.find(item => item.id === value) ?? items[0];\n  const change = (e, index) => {\n    const enabled = items.filter(i => !i.disabled);\n    const pos = enabled.findIndex(i => i.id === items[index].id);\n    const offset = e.key === \"ArrowRight\" ? 1 : e.key === \"ArrowLeft\" ? -1 : 0;\n    const next = e.key === \"Home\" ? enabled[0] : e.key === \"End\" ? enabled.at(-1) : offset ? enabled[(pos + offset + enabled.length) % enabled.length] : null;\n    if (next) {\n      e.preventDefault();\n      onChange?.(next.id);\n      document.getElementById(id + \"-\" + next.id)?.focus();\n    }\n  };\n  return <div><div className=\"cc-tabs\" role=\"tablist\" aria-label={label}>{items.map((item, index) => <button type=\"button\" role=\"tab\" id={id + \"-\" + item.id} aria-controls={id + \"-panel\"} key={item.id} aria-selected={active?.id === item.id} tabIndex={active?.id === item.id ? 0 : -1} disabled={disabled || item.disabled} onKeyDown={e => change(e, index)} onClick={() => onChange?.(item.id)}>{item.label}</button>)}</div><section role=\"tabpanel\" id={id + \"-panel\"} aria-labelledby={id + \"-\" + active?.id} tabIndex={0}>{active?.content}</section></div>;\n}\nexport function ClearBreadcrumb({\n  items,\n  label = \"当前位置\"\n}) {\n  return <nav className=\"cc-breadcrumb\" aria-label={label}><ol>{items.map((item, index) => <li key={index}>{index === items.length - 1 ? <span aria-current=\"page\">{item.label}</span> : <a href={item.href} onClick={item.onClick}>{item.label}</a>}</li>)}</ol></nav>;\n}\nexport function ClearPagination({\n  page,\n  pageCount,\n  onChange,\n  disabled\n}) {\n  const total = Math.max(1, pageCount),\n    current = Math.min(total, Math.max(1, page));\n  return <nav className=\"cc-pagination\" aria-label=\"分页\"><button type=\"button\" disabled={disabled || current <= 1} onClick={() => onChange?.(current - 1)}>上一页</button><span aria-live=\"polite\">第 {current} / {total} 页</span><button type=\"button\" disabled={disabled || current >= total} onClick={() => onChange?.(current + 1)}>下一页</button></nav>;\n}\n"
+  },
+  {
+    "id": "breadcrumb",
+    "suffix": "Breadcrumb",
+    "exportName": "ClearBreadcrumb",
+    "kind": "basic",
+    "title": "面包屑",
+    "description": "表达当前位置的层级。",
+    "anatomy": "祖先链接、分隔符、当前位置",
+    "usage": "当前项不重复跳转；items 提供可用链接或动作。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearBreadcrumb(props:{items:Array<{label:string;href?:string;onClick?:()=>void}>;label?:string}):JSX.Element;",
+    "source": "web/Navigation.jsx",
+    "sourceCode": "import { useId } from \"react\";\nexport function ClearShell({\n  brand,\n  navigation,\n  activeId,\n  onNavigate,\n  title,\n  actions,\n  children\n}) {\n  return <div className=\"cc-shell\"><aside><strong>{brand}</strong><nav aria-label=\"工作台导航\">{navigation.map(item => <button type=\"button\" key={item.id} aria-current={activeId === item.id ? \"page\" : undefined} onClick={() => onNavigate?.(item.id)}>{item.icon}{item.label}</button>)}</nav></aside><div className=\"cc-shell-main\"><header><h2>{title}</h2><div>{actions}</div></header><main>{children}</main></div></div>;\n}\nexport function ClearTabs({\n  items,\n  value,\n  onChange,\n  label = \"页面分区\",\n  disabled = false\n}) {\n  const id = useId(),\n    active = items.find(item => item.id === value) ?? items[0];\n  const change = (e, index) => {\n    const enabled = items.filter(i => !i.disabled);\n    const pos = enabled.findIndex(i => i.id === items[index].id);\n    const offset = e.key === \"ArrowRight\" ? 1 : e.key === \"ArrowLeft\" ? -1 : 0;\n    const next = e.key === \"Home\" ? enabled[0] : e.key === \"End\" ? enabled.at(-1) : offset ? enabled[(pos + offset + enabled.length) % enabled.length] : null;\n    if (next) {\n      e.preventDefault();\n      onChange?.(next.id);\n      document.getElementById(id + \"-\" + next.id)?.focus();\n    }\n  };\n  return <div><div className=\"cc-tabs\" role=\"tablist\" aria-label={label}>{items.map((item, index) => <button type=\"button\" role=\"tab\" id={id + \"-\" + item.id} aria-controls={id + \"-panel\"} key={item.id} aria-selected={active?.id === item.id} tabIndex={active?.id === item.id ? 0 : -1} disabled={disabled || item.disabled} onKeyDown={e => change(e, index)} onClick={() => onChange?.(item.id)}>{item.label}</button>)}</div><section role=\"tabpanel\" id={id + \"-panel\"} aria-labelledby={id + \"-\" + active?.id} tabIndex={0}>{active?.content}</section></div>;\n}\nexport function ClearBreadcrumb({\n  items,\n  label = \"当前位置\"\n}) {\n  return <nav className=\"cc-breadcrumb\" aria-label={label}><ol>{items.map((item, index) => <li key={index}>{index === items.length - 1 ? <span aria-current=\"page\">{item.label}</span> : <a href={item.href} onClick={item.onClick}>{item.label}</a>}</li>)}</ol></nav>;\n}\nexport function ClearPagination({\n  page,\n  pageCount,\n  onChange,\n  disabled\n}) {\n  const total = Math.max(1, pageCount),\n    current = Math.min(total, Math.max(1, page));\n  return <nav className=\"cc-pagination\" aria-label=\"分页\"><button type=\"button\" disabled={disabled || current <= 1} onClick={() => onChange?.(current - 1)}>上一页</button><span aria-live=\"polite\">第 {current} / {total} 页</span><button type=\"button\" disabled={disabled || current >= total} onClick={() => onChange?.(current + 1)}>下一页</button></nav>;\n}\n"
+  },
+  {
+    "id": "pagination",
+    "suffix": "Pagination",
+    "exportName": "ClearPagination",
+    "kind": "basic",
+    "title": "分页",
+    "description": "按页浏览一个集合。",
+    "anatomy": "上页、页码、下页",
+    "usage": "page 从 1 起；总页数由数据集计算。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearPagination(props:{page:number;pageCount:number;onChange?:(page:number)=>void;disabled?:boolean}):JSX.Element;",
+    "source": "web/Navigation.jsx",
+    "sourceCode": "import { useId } from \"react\";\nexport function ClearShell({\n  brand,\n  navigation,\n  activeId,\n  onNavigate,\n  title,\n  actions,\n  children\n}) {\n  return <div className=\"cc-shell\"><aside><strong>{brand}</strong><nav aria-label=\"工作台导航\">{navigation.map(item => <button type=\"button\" key={item.id} aria-current={activeId === item.id ? \"page\" : undefined} onClick={() => onNavigate?.(item.id)}>{item.icon}{item.label}</button>)}</nav></aside><div className=\"cc-shell-main\"><header><h2>{title}</h2><div>{actions}</div></header><main>{children}</main></div></div>;\n}\nexport function ClearTabs({\n  items,\n  value,\n  onChange,\n  label = \"页面分区\",\n  disabled = false\n}) {\n  const id = useId(),\n    active = items.find(item => item.id === value) ?? items[0];\n  const change = (e, index) => {\n    const enabled = items.filter(i => !i.disabled);\n    const pos = enabled.findIndex(i => i.id === items[index].id);\n    const offset = e.key === \"ArrowRight\" ? 1 : e.key === \"ArrowLeft\" ? -1 : 0;\n    const next = e.key === \"Home\" ? enabled[0] : e.key === \"End\" ? enabled.at(-1) : offset ? enabled[(pos + offset + enabled.length) % enabled.length] : null;\n    if (next) {\n      e.preventDefault();\n      onChange?.(next.id);\n      document.getElementById(id + \"-\" + next.id)?.focus();\n    }\n  };\n  return <div><div className=\"cc-tabs\" role=\"tablist\" aria-label={label}>{items.map((item, index) => <button type=\"button\" role=\"tab\" id={id + \"-\" + item.id} aria-controls={id + \"-panel\"} key={item.id} aria-selected={active?.id === item.id} tabIndex={active?.id === item.id ? 0 : -1} disabled={disabled || item.disabled} onKeyDown={e => change(e, index)} onClick={() => onChange?.(item.id)}>{item.label}</button>)}</div><section role=\"tabpanel\" id={id + \"-panel\"} aria-labelledby={id + \"-\" + active?.id} tabIndex={0}>{active?.content}</section></div>;\n}\nexport function ClearBreadcrumb({\n  items,\n  label = \"当前位置\"\n}) {\n  return <nav className=\"cc-breadcrumb\" aria-label={label}><ol>{items.map((item, index) => <li key={index}>{index === items.length - 1 ? <span aria-current=\"page\">{item.label}</span> : <a href={item.href} onClick={item.onClick}>{item.label}</a>}</li>)}</ol></nav>;\n}\nexport function ClearPagination({\n  page,\n  pageCount,\n  onChange,\n  disabled\n}) {\n  const total = Math.max(1, pageCount),\n    current = Math.min(total, Math.max(1, page));\n  return <nav className=\"cc-pagination\" aria-label=\"分页\"><button type=\"button\" disabled={disabled || current <= 1} onClick={() => onChange?.(current - 1)}>上一页</button><span aria-live=\"polite\">第 {current} / {total} 页</span><button type=\"button\" disabled={disabled || current >= total} onClick={() => onChange?.(current + 1)}>下一页</button></nav>;\n}\n"
+  },
+  {
+    "id": "data-table",
+    "suffix": "DataTable",
+    "exportName": "ClearDataTable",
+    "kind": "business",
+    "title": "数据表格",
+    "description": "搜索、排序、选择和分页一组记录。",
+    "anatomy": "搜索、基础表格、复选、分页、批量动作",
+    "usage": "rows 受控；远端分页与服务端排序需调用方接入。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error",
+      "empty"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearDataTable<T extends Row>(props: {rows:T[];columns:Array<Omit<Column<T>,\"render\">&{sortable?:boolean;render?:(value:T[keyof T],row:T)=>ReactNode}>;caption?:string;pageSize?:number;showToolbar?:boolean;selectable?:boolean;selection?:T[\"id\"][];onSelectionChange?:(ids:T[\"id\"][])=>void;onBulkAction?:(ids:T[\"id\"][])=>void;onRowActivate?:(row:T)=>void;loading?:boolean;disabled?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;\n\nexport interface Row {id:string|number;disabled?:boolean;}\n\nexport interface Column<T> {key:Extract<keyof T,string>;label:string;render?:(row:T)=>ReactNode;}",
+    "source": "web/DataTable.jsx",
+    "sourceCode": "import { useMemo, useState } from \"react\";\nimport { ClearPagination } from \"./Navigation.jsx\";\nexport function ClearDataTable({\n  rows,\n  columns,\n  caption = \"数据列表\",\n  pageSize = 5,\n  showToolbar = true,\n  selectable = true,\n  selection,\n  onSelectionChange,\n  onRowActivate,\n  onBulkAction,\n  loading = false,\n  disabled = false,\n  error,\n  onRetry\n}) {\n  const [query, setQuery] = useState(\"\"),\n    [sort, setSort] = useState(null),\n    [page, setPage] = useState(1),\n    [hidden, setHidden] = useState([]),\n    [localSelection, setLocalSelection] = useState([]);\n  const selected = (selection ?? localSelection).filter(id => rows.some(r => r.id === id && !r.disabled)),\n    inert = loading || disabled;\n  const select = ids => {\n    setLocalSelection(ids);\n    onSelectionChange?.(ids);\n  };\n  const filtered = useMemo(() => {\n    const list = rows.filter(row => columns.some(c => String(row[c.key] ?? \"\").toLocaleLowerCase().includes(query.toLocaleLowerCase())));\n    if (sort) list.sort((a, b) => {\n      const x = a[sort.key],\n        y = b[sort.key];\n      return (typeof x === \"number\" && typeof y === \"number\" ? x - y : String(x ?? \"\").localeCompare(String(y ?? \"\"), \"zh-CN\", {\n        numeric: true\n      })) * sort.direction;\n    });\n    return list;\n  }, [rows, columns, query, sort]);\n  const size = Math.max(1, Math.floor(Number.isFinite(pageSize) ? pageSize : 5));\n  const count = Math.max(1, Math.ceil(filtered.length / size)),\n    current = Math.min(page, count),\n    visible = filtered.slice((current - 1) * size, current * size),\n    eligible = visible.filter(r => !r.disabled).map(r => r.id);\n  const shown = columns.filter(c => !hidden.includes(c.key));\n  return <section className=\"cc-data-table\" aria-busy={loading || undefined}>{showToolbar && <div className=\"cc-table-toolbar\"><label>筛选 <input type=\"search\" aria-label={\"筛选\" + caption} value={query} onChange={e => {\n          setQuery(e.target.value);\n          setPage(1);\n        }} disabled={inert} /></label><details><summary>显示列</summary>{columns.map(c => <label key={c.key}><input type=\"checkbox\" checked={!hidden.includes(c.key)} disabled={inert || shown.length === 1 && !hidden.includes(c.key)} onChange={() => setHidden(v => v.includes(c.key) ? v.filter(x => x !== c.key) : [...v, c.key])} />{c.label}</label>)}</details></div>}\n <p role=\"status\">{loading ? \"正在加载数据…\" : \"匹配 \" + filtered.length + \" 条\" + (selectable ? \"；已选择 \" + selected.length + \" 条（跨页保留）\" : \"\")}</p>\n {error ? <div role=\"alert\">{error}{onRetry ? <button type=\"button\" onClick={onRetry} disabled={inert}>重新加载</button> : null}</div> : <div className=\"cc-table-scroll\"><table><caption>{caption}</caption><thead><tr>{selectable && <th><input type=\"checkbox\" aria-label=\"选择本页全部\" disabled={inert || !eligible.length} checked={!!eligible.length && eligible.every(id => selected.includes(id))} onChange={e => select(e.target.checked ? [...new Set([...selected, ...eligible])] : selected.filter(id => !eligible.includes(id)))} /></th>}{shown.map(c => <th key={c.key} aria-sort={sort?.key === c.key ? sort.direction === 1 ? \"ascending\" : \"descending\" : \"none\"}><button type=\"button\" disabled={inert || c.sortable === false} onClick={() => {\n                setSort({\n                  key: c.key,\n                  direction: sort?.key === c.key ? -sort.direction : 1\n                });\n                setPage(1);\n              }}>{c.label}{sort?.key === c.key ? sort.direction === 1 ? \" ↑\" : \" ↓\" : \"\"}</button></th>)}{onRowActivate ? <th>详情</th> : null}</tr></thead><tbody>{visible.map(row => <tr key={row.id} data-selected={selected.includes(row.id)}>{selectable && <td><input type=\"checkbox\" aria-label={\"选择 \" + String(row[columns[0].key])} disabled={inert || row.disabled} checked={selected.includes(row.id)} onChange={e => select(e.target.checked ? [...selected, row.id] : selected.filter(id => id !== row.id))} /></td>}{shown.map(c => <td key={c.key}>{c.render ? c.render(row[c.key], row) : String(row[c.key] ?? \"—\")}</td>)}{onRowActivate ? <td><button type=\"button\" disabled={inert || row.disabled} onClick={() => onRowActivate(row)}>查看 {String(row[columns[0].key])}</button></td> : null}</tr>)}</tbody></table>{!visible.length ? <p>当前筛选条件下暂无数据。</p> : null}</div>}\n <div className=\"cc-inline\">{onBulkAction ? <button type=\"button\" disabled={inert || !selected.length} onClick={() => onBulkAction(selected)}>批量处理（{selected.length}）</button> : null}{selectable && !!selected.length && <button type=\"button\" disabled={inert || !selected.length} onClick={() => select([])}>清除选择</button>}{count > 1 && <ClearPagination page={current} pageCount={count} onChange={setPage} disabled={inert} />}</div></section>;\n}\n"
+  },
+  {
+    "id": "drawer",
+    "suffix": "Drawer",
+    "exportName": "ClearDrawer",
+    "kind": "basic",
+    "title": "抽屉",
+    "description": "在临时侧层查看或编辑详情。",
+    "anatomy": "标题、内容、关闭、动作区",
+    "usage": "open 受控；保存与取消应由调用方区分。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearDrawer(props:DialogProps):JSX.Element;\n\nexport interface DialogProps extends StateProps {open:boolean;onOpenChange:(open:boolean)=>void;title:string;children?:ReactNode;actions?:ReactNode;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/Overlays.jsx",
+    "sourceCode": "// 通过原生属性设置 inert，兼容 React 18/19 的布尔属性差异。\nimport { X } from \"@phosphor-icons/react\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { createPortal } from \"react-dom\";\nimport { useModalLifecycle } from \"./useModalLifecycle.js\";\nexport function ClearDrawer({\n  open,\n  onOpenChange,\n  title,\n  children,\n  actions,\n  loading,\n  disabled,\n  error\n}) {\n  const id = useId(),\n    {\n      anchorRef,\n      dialogRef,\n      scopeRef,\n      close\n    } = useModalLifecycle(open, onOpenChange);\n  return <><span ref={anchorRef} hidden />{open ? createPortal(<div data-ui-system=\"clearline-console\" ref={scopeRef} style={{\n      display: \"contents\"\n    }}><dialog ref={dialogRef} className=\"cc-drawer\" aria-labelledby={id} aria-busy={loading || undefined} onCancel={e => {\n        e.preventDefault();\n        close();\n      }}><header><h2 id={id}>{title}</h2><button type=\"button\" onClick={close} aria-label=\"关闭详情\"><X size={18} aria-hidden=\"true\" /></button></header>{loading ? <p role=\"status\">正在加载详情…</p> : null}{error ? <p role=\"alert\">{error}</p> : null}<div ref={element => { if (element) element.inert = Boolean(loading || disabled); }}>{children}<footer>{actions}</footer></div></dialog></div>, document.body) : null}</>;\n}\nexport function ClearDropdownMenu({\n  label = \"更多操作\",\n  items,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    root = useRef(null),\n    trigger = useRef(null),\n    id = useId();\n  const position = usePopupPosition(root, open);\n  const close = (focus = true) => {\n    setOpen(false);\n    if (focus) trigger.current?.focus();\n  };\n  useEffect(() => {\n    if (!open) return;\n    const away = e => {\n      if (!root.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", away);\n    root.current?.querySelector('[role=\"menuitem\"]:not(:disabled)')?.focus();\n    return () => document.removeEventListener(\"pointerdown\", away);\n  }, [open]);\n  const keys = e => {\n    const all = [...root.current.querySelectorAll('[role=\"menuitem\"]:not(:disabled)')],\n      i = all.indexOf(document.activeElement);\n    if (e.key === \"Escape\") {\n      e.preventDefault();\n      close();\n    } else if (e.key === \"Tab\") setOpen(false);else if ([\"ArrowDown\", \"ArrowUp\", \"Home\", \"End\"].includes(e.key)) {\n      e.preventDefault();\n      all[e.key === \"Home\" ? 0 : e.key === \"End\" ? all.length - 1 : (i + (e.key === \"ArrowDown\" ? 1 : -1) + all.length) % all.length]?.focus();\n    }\n  };\n  return <span className=\"cc-popover-anchor\" ref={root}><button type=\"button\" ref={trigger} aria-haspopup=\"menu\" aria-controls={id} aria-expanded={open} disabled={disabled} onClick={() => setOpen(!open)} onKeyDown={e => {\n      if (e.key === \"ArrowDown\") {\n        e.preventDefault();\n        setOpen(true);\n      }\n    }}>{label}</button>{open ? <div role=\"menu\" id={id} popover=\"manual\" style={position} className=\"cc-popup\" onKeyDown={keys}>{items.map(item => <button type=\"button\" role=\"menuitem\" key={item.id} disabled={item.disabled} data-danger={item.danger} onClick={() => {\n        close();\n        item.onSelect?.();\n      }}>{item.label}</button>)}</div> : null}</span>;\n}\nexport function ClearPopover({\n  label,\n  children,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    ref = useRef(null),\n    button = useRef(null),\n    id = useId();\n  const position = usePopupPosition(ref, open);\n  useEffect(() => {\n    if (!open) return;\n    const listener = e => {\n      if (e.type === \"keydown\" && e.key === \"Escape\") {\n        setOpen(false);\n        button.current?.focus();\n      } else if (e.type === \"pointerdown\" && !ref.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", listener);\n    document.addEventListener(\"keydown\", listener);\n    return () => {\n      document.removeEventListener(\"pointerdown\", listener);\n      document.removeEventListener(\"keydown\", listener);\n    };\n  }, [open]);\n  return <span className=\"cc-popover-anchor\" ref={ref}><button type=\"button\" ref={button} disabled={disabled} aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}>{label}</button>{open ? <section id={id} popover=\"manual\" style={position} className=\"cc-popup\" aria-label={label}>{children}<button type=\"button\" onClick={() => {\n        setOpen(false);\n        button.current?.focus();\n      }}>关闭</button></section> : null}</span>;\n}\nexport function ClearTooltip({\n  label,\n  children\n}) {\n  const id = useId(),\n    [open, setOpen] = useState(false),\n    ref = useRef(null);\n  const position = usePopupPosition(ref, open);\n  return <span ref={ref} className=\"cc-popover-anchor\" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}><button type=\"button\" aria-describedby={open ? id : undefined} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={e => {\n      if (e.key === \"Escape\") setOpen(false);\n    }} onClick={() => setOpen(!open)}>{label}</button>{open ? <span role=\"tooltip\" id={id} popover=\"manual\" style={position} className=\"cc-popup\">{children}</span> : null}</span>;\n}\n\n// 使用浏览器 top layer，避免宿主页面的 transform / overflow 截断浮层。\nfunction usePopupPosition(ref, open) {\n  const [position, setPosition] = useState({});\n  useEffect(() => {\n    if (!open) return;\n    const popup = ref.current?.querySelector('[popover]');\n    popup?.showPopover();\n    const update = () => {\n      const r = ref.current?.getBoundingClientRect();\n      if (!r || !popup) return;\n      const box = popup.getBoundingClientRect();\n      const left = Math.max(8, Math.min(r.left, innerWidth - box.width - 8));\n      const top = Math.max(8, Math.min(r.bottom + 8, innerHeight - box.height - 8));\n      setPosition({\n        position: \"fixed\",\n        margin: 0,\n        inset: \"auto\",\n        left,\n        top,\n        maxHeight: \"calc(100dvh - 16px)\",\n        overflow: \"auto\"\n      });\n    };\n    update();\n    window.addEventListener(\"resize\", update);\n    window.addEventListener(\"scroll\", update, true);\n    return () => {\n      window.removeEventListener(\"resize\", update);\n      window.removeEventListener(\"scroll\", update, true);\n      if (popup?.matches(\":popover-open\")) popup.hidePopover();\n    };\n  }, [open]);\n  return position;\n}\n"
+  },
+  {
+    "id": "dropdown-menu",
+    "suffix": "DropdownMenu",
+    "exportName": "ClearDropdownMenu",
+    "kind": "basic",
+    "title": "操作菜单",
+    "description": "收纳低频次级动作。",
+    "anatomy": "触发按钮、菜单项、禁用项",
+    "usage": "危险操作先进入确认流程，不在展开时执行。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearDropdownMenu(props:{label?:string;items:Array<{id:string;label:string;disabled?:boolean;danger?:boolean;onSelect?:()=>void}>;disabled?:boolean}):JSX.Element;",
+    "source": "web/Overlays.jsx",
+    "sourceCode": "// 通过原生属性设置 inert，兼容 React 18/19 的布尔属性差异。\nimport { X } from \"@phosphor-icons/react\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { createPortal } from \"react-dom\";\nimport { useModalLifecycle } from \"./useModalLifecycle.js\";\nexport function ClearDrawer({\n  open,\n  onOpenChange,\n  title,\n  children,\n  actions,\n  loading,\n  disabled,\n  error\n}) {\n  const id = useId(),\n    {\n      anchorRef,\n      dialogRef,\n      scopeRef,\n      close\n    } = useModalLifecycle(open, onOpenChange);\n  return <><span ref={anchorRef} hidden />{open ? createPortal(<div data-ui-system=\"clearline-console\" ref={scopeRef} style={{\n      display: \"contents\"\n    }}><dialog ref={dialogRef} className=\"cc-drawer\" aria-labelledby={id} aria-busy={loading || undefined} onCancel={e => {\n        e.preventDefault();\n        close();\n      }}><header><h2 id={id}>{title}</h2><button type=\"button\" onClick={close} aria-label=\"关闭详情\"><X size={18} aria-hidden=\"true\" /></button></header>{loading ? <p role=\"status\">正在加载详情…</p> : null}{error ? <p role=\"alert\">{error}</p> : null}<div ref={element => { if (element) element.inert = Boolean(loading || disabled); }}>{children}<footer>{actions}</footer></div></dialog></div>, document.body) : null}</>;\n}\nexport function ClearDropdownMenu({\n  label = \"更多操作\",\n  items,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    root = useRef(null),\n    trigger = useRef(null),\n    id = useId();\n  const position = usePopupPosition(root, open);\n  const close = (focus = true) => {\n    setOpen(false);\n    if (focus) trigger.current?.focus();\n  };\n  useEffect(() => {\n    if (!open) return;\n    const away = e => {\n      if (!root.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", away);\n    root.current?.querySelector('[role=\"menuitem\"]:not(:disabled)')?.focus();\n    return () => document.removeEventListener(\"pointerdown\", away);\n  }, [open]);\n  const keys = e => {\n    const all = [...root.current.querySelectorAll('[role=\"menuitem\"]:not(:disabled)')],\n      i = all.indexOf(document.activeElement);\n    if (e.key === \"Escape\") {\n      e.preventDefault();\n      close();\n    } else if (e.key === \"Tab\") setOpen(false);else if ([\"ArrowDown\", \"ArrowUp\", \"Home\", \"End\"].includes(e.key)) {\n      e.preventDefault();\n      all[e.key === \"Home\" ? 0 : e.key === \"End\" ? all.length - 1 : (i + (e.key === \"ArrowDown\" ? 1 : -1) + all.length) % all.length]?.focus();\n    }\n  };\n  return <span className=\"cc-popover-anchor\" ref={root}><button type=\"button\" ref={trigger} aria-haspopup=\"menu\" aria-controls={id} aria-expanded={open} disabled={disabled} onClick={() => setOpen(!open)} onKeyDown={e => {\n      if (e.key === \"ArrowDown\") {\n        e.preventDefault();\n        setOpen(true);\n      }\n    }}>{label}</button>{open ? <div role=\"menu\" id={id} popover=\"manual\" style={position} className=\"cc-popup\" onKeyDown={keys}>{items.map(item => <button type=\"button\" role=\"menuitem\" key={item.id} disabled={item.disabled} data-danger={item.danger} onClick={() => {\n        close();\n        item.onSelect?.();\n      }}>{item.label}</button>)}</div> : null}</span>;\n}\nexport function ClearPopover({\n  label,\n  children,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    ref = useRef(null),\n    button = useRef(null),\n    id = useId();\n  const position = usePopupPosition(ref, open);\n  useEffect(() => {\n    if (!open) return;\n    const listener = e => {\n      if (e.type === \"keydown\" && e.key === \"Escape\") {\n        setOpen(false);\n        button.current?.focus();\n      } else if (e.type === \"pointerdown\" && !ref.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", listener);\n    document.addEventListener(\"keydown\", listener);\n    return () => {\n      document.removeEventListener(\"pointerdown\", listener);\n      document.removeEventListener(\"keydown\", listener);\n    };\n  }, [open]);\n  return <span className=\"cc-popover-anchor\" ref={ref}><button type=\"button\" ref={button} disabled={disabled} aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}>{label}</button>{open ? <section id={id} popover=\"manual\" style={position} className=\"cc-popup\" aria-label={label}>{children}<button type=\"button\" onClick={() => {\n        setOpen(false);\n        button.current?.focus();\n      }}>关闭</button></section> : null}</span>;\n}\nexport function ClearTooltip({\n  label,\n  children\n}) {\n  const id = useId(),\n    [open, setOpen] = useState(false),\n    ref = useRef(null);\n  const position = usePopupPosition(ref, open);\n  return <span ref={ref} className=\"cc-popover-anchor\" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}><button type=\"button\" aria-describedby={open ? id : undefined} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={e => {\n      if (e.key === \"Escape\") setOpen(false);\n    }} onClick={() => setOpen(!open)}>{label}</button>{open ? <span role=\"tooltip\" id={id} popover=\"manual\" style={position} className=\"cc-popup\">{children}</span> : null}</span>;\n}\n\n// 使用浏览器 top layer，避免宿主页面的 transform / overflow 截断浮层。\nfunction usePopupPosition(ref, open) {\n  const [position, setPosition] = useState({});\n  useEffect(() => {\n    if (!open) return;\n    const popup = ref.current?.querySelector('[popover]');\n    popup?.showPopover();\n    const update = () => {\n      const r = ref.current?.getBoundingClientRect();\n      if (!r || !popup) return;\n      const box = popup.getBoundingClientRect();\n      const left = Math.max(8, Math.min(r.left, innerWidth - box.width - 8));\n      const top = Math.max(8, Math.min(r.bottom + 8, innerHeight - box.height - 8));\n      setPosition({\n        position: \"fixed\",\n        margin: 0,\n        inset: \"auto\",\n        left,\n        top,\n        maxHeight: \"calc(100dvh - 16px)\",\n        overflow: \"auto\"\n      });\n    };\n    update();\n    window.addEventListener(\"resize\", update);\n    window.addEventListener(\"scroll\", update, true);\n    return () => {\n      window.removeEventListener(\"resize\", update);\n      window.removeEventListener(\"scroll\", update, true);\n      if (popup?.matches(\":popover-open\")) popup.hidePopover();\n    };\n  }, [open]);\n  return position;\n}\n"
+  },
+  {
+    "id": "popover",
+    "suffix": "Popover",
+    "exportName": "ClearPopover",
+    "kind": "basic",
+    "title": "信息浮层",
+    "description": "就近解释数据口径或补充内容。",
+    "anatomy": "触发器、说明内容、关闭行为",
+    "usage": "适合短内容；长编辑表单使用抽屉。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearPopover(props:{label:string;children?:ReactNode;disabled?:boolean}):JSX.Element;",
+    "source": "web/Overlays.jsx",
+    "sourceCode": "// 通过原生属性设置 inert，兼容 React 18/19 的布尔属性差异。\nimport { X } from \"@phosphor-icons/react\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { createPortal } from \"react-dom\";\nimport { useModalLifecycle } from \"./useModalLifecycle.js\";\nexport function ClearDrawer({\n  open,\n  onOpenChange,\n  title,\n  children,\n  actions,\n  loading,\n  disabled,\n  error\n}) {\n  const id = useId(),\n    {\n      anchorRef,\n      dialogRef,\n      scopeRef,\n      close\n    } = useModalLifecycle(open, onOpenChange);\n  return <><span ref={anchorRef} hidden />{open ? createPortal(<div data-ui-system=\"clearline-console\" ref={scopeRef} style={{\n      display: \"contents\"\n    }}><dialog ref={dialogRef} className=\"cc-drawer\" aria-labelledby={id} aria-busy={loading || undefined} onCancel={e => {\n        e.preventDefault();\n        close();\n      }}><header><h2 id={id}>{title}</h2><button type=\"button\" onClick={close} aria-label=\"关闭详情\"><X size={18} aria-hidden=\"true\" /></button></header>{loading ? <p role=\"status\">正在加载详情…</p> : null}{error ? <p role=\"alert\">{error}</p> : null}<div ref={element => { if (element) element.inert = Boolean(loading || disabled); }}>{children}<footer>{actions}</footer></div></dialog></div>, document.body) : null}</>;\n}\nexport function ClearDropdownMenu({\n  label = \"更多操作\",\n  items,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    root = useRef(null),\n    trigger = useRef(null),\n    id = useId();\n  const position = usePopupPosition(root, open);\n  const close = (focus = true) => {\n    setOpen(false);\n    if (focus) trigger.current?.focus();\n  };\n  useEffect(() => {\n    if (!open) return;\n    const away = e => {\n      if (!root.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", away);\n    root.current?.querySelector('[role=\"menuitem\"]:not(:disabled)')?.focus();\n    return () => document.removeEventListener(\"pointerdown\", away);\n  }, [open]);\n  const keys = e => {\n    const all = [...root.current.querySelectorAll('[role=\"menuitem\"]:not(:disabled)')],\n      i = all.indexOf(document.activeElement);\n    if (e.key === \"Escape\") {\n      e.preventDefault();\n      close();\n    } else if (e.key === \"Tab\") setOpen(false);else if ([\"ArrowDown\", \"ArrowUp\", \"Home\", \"End\"].includes(e.key)) {\n      e.preventDefault();\n      all[e.key === \"Home\" ? 0 : e.key === \"End\" ? all.length - 1 : (i + (e.key === \"ArrowDown\" ? 1 : -1) + all.length) % all.length]?.focus();\n    }\n  };\n  return <span className=\"cc-popover-anchor\" ref={root}><button type=\"button\" ref={trigger} aria-haspopup=\"menu\" aria-controls={id} aria-expanded={open} disabled={disabled} onClick={() => setOpen(!open)} onKeyDown={e => {\n      if (e.key === \"ArrowDown\") {\n        e.preventDefault();\n        setOpen(true);\n      }\n    }}>{label}</button>{open ? <div role=\"menu\" id={id} popover=\"manual\" style={position} className=\"cc-popup\" onKeyDown={keys}>{items.map(item => <button type=\"button\" role=\"menuitem\" key={item.id} disabled={item.disabled} data-danger={item.danger} onClick={() => {\n        close();\n        item.onSelect?.();\n      }}>{item.label}</button>)}</div> : null}</span>;\n}\nexport function ClearPopover({\n  label,\n  children,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    ref = useRef(null),\n    button = useRef(null),\n    id = useId();\n  const position = usePopupPosition(ref, open);\n  useEffect(() => {\n    if (!open) return;\n    const listener = e => {\n      if (e.type === \"keydown\" && e.key === \"Escape\") {\n        setOpen(false);\n        button.current?.focus();\n      } else if (e.type === \"pointerdown\" && !ref.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", listener);\n    document.addEventListener(\"keydown\", listener);\n    return () => {\n      document.removeEventListener(\"pointerdown\", listener);\n      document.removeEventListener(\"keydown\", listener);\n    };\n  }, [open]);\n  return <span className=\"cc-popover-anchor\" ref={ref}><button type=\"button\" ref={button} disabled={disabled} aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}>{label}</button>{open ? <section id={id} popover=\"manual\" style={position} className=\"cc-popup\" aria-label={label}>{children}<button type=\"button\" onClick={() => {\n        setOpen(false);\n        button.current?.focus();\n      }}>关闭</button></section> : null}</span>;\n}\nexport function ClearTooltip({\n  label,\n  children\n}) {\n  const id = useId(),\n    [open, setOpen] = useState(false),\n    ref = useRef(null);\n  const position = usePopupPosition(ref, open);\n  return <span ref={ref} className=\"cc-popover-anchor\" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}><button type=\"button\" aria-describedby={open ? id : undefined} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={e => {\n      if (e.key === \"Escape\") setOpen(false);\n    }} onClick={() => setOpen(!open)}>{label}</button>{open ? <span role=\"tooltip\" id={id} popover=\"manual\" style={position} className=\"cc-popup\">{children}</span> : null}</span>;\n}\n\n// 使用浏览器 top layer，避免宿主页面的 transform / overflow 截断浮层。\nfunction usePopupPosition(ref, open) {\n  const [position, setPosition] = useState({});\n  useEffect(() => {\n    if (!open) return;\n    const popup = ref.current?.querySelector('[popover]');\n    popup?.showPopover();\n    const update = () => {\n      const r = ref.current?.getBoundingClientRect();\n      if (!r || !popup) return;\n      const box = popup.getBoundingClientRect();\n      const left = Math.max(8, Math.min(r.left, innerWidth - box.width - 8));\n      const top = Math.max(8, Math.min(r.bottom + 8, innerHeight - box.height - 8));\n      setPosition({\n        position: \"fixed\",\n        margin: 0,\n        inset: \"auto\",\n        left,\n        top,\n        maxHeight: \"calc(100dvh - 16px)\",\n        overflow: \"auto\"\n      });\n    };\n    update();\n    window.addEventListener(\"resize\", update);\n    window.addEventListener(\"scroll\", update, true);\n    return () => {\n      window.removeEventListener(\"resize\", update);\n      window.removeEventListener(\"scroll\", update, true);\n      if (popup?.matches(\":popover-open\")) popup.hidePopover();\n    };\n  }, [open]);\n  return position;\n}\n"
+  },
+  {
+    "id": "tooltip",
+    "suffix": "Tooltip",
+    "exportName": "ClearTooltip",
+    "kind": "basic",
+    "title": "提示",
+    "description": "补充简短帮助文字。",
+    "anatomy": "可聚焦触发器、辅助说明",
+    "usage": "不可放置唯一的关键说明或必需操作。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearTooltip(props:{label:string;children?:ReactNode}):JSX.Element;",
+    "source": "web/Overlays.jsx",
+    "sourceCode": "// 通过原生属性设置 inert，兼容 React 18/19 的布尔属性差异。\nimport { X } from \"@phosphor-icons/react\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { createPortal } from \"react-dom\";\nimport { useModalLifecycle } from \"./useModalLifecycle.js\";\nexport function ClearDrawer({\n  open,\n  onOpenChange,\n  title,\n  children,\n  actions,\n  loading,\n  disabled,\n  error\n}) {\n  const id = useId(),\n    {\n      anchorRef,\n      dialogRef,\n      scopeRef,\n      close\n    } = useModalLifecycle(open, onOpenChange);\n  return <><span ref={anchorRef} hidden />{open ? createPortal(<div data-ui-system=\"clearline-console\" ref={scopeRef} style={{\n      display: \"contents\"\n    }}><dialog ref={dialogRef} className=\"cc-drawer\" aria-labelledby={id} aria-busy={loading || undefined} onCancel={e => {\n        e.preventDefault();\n        close();\n      }}><header><h2 id={id}>{title}</h2><button type=\"button\" onClick={close} aria-label=\"关闭详情\"><X size={18} aria-hidden=\"true\" /></button></header>{loading ? <p role=\"status\">正在加载详情…</p> : null}{error ? <p role=\"alert\">{error}</p> : null}<div ref={element => { if (element) element.inert = Boolean(loading || disabled); }}>{children}<footer>{actions}</footer></div></dialog></div>, document.body) : null}</>;\n}\nexport function ClearDropdownMenu({\n  label = \"更多操作\",\n  items,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    root = useRef(null),\n    trigger = useRef(null),\n    id = useId();\n  const position = usePopupPosition(root, open);\n  const close = (focus = true) => {\n    setOpen(false);\n    if (focus) trigger.current?.focus();\n  };\n  useEffect(() => {\n    if (!open) return;\n    const away = e => {\n      if (!root.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", away);\n    root.current?.querySelector('[role=\"menuitem\"]:not(:disabled)')?.focus();\n    return () => document.removeEventListener(\"pointerdown\", away);\n  }, [open]);\n  const keys = e => {\n    const all = [...root.current.querySelectorAll('[role=\"menuitem\"]:not(:disabled)')],\n      i = all.indexOf(document.activeElement);\n    if (e.key === \"Escape\") {\n      e.preventDefault();\n      close();\n    } else if (e.key === \"Tab\") setOpen(false);else if ([\"ArrowDown\", \"ArrowUp\", \"Home\", \"End\"].includes(e.key)) {\n      e.preventDefault();\n      all[e.key === \"Home\" ? 0 : e.key === \"End\" ? all.length - 1 : (i + (e.key === \"ArrowDown\" ? 1 : -1) + all.length) % all.length]?.focus();\n    }\n  };\n  return <span className=\"cc-popover-anchor\" ref={root}><button type=\"button\" ref={trigger} aria-haspopup=\"menu\" aria-controls={id} aria-expanded={open} disabled={disabled} onClick={() => setOpen(!open)} onKeyDown={e => {\n      if (e.key === \"ArrowDown\") {\n        e.preventDefault();\n        setOpen(true);\n      }\n    }}>{label}</button>{open ? <div role=\"menu\" id={id} popover=\"manual\" style={position} className=\"cc-popup\" onKeyDown={keys}>{items.map(item => <button type=\"button\" role=\"menuitem\" key={item.id} disabled={item.disabled} data-danger={item.danger} onClick={() => {\n        close();\n        item.onSelect?.();\n      }}>{item.label}</button>)}</div> : null}</span>;\n}\nexport function ClearPopover({\n  label,\n  children,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    ref = useRef(null),\n    button = useRef(null),\n    id = useId();\n  const position = usePopupPosition(ref, open);\n  useEffect(() => {\n    if (!open) return;\n    const listener = e => {\n      if (e.type === \"keydown\" && e.key === \"Escape\") {\n        setOpen(false);\n        button.current?.focus();\n      } else if (e.type === \"pointerdown\" && !ref.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", listener);\n    document.addEventListener(\"keydown\", listener);\n    return () => {\n      document.removeEventListener(\"pointerdown\", listener);\n      document.removeEventListener(\"keydown\", listener);\n    };\n  }, [open]);\n  return <span className=\"cc-popover-anchor\" ref={ref}><button type=\"button\" ref={button} disabled={disabled} aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}>{label}</button>{open ? <section id={id} popover=\"manual\" style={position} className=\"cc-popup\" aria-label={label}>{children}<button type=\"button\" onClick={() => {\n        setOpen(false);\n        button.current?.focus();\n      }}>关闭</button></section> : null}</span>;\n}\nexport function ClearTooltip({\n  label,\n  children\n}) {\n  const id = useId(),\n    [open, setOpen] = useState(false),\n    ref = useRef(null);\n  const position = usePopupPosition(ref, open);\n  return <span ref={ref} className=\"cc-popover-anchor\" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}><button type=\"button\" aria-describedby={open ? id : undefined} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={e => {\n      if (e.key === \"Escape\") setOpen(false);\n    }} onClick={() => setOpen(!open)}>{label}</button>{open ? <span role=\"tooltip\" id={id} popover=\"manual\" style={position} className=\"cc-popup\">{children}</span> : null}</span>;\n}\n\n// 使用浏览器 top layer，避免宿主页面的 transform / overflow 截断浮层。\nfunction usePopupPosition(ref, open) {\n  const [position, setPosition] = useState({});\n  useEffect(() => {\n    if (!open) return;\n    const popup = ref.current?.querySelector('[popover]');\n    popup?.showPopover();\n    const update = () => {\n      const r = ref.current?.getBoundingClientRect();\n      if (!r || !popup) return;\n      const box = popup.getBoundingClientRect();\n      const left = Math.max(8, Math.min(r.left, innerWidth - box.width - 8));\n      const top = Math.max(8, Math.min(r.bottom + 8, innerHeight - box.height - 8));\n      setPosition({\n        position: \"fixed\",\n        margin: 0,\n        inset: \"auto\",\n        left,\n        top,\n        maxHeight: \"calc(100dvh - 16px)\",\n        overflow: \"auto\"\n      });\n    };\n    update();\n    window.addEventListener(\"resize\", update);\n    window.addEventListener(\"scroll\", update, true);\n    return () => {\n      window.removeEventListener(\"resize\", update);\n      window.removeEventListener(\"scroll\", update, true);\n      if (popup?.matches(\":popover-open\")) popup.hidePopover();\n    };\n  }, [open]);\n  return position;\n}\n"
+  },
+  {
+    "id": "progress",
+    "suffix": "Progress",
+    "exportName": "ClearProgress",
+    "kind": "basic",
+    "title": "进度条",
+    "description": "表达已知比例或进行中的任务。",
+    "anatomy": "任务标签、进度、当前值",
+    "usage": "value 与 max 同一量纲，未知进度不要编造百分比。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearProgress(props:{label:string;value?:number;max?:number}):JSX.Element;",
+    "source": "web/FeedbackControls.jsx",
+    "sourceCode": "export function ClearProgress({\n  label,\n  value,\n  max = 100\n}) {\n  const limit = Number.isFinite(max) && max > 0 ? max : 100;\n  const safe = typeof value === \"number\" && Number.isFinite(value) ? Math.max(0, Math.min(limit, value)) : undefined;\n  return <label className=\"cc-control\">{label}<progress value={safe} max={limit} /><small>{safe === undefined ? \"处理中…\" : Math.round(safe / limit * 100) + \"%\"}</small></label>;\n}\nexport function ClearSkeleton({\n  label = \"正在加载\",\n  rows = 3\n}) {\n  return <div className=\"cc-skeleton\" role=\"status\" aria-label={label}>{Array.from({\n      length: Math.max(1, Math.min(rows, 10))\n    }, (_, i) => <i key={i} aria-hidden=\"true\" />)}<span>{label}</span></div>;\n}\nexport function ClearToastQueue({\n  items,\n  onDismiss\n}) {\n  return <ol className=\"cc-toasts\" aria-label=\"通知队列\">{items.map(item => <li key={item.id} role={item.tone === \"error\" ? \"alert\" : \"status\"}><span>{item.message}</span>{item.onRetry ? <button type=\"button\" onClick={item.onRetry}>重试</button> : null}<button type=\"button\" onClick={() => onDismiss?.(item.id)} aria-label={\"关闭通知：\" + item.message}>×</button></li>)}</ol>;\n}\n"
+  },
+  {
+    "id": "skeleton",
+    "suffix": "Skeleton",
+    "exportName": "ClearSkeleton",
+    "kind": "basic",
+    "title": "加载占位",
+    "description": "等待数据时保留视觉节奏。",
+    "anatomy": "加载标签、占位行",
+    "usage": "只用于加载过程；错误要切换成解释和恢复动作。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearSkeleton(props:{label?:string;rows?:number}):JSX.Element;",
+    "source": "web/FeedbackControls.jsx",
+    "sourceCode": "export function ClearProgress({\n  label,\n  value,\n  max = 100\n}) {\n  const limit = Number.isFinite(max) && max > 0 ? max : 100;\n  const safe = typeof value === \"number\" && Number.isFinite(value) ? Math.max(0, Math.min(limit, value)) : undefined;\n  return <label className=\"cc-control\">{label}<progress value={safe} max={limit} /><small>{safe === undefined ? \"处理中…\" : Math.round(safe / limit * 100) + \"%\"}</small></label>;\n}\nexport function ClearSkeleton({\n  label = \"正在加载\",\n  rows = 3\n}) {\n  return <div className=\"cc-skeleton\" role=\"status\" aria-label={label}>{Array.from({\n      length: Math.max(1, Math.min(rows, 10))\n    }, (_, i) => <i key={i} aria-hidden=\"true\" />)}<span>{label}</span></div>;\n}\nexport function ClearToastQueue({\n  items,\n  onDismiss\n}) {\n  return <ol className=\"cc-toasts\" aria-label=\"通知队列\">{items.map(item => <li key={item.id} role={item.tone === \"error\" ? \"alert\" : \"status\"}><span>{item.message}</span>{item.onRetry ? <button type=\"button\" onClick={item.onRetry}>重试</button> : null}<button type=\"button\" onClick={() => onDismiss?.(item.id)} aria-label={\"关闭通知：\" + item.message}>×</button></li>)}</ol>;\n}\n"
+  },
+  {
+    "id": "toast-queue",
+    "suffix": "ToastQueue",
+    "exportName": "ClearToastQueue",
+    "kind": "basic",
+    "title": "通知队列",
+    "description": "按顺序呈现短操作反馈。",
+    "anatomy": "消息列表、关闭、可选重试",
+    "usage": "items 和 onDismiss 受控；关键错误需同时就地展示。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function ClearToastQueue(props:{items:Array<{id:string;message:string;tone?:string;onRetry?:()=>void}>;onDismiss?:(id:string)=>void}):JSX.Element;",
+    "source": "web/FeedbackControls.jsx",
+    "sourceCode": "export function ClearProgress({\n  label,\n  value,\n  max = 100\n}) {\n  const limit = Number.isFinite(max) && max > 0 ? max : 100;\n  const safe = typeof value === \"number\" && Number.isFinite(value) ? Math.max(0, Math.min(limit, value)) : undefined;\n  return <label className=\"cc-control\">{label}<progress value={safe} max={limit} /><small>{safe === undefined ? \"处理中…\" : Math.round(safe / limit * 100) + \"%\"}</small></label>;\n}\nexport function ClearSkeleton({\n  label = \"正在加载\",\n  rows = 3\n}) {\n  return <div className=\"cc-skeleton\" role=\"status\" aria-label={label}>{Array.from({\n      length: Math.max(1, Math.min(rows, 10))\n    }, (_, i) => <i key={i} aria-hidden=\"true\" />)}<span>{label}</span></div>;\n}\nexport function ClearToastQueue({\n  items,\n  onDismiss\n}) {\n  return <ol className=\"cc-toasts\" aria-label=\"通知队列\">{items.map(item => <li key={item.id} role={item.tone === \"error\" ? \"alert\" : \"status\"}><span>{item.message}</span>{item.onRetry ? <button type=\"button\" onClick={item.onRetry}>重试</button> : null}<button type=\"button\" onClick={() => onDismiss?.(item.id)} aria-label={\"关闭通知：\" + item.message}>×</button></li>)}</ol>;\n}\n"
+  },
+  {
+    "id": "project-workspace",
+    "suffix": "ProjectWorkspace",
+    "exportName": "ClearProjectWorkspace",
+    "kind": "pattern",
+    "title": "项目工作台示例",
+    "description": "组合项目表格和侧向详情。",
+    "anatomy": "工作区框架、项目目录、详情、新建抽屉",
+    "usage": "本地临时数据；刷新不保存，不包含权限后端。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "默认演示数据；支持受控集合、异步保存回调和读取状态。",
+      "hover": "由目录、状态和新建按钮反馈。",
+      "pressed": "编辑草稿；确认保存成功后回写集合，取消丢弃当前草稿。",
+      "focus": "按工作区导航、表格、详情、抽屉顺序访问。",
+      "disabled": "readOnly 或没有变更回调的受控集合禁止编辑；保留阅读和关闭。",
+      "loading": "loading 表达读取；保存请求中禁用重复提交，关闭仍可用。",
+      "error": "读取失败支持 onRetry；保存失败保留草稿并重试，不更新原记录。"
+    },
+    "api": "export declare function ClearProjectWorkspace(props?:ClearProjectWorkspaceProps):JSX.Element;\n\nexport interface ClearProjectWorkspaceProps {\n  rows?:ClearProject[]; defaultRows?:ClearProject[]; onRowsChange?:(rows:ClearProject[])=>void;\n  onSaveProject?:(project:ClearProject,context:{signal:AbortSignal})=>ClearProject|Promise<ClearProject>;\n  loading?:boolean; error?:string; onRetry?:()=>void; readOnly?:boolean;\n}\n\nexport interface ClearProject {id:string;name:string;owner:string;status:string;date:string;description?:string;}",
+    "source": "web/ProjectWorkspace.jsx",
+    "sourceCode": "import { Plus, SquaresFour, Folder, Users, Gear } from '@phosphor-icons/react';\nimport { useEffect, useRef, useState } from 'react';\nimport { ClearShell } from './Navigation.jsx';\nimport { ClearProjectTable, ClearProjectDetails } from './ProjectComponents.jsx';\nimport { ClearButton, ClearField, ClearPanel } from './primitives.jsx';\nimport { ClearDrawer } from './Overlays.jsx';\nimport { projectExamples } from './demo-data.js';\n\nexport function ClearProjectWorkspace({ rows: controlledRows, defaultRows = projectExamples, onRowsChange, onSaveProject, loading = false, error: loadError, onRetry, readOnly = false } = {}) {\n  const [localRows, setLocalRows] = useState(defaultRows);\n  const rows = controlledRows ?? localRows;\n  const [selectedId, setSelectedId] = useState(() => rows[2]?.id ?? rows[0]?.id ?? null);\n  const [nav, setNav] = useState('projects');\n  const [creating, setCreating] = useState(false);\n  const [draft, setDraft] = useState(null);\n  const [error, setError] = useState('');\n  const [saving, setSaving] = useState(false);\n  const [message, setMessage] = useState('');\n  const request = useRef(null);\n  const latestRows = useRef(rows);\n  latestRows.current = rows;\n  const selected = rows.find(row => row.id === selectedId) ?? null;\n  const editable = !readOnly && (controlledRows === undefined || !!onRowsChange);\n  const blocked = saving || loading || !!loadError || !editable;\n  useEffect(() => () => request.current?.abort(), []);\n\n  const close = () => { request.current?.abort(); request.current = null; setSaving(false); setDraft(null); setCreating(false); setError(''); };\n  const select = project => { close(); setSelectedId(project?.id ?? null); setMessage(''); };\n  const start = () => {\n    setDraft({ id: crypto.randomUUID(), name: '', owner: 'You', status: 'Planning', date: '', description: '' });\n    setCreating(true); setError(''); setMessage('');\n  };\n  const save = async () => {\n    if (!draft || blocked || request.current) return;\n    if (!draft.name.trim()) { setError('请输入项目名称'); return; }\n    const controller = new AbortController(); request.current = controller;\n    const submitted = { ...draft, name: draft.name.trim() };\n    setSaving(true); setError(''); setMessage('');\n    try {\n      const saved = onSaveProject ? await onSaveProject(submitted, { signal: controller.signal }) : { ...submitted, date: new Date().toISOString().slice(0, 10) };\n      // 关闭或卸载后，忽略不遵守 AbortSignal 的迟到结果。\n      if (controller.signal.aborted || request.current !== controller) return;\n      if (!saved || saved.id !== submitted.id || ['name', 'owner', 'status', 'date'].some(key => typeof saved[key] !== 'string')) throw new Error('保存服务没有返回完整项目，请检查接入接口。');\n      const current = latestRows.current;\n      const next = current.some(row => row.id === saved.id) ? current.map(row => row.id === saved.id ? saved : row) : [...current, saved];\n      onRowsChange?.(next);\n      if (controlledRows === undefined) setLocalRows(next);\n      setSelectedId(saved.id); setDraft(null); setCreating(false);\n      setMessage(onSaveProject ? '项目已保存。' : '已更新本次演示；刷新后恢复示例。');\n    } catch (failure) {\n      if (!controller.signal.aborted) setError(failure instanceof Error ? failure.message : '项目保存失败，请重试。');\n    } finally {\n      if (request.current === controller) { request.current = null; setSaving(false); }\n    }\n  };\n  const feedback = <><p role=\"status\">{saving ? '正在保存项目…' : message}</p>{error && <p className=\"cc-save-error\" role=\"alert\">{error} 草稿已保留。</p>}</>;\n  return <ClearShell brand=\"Clearline Console\" navigation={[\n    { id: 'overview', label: 'Overview', icon: <SquaresFour size={18} /> },\n    { id: 'projects', label: 'Projects', icon: <Folder size={18} /> },\n    { id: 'teams', label: 'Teams', icon: <Users size={18} /> },\n    { id: 'settings', label: 'Settings', icon: <Gear size={18} /> },\n  ]} activeId={nav} onNavigate={id => { close(); setNav(id); }} title={nav === 'projects' ? 'Projects' : nav === 'teams' ? 'Teams' : nav === 'settings' ? 'Settings' : 'Overview'}\n    actions={<ClearButton disabled={blocked} onClick={start}><Plus size={18} aria-hidden=\"true\" /> Add project</ClearButton>}>\n    {nav === 'projects' ? <>\n      {!creating && feedback}\n      <div className=\"cc-project-grid\" data-detail-open={!!selected}><ClearProjectTable rows={rows} selectedId={selectedId} onSelect={select} loading={loading} error={loadError} onRetry={onRetry} />\n        {selected && <div><ClearProjectDetails project={!creating && draft?.id === selected.id ? draft : selected} disabled={blocked} onStatusChange={status => { setDraft({ ...(draft ?? selected), status }); setError(''); setMessage(''); }} onClose={() => { close(); setSelectedId(null); }} />\n          {!creating && draft && <div className=\"cc-workspace-actions\"><ClearButton loading={saving} disabled={loading || !!loadError || !editable} onClick={save}>{error ? '重试保存项目' : '保存项目'}</ClearButton><ClearButton variant=\"secondary\" onClick={close}>取消编辑</ClearButton></div>}\n        </div>}\n      </div>\n    </> : nav === 'teams' ? <ClearPanel title=\"Project owners\">{[...new Set(rows.map(row => row.owner))].map(owner => <p key={owner}>{owner} · {rows.filter(row => row.owner === owner).length} projects</p>)}</ClearPanel>\n      : nav === 'settings' ? <ClearPanel title=\"Directory settings\"><p>项目目录由接入方提供数据与保存服务。权限、团队和审计由业务项目负责。</p><ClearButton onClick={() => setNav('projects')}>Back to projects</ClearButton></ClearPanel>\n      : <ClearPanel title={rows.length + ' active projects'}><p>{rows.filter(row => row.status === 'At risk').length} projects need attention.</p><ClearButton onClick={() => setNav('projects')}>Review projects</ClearButton></ClearPanel>}\n    <ClearDrawer open={creating} onOpenChange={open => { if (!open) close(); }} title=\"Add project\">\n      {feedback}\n      {creating && draft && <form className=\"cc-project-create\" onSubmit={event => { event.preventDefault(); save(); }}>\n        <ClearField label=\"Project name\" value={draft.name} disabled={blocked} error={error && !draft.name.trim() ? error : undefined} onChange={event => setDraft({ ...draft, name: event.target.value })} />\n        <ClearButton type=\"submit\" loading={saving} disabled={loading || !!loadError || !editable}>{error ? '重试保存项目' : 'Create project'}</ClearButton>\n        <ClearButton variant=\"secondary\" onClick={close}>取消编辑</ClearButton>\n      </form>}\n    </ClearDrawer>\n  </ClearShell>;\n}\n"
+  },
+  {
+    "id": "project-table",
+    "suffix": "ProjectTable",
+    "exportName": "ClearProjectTable",
+    "kind": "business",
+    "title": "项目目录",
+    "description": "按项目名称、状态和负责人管理记录。",
+    "anatomy": "项目列定义、数据表格、选择与详情入口",
+    "usage": "rows 与 selectedId 由页面持有，不内置项目数据。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "项目列、当前选择、搜索排序和分页。",
+      "hover": "行链接与复选框反馈。",
+      "pressed": "选择项目后由 onSelect 返回对应记录。",
+      "focus": "表格内的链接、复选与分页可通过键盘操作。",
+      "disabled": "没有独立 disabled 参数；无 onSelect 时名称为静态文字。",
+      "loading": "loading 显示数据表格加载状态。",
+      "error": "error 与 onRetry 交给数据表格就地恢复。"
+    },
+    "api": "export declare function ClearProjectTable(props:{rows:ClearProject[];selectedId?:string;onSelect?:(project:ClearProject|null)=>void;loading?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;\n\nexport interface ClearProject {id:string;name:string;owner:string;status:string;date:string;description?:string;}",
+    "source": "web/ProjectComponents.jsx",
+    "sourceCode": "import { X } from '@phosphor-icons/react';\nimport { useState } from 'react';\nimport { ClearButton, ClearSelect } from './primitives.jsx';\nimport { ClearTabs } from './Navigation.jsx';\nimport { ClearDataTable } from './DataTable.jsx';\n\nexport function ClearProjectTable({ rows, selectedId, onSelect, loading, error, onRetry }) {\n  return <ClearDataTable caption=\"Project directory\" selectable={false} rows={rows} loading={loading} error={error} onRetry={onRetry} pageSize={6} selection={selectedId ? [selectedId] : []} onSelectionChange={ids => onSelect?.(rows.find(row => row.id === ids.at(-1)) ?? null)} columns={[\n    {key:'name',label:'Project name',render:(value,row) => onSelect ? <button type=\"button\" className=\"cc-project-link\" disabled={loading || !!error} onClick={() => onSelect(row)}>{value}</button> : value},\n    {key:'id',label:'Key'}, {key:'status',label:'Status',render:value => <span className=\"cc-project-status\" data-status={value}>{value}</span>},\n    {key:'owner',label:'Owner'}, {key:'date',label:'Updated'}\n  ]}/>;\n}\nexport function ClearProjectDetails({ project, onStatusChange, onClose, disabled = false }) {\n  const [tab,setTab] = useState('details');\n  if(!project) return <aside className=\"cc-project-detail\"><p>选择一个项目查看详情。</p></aside>;\n  return <aside className=\"cc-project-detail\"><header><h3>{project.name}</h3>{onClose && <ClearButton variant=\"ghost\" aria-label=\"关闭项目详情\" onClick={onClose}><X size={18} aria-hidden=\"true\"/></ClearButton>}</header>\n    <ClearTabs value={tab} onChange={setTab} items={[\n      {id:'details',label:'Details',content:<dl><dt>Project key</dt><dd>{project.id}</dd><dt>Owner</dt><dd>{project.owner}</dd><dt>Status</dt><dd><ClearSelect aria-label=\"项目状态\" value={project.status} disabled={disabled || !onStatusChange} onChange={event => onStatusChange?.(event.target.value)} options={['Planning','In progress','On track','At risk'].map(value => ({value,label:value}))}/></dd><dt>Updated</dt><dd>{project.date}</dd><dt>Description</dt><dd>{project.description ?? '尚未填写项目说明'}</dd></dl>},\n      {id:'activity',label:'Activity',content:<p>{project.owner} · 当前状态 {project.status}。此处为当前记录摘要，历史事件由业务方提供。</p>}\n    ]}/>\n  </aside>;\n}\n"
+  },
+  {
+    "id": "project-details",
+    "suffix": "ProjectDetails",
+    "exportName": "ClearProjectDetails",
+    "kind": "business",
+    "title": "项目详情",
+    "description": "在列表旁展示并修改选中项目。",
+    "anatomy": "标题、详情/动态标签、属性、状态选择",
+    "usage": "选中项目由上层持有，状态变更回写同一条记录。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "选中项目的属性和当前状态；空选择提示选项目。",
+      "hover": "状态选择器、标签页、关闭按钮反馈。",
+      "pressed": "切换详情或摘要；状态通过 onStatusChange 回写。",
+      "focus": "标签页和状态字段可键盘访问；这是非模态侧栏。",
+      "disabled": "disabled 只锁定状态编辑，仍可查看详情与关闭。",
+      "loading": "无独立 loading 参数，读取由所在项目页负责。",
+      "error": "无独立 error 参数，保存失败由上层流程显示并保留项目。"
+    },
+    "api": "export declare function ClearProjectDetails(props:{project:ClearProject|null;onStatusChange?:(status:string)=>void;onClose?:()=>void;disabled?:boolean}):JSX.Element;\n\nexport interface ClearProject {id:string;name:string;owner:string;status:string;date:string;description?:string;}",
+    "source": "web/ProjectComponents.jsx",
+    "sourceCode": "import { X } from '@phosphor-icons/react';\nimport { useState } from 'react';\nimport { ClearButton, ClearSelect } from './primitives.jsx';\nimport { ClearTabs } from './Navigation.jsx';\nimport { ClearDataTable } from './DataTable.jsx';\n\nexport function ClearProjectTable({ rows, selectedId, onSelect, loading, error, onRetry }) {\n  return <ClearDataTable caption=\"Project directory\" selectable={false} rows={rows} loading={loading} error={error} onRetry={onRetry} pageSize={6} selection={selectedId ? [selectedId] : []} onSelectionChange={ids => onSelect?.(rows.find(row => row.id === ids.at(-1)) ?? null)} columns={[\n    {key:'name',label:'Project name',render:(value,row) => onSelect ? <button type=\"button\" className=\"cc-project-link\" disabled={loading || !!error} onClick={() => onSelect(row)}>{value}</button> : value},\n    {key:'id',label:'Key'}, {key:'status',label:'Status',render:value => <span className=\"cc-project-status\" data-status={value}>{value}</span>},\n    {key:'owner',label:'Owner'}, {key:'date',label:'Updated'}\n  ]}/>;\n}\nexport function ClearProjectDetails({ project, onStatusChange, onClose, disabled = false }) {\n  const [tab,setTab] = useState('details');\n  if(!project) return <aside className=\"cc-project-detail\"><p>选择一个项目查看详情。</p></aside>;\n  return <aside className=\"cc-project-detail\"><header><h3>{project.name}</h3>{onClose && <ClearButton variant=\"ghost\" aria-label=\"关闭项目详情\" onClick={onClose}><X size={18} aria-hidden=\"true\"/></ClearButton>}</header>\n    <ClearTabs value={tab} onChange={setTab} items={[\n      {id:'details',label:'Details',content:<dl><dt>Project key</dt><dd>{project.id}</dd><dt>Owner</dt><dd>{project.owner}</dd><dt>Status</dt><dd><ClearSelect aria-label=\"项目状态\" value={project.status} disabled={disabled || !onStatusChange} onChange={event => onStatusChange?.(event.target.value)} options={['Planning','In progress','On track','At risk'].map(value => ({value,label:value}))}/></dd><dt>Updated</dt><dd>{project.date}</dd><dt>Description</dt><dd>{project.description ?? '尚未填写项目说明'}</dd></dl>},\n      {id:'activity',label:'Activity',content:<p>{project.owner} · 当前状态 {project.status}。此处为当前记录摘要，历史事件由业务方提供。</p>}\n    ]}/>\n  </aside>;\n}\n"
+  },
+  {
+    "id": "slider",
+    "suffix": "Slider",
+    "exportName": "ClearSlider",
+    "kind": "basic",
+    "title": "数值滑块",
+    "description": "拖动或用方向键调整一个数值。",
+    "anatomy": "标签、当前值、轨道、滑块、提示",
+    "usage": "value 受控，onChange 返回数值；min/max/step 定义范围，保存由页面负责。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "显示当前数值、单位和可调范围；value 由调用方持有。",
+      "hover": "轨道提供轻量反馈，不改变当前数值。",
+      "pressed": "拖动滑块更新数值，停止拖动不等于保存。",
+      "focus": "方向键按 step 调整，Home/End 到最小/最大值；保留可见焦点。",
+      "disabled": "禁用原生 range，保留当前读数。",
+      "loading": "禁用调整并说明正在读取，保留已有值。",
+      "error": "显示错误文字并通过 aria-describedby 关联输入；由调用方处理恢复。"
+    },
+    "api": "export declare function ClearSlider(props:{label:string;value:number;min?:number;max?:number;step?:number;unit?:string;onChange?:(value:number)=>void;hint?:string;error?:string;loading?:boolean;disabled?:boolean}):JSX.Element;",
+    "source": "web/Slider.jsx",
+    "sourceCode": "import {useId} from 'react';\nexport function ClearSlider({label,value,min=0,max=100,step=1,unit='',onChange,hint,error,loading=false,disabled=false}) {\n  const id=useId();\n  const fill=max>min?Math.min(100,Math.max(0,(value-min)/(max-min)*100)):0;\n  return <label className=\"cc-slider\"><span className=\"cc-slider-heading\"><span>{label}</span><output htmlFor={id}>{value}{unit}</output></span><input id={id} type=\"range\" aria-label={label} value={value} min={min} max={max} step={step} disabled={disabled||loading} aria-invalid={!!error} aria-busy={loading||undefined} aria-describedby={error||hint||loading?id+'-hint':undefined} aria-valuetext={value+unit} style={{'--cc-slider-fill':fill+'%'}} onChange={event=>onChange?.(Number(event.target.value))}/>{(error||hint||loading)&&<small id={id+'-hint'} role={error?'alert':loading?'status':undefined}>{error||(loading?'正在读取设置…':hint)}</small>}</label>;\n}\n"
+  }
+]

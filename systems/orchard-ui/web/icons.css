@@ -1,0 +1,34 @@
+[data-ui-system="orchard-ui"] .ou-app-icon { position:relative; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; border-radius:24%; background:var(--ou-icon-blue); color:white; vertical-align:middle; }
+[data-ui-system="orchard-ui"] .ou-app-icon[data-tone=rose] { background:var(--ou-icon-rose); }
+[data-ui-system="orchard-ui"] .ou-app-icon[data-tone=amber] { background:var(--ou-icon-amber); }
+[data-ui-system="orchard-ui"] .ou-app-icon[data-tone=green] { background:var(--ou-icon-green); }
+[data-ui-system="orchard-ui"] .ou-app-icon[data-tone=violet] { background:var(--ou-icon-violet); }
+[data-ui-system="orchard-ui"] .ou-app-icon[data-tone=slate] { background:var(--ou-icon-slate); }
+[data-ui-system="orchard-ui"] .ou-app-icon[data-artwork=true] { background:transparent; }
+[data-ui-system="orchard-ui"] .ou-app-icon>img { display:block; width:100%; height:100%; object-fit:contain; border-radius:24%; }
+[data-ui-system="orchard-ui"] .ou-app-icon-badge { position:absolute; right:-6px; top:-6px; background:var(--ou-error); color:white; border:2px solid var(--ou-surface); border-radius:20px; font-size:11px; font-weight:600; padding:1px 5px; min-width:20px; text-align:center; }
+[data-ui-system="orchard-ui"] :is(.ou-app-launcher,.ou-icon-picker,.ou-command-menu) { min-width:0; padding:20px; background:var(--ou-surface); border:1px solid var(--ou-border); border-radius:var(--ou-panel-radius); }
+[data-ui-system="orchard-ui"] :is(.ou-app-launcher,.ou-icon-picker)>header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
+[data-ui-system="orchard-ui"] .ou-app-launcher h3 { margin:0; font-size:16px; }
+[data-ui-system="orchard-ui"] :is(.ou-app-launcher,.ou-icon-picker)>header>span { color:var(--ou-muted); font-size:12px; }
+[data-ui-system="orchard-ui"] .ou-app-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(76px,1fr)); gap:18px 10px; margin-top:20px; }
+[data-ui-system="orchard-ui"] .ou-app-grid>button { display:flex; flex-direction:column; align-items:center; gap:9px; min-width:0; padding:6px 2px; border:0; border-radius:10px; background:transparent; color:var(--ou-text); font-size:12px; transition:background var(--ou-motion),transform var(--ou-motion); }
+[data-ui-system="orchard-ui"] .ou-app-grid>button>span:last-child { max-width:100%; overflow-wrap:anywhere; }
+[data-ui-system="orchard-ui"] .ou-app-grid>button:hover:not(:disabled) { background:var(--ou-soft); }
+[data-ui-system="orchard-ui"] .ou-app-grid>button:active:not(:disabled) { transform:scale(.96); }
+[data-ui-system="orchard-ui"] .ou-symbol-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(42px,1fr)); gap:8px; margin:18px 0; }
+[data-ui-system="orchard-ui"] .ou-symbol-grid>button { display:grid; place-items:center; min-height:44px; padding:8px; border:1px solid transparent; border-radius:8px; background:var(--ou-canvas); color:var(--ou-text); transition:background var(--ou-motion); }
+[data-ui-system="orchard-ui"] .ou-symbol-grid>button:hover:not(:disabled) { background:var(--ou-soft); }
+[data-ui-system="orchard-ui"] .ou-symbol-grid>button[aria-pressed=true] { background:var(--ou-soft); color:var(--ou-accent); border-color:var(--ou-accent); }
+[data-ui-system="orchard-ui"] .ou-symbol-grid>button:active:not(:disabled) { transform:scale(.94); }
+[data-ui-system="orchard-ui"] .ou-icon-picker>footer { display:flex; justify-content:space-between; gap:12px; color:var(--ou-muted); font-size:12px; }
+[data-ui-system="orchard-ui"] .ou-command-menu>ul { list-style:none; padding:0; margin:12px -6px; }
+[data-ui-system="orchard-ui"] .ou-command-menu li>button { display:flex; align-items:center; gap:12px; width:100%; padding:10px; border:0; border-radius:8px; background:transparent; color:var(--ou-text); text-align:left; }
+[data-ui-system="orchard-ui"] .ou-command-menu li>button:hover:not(:disabled),[data-ui-system="orchard-ui"] .ou-command-menu li>button:focus-visible { background:var(--ou-soft); }
+[data-ui-system="orchard-ui"] .ou-command-menu li>button:active:not(:disabled) { background:var(--ou-sidebar); }
+[data-ui-system="orchard-ui"] .ou-command-menu li>button>svg { flex-shrink:0; color:var(--ou-muted); }
+[data-ui-system="orchard-ui"] .ou-command-menu li>button>span { min-width:0; flex:1; }
+[data-ui-system="orchard-ui"] .ou-command-menu strong { display:block; font-size:14px; font-weight:500; }
+[data-ui-system="orchard-ui"] .ou-command-menu small { display:block; margin-top:2px; color:var(--ou-muted); font-size:12px; overflow-wrap:anywhere; }
+[data-ui-system="orchard-ui"] .ou-command-menu kbd { flex-shrink:0; color:var(--ou-muted); font:inherit; font-size:11px; padding:2px 5px; border:1px solid var(--ou-border); border-radius:4px; }
+[data-ui-system="orchard-ui"] .ou-command-menu>footer { border-top:1px solid var(--ou-border); padding-top:12px; font-size:12px; color:var(--ou-muted); }

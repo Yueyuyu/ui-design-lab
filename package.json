@@ -14,12 +14,32 @@
     },
     "./clearline-console/tokens.css": "./systems/clearline-console/foundations/tokens.css",
     "./clearline-console/components.css": "./systems/clearline-console/web/components.css",
+    "./dialogue-ui": {
+      "types": "./systems/dialogue-ui/web/index.d.ts",
+      "import": "./dist/package/dialogue-ui.js"
+    },
+    "./dialogue-ui/tokens.css": "./systems/dialogue-ui/foundations/tokens.css",
+    "./dialogue-ui/components.css": "./systems/dialogue-ui/web/components.css",
+    "./folio-workspace": {
+      "types": "./systems/folio-workspace/web/index.d.ts",
+      "import": "./dist/package/folio-workspace.js"
+    },
+    "./folio-workspace/tokens.css": "./systems/folio-workspace/foundations/tokens.css",
+    "./folio-workspace/components.css": "./systems/folio-workspace/web/components.css",
     "./midnight-ledger": {
       "types": "./systems/midnight-ledger/web/index.d.ts",
       "import": "./dist/package/midnight-ledger.js"
     },
     "./midnight-ledger/tokens.css": "./systems/midnight-ledger/foundations/tokens.css",
     "./midnight-ledger/components.css": "./systems/midnight-ledger/web/components.css",
+    "./orchard-ui": {
+      "types": "./systems/orchard-ui/web/index.d.ts",
+      "import": "./dist/package/orchard-ui.js"
+    },
+    "./orchard-ui/tokens.css": "./systems/orchard-ui/foundations/tokens.css",
+    "./orchard-ui/components.css": "./systems/orchard-ui/web/components.css",
+    "./orchard-ui/assets/orchard-files.png": "./systems/orchard-ui/assets/orchard-files.png",
+    "./orchard-ui/assets/orchard-music.png": "./systems/orchard-ui/assets/orchard-music.png",
     "./quiet-workspace": {
       "types": "./systems/quiet-workspace/web/index.d.ts",
       "import": "./dist/package/quiet-workspace.js"
@@ -31,7 +51,10 @@
       "import": "./dist/package/signal-studio.js"
     },
     "./signal-studio/tokens.css": "./systems/signal-studio/foundations/tokens.css",
-    "./signal-studio/components.css": "./systems/signal-studio/web/components.css"
+    "./signal-studio/components.css": "./systems/signal-studio/web/components.css",
+    "./signal-studio/assets/field-notes.webp": "./systems/signal-studio/assets/field-notes.webp",
+    "./signal-studio/assets/momentum.webp": "./systems/signal-studio/assets/momentum.webp",
+    "./signal-studio/assets/signals.webp": "./systems/signal-studio/assets/signals.webp"
   },
   "scripts": {
     "dev": "vite",
@@ -40,7 +63,7 @@
     "suite:list": "node scripts/list-suites.mjs",
     "suite:new": "node scripts/create-suite.mjs",
     "suite:design": "node scripts/generate-design-md.mjs",
-    "suite:check": "node scripts/validate-suites.mjs",
+    "suite:check": "node scripts/validate-suites.mjs && npm run docs:check",
     "test:tokens": "npm run suite:check",
     "check": "npm run suite:check && npm run build:package && npm run test:types && npm run build && npm test",
     "test:sites": "node --test tests/sites-worker.test.mjs",
@@ -51,10 +74,16 @@
     "prepack": "npm run build:package",
     "example:build": "vite build --config examples/consumer/vite.config.mjs",
     "test:consumer": "npm run build:package && node scripts/verify-consumer.mjs",
+    "test:consumer:react18": "npm run build:package && node scripts/verify-consumer.mjs --react=18.2.0",
     "covers": "node scripts/capture-covers.mjs",
     "release:prepare": "npm run check && npm run test:sites && node scripts/prepare-beta.mjs",
     "test:compat": "playwright test --project=firefox --project=webkit",
-    "test:beta": "node scripts/verify-beta.mjs"
+    "test:beta": "node scripts/verify-beta.mjs",
+    "docs:generate": "node scripts/component-docs.mjs --write && node scripts/suite-documents.mjs --write",
+    "docs:check": "node scripts/component-docs.mjs && node scripts/suite-documents.mjs",
+    "downloads:prepare": "npm run build:package && node scripts/prepare-downloads.mjs",
+    "predev": "npm run downloads:prepare",
+    "prebuild": "npm run downloads:prepare"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10"
@@ -73,11 +102,15 @@
     "LICENSE",
     "QUICKSTART.md",
     "COMPATIBILITY.md",
-    "systems/*/assets/*.webp"
+    "systems/*/assets/*.webp",
+    "systems/orchard-ui/assets/*.png",
+    "systems/*/INTEGRATION.md",
+    "scripts/check-consumer.mjs",
+    "skills/consume-suite/SKILL.md"
   ],
   "peerDependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": "^18.2.0 || ^19.2.0",
+    "react-dom": "^18.2.0 || ^19.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "5.0.4",

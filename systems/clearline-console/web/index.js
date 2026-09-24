@@ -6,3 +6,7 @@ export * from "./DataTable.jsx";
 export * from "./Overlays.jsx";
 export * from "./FeedbackControls.jsx";
 export { ClearProjectWorkspace } from "./ProjectWorkspace.jsx";
+
+export {ClearProjectTable,ClearProjectDetails} from "./ProjectComponents.jsx";
+
+export { ClearSlider } from './Slider.jsx';

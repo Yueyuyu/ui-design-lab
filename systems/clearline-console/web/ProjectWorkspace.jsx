@@ -1,127 +1,83 @@
-import { X, Plus, SquaresFour, Folder, Users, Gear } from "@phosphor-icons/react";
-import { useState } from "react";
-import { ClearShell, ClearTabs } from "./Navigation.jsx";
-import { ClearDataTable } from "./DataTable.jsx";
-import { ClearButton, ClearField, ClearPanel, ClearSelect } from "./primitives.jsx";
-import { ClearDrawer } from "./Overlays.jsx";
-const initial = [{
-  id: "NW-2026-017",
-  name: "Northwind Migration",
-  owner: "Maya Patel",
-  status: "On track",
-  date: "2026-09-04"
-}, {
-  id: "CP-2026-012",
-  name: "Client Portal Redesign",
-  owner: "Liam Chen",
-  status: "In progress",
-  date: "2026-09-05"
-}, {
-  id: "DP-2026-009",
-  name: "Data Platform Upgrade",
-  owner: "Elena Rossi",
-  status: "In progress",
-  date: "2026-09-03"
-}, {
-  id: "SP-2026-008",
-  name: "Security Program Refresh",
-  owner: "Jordan Lee",
-  status: "On track",
-  date: "2026-09-02"
-}, {
-  id: "MA-2026-006",
-  name: "Mobile App Initiative",
-  owner: "Priya Nair",
-  status: "At risk",
-  date: "2026-09-01"
-}, {
-  id: "HQ-2026-004",
-  name: "HQ Workspace Expansion",
-  owner: "Marco Silva",
-  status: "Planning",
-  date: "2026-08-29"
-}];
-export function ClearProjectWorkspace() {
-  const [rows, setRows] = useState(initial),
-    [selected, setSelected] = useState(initial[2]),
-    [tab, setTab] = useState("details"),
-    [nav, setNav] = useState("projects"),
-    [newOpen, setNewOpen] = useState(false),
-    [name, setName] = useState(""),
-    [error, setError] = useState("");
-  const options = ["Planning", "In progress", "On track", "At risk"].map(s => ({
-    value: s,
-    label: s
-  }));
-  const update = status => {
-    setRows(v => v.map(r => r.id === selected.id ? {
-      ...r,
-      status
-    } : r));
-    setSelected(v => ({
-      ...v,
-      status
-    }));
+import { Plus, SquaresFour, Folder, Users, Gear } from '@phosphor-icons/react';
+import { useEffect, useRef, useState } from 'react';
+import { ClearShell } from './Navigation.jsx';
+import { ClearProjectTable, ClearProjectDetails } from './ProjectComponents.jsx';
+import { ClearButton, ClearField, ClearPanel } from './primitives.jsx';
+import { ClearDrawer } from './Overlays.jsx';
+import { projectExamples } from './demo-data.js';
+
+export function ClearProjectWorkspace({ rows: controlledRows, defaultRows = projectExamples, onRowsChange, onSaveProject, loading = false, error: loadError, onRetry, readOnly = false } = {}) {
+  const [localRows, setLocalRows] = useState(defaultRows);
+  const rows = controlledRows ?? localRows;
+  const [selectedId, setSelectedId] = useState(() => rows[2]?.id ?? rows[0]?.id ?? null);
+  const [nav, setNav] = useState('projects');
+  const [creating, setCreating] = useState(false);
+  const [draft, setDraft] = useState(null);
+  const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState('');
+  const request = useRef(null);
+  const latestRows = useRef(rows);
+  latestRows.current = rows;
+  const selected = rows.find(row => row.id === selectedId) ?? null;
+  const editable = !readOnly && (controlledRows === undefined || !!onRowsChange);
+  const blocked = saving || loading || !!loadError || !editable;
+  useEffect(() => () => request.current?.abort(), []);
+
+  const close = () => { request.current?.abort(); request.current = null; setSaving(false); setDraft(null); setCreating(false); setError(''); };
+  const select = project => { close(); setSelectedId(project?.id ?? null); setMessage(''); };
+  const start = () => {
+    setDraft({ id: crypto.randomUUID(), name: '', owner: 'You', status: 'Planning', date: '', description: '' });
+    setCreating(true); setError(''); setMessage('');
   };
-  return <ClearShell brand="Clearline Console" navigation={[{
-    id: "overview",
-    label: "Overview",
-    icon: <SquaresFour size={18} />
-  }, {
-    id: "projects",
-    label: "Projects",
-    icon: <Folder size={18} />
-  }, {
-    id: "teams",
-    label: "Teams",
-    icon: <Users size={18} />
-  }, {
-    id: "settings",
-    label: "Settings",
-    icon: <Gear size={18} />
-  }]} activeId={nav} onNavigate={setNav} title={nav === "projects" ? "Projects" : nav === "teams" ? "Teams" : nav === "settings" ? "Settings" : "Overview"} actions={<ClearButton onClick={() => setNewOpen(true)}><Plus size={18} aria-hidden="true" /> Add project</ClearButton>}>
- {nav === "projects" ? <div className="cc-project-grid"><ClearDataTable rows={rows} selection={selected ? [selected.id] : []} onSelectionChange={ids => setSelected(rows.find(r => r.id === ids.at(-1)) ?? null)} pageSize={6} columns={[{
-        key: "name",
-        label: "Project name",
-        render: (value, row) => <button type="button" className="cc-project-link" onClick={() => setSelected(row)}>{value}</button>
-      }, {
-        key: "id",
-        label: "Key"
-      }, {
-        key: "status",
-        label: "Status",
-        render: value => <span className="cc-project-status" data-status={value}>{value}</span>
-      }, {
-        key: "owner",
-        label: "Owner"
-      }, {
-        key: "date",
-        label: "Updated"
-      }]} caption="Project directory" />{selected ? <aside className="cc-project-detail"><header><h3>{selected.name}</h3><ClearButton variant="ghost" aria-label="关闭项目详情" onClick={() => setSelected(null)}><X size={18} aria-hidden="true" /></ClearButton></header><ClearTabs value={tab} onChange={setTab} items={[{
-          id: "details",
-          label: "Details",
-          content: <dl><dt>Project key</dt><dd>{selected.id}</dd><dt>Owner</dt><dd>{selected.owner}</dd><dt>Status</dt><dd><ClearSelect label="项目状态" value={selected.status} onChange={e => update(e.target.value)} options={options} /></dd><dt>Updated</dt><dd>{selected.date}</dd><dt>Priority</dt><dd>Medium</dd><dt>Type</dt><dd>Internal</dd><dt>Department</dt><dd>Platform Engineering</dd><dt>Description</dt><dd>Improve delivery reliability and keep project ownership visible.</dd></dl>
-        }, {
-          id: "activity",
-          label: "Activity",
-          content: <p>{selected.owner} · 当前状态 {selected.status}。数据是可编辑的本地示例。</p>
-        }]} /></aside> : null}</div> : nav === "teams" ? <ClearPanel title="Project owners">{[...new Set(rows.map(r => r.owner))].map(owner => <p key={owner}>{owner} · {rows.filter(r => r.owner === owner).length} projects</p>)}</ClearPanel> : nav === "settings" ? <ClearPanel title="Directory settings"><p>当前示例使用客户端表格；真实权限与团队资料由业务方接入。</p><ClearButton onClick={() => setNav("projects")}>Back to projects</ClearButton></ClearPanel> : <ClearPanel title={rows.length + " active projects"}><p>{rows.filter(r => r.status === "At risk").length} projects need attention.</p><ClearButton onClick={() => setNav("projects")}>Review projects</ClearButton></ClearPanel>}
- <ClearDrawer open={newOpen} onOpenChange={setNewOpen} title="Add project"><ClearField label="Project name" value={name} error={error} onChange={e => setName(e.target.value)} /><ClearButton onClick={() => {
-        if (!name.trim()) {
-          setError("请输入项目名称");
-          return;
-        }
-        setRows(v => [...v, {
-          id: crypto.randomUUID().slice(0, 8),
-          name,
-          owner: "You",
-          status: "Planning",
-          date: "2026-09-05"
-        }]);
-        setNewOpen(false);
-        setNav("projects");
-        setName("");
-        setError("");
-      }}>Create project</ClearButton></ClearDrawer>
- </ClearShell>;
+  const save = async () => {
+    if (!draft || blocked || request.current) return;
+    if (!draft.name.trim()) { setError('请输入项目名称'); return; }
+    const controller = new AbortController(); request.current = controller;
+    const submitted = { ...draft, name: draft.name.trim() };
+    setSaving(true); setError(''); setMessage('');
+    try {
+      const saved = onSaveProject ? await onSaveProject(submitted, { signal: controller.signal }) : { ...submitted, date: new Date().toISOString().slice(0, 10) };
+      // 关闭或卸载后，忽略不遵守 AbortSignal 的迟到结果。
+      if (controller.signal.aborted || request.current !== controller) return;
+      if (!saved || saved.id !== submitted.id || ['name', 'owner', 'status', 'date'].some(key => typeof saved[key] !== 'string')) throw new Error('保存服务没有返回完整项目，请检查接入接口。');
+      const current = latestRows.current;
+      const next = current.some(row => row.id === saved.id) ? current.map(row => row.id === saved.id ? saved : row) : [...current, saved];
+      onRowsChange?.(next);
+      if (controlledRows === undefined) setLocalRows(next);
+      setSelectedId(saved.id); setDraft(null); setCreating(false);
+      setMessage(onSaveProject ? '项目已保存。' : '已更新本次演示；刷新后恢复示例。');
+    } catch (failure) {
+      if (!controller.signal.aborted) setError(failure instanceof Error ? failure.message : '项目保存失败，请重试。');
+    } finally {
+      if (request.current === controller) { request.current = null; setSaving(false); }
+    }
+  };
+  const feedback = <><p role="status">{saving ? '正在保存项目…' : message}</p>{error && <p className="cc-save-error" role="alert">{error} 草稿已保留。</p>}</>;
+  return <ClearShell brand="Clearline Console" navigation={[
+    { id: 'overview', label: 'Overview', icon: <SquaresFour size={18} /> },
+    { id: 'projects', label: 'Projects', icon: <Folder size={18} /> },
+    { id: 'teams', label: 'Teams', icon: <Users size={18} /> },
+    { id: 'settings', label: 'Settings', icon: <Gear size={18} /> },
+  ]} activeId={nav} onNavigate={id => { close(); setNav(id); }} title={nav === 'projects' ? 'Projects' : nav === 'teams' ? 'Teams' : nav === 'settings' ? 'Settings' : 'Overview'}
+    actions={<ClearButton disabled={blocked} onClick={start}><Plus size={18} aria-hidden="true" /> Add project</ClearButton>}>
+    {nav === 'projects' ? <>
+      {!creating && feedback}
+      <div className="cc-project-grid" data-detail-open={!!selected}><ClearProjectTable rows={rows} selectedId={selectedId} onSelect={select} loading={loading} error={loadError} onRetry={onRetry} />
+        {selected && <div><ClearProjectDetails project={!creating && draft?.id === selected.id ? draft : selected} disabled={blocked} onStatusChange={status => { setDraft({ ...(draft ?? selected), status }); setError(''); setMessage(''); }} onClose={() => { close(); setSelectedId(null); }} />
+          {!creating && draft && <div className="cc-workspace-actions"><ClearButton loading={saving} disabled={loading || !!loadError || !editable} onClick={save}>{error ? '重试保存项目' : '保存项目'}</ClearButton><ClearButton variant="secondary" onClick={close}>取消编辑</ClearButton></div>}
+        </div>}
+      </div>
+    </> : nav === 'teams' ? <ClearPanel title="Project owners">{[...new Set(rows.map(row => row.owner))].map(owner => <p key={owner}>{owner} · {rows.filter(row => row.owner === owner).length} projects</p>)}</ClearPanel>
+      : nav === 'settings' ? <ClearPanel title="Directory settings"><p>项目目录由接入方提供数据与保存服务。权限、团队和审计由业务项目负责。</p><ClearButton onClick={() => setNav('projects')}>Back to projects</ClearButton></ClearPanel>
+      : <ClearPanel title={rows.length + ' active projects'}><p>{rows.filter(row => row.status === 'At risk').length} projects need attention.</p><ClearButton onClick={() => setNav('projects')}>Review projects</ClearButton></ClearPanel>}
+    <ClearDrawer open={creating} onOpenChange={open => { if (!open) close(); }} title="Add project">
+      {feedback}
+      {creating && draft && <form className="cc-project-create" onSubmit={event => { event.preventDefault(); save(); }}>
+        <ClearField label="Project name" value={draft.name} disabled={blocked} error={error && !draft.name.trim() ? error : undefined} onChange={event => setDraft({ ...draft, name: event.target.value })} />
+        <ClearButton type="submit" loading={saving} disabled={loading || !!loadError || !editable}>{error ? '重试保存项目' : 'Create project'}</ClearButton>
+        <ClearButton variant="secondary" onClick={close}>取消编辑</ClearButton>
+      </form>}
+    </ClearDrawer>
+  </ClearShell>;
 }

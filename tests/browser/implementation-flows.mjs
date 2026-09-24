@@ -33,7 +33,7 @@ export async function taskFlow({p,goto,id}){
  ensure((await p.getByRole("heading",{name:/本会话累计用量/}).textContent()).includes("362"),"重试用量未一致累加");
 }
 export async function overlayFlow({p,goto,id}){
- await goto("/#systems/"+id+"/components-plus");
+ await goto("/#systems/"+id+"/playground/controls");
  await p.getByRole("tab",{name:"菜单、详情与通知",exact:true}).click();
  await p.getByRole("button",{name:"更多操作",exact:true}).click();
  await p.getByRole("menuitem",{name:"编辑详情",exact:true}).click();

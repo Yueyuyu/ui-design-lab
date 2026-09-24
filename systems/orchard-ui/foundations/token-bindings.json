@@ -1,0 +1,46 @@
+{
+  "base": {
+    "--ou-canvas": "base.canvas",
+    "--ou-surface": "base.surface",
+    "--ou-sidebar": "base.sidebar",
+    "--ou-text": "base.text",
+    "--ou-muted": "base.muted",
+    "--ou-border": "base.border",
+    "--ou-accent": "base.accent",
+    "--ou-on-accent": "base.on-accent",
+    "--ou-soft": "base.soft",
+    "--ou-error": "base.error",
+    "--ou-success": "base.success",
+    "--ou-font": "base.font",
+    "--ou-font-size": "base.font-size",
+    "--ou-line-height": "base.line-height",
+    "--ou-radius": "base.radius",
+    "--ou-panel-radius": "base.panel-radius",
+    "--ou-control-height": "base.control-height",
+    "--ou-control-x": "base.control-x",
+    "--ou-row-gap": "base.row-gap",
+    "--ou-motion": "base.motion",
+    "--ou-space-1": "base.space-1",
+    "--ou-space-2": "base.space-2",
+    "--ou-space-3": "base.space-3",
+    "--ou-space-4": "base.space-4",
+    "--ou-space-6": "base.space-6",
+    "--ou-icon-blue": "base.icon-blue",
+    "--ou-icon-rose": "base.icon-rose",
+    "--ou-icon-amber": "base.icon-amber",
+    "--ou-icon-green": "base.icon-green",
+    "--ou-icon-violet": "base.icon-violet",
+    "--ou-icon-slate": "base.icon-slate"
+  },
+  "compact": {
+    "--ou-control-height": "compact.control-height",
+    "--ou-row-gap": "compact.row-gap"
+  },
+  "reducedMotion": {
+    "--ou-motion": "reducedMotion.duration"
+  },
+  "comfortable": {
+    "--ou-control-height": "base.control-height",
+    "--ou-row-gap": "base.row-gap"
+  }
+}

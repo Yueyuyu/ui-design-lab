@@ -1,5 +1,10 @@
 // 使用公开子路径，生成可直接粘贴到 React 项目的完整示例。
 export function businessExample(suite) {
+  if (suite.starter?.component) {
+    const component = suite.starter.component;
+    const props = Object.entries(suite.starter.props ?? {}).map(([key, value]) => ` ${key}={${JSON.stringify(value)}}`).join("");
+    return `import { ${component} } from "ui-design-lab/${suite.id}";\nimport "ui-design-lab/${suite.id}/tokens.css";\nimport "ui-design-lab/${suite.id}/components.css";\n\nexport default function Workspace() {\n  return <section data-ui-system="${suite.id}">\n    <${component}${props} />\n  </section>;\n}`;
+  }
   const prefix = suite.componentPrefix ?? (suite.prefix === "qw" ? "Quiet" : "Ledger");
   return `import { useState } from "react";
 import { ${prefix}DataTable, ${prefix}Drawer, ${prefix}Field } from "ui-design-lab/${suite.id}";

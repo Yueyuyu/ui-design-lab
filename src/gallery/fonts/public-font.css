@@ -1,0 +1,8 @@
+/* 本地中文可变字体供四个公共入口使用，不改变套系字体。 */
+@font-face {
+  font-family: "Lab Noto Sans SC";
+  src: url("./noto-sans-sc-public.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}

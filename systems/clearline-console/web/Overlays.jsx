@@ -1,3 +1,4 @@
+// 通过原生属性设置 inert，兼容 React 18/19 的布尔属性差异。
 import { X } from "@phosphor-icons/react";
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -24,7 +25,7 @@ export function ClearDrawer({
     }}><dialog ref={dialogRef} className="cc-drawer" aria-labelledby={id} aria-busy={loading || undefined} onCancel={e => {
         e.preventDefault();
         close();
-      }}><header><h2 id={id}>{title}</h2><button type="button" onClick={close} aria-label="关闭详情"><X size={18} aria-hidden="true" /></button></header>{loading ? <p role="status">正在加载详情…</p> : null}{error ? <p role="alert">{error}</p> : null}<div inert={loading || disabled ? true : undefined}>{children}<footer>{actions}</footer></div></dialog></div>, document.body) : null}</>;
+      }}><header><h2 id={id}>{title}</h2><button type="button" onClick={close} aria-label="关闭详情"><X size={18} aria-hidden="true" /></button></header>{loading ? <p role="status">正在加载详情…</p> : null}{error ? <p role="alert">{error}</p> : null}<div ref={element => { if (element) element.inert = Boolean(loading || disabled); }}>{children}<footer>{actions}</footer></div></dialog></div>, document.body) : null}</>;
 }
 export function ClearDropdownMenu({
   label = "更多操作",

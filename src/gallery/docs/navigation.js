@@ -3,7 +3,7 @@ export const documentationAliases = { 'components-plus':'components', workflows:
 export function createDocumentationNavigation({ theme = false } = {}) {
   const entries = [
     ['overview','套系总览','了解'], ['foundations','基础规范','了解'],
-    ['components','组件目录','构建'], ['patterns','页面与流程','构建'], ['guidelines','设计与行为规范','构建'],
+    ['components','组件目录','构建'], ['patterns','应用示例','构建'], ['guidelines','设计与行为规范','构建'],
     ['playground','交互试验','试用与接入'], ...(theme ? [['theme','主题编辑','试用与接入']] : []), ['usage','接入指南','试用与接入']
   ];
   return entries.map(([id,label,group],index) => ({id,label,group,index:String(index+1).padStart(2,'0')}));

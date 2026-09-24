@@ -1,0 +1,212 @@
+{
+  "version": "0.1.0",
+  "requiredStates": [
+    "default",
+    "hover",
+    "pressed",
+    "focus",
+    "disabled",
+    "loading",
+    "error"
+  ],
+  "components": {
+    "button": {
+      "default": "DialogueButton 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "icon-button": {
+      "default": "DialogueIconButton 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "field": {
+      "default": "DialogueField 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "textarea": {
+      "default": "DialogueTextarea 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "select": {
+      "default": "DialogueSelect 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "toggle": {
+      "default": "DialogueToggle 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "checkbox": {
+      "default": "DialogueCheckbox 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "slider": {
+      "default": "DialogueSlider 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "disabled 禁止输入或操作。",
+      "loading": "loading 时阻止重复提交并标记忙碌。",
+      "error": "error 在输入附近或组件内显示说明；已输入内容保留。"
+    },
+    "tabs": {
+      "default": "DialogueTabs 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "通过所属按钮或字段的 disabled 参数禁用；纯展示内容保持可读。",
+      "loading": "不提供 loading 参数；异步内容由调用方显示 Progress，等待时可传 disabled。",
+      "error": "不提供 error 参数；调用方在内容区域组合 Notification 说明失败。"
+    },
+    "segmented-control": {
+      "default": "DialogueSegmentedControl 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "通过所属按钮或字段的 disabled 参数禁用；纯展示内容保持可读。",
+      "loading": "不提供 loading 参数；异步内容由调用方显示 Progress，等待时可传 disabled。",
+      "error": "不提供 error 参数；调用方在内容区域组合 Notification 说明失败。"
+    },
+    "badge": {
+      "default": "DialogueBadge 按公开参数呈现真实值与内容。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "不提供 loading 参数；调用方通过内容槽或 Progress 表达读取过程。",
+      "error": "使用 tone=\"error\" 显示简短异常标签，详细恢复信息交给 Notification。"
+    },
+    "card": {
+      "default": "DialogueCard 按公开参数呈现真实值与内容。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "不提供 loading 参数；调用方通过内容槽或 Progress 表达读取过程。",
+      "error": "不提供 error 参数；调用方组合 Notification 或说明文字，不隐藏已有内容。"
+    },
+    "dropdown-menu": {
+      "default": "DialogueDropdownMenu 按公开参数呈现真实值与内容。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "键盘焦点有清晰描边；静态正文不额外加入 Tab 顺序。",
+      "disabled": "通过所属按钮或字段的 disabled 参数禁用；纯展示内容保持可读。",
+      "loading": "不提供 loading 参数；异步内容由调用方显示 Progress，等待时可传 disabled。",
+      "error": "不提供 error 参数；调用方在内容区域组合 Notification 说明失败。"
+    },
+    "dialog": {
+      "default": "open 控制模态显示；原生 dialog 限制背景交互并锁定页面滚动。",
+      "hover": "指针进入可操作区域时显示轻微表面反馈；只读内容不额外改变。",
+      "pressed": "按下由实际按钮或输入控件反馈，松开后执行；容器通过内部控件表达。",
+      "focus": "焦点保留在模态内部；关闭或 Escape 后回到打开控件。",
+      "disabled": "内容及 footer inert，关闭按钮仍可操作。",
+      "loading": "显示正在处理说明，内容及 footer inert，关闭按钮仍可操作。",
+      "error": "对话框上方显示 error 文本，已有内容保留。"
+    },
+    "progress": {
+      "default": "label 描述任务；value/max 显示确定进度。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "省略 value 呈现原生不确定进度；保留可读 label。",
+      "error": "不提供 error 参数；调用方组合 Notification 或说明文字，不隐藏已有内容。"
+    },
+    "empty-state": {
+      "default": "DialogueEmptyState 按公开参数呈现真实值与内容。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "不提供 loading 参数；调用方通过内容槽或 Progress 表达读取过程。",
+      "error": "不提供 error 参数；调用方组合 Notification 或说明文字，不隐藏已有内容。"
+    },
+    "notification": {
+      "default": "DialogueNotification 按公开参数呈现真实值与内容。",
+      "hover": "容器不提供直接 hover；若含操作，由内部按钮或输入控件表达。",
+      "pressed": "容器无直接按下行为，操作仅由内部控件处理。",
+      "focus": "静态内容不加入 Tab 顺序；内部操作遵循本套焦点描边。",
+      "disabled": "不提供 disabled 参数；只读内容保留，调用方禁用所属操作。",
+      "loading": "不提供 loading 参数；调用方通过内容槽或 Progress 表达读取过程。",
+      "error": "tone=\"error\" 采用 role=\"alert\"；description 说明原因，actionLabel/onAction 提供恢复入口。"
+    },
+    "message": {
+      "default": "user 浅灰气泡，assistant 为直接正文；保留文本换行。",
+      "hover": "仅复制/重试按钮响应悬停，正文保持稳定。",
+      "pressed": "助手复制正文；错误状态可以触发 onRetry。",
+      "focus": "复制/重试按钮可键盘进入，正文不占用 Tab 顺序。",
+      "disabled": "无 disabled 参数；只读正文保持可选择。",
+      "loading": "显示正在组织回复；隐藏复制入口。",
+      "error": "显示 error 和可选重试按钮，既有正文保留；复制失败给出手动复制说明。"
+    },
+    "composer": {
+      "default": "受控 value/onChange；Enter 发送，Shift+Enter 换行，中文组合输入不误发送。",
+      "hover": "发送及附件按钮响应悬停。",
+      "pressed": "非空且可用时发送；onFiles 只返回 File 列表，不自动上传。",
+      "focus": "输入区外边框显示清晰焦点环；按钮拥有独立焦点。",
+      "disabled": "禁止编辑、发送和附件选择。",
+      "loading": "发送改为停止，禁止重复发送和附件选择；仍可编辑下一条草稿。",
+      "error": "输入区下方显示 error；不清空 value。"
+    },
+    "conversation-list": {
+      "default": "以 items 与 value 呈现当前项；选择回调交给调用方。",
+      "hover": "鼠标悬停改变条目表面。",
+      "pressed": "点击触发 onChange；当前项使用 aria-current=\"page\"。",
+      "focus": "条目按 DOM 顺序进入键盘导航，并显示焦点描边。",
+      "disabled": "不提供整表 disabled 参数；异步期间是否允许切换由页面决定。",
+      "loading": "不提供 loading 参数；由调用方在列表邻近位置显示进度。",
+      "error": "不提供 error 参数；由调用方展示错误说明，已有列表不丢弃。"
+    },
+    "prompt-suggestions": {
+      "default": "呈现标题、说明与 prompt；点击通过 onSelect 返回 prompt。",
+      "hover": "建议按钮表面变浅灰。",
+      "pressed": "点击触发 onSelect，是否填入输入区由调用方控制。",
+      "focus": "每条建议可键盘聚焦并 Enter/Space 激活。",
+      "disabled": "disabled 禁用全部建议。",
+      "loading": "不提供 loading 参数；调用方可 disabled 并显示进度。",
+      "error": "不提供 error 参数；调用方在建议区域旁说明读取失败。"
+    },
+    "chat-workspace": {
+      "default": "会话、消息、每会话草稿由页面持有；默认示例不连接 AI。",
+      "hover": "工具、列表和话题建议响应悬停。",
+      "pressed": "发送、停止、新建、搜索及切换对应实际本地操作。",
+      "focus": "正文不抢焦点；输入和工具可键盘访问，中文组合输入不误触提交。",
+      "disabled": "空白输入不发送；一次最多一个未完成请求。",
+      "loading": "显示回复进度；停止、切换或卸载会中止请求并忽略迟到响应。",
+      "error": "错误消息提供重试且不重复添加用户消息；保留输入。"
+    }
+  }
+}

@@ -1,0 +1,279 @@
+[
+  {
+    "id": "button",
+    "suffix": "Button",
+    "exportName": "FolioButton",
+    "kind": "basic",
+    "title": "按钮",
+    "description": "触发一个明确动作。",
+    "anatomy": "文字标签、可选图标、交互表面",
+    "usage": "主要动作保持唯一；提交中阻止重复操作。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading"
+    ],
+    "states": {
+      "default": "文字与小图标入口，solid 用于主要提交。",
+      "hover": "中性底色加深。",
+      "pressed": "进一步压低底色，不位移内容。",
+      "focus": "显示蓝色双像素轮廓。",
+      "disabled": "原生 disabled，无法触发。",
+      "loading": "loading 禁止重复操作，图标加可见进度文案。",
+      "error": "由邻近 Callout 呈现原因和重试，不仅改红色。"
+    },
+    "api": "export declare const FolioButton:ForwardRefExoticComponent<ButtonHTMLAttributes<HTMLButtonElement> & {tone?:'quiet'|'solid'|'danger';loading?:boolean} & RefAttributes<HTMLButtonElement>>;",
+    "source": "web/Primitives.jsx",
+    "sourceCode": "import { forwardRef, useId } from 'react';\nimport { Check, CircleNotch, Info, WarningCircle } from '@phosphor-icons/react';\nexport const FolioButton = forwardRef(function FolioButton({ children, tone = 'quiet', loading = false, disabled, className = '', ...props }, ref) {\n  return <button ref={ref} type=\"button\" {...props} disabled={disabled || loading} aria-busy={loading || undefined} className={`fw-button fw-button--${tone} ${className}`}>{loading && <CircleNotch size={16} aria-hidden=\"true\" />}{children}</button>;\n});\nexport function FolioStatus({ value }) { return <span className=\"fw-status\" data-status={value}>{value}</span>; }\nexport function FolioCallout({ children, tone = 'note', action }) {\n  const Icon = tone === 'error' ? WarningCircle : Info;\n  return <div className=\"fw-callout\" data-tone={tone} role={tone === 'error' ? 'alert' : 'note'}><Icon size={19} aria-hidden=\"true\" /><div>{children}</div>{action}</div>;\n}\nexport function FolioPageHeader({ title, onChange, disabled = false }) {\n  const id = useId();\n  return <header className=\"fw-page-header\"><span className=\"fw-page-mark\" aria-hidden=\"true\">▤</span><h1 className=\"fw-sr-only\">{title || '未命名页面'}</h1><label className=\"fw-sr-only\" htmlFor={id}>页面标题</label><input className=\"fw-page-title\" id={id} value={title} onChange={e => onChange(e.target.value)} disabled={disabled} placeholder=\"未命名页面\" /><div className=\"fw-page-meta\"><span><Check size={14} /> 私人手记</span><span>文字 · 发现 · 下一步</span></div></header>;\n}\n"
+  },
+  {
+    "id": "status",
+    "suffix": "Status",
+    "exportName": "FolioStatus",
+    "kind": "basic",
+    "title": "记录状态",
+    "description": "显示记录的当前状态。",
+    "anatomy": "状态文字、浅色背景",
+    "usage": "更新发生在记录编辑器；标签本身不执行变更。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "带文本的浅色状态标记。",
+      "hover": "静态属性没有 hover 动作。",
+      "pressed": "静态属性没有 pressed 动作。",
+      "focus": "不加入 Tab 顺序；详情中的状态 select 可聚焦。",
+      "disabled": "随父级禁用控件，不把静态状态当按钮。",
+      "loading": "由工作区保存状态表达，不修改原记录值。",
+      "error": "未知状态保持文本，不强制显示成功颜色。"
+    },
+    "api": "export declare function FolioStatus(props:{value:string}):ReactNode;",
+    "source": "web/Primitives.jsx",
+    "sourceCode": "import { forwardRef, useId } from 'react';\nimport { Check, CircleNotch, Info, WarningCircle } from '@phosphor-icons/react';\nexport const FolioButton = forwardRef(function FolioButton({ children, tone = 'quiet', loading = false, disabled, className = '', ...props }, ref) {\n  return <button ref={ref} type=\"button\" {...props} disabled={disabled || loading} aria-busy={loading || undefined} className={`fw-button fw-button--${tone} ${className}`}>{loading && <CircleNotch size={16} aria-hidden=\"true\" />}{children}</button>;\n});\nexport function FolioStatus({ value }) { return <span className=\"fw-status\" data-status={value}>{value}</span>; }\nexport function FolioCallout({ children, tone = 'note', action }) {\n  const Icon = tone === 'error' ? WarningCircle : Info;\n  return <div className=\"fw-callout\" data-tone={tone} role={tone === 'error' ? 'alert' : 'note'}><Icon size={19} aria-hidden=\"true\" /><div>{children}</div>{action}</div>;\n}\nexport function FolioPageHeader({ title, onChange, disabled = false }) {\n  const id = useId();\n  return <header className=\"fw-page-header\"><span className=\"fw-page-mark\" aria-hidden=\"true\">▤</span><h1 className=\"fw-sr-only\">{title || '未命名页面'}</h1><label className=\"fw-sr-only\" htmlFor={id}>页面标题</label><input className=\"fw-page-title\" id={id} value={title} onChange={e => onChange(e.target.value)} disabled={disabled} placeholder=\"未命名页面\" /><div className=\"fw-page-meta\"><span><Check size={14} /> 私人手记</span><span>文字 · 发现 · 下一步</span></div></header>;\n}\n"
+  },
+  {
+    "id": "callout",
+    "suffix": "Callout",
+    "exportName": "FolioCallout",
+    "kind": "basic",
+    "title": "正文提示",
+    "description": "在内容中突出一段提示。",
+    "anatomy": "图标、正文、可选恢复动作",
+    "usage": "只用于需要额外强调的信息。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "轻中性提示，不给每段正文套容器。",
+      "hover": "由可选 action 控件表达。",
+      "pressed": "由 action 控件表达。",
+      "focus": "错误由 alert 宣读；action 有清晰轮廓。",
+      "disabled": "action 自己声明禁用条件。",
+      "loading": "保留原因，action 显示进度。",
+      "error": "error 色面、警告图标、原因和恢复按钮。"
+    },
+    "api": "export declare function FolioCallout(props:{children:ReactNode;tone?:'note'|'error';action?:ReactNode}):ReactNode;",
+    "source": "web/Primitives.jsx",
+    "sourceCode": "import { forwardRef, useId } from 'react';\nimport { Check, CircleNotch, Info, WarningCircle } from '@phosphor-icons/react';\nexport const FolioButton = forwardRef(function FolioButton({ children, tone = 'quiet', loading = false, disabled, className = '', ...props }, ref) {\n  return <button ref={ref} type=\"button\" {...props} disabled={disabled || loading} aria-busy={loading || undefined} className={`fw-button fw-button--${tone} ${className}`}>{loading && <CircleNotch size={16} aria-hidden=\"true\" />}{children}</button>;\n});\nexport function FolioStatus({ value }) { return <span className=\"fw-status\" data-status={value}>{value}</span>; }\nexport function FolioCallout({ children, tone = 'note', action }) {\n  const Icon = tone === 'error' ? WarningCircle : Info;\n  return <div className=\"fw-callout\" data-tone={tone} role={tone === 'error' ? 'alert' : 'note'}><Icon size={19} aria-hidden=\"true\" /><div>{children}</div>{action}</div>;\n}\nexport function FolioPageHeader({ title, onChange, disabled = false }) {\n  const id = useId();\n  return <header className=\"fw-page-header\"><span className=\"fw-page-mark\" aria-hidden=\"true\">▤</span><h1 className=\"fw-sr-only\">{title || '未命名页面'}</h1><label className=\"fw-sr-only\" htmlFor={id}>页面标题</label><input className=\"fw-page-title\" id={id} value={title} onChange={e => onChange(e.target.value)} disabled={disabled} placeholder=\"未命名页面\" /><div className=\"fw-page-meta\"><span><Check size={14} /> 私人手记</span><span>文字 · 发现 · 下一步</span></div></header>;\n}\n"
+  },
+  {
+    "id": "page-header",
+    "suffix": "PageHeader",
+    "exportName": "FolioPageHeader",
+    "kind": "business",
+    "title": "可编辑页面头",
+    "description": "以文档标题作为内容入口。",
+    "anatomy": "页面图标、标题输入、辅助提示",
+    "usage": "onChange 更新标题；持久化由工作区负责。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "图标、可编辑标题与辅助属性，标题无卡片外框。",
+      "hover": "标题出现轻灰编辑底色。",
+      "pressed": "由标题输入框表达文本选择。",
+      "focus": "标题输入框具有名称和可见轮廓。",
+      "disabled": "读取失败时标题输入禁用。",
+      "loading": "工作区状态提示正在本地保存。",
+      "error": "写入失败保留标题，读取失败不覆盖旧内容。"
+    },
+    "api": "export declare function FolioPageHeader(props:{title:string;onChange:(title:string)=>void;disabled?:boolean}):ReactNode;",
+    "source": "web/Primitives.jsx",
+    "sourceCode": "import { forwardRef, useId } from 'react';\nimport { Check, CircleNotch, Info, WarningCircle } from '@phosphor-icons/react';\nexport const FolioButton = forwardRef(function FolioButton({ children, tone = 'quiet', loading = false, disabled, className = '', ...props }, ref) {\n  return <button ref={ref} type=\"button\" {...props} disabled={disabled || loading} aria-busy={loading || undefined} className={`fw-button fw-button--${tone} ${className}`}>{loading && <CircleNotch size={16} aria-hidden=\"true\" />}{children}</button>;\n});\nexport function FolioStatus({ value }) { return <span className=\"fw-status\" data-status={value}>{value}</span>; }\nexport function FolioCallout({ children, tone = 'note', action }) {\n  const Icon = tone === 'error' ? WarningCircle : Info;\n  return <div className=\"fw-callout\" data-tone={tone} role={tone === 'error' ? 'alert' : 'note'}><Icon size={19} aria-hidden=\"true\" /><div>{children}</div>{action}</div>;\n}\nexport function FolioPageHeader({ title, onChange, disabled = false }) {\n  const id = useId();\n  return <header className=\"fw-page-header\"><span className=\"fw-page-mark\" aria-hidden=\"true\">▤</span><h1 className=\"fw-sr-only\">{title || '未命名页面'}</h1><label className=\"fw-sr-only\" htmlFor={id}>页面标题</label><input className=\"fw-page-title\" id={id} value={title} onChange={e => onChange(e.target.value)} disabled={disabled} placeholder=\"未命名页面\" /><div className=\"fw-page-meta\"><span><Check size={14} /> 私人手记</span><span>文字 · 发现 · 下一步</span></div></header>;\n}\n"
+  },
+  {
+    "id": "page-tree",
+    "suffix": "PageTree",
+    "exportName": "FolioPageTree",
+    "kind": "business",
+    "title": "页面树",
+    "description": "创建、搜索和切换父子页面。",
+    "anatomy": "工作区、搜索、嵌套页面、新建入口",
+    "usage": "父子关系和 activeId 来自同一文档数据。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "嵌套列表呈现父子页面，当前项 aria-current=page。",
+      "hover": "每个页面入口显示中性底色。",
+      "pressed": "展开按钮和页面入口独立，不混用动作。",
+      "focus": "原生按钮按 Tab 顺序可达；展开状态可读。",
+      "disabled": "读取失败禁用新建，浏览仍可用。",
+      "loading": "加载由工作区保存/读取状态承担。",
+      "error": "搜索无结果提供明确文本；保存失败可重试。"
+    },
+    "api": "export declare function FolioPageTree(props:{pages:FolioPage[];activeId:string;onSelect:(id:string)=>void;onCreate:(parentId:string|null)=>void;disabled?:boolean}):ReactNode;\n\nexport interface FolioPage { id:string; title:string; parentId:string | null; icon?:string; blocks:FolioBlock[]; records:FolioRecord[]; drafts:Record<string,FolioRecord>; view:FolioView; views:Record<FolioView,FolioViewConfig>; }\n\nexport interface FolioBlock { id:string; type:FolioBlockType; text:string; checked?:boolean; open?:boolean; detail?:string; }\n\nexport type FolioBlockType = 'paragraph' | 'heading' | 'todo' | 'toggle';\n\nexport interface FolioRecord { id:string; title:string; status:FolioRecordStatus; category:string; note:string; }\n\nexport type FolioRecordStatus = '未开始' | '进行中' | '已完成';\n\nexport type FolioView = 'table' | 'board' | 'list';\n\nexport interface FolioViewConfig { query:string; status:'全部' | FolioRecordStatus; sort:'manual' | 'title'; }",
+    "source": "web/Navigation.jsx",
+    "sourceCode": "import { useState } from 'react';\nimport { CaretDown, CaretRight, FileText, Plus, MagnifyingGlass, BookOpen } from '@phosphor-icons/react';\nimport { FolioButton } from './Primitives.jsx';\nexport function FolioPageTree({ pages, activeId, onSelect, onCreate, disabled = false }) {\n  const [collapsed, setCollapsed] = useState([]);\n  const [query, setQuery] = useState('');\n  const renderPage = page => {\n    const children = pages.filter(item => item.parentId === page.id);\n    const expanded = !collapsed.includes(page.id);\n    return <li key={page.id}><div className=\"fw-tree-row\" data-active={activeId === page.id}>\n      {children.length > 0 ? <FolioButton aria-label={`${expanded ? '折叠' : '展开'} ${page.title || '未命名页面'}`} aria-expanded={expanded} onClick={() => setCollapsed(list => expanded ? [...list, page.id] : list.filter(id => id !== page.id))}><CaretDown size={13} style={{ transform: expanded ? undefined : 'rotate(-90deg)' }} /></FolioButton> : <span className=\"fw-tree-spacer\" />}\n      <FolioButton className=\"fw-tree-link\" aria-current={activeId === page.id ? 'page' : undefined} onClick={() => onSelect(page.id)}><FileText size={16} /><span>{page.title || '未命名页面'}</span></FolioButton>\n    </div>{expanded && children.length > 0 && <ul>{children.map(renderPage)}</ul>}</li>;\n  };\n  const matches = pages.filter(page => page.title.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <nav className=\"fw-page-tree\" aria-label=\"工作区页面\"><div className=\"fw-workspace-name\"><BookOpen size={22} /><strong>Folio<span>页集 · 私人工作区</span></strong></div><label className=\"fw-search\"><MagnifyingGlass size={16} /><input type=\"search\" aria-label=\"搜索页面\" value={query} onChange={e => setQuery(e.target.value)} placeholder=\"搜索页面…\" /></label><div className=\"fw-tree-label\">工作区<FolioButton aria-label=\"新建页面\" disabled={disabled} onClick={() => onCreate(null)}><Plus size={16} /></FolioButton></div>\n    {query ? <ul>{matches.map(page => <li key={page.id}><FolioButton className=\"fw-tree-link\" onClick={() => onSelect(page.id)}><FileText size={16} /><span>{page.title || '未命名页面'}</span></FolioButton></li>)}</ul> : <ul>{pages.filter(page => page.parentId === null).map(renderPage)}</ul>}\n    {query && !matches.length && <p className=\"fw-muted\">没有匹配的页面</p>}<FolioButton className=\"fw-child-page\" disabled={disabled} onClick={() => { setCollapsed(list => list.filter(id => id !== activeId)); onCreate(activeId); }}><Plus size={15} /> 添加子页面</FolioButton><div className=\"fw-tree-footer\"><span>一个安放想法的地方</span><small>在页面之间整理内容与记录</small></div></nav>;\n}\nexport function FolioBreadcrumbs({ pages, activeId, onSelect }) {\n  const path = [];\n  let page = pages.find(item => item.id === activeId);\n  while (page) { path.unshift(page); page = pages.find(item => item.id === page.parentId); }\n  return <nav className=\"fw-breadcrumbs\" aria-label=\"页面路径\"><span>手记</span>{path.map((item, index) => <span key={item.id}><CaretRight size={12} /><FolioButton aria-current={index === path.length - 1 ? 'page' : undefined} onClick={() => onSelect(item.id)}>{item.title || '未命名页面'}</FolioButton></span>)}</nav>;\n}\n"
+  },
+  {
+    "id": "breadcrumbs",
+    "suffix": "Breadcrumbs",
+    "exportName": "FolioBreadcrumbs",
+    "kind": "basic",
+    "title": "页面路径",
+    "description": "显示页面的父子路径。",
+    "anatomy": "父页面、分隔符、当前页",
+    "usage": "与页面树共享 activeId，保持位置一致。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "由父级到当前页的轻量定位。",
+      "hover": "每项是可点击页面入口。",
+      "pressed": "按下打开对应页面，不清除草稿。",
+      "focus": "原生按钮及当前位置标识。",
+      "disabled": "导航仍可读，不承担编辑权限。",
+      "loading": "保持原路径，加载在工作区层表达。",
+      "error": "路径在存储验证时检查循环与无效父级。"
+    },
+    "api": "export declare function FolioBreadcrumbs(props:{pages:FolioPage[];activeId:string;onSelect:(id:string)=>void}):ReactNode;\n\nexport interface FolioPage { id:string; title:string; parentId:string | null; icon?:string; blocks:FolioBlock[]; records:FolioRecord[]; drafts:Record<string,FolioRecord>; view:FolioView; views:Record<FolioView,FolioViewConfig>; }\n\nexport interface FolioBlock { id:string; type:FolioBlockType; text:string; checked?:boolean; open?:boolean; detail?:string; }\n\nexport type FolioBlockType = 'paragraph' | 'heading' | 'todo' | 'toggle';\n\nexport interface FolioRecord { id:string; title:string; status:FolioRecordStatus; category:string; note:string; }\n\nexport type FolioRecordStatus = '未开始' | '进行中' | '已完成';\n\nexport type FolioView = 'table' | 'board' | 'list';\n\nexport interface FolioViewConfig { query:string; status:'全部' | FolioRecordStatus; sort:'manual' | 'title'; }",
+    "source": "web/Navigation.jsx",
+    "sourceCode": "import { useState } from 'react';\nimport { CaretDown, CaretRight, FileText, Plus, MagnifyingGlass, BookOpen } from '@phosphor-icons/react';\nimport { FolioButton } from './Primitives.jsx';\nexport function FolioPageTree({ pages, activeId, onSelect, onCreate, disabled = false }) {\n  const [collapsed, setCollapsed] = useState([]);\n  const [query, setQuery] = useState('');\n  const renderPage = page => {\n    const children = pages.filter(item => item.parentId === page.id);\n    const expanded = !collapsed.includes(page.id);\n    return <li key={page.id}><div className=\"fw-tree-row\" data-active={activeId === page.id}>\n      {children.length > 0 ? <FolioButton aria-label={`${expanded ? '折叠' : '展开'} ${page.title || '未命名页面'}`} aria-expanded={expanded} onClick={() => setCollapsed(list => expanded ? [...list, page.id] : list.filter(id => id !== page.id))}><CaretDown size={13} style={{ transform: expanded ? undefined : 'rotate(-90deg)' }} /></FolioButton> : <span className=\"fw-tree-spacer\" />}\n      <FolioButton className=\"fw-tree-link\" aria-current={activeId === page.id ? 'page' : undefined} onClick={() => onSelect(page.id)}><FileText size={16} /><span>{page.title || '未命名页面'}</span></FolioButton>\n    </div>{expanded && children.length > 0 && <ul>{children.map(renderPage)}</ul>}</li>;\n  };\n  const matches = pages.filter(page => page.title.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <nav className=\"fw-page-tree\" aria-label=\"工作区页面\"><div className=\"fw-workspace-name\"><BookOpen size={22} /><strong>Folio<span>页集 · 私人工作区</span></strong></div><label className=\"fw-search\"><MagnifyingGlass size={16} /><input type=\"search\" aria-label=\"搜索页面\" value={query} onChange={e => setQuery(e.target.value)} placeholder=\"搜索页面…\" /></label><div className=\"fw-tree-label\">工作区<FolioButton aria-label=\"新建页面\" disabled={disabled} onClick={() => onCreate(null)}><Plus size={16} /></FolioButton></div>\n    {query ? <ul>{matches.map(page => <li key={page.id}><FolioButton className=\"fw-tree-link\" onClick={() => onSelect(page.id)}><FileText size={16} /><span>{page.title || '未命名页面'}</span></FolioButton></li>)}</ul> : <ul>{pages.filter(page => page.parentId === null).map(renderPage)}</ul>}\n    {query && !matches.length && <p className=\"fw-muted\">没有匹配的页面</p>}<FolioButton className=\"fw-child-page\" disabled={disabled} onClick={() => { setCollapsed(list => list.filter(id => id !== activeId)); onCreate(activeId); }}><Plus size={15} /> 添加子页面</FolioButton><div className=\"fw-tree-footer\"><span>一个安放想法的地方</span><small>在页面之间整理内容与记录</small></div></nav>;\n}\nexport function FolioBreadcrumbs({ pages, activeId, onSelect }) {\n  const path = [];\n  let page = pages.find(item => item.id === activeId);\n  while (page) { path.unshift(page); page = pages.find(item => item.id === page.parentId); }\n  return <nav className=\"fw-breadcrumbs\" aria-label=\"页面路径\"><span>手记</span>{path.map((item, index) => <span key={item.id}><CaretRight size={12} /><FolioButton aria-current={index === path.length - 1 ? 'page' : undefined} onClick={() => onSelect(item.id)}>{item.title || '未命名页面'}</FolioButton></span>)}</nav>;\n}\n"
+  },
+  {
+    "id": "block-editor",
+    "suffix": "BlockEditor",
+    "exportName": "FolioBlockEditor",
+    "kind": "business",
+    "title": "内容块编辑器",
+    "description": "编辑、转换和排列纯文本内容块。",
+    "anatomy": "块输入、手柄菜单、待办、折叠、撤销",
+    "usage": "支持中文组合输入；没有富文本、多人协作或拖拽。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "支持正文、标题、待办、折叠四类纯文本块。",
+      "hover": "手柄保持可发现，hover 增强；文本轻底色。",
+      "pressed": "块菜单转换、上下移动或删除。",
+      "focus": "菜单方向键、Home/End/Esc；中文组合输入不触发斜杠。",
+      "disabled": "控件禁用但正文可读，避免假可编辑。",
+      "loading": "本地保存不阻断持续输入，状态由工作区表达。",
+      "error": "删除可撤销一次；写入失败保留内存内容。"
+    },
+    "api": "export declare function FolioBlockEditor(props:{blocks:FolioBlock[];onChange:(blocks:FolioBlock[])=>void;disabled?:boolean}):ReactNode;\n\nexport interface FolioBlock { id:string; type:FolioBlockType; text:string; checked?:boolean; open?:boolean; detail?:string; }\n\nexport type FolioBlockType = 'paragraph' | 'heading' | 'todo' | 'toggle';",
+    "source": "web/BlockEditor.jsx",
+    "sourceCode": "import { useEffect, useRef, useState } from 'react';\nimport { ArrowDown, ArrowUp, CaretRight, DotsSixVertical, Plus, Trash, TextT, TextH, CheckSquare, CaretDown, ArrowCounterClockwise } from '@phosphor-icons/react';\nimport { FolioButton } from './Primitives.jsx';\nimport { folioBlockTypes, folioId } from './model.js';\nconst icons = { paragraph: TextT, heading: TextH, todo: CheckSquare, toggle: CaretDown };\n\nexport function FolioBlockEditor({ blocks, onChange, disabled = false }) {\n  const [menu, setMenu] = useState(null);\n  const [undo, setUndo] = useState(null);\n  const [focusId, setFocusId] = useState(null);\n  const menuRef = useRef(null);\n  const fields = useRef(new Map());\n  const triggerRef = useRef(null);\n  useEffect(() => { if (menu) menuRef.current?.querySelector('button:not(:disabled)')?.focus(); }, [menu]);\n  useEffect(() => { if (focusId) { fields.current.get(focusId)?.focus(); setFocusId(null); } }, [blocks, focusId]);\n  const update = (id, patch) => onChange(blocks.map(block => block.id === id ? { ...block, ...patch } : block));\n  function choose(type) {\n    if (menu.id) { update(menu.id, { type, ...(type === 'toggle' ? { open: true } : {}) }); setFocusId(menu.id); }\n    else { const id = folioId(); onChange([...blocks, { id, type, text: '', ...(type === 'toggle' ? { open: true } : {}) }]); setFocusId(id); }\n    setMenu(null);\n  }\n  function move(id, offset) {\n    const index = blocks.findIndex(block => block.id === id);\n    if (index + offset < 0 || index + offset >= blocks.length) return;\n    const next = [...blocks];\n    [next[index], next[index + offset]] = [next[index + offset], next[index]];\n    onChange(next); setMenu(null); setFocusId(id);\n  }\n  function remove(id) {\n    const index = blocks.findIndex(block => block.id === id);\n    setUndo({ block: blocks[index], index }); onChange(blocks.filter(block => block.id !== id)); setMenu(null);\n    setFocusId(blocks[index + 1]?.id ?? blocks[index - 1]?.id);\n  }\n  const openMenu = (id, target) => { triggerRef.current = target; setMenu({ id }); };\n  const closeMenu = () => { setMenu(null); triggerRef.current?.focus(); };\n  function keyMenu(event) {\n    if (event.key === 'Escape') { event.preventDefault(); closeMenu(); }\n    if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {\n      event.preventDefault();\n      const items = [...menuRef.current.querySelectorAll('button:not(:disabled)')];\n      const index = items.indexOf(document.activeElement);\n      const next = event.key === 'Home' ? 0 : event.key === 'End' ? items.length - 1 : (index + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;\n      items[next]?.focus();\n    }\n  }\n  const renderMenu = () => <div className=\"fw-block-menu\" ref={menuRef} role=\"menu\" aria-label=\"块操作\" onKeyDown={keyMenu} onPointerDown={event => {\n    // WebKit 的按钮点击不自动保留焦点，避免 blur 在 click 执行动作前卸载菜单。\n    const button = event.target.closest('button');\n    if (button && !button.disabled) { event.preventDefault(); button.focus(); }\n  }} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setMenu(null); }}>\n    <small>{menu.id ? '转换为' : '添加内容块'}</small>{Object.entries(folioBlockTypes).map(([type, label]) => { const Icon = icons[type]; return <FolioButton role=\"menuitem\" key={type} onClick={() => choose(type)}><Icon size={17} />{label}</FolioButton>; })}\n    {menu.id && <><hr /><FolioButton role=\"menuitem\" disabled={blocks[0]?.id === menu.id} onClick={() => move(menu.id, -1)}><ArrowUp size={17} />上移</FolioButton><FolioButton role=\"menuitem\" disabled={blocks.at(-1)?.id === menu.id} onClick={() => move(menu.id, 1)}><ArrowDown size={17} />下移</FolioButton><FolioButton role=\"menuitem\" tone=\"danger\" onClick={() => remove(menu.id)}><Trash size={17} />删除块</FolioButton></>}\n  </div>;\n  return <section className=\"fw-block-editor\" aria-label=\"页面内容\">\n    {blocks.map((block, index) => <div key={block.id} className=\"fw-block\" data-block-id={block.id} data-kind={block.type}>\n      <FolioButton className=\"fw-block-handle\" aria-label={`块 ${index + 1} 操作`} aria-haspopup=\"menu\" aria-expanded={menu?.id === block.id} disabled={disabled} onClick={e => menu?.id === block.id ? closeMenu() : openMenu(block.id, e.currentTarget)}><DotsSixVertical size={18} /></FolioButton>\n      <div className=\"fw-block-content\">\n        <div className=\"fw-block-line\">{block.type === 'todo' && <input type=\"checkbox\" aria-label={`完成 ${block.text || '待办'}`} checked={!!block.checked} disabled={disabled} onChange={e => update(block.id, { checked: e.target.checked })} />}\n          {block.type === 'toggle' && <FolioButton aria-label={`${block.open ? '折叠' : '展开'} ${block.text || '内容'}`} aria-expanded={!!block.open} disabled={disabled} onClick={() => update(block.id, { open: !block.open })}><CaretRight size={15} style={{ transform: block.open ? 'rotate(90deg)' : undefined }} /></FolioButton>}\n          <textarea ref={node => node ? fields.current.set(block.id, node) : fields.current.delete(block.id)} className={block.checked && block.type === 'todo' ? 'fw-completed' : ''} aria-label={`${folioBlockTypes[block.type]}块 ${index + 1}`} value={block.text} disabled={disabled} rows={Math.max(1, Math.ceil(block.text.length / 48))} placeholder=\"写点什么，或输入 / 选择块…\" onChange={e => update(block.id, { text: e.target.value })} onKeyDown={event => {\n            // 中文输入法组合期间的斜杠/确认键属于输入法，不能被块命令截获。\n            if (event.key === '/' && !event.nativeEvent.isComposing && event.keyCode !== 229 && !block.text) { event.preventDefault(); openMenu(block.id, event.currentTarget); }\n          }} />\n        </div>{block.type === 'toggle' && block.open && <textarea className=\"fw-toggle-content\" aria-label={`折叠内容 ${index + 1}`} value={block.detail ?? ''} disabled={disabled} rows={2} placeholder=\"展开后要显示的内容…\" onChange={e => update(block.id, { detail: e.target.value })} />}\n      </div>{menu?.id === block.id && renderMenu()}\n    </div>)}\n    <div className=\"fw-block-add\"><FolioButton disabled={disabled} aria-haspopup=\"menu\" aria-expanded={menu?.id === null} onClick={e => menu?.id === null ? closeMenu() : openMenu(null, e.currentTarget)}><Plus size={16} />添加内容块</FolioButton>{menu?.id === null && renderMenu()}</div>\n    {undo && <div className=\"fw-undo\" role=\"status\"><span>已删除一个内容块</span><FolioButton disabled={disabled} onClick={() => { const next = [...blocks]; next.splice(Math.min(undo.index, next.length), 0, undo.block); onChange(next); setFocusId(undo.block.id); setUndo(null); }}><ArrowCounterClockwise size={15} />撤销删除</FolioButton></div>}\n  </section>;\n}\n"
+  },
+  {
+    "id": "view-tabs",
+    "suffix": "ViewTabs",
+    "exportName": "FolioViewTabs",
+    "kind": "basic",
+    "title": "数据库视图切换",
+    "description": "在同一记录集合上切换展示方式。",
+    "anatomy": "表格、看板、列表三个标签",
+    "usage": "view 变更不应丢弃记录或草稿。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "表格、看板、列表对应同一组记录。",
+      "hover": "文字标签轻底色。",
+      "pressed": "选中项底线与 aria-selected 同步。",
+      "focus": "左右方向键、Home/End 切换；单一 Tab 停靠。",
+      "disabled": "此只读视图切换保持可用，不承担编辑权限。",
+      "loading": "保留当前视图，加载状态由数据库或工作区提供。",
+      "error": "筛选空结果在对应面板给出清除入口。"
+    },
+    "api": "export declare function FolioViewTabs(props:{value:FolioView;onChange:(view:FolioView)=>void;panelId:string}):ReactNode;\n\nexport type FolioView = 'table' | 'board' | 'list';",
+    "source": "web/Database.jsx",
+    "sourceCode": "import { useId } from 'react';\nimport { Table, Kanban, ListBullets, Plus, FileText, MagnifyingGlass } from '@phosphor-icons/react';\nimport { FolioButton, FolioStatus } from './Primitives.jsx';\nimport { filterFolioRecords, folioStatuses } from './model.js';\nconst views = [['table', '表格', Table], ['board', '看板', Kanban], ['list', '列表', ListBullets]];\nexport function FolioViewTabs({ value, onChange, panelId }) {\n  return <div className=\"fw-view-tabs\" role=\"tablist\" aria-label=\"数据库视图\">{views.map(([id, label, Icon], index) => <button type=\"button\" key={id} id={`${panelId}-${id}`} role=\"tab\" aria-selected={value === id} aria-controls={panelId} tabIndex={value === id ? 0 : -1} onClick={() => onChange(id)} onKeyDown={e => {\n    if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {\n      e.preventDefault();\n      const next = e.key === 'Home' ? 0 : e.key === 'End' ? views.length - 1 : (index + (e.key === 'ArrowRight' ? 1 : -1) + views.length) % views.length;\n      onChange(views[next][0]); e.currentTarget.parentElement.children[next].focus();\n    }\n  }}><Icon size={16} />{label}</button>)}</div>;\n}\nexport function FolioDatabase({ records, view, config, onViewChange, onConfigChange, onOpen, onCreate, disabled = false, activeId, draftIds = [] }) {\n  const panelId = useId();\n  const filtered = filterFolioRecords(records, config);\n  const titleButton = record => <FolioButton className=\"fw-record-link\" onClick={e => onOpen(record.id, e.currentTarget)} aria-label={`打开 ${record.title}`}><FileText size={16} /><span>{record.title}</span>{draftIds.includes(record.id) && <small>草稿</small>}</FolioButton>;\n  return <section className=\"fw-database\" aria-label=\"研究集合\"><div className=\"fw-database-title\"><h2>研究集合 <span>{records.length}</span></h2><FolioButton tone=\"solid\" disabled={disabled} onClick={e => onCreate(e.currentTarget)}><Plus size={15} />新建记录</FolioButton></div>\n    <FolioViewTabs value={view} onChange={onViewChange} panelId={panelId} />\n    <div className=\"fw-database-controls\"><label className=\"fw-search\"><MagnifyingGlass size={15} /><input type=\"search\" value={config.query} onChange={e => onConfigChange({ query: e.target.value })} placeholder=\"搜索记录…\" aria-label=\"搜索记录\" /></label><label>状态<select aria-label=\"筛选状态\" value={config.status} onChange={e => onConfigChange({ status: e.target.value })}>{['全部', ...folioStatuses].map(status => <option key={status}>{status}</option>)}</select></label><label>排序<select aria-label=\"记录排序\" value={config.sort} onChange={e => onConfigChange({ sort: e.target.value })}><option value=\"manual\">创建顺序</option><option value=\"title\">标题</option></select></label></div>\n    <div id={panelId} role=\"tabpanel\" aria-labelledby={`${panelId}-${view}`} tabIndex={0} className=\"fw-database-view\" data-view={view}>\n      {!filtered.length ? <div className=\"fw-empty\"><FileText size={24} /><strong>{records.length ? '没有匹配的记录' : '从第一条发现开始'}</strong><p>{records.length ? '当前筛选只属于这个视图。' : '把一个问题、一段观察或下一步写下来。'}</p>{records.length ? <FolioButton onClick={() => onConfigChange({ query: '', status: '全部' })}>清除筛选</FolioButton> : <FolioButton disabled={disabled} onClick={e => onCreate(e.currentTarget)}>创建第一条记录</FolioButton>}</div>\n        : view === 'table' ? <div className=\"fw-table-scroll\"><table><caption className=\"fw-sr-only\">研究记录表格</caption><thead><tr><th>名称</th><th>状态</th><th>分类</th></tr></thead><tbody>{filtered.map(record => <tr key={record.id} data-selected={activeId === record.id}><td>{titleButton(record)}</td><td><FolioStatus value={record.status} /></td><td className=\"fw-muted\">{record.category || '未分类'}</td></tr>)}</tbody></table></div>\n        : view === 'board' ? <div className=\"fw-board\">{folioStatuses.map(status => <section key={status}><header><FolioStatus value={status} /><span>{filtered.filter(record => record.status === status).length}</span></header>{filtered.filter(record => record.status === status).map(record => <article key={record.id} data-selected={activeId === record.id}>{titleButton(record)}<span className=\"fw-muted\">{record.category || '未分类'}</span></article>)}</section>)}</div>\n        : <ul className=\"fw-record-list\">{filtered.map(record => <li key={record.id} data-selected={activeId === record.id}>{titleButton(record)}<FolioStatus value={record.status} /><span className=\"fw-muted\">{record.category || '未分类'}</span></li>)}</ul>}\n    </div><div className=\"fw-database-footer\"><span>{filtered.length} 条记录</span><span>同一集合 · 视图独立筛选</span></div>\n  </section>;\n}\n"
+  },
+  {
+    "id": "database",
+    "suffix": "Database",
+    "exportName": "FolioDatabase",
+    "kind": "business",
+    "title": "多视图数据库",
+    "description": "对同一集合进行表格、看板和列表操作。",
+    "anatomy": "视图标签、过滤排序、记录、创建入口",
+    "usage": "records 共享，视图配置独立；本组件不请求后端。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "表格轻分隔线、看板按状态分组、列表按行排版。",
+      "hover": "记录标题有局部底色。",
+      "pressed": "点击记录侧开；切换布局保留记录与视图独立配置。",
+      "focus": "语义 table、tablist 与原生筛选控件；行标题可键盘打开。",
+      "disabled": "读取失败禁用新建，搜索浏览保持可用。",
+      "loading": "保存只更新详情数据，不让所有行变成骨架。",
+      "error": "空集合可新建；筛选空结果可清除筛选。"
+    },
+    "api": "export declare function FolioDatabase(props:{records:FolioRecord[];view:FolioView;config:FolioViewConfig;onViewChange:(view:FolioView)=>void;onConfigChange:(patch:Partial<FolioViewConfig>)=>void;onOpen:(id:string,trigger:HTMLButtonElement)=>void;onCreate:(trigger:HTMLButtonElement)=>void;disabled?:boolean;activeId?:string|null;draftIds?:string[]}):ReactNode;\n\nexport interface FolioRecord { id:string; title:string; status:FolioRecordStatus; category:string; note:string; }\n\nexport type FolioRecordStatus = '未开始' | '进行中' | '已完成';\n\nexport type FolioView = 'table' | 'board' | 'list';\n\nexport interface FolioViewConfig { query:string; status:'全部' | FolioRecordStatus; sort:'manual' | 'title'; }",
+    "source": "web/Database.jsx",
+    "sourceCode": "import { useId } from 'react';\nimport { Table, Kanban, ListBullets, Plus, FileText, MagnifyingGlass } from '@phosphor-icons/react';\nimport { FolioButton, FolioStatus } from './Primitives.jsx';\nimport { filterFolioRecords, folioStatuses } from './model.js';\nconst views = [['table', '表格', Table], ['board', '看板', Kanban], ['list', '列表', ListBullets]];\nexport function FolioViewTabs({ value, onChange, panelId }) {\n  return <div className=\"fw-view-tabs\" role=\"tablist\" aria-label=\"数据库视图\">{views.map(([id, label, Icon], index) => <button type=\"button\" key={id} id={`${panelId}-${id}`} role=\"tab\" aria-selected={value === id} aria-controls={panelId} tabIndex={value === id ? 0 : -1} onClick={() => onChange(id)} onKeyDown={e => {\n    if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {\n      e.preventDefault();\n      const next = e.key === 'Home' ? 0 : e.key === 'End' ? views.length - 1 : (index + (e.key === 'ArrowRight' ? 1 : -1) + views.length) % views.length;\n      onChange(views[next][0]); e.currentTarget.parentElement.children[next].focus();\n    }\n  }}><Icon size={16} />{label}</button>)}</div>;\n}\nexport function FolioDatabase({ records, view, config, onViewChange, onConfigChange, onOpen, onCreate, disabled = false, activeId, draftIds = [] }) {\n  const panelId = useId();\n  const filtered = filterFolioRecords(records, config);\n  const titleButton = record => <FolioButton className=\"fw-record-link\" onClick={e => onOpen(record.id, e.currentTarget)} aria-label={`打开 ${record.title}`}><FileText size={16} /><span>{record.title}</span>{draftIds.includes(record.id) && <small>草稿</small>}</FolioButton>;\n  return <section className=\"fw-database\" aria-label=\"研究集合\"><div className=\"fw-database-title\"><h2>研究集合 <span>{records.length}</span></h2><FolioButton tone=\"solid\" disabled={disabled} onClick={e => onCreate(e.currentTarget)}><Plus size={15} />新建记录</FolioButton></div>\n    <FolioViewTabs value={view} onChange={onViewChange} panelId={panelId} />\n    <div className=\"fw-database-controls\"><label className=\"fw-search\"><MagnifyingGlass size={15} /><input type=\"search\" value={config.query} onChange={e => onConfigChange({ query: e.target.value })} placeholder=\"搜索记录…\" aria-label=\"搜索记录\" /></label><label>状态<select aria-label=\"筛选状态\" value={config.status} onChange={e => onConfigChange({ status: e.target.value })}>{['全部', ...folioStatuses].map(status => <option key={status}>{status}</option>)}</select></label><label>排序<select aria-label=\"记录排序\" value={config.sort} onChange={e => onConfigChange({ sort: e.target.value })}><option value=\"manual\">创建顺序</option><option value=\"title\">标题</option></select></label></div>\n    <div id={panelId} role=\"tabpanel\" aria-labelledby={`${panelId}-${view}`} tabIndex={0} className=\"fw-database-view\" data-view={view}>\n      {!filtered.length ? <div className=\"fw-empty\"><FileText size={24} /><strong>{records.length ? '没有匹配的记录' : '从第一条发现开始'}</strong><p>{records.length ? '当前筛选只属于这个视图。' : '把一个问题、一段观察或下一步写下来。'}</p>{records.length ? <FolioButton onClick={() => onConfigChange({ query: '', status: '全部' })}>清除筛选</FolioButton> : <FolioButton disabled={disabled} onClick={e => onCreate(e.currentTarget)}>创建第一条记录</FolioButton>}</div>\n        : view === 'table' ? <div className=\"fw-table-scroll\"><table><caption className=\"fw-sr-only\">研究记录表格</caption><thead><tr><th>名称</th><th>状态</th><th>分类</th></tr></thead><tbody>{filtered.map(record => <tr key={record.id} data-selected={activeId === record.id}><td>{titleButton(record)}</td><td><FolioStatus value={record.status} /></td><td className=\"fw-muted\">{record.category || '未分类'}</td></tr>)}</tbody></table></div>\n        : view === 'board' ? <div className=\"fw-board\">{folioStatuses.map(status => <section key={status}><header><FolioStatus value={status} /><span>{filtered.filter(record => record.status === status).length}</span></header>{filtered.filter(record => record.status === status).map(record => <article key={record.id} data-selected={activeId === record.id}>{titleButton(record)}<span className=\"fw-muted\">{record.category || '未分类'}</span></article>)}</section>)}</div>\n        : <ul className=\"fw-record-list\">{filtered.map(record => <li key={record.id} data-selected={activeId === record.id}>{titleButton(record)}<FolioStatus value={record.status} /><span className=\"fw-muted\">{record.category || '未分类'}</span></li>)}</ul>}\n    </div><div className=\"fw-database-footer\"><span>{filtered.length} 条记录</span><span>同一集合 · 视图独立筛选</span></div>\n  </section>;\n}\n"
+  },
+  {
+    "id": "record-detail",
+    "suffix": "RecordDetail",
+    "exportName": "FolioRecordDetail",
+    "kind": "business",
+    "title": "记录详情",
+    "description": "在侧开区域编辑记录并保留上下文。",
+    "anatomy": "标题、状态、分类、笔记、保存和取消",
+    "usage": "这是非模态侧栏；onCancel 和 onClose 具有不同草稿语义。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "非模态 aside，独立草稿，不阻断列表。",
+      "hover": "字段与按钮表达 hover。",
+      "pressed": "保存提交当前记录；取消丢弃此草稿。",
+      "focus": "打开聚焦标题；Esc 关闭保留草稿；关闭恢复触发点。",
+      "disabled": "字段与提交禁用，关闭仍可用。",
+      "loading": "保存状态由工作区承担，当前输入保留。",
+      "error": "空标题给出行内错误并聚焦；读写失败不宣称已保存。"
+    },
+    "api": "export declare function FolioRecordDetail(props:{record:FolioRecord;onChange:(record:FolioRecord)=>void;onSave:(record:FolioRecord)=>void;onCancel:()=>void;onClose:()=>void;disabled?:boolean;autoFocus?:boolean}):ReactNode;\n\nexport interface FolioRecord { id:string; title:string; status:FolioRecordStatus; category:string; note:string; }\n\nexport type FolioRecordStatus = '未开始' | '进行中' | '已完成';",
+    "source": "web/RecordDetail.jsx",
+    "sourceCode": "import { useEffect, useId, useRef, useState } from 'react';\nimport { ArrowSquareOut, X } from '@phosphor-icons/react';\nimport { FolioButton } from './Primitives.jsx';\nimport { folioStatuses } from './model.js';\nexport function FolioRecordDetail({ record, onChange, onSave, onCancel, onClose, disabled = false, autoFocus = true }) {\n  const input = useRef(null);\n  const errorId = useId();\n  const [error, setError] = useState('');\n  useEffect(() => {\n    const trigger = document.activeElement;\n    return () => { if (document.activeElement === document.body && trigger?.isConnected) trigger.focus(); };\n  }, []);\n  useEffect(() => { if(autoFocus) input.current?.focus(); setError(''); }, [record.id,autoFocus]);\n  return <aside className=\"fw-record-detail\" aria-label=\"记录详情\" onKeyDown={e => { if (e.key === 'Escape' && !e.nativeEvent.isComposing) { e.stopPropagation(); onClose(); } }}><header><span><ArrowSquareOut size={16} />侧开详情</span><FolioButton aria-label=\"关闭详情并保留草稿\" onClick={onClose}><X size={17} /></FolioButton></header><p className=\"fw-muted\">草稿保留到保存或取消；左侧仍可操作。</p><form onSubmit={e => { e.preventDefault(); if (!record.title.trim()) { setError('请填写记录标题。'); input.current?.focus(); return; } onSave({ ...record, title: record.title.trim() }); }}><label>记录标题<input ref={input} value={record.title} disabled={disabled} aria-invalid={!!error} aria-describedby={error ? errorId : undefined} onChange={e => { onChange({ ...record, title: e.target.value }); setError(''); }} /></label>{error && <p className=\"fw-error\" role=\"alert\" id={errorId}>{error}</p>}<label>记录状态<select value={record.status} disabled={disabled} onChange={e => onChange({ ...record, status: e.target.value })}>{folioStatuses.map(value => <option key={value}>{value}</option>)}</select></label><label>记录分类<input value={record.category} disabled={disabled} onChange={e => onChange({ ...record, category: e.target.value })} /></label><label>记录笔记<textarea aria-label=\"记录笔记\" rows={6} value={record.note} disabled={disabled} onChange={e => onChange({ ...record, note: e.target.value })} /></label><footer><FolioButton type=\"submit\" tone=\"solid\" disabled={disabled}>保存记录</FolioButton><FolioButton disabled={disabled} onClick={onCancel}>取消编辑</FolioButton></footer></form></aside>;\n}\n"
+  },
+  {
+    "id": "workspace",
+    "suffix": "Workspace",
+    "exportName": "FolioWorkspace",
+    "kind": "pattern",
+    "title": "知识工作台",
+    "description": "把页面树、内容块和数据库组合在同一纸面。",
+    "anatomy": "页面树、路径、页面头、块、数据库、侧开详情",
+    "usage": "storageKey 决定本地持久化；无云端协作。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "页面树、正文块与内嵌集合组合，支持独立 storageKey。",
+      "hover": "不让整个工作区出现装饰性 hover。",
+      "pressed": "由所属按钮和编辑器处理操作。",
+      "focus": "所有编辑可键盘完成，窄屏目录有常驻切换按钮。",
+      "disabled": "读取失败展示只读示例，禁止自动覆盖原始内容。",
+      "loading": "250ms 延迟保存有可见状态，卸载前补写。",
+      "error": "读写失败分别处理，重试读取/保存；JSON 导出备份。"
+    },
+    "api": "export declare function FolioWorkspace(props:{storageKey?:string|null}):ReactNode;",
+    "source": "web/Workspace.jsx",
+    "sourceCode": "import { useRef, useState } from 'react';\nimport { DownloadSimple, List } from '@phosphor-icons/react';\nimport { FolioButton, FolioCallout, FolioPageHeader } from './Primitives.jsx';\nimport { FolioPageTree, FolioBreadcrumbs } from './Navigation.jsx';\nimport { FolioBlockEditor } from './BlockEditor.jsx';\nimport { FolioDatabase } from './Database.jsx';\nimport { FolioRecordDetail } from './RecordDetail.jsx';\nimport { createFolioPage, folioId } from './model.js';\nimport { useFolioStorage } from './useFolioStorage.js';\n\nexport function FolioWorkspace({ storageKey = 'folio-workspace-v1' }) {\n  // storageKey 界定独立工作区；调用方切换键时用 React key 重新挂载实例。\n  const { document, setDocument, status, error, retry } = useFolioStorage(storageKey);\n  const [selected, setSelected] = useState(null);\n  const [showTree, setShowTree] = useState(false);\n  const [notice, setNotice] = useState('');\n  const origin = useRef(null);\n  const workspaceRef = useRef(null);\n  const page = document.pages.find(item => item.id === document.activePage);\n  const disabled = error === 'read';\n  const updatePage = update => setDocument(previous => ({ ...previous, pages: previous.pages.map(item => item.id === page.id ? (typeof update === 'function' ? update(item) : { ...item, ...update }) : item) }));\n  const selectPage = id => { setDocument(previous => ({ ...previous, activePage: id })); setSelected(null); setShowTree(false); setNotice(''); };\n  const createPage = parentId => { const next = createFolioPage('未命名页面', parentId); setDocument(previous => ({ ...previous, pages: [...previous.pages, next], activePage: next.id })); setSelected(null); setShowTree(false); setNotice('页面已创建，可编辑标题和内容。'); };\n  const closeDetail = () => { setSelected(null); requestAnimationFrame(() => {\n    // 保存可能让记录移出当前分组/筛选，触发点消失时回到当前视图页签。\n    const target = origin.current?.isConnected ? origin.current : workspaceRef.current?.querySelector('[role=\"tab\"][aria-selected=\"true\"]');\n    target?.focus();\n  }); };\n  const openRecord = (id, trigger) => { origin.current = trigger; if (!page.drafts[id]) updatePage(item => ({ ...item, drafts: { ...item.drafts, [id]: { ...item.records.find(row => row.id === id) } } })); setSelected(id); };\n  const newRecord = trigger => { const id = folioId(); origin.current = trigger; updatePage(item => ({ ...item, drafts: { ...item.drafts, [id]: { id, title: '', category: '', status: '未开始', note: '' } } })); setSelected(id); };\n  const saveRecord = record => { updatePage(item => { const drafts = { ...item.drafts }; delete drafts[record.id]; return { ...item, drafts, records: item.records.some(row => row.id === record.id) ? item.records.map(row => row.id === record.id ? record : row) : [...item.records, record] }; }); setNotice('记录已更新，所有视图共享这次修改。'); closeDetail(); };\n  const cancelRecord = () => { updatePage(item => { const drafts = { ...item.drafts }; delete drafts[selected]; return { ...item, drafts }; }); setNotice('已取消编辑，原记录保持不变。'); closeDetail(); };\n  function exportDocument() {\n    const url = URL.createObjectURL(new Blob([JSON.stringify(document, null, 2)], { type: 'application/json' }));\n    const anchor = window.document.createElement('a'); anchor.href = url; anchor.download = 'folio-workspace.json'; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);\n    setNotice('已导出本地页面、记录与草稿。');\n  }\n  return <div ref={workspaceRef} className=\"fw-workspace\" data-tree-open={showTree}>\n    <FolioPageTree pages={document.pages} activeId={page.id} onSelect={selectPage} onCreate={createPage} disabled={disabled} />\n    <div className=\"fw-workspace-main\"><div className=\"fw-workspace-top\"><FolioButton className=\"fw-mobile-menu\" aria-label=\"切换页面目录\" aria-expanded={showTree} onClick={() => setShowTree(value => !value)}><List size={18} /></FolioButton><FolioBreadcrumbs pages={document.pages} activeId={page.id} onSelect={selectPage} /><span className=\"fw-save-status\" role=\"status\">{status === 'saved' ? '已保存到此浏览器' : status === 'saving' ? '正在保存…' : status === 'session' ? '临时预览' : '保存需要处理'}</span><FolioButton aria-label=\"导出工作区 JSON\" onClick={exportDocument}><DownloadSimple size={17} /></FolioButton></div>\n      {error && <FolioCallout tone=\"error\" action={<FolioButton onClick={retry}>重试{error === 'read' ? '读取' : '保存'}</FolioButton>}>{error === 'read' ? '无法读取本地内容。当前只读示例不会覆盖原始内容，请恢复浏览器存储后重试。' : '内容暂未保存，当前编辑仍在内存中。请重试，或导出 JSON 备份。'}</FolioCallout>}\n      <div className=\"fw-writing-layout\" data-detail-open={!!selected}><article className=\"fw-document\"><FolioPageHeader title={page.title} onChange={title => updatePage({ title })} disabled={disabled} /><FolioCallout>好想法不必一次写完。先记下来，再慢慢整理。</FolioCallout><FolioBlockEditor key={page.id} blocks={page.blocks} onChange={blocks => updatePage({ blocks })} disabled={disabled} />\n        <FolioDatabase records={page.records} view={page.view} config={page.views[page.view]} onViewChange={view => updatePage({ view })} onConfigChange={patch => updatePage(item => ({ ...item, views: { ...item.views, [item.view]: { ...item.views[item.view], ...patch } } }))} onOpen={openRecord} onCreate={newRecord} disabled={disabled} activeId={selected} draftIds={Object.keys(page.drafts)} />\n        {!!Object.keys(page.drafts).length && <div className=\"fw-drafts\"><span>未完成的草稿</span>{Object.values(page.drafts).map(record => <FolioButton key={record.id} onClick={e => { origin.current = e.currentTarget; setSelected(record.id); }}>{record.title || '未命名记录'}</FolioButton>)}</div>}\n        <p className=\"fw-notice\" role=\"status\">{notice || '这是你的纸面：点击文字编辑，空白块输入 / 插入内容。'}</p></article>\n        {selected && page.drafts[selected] && <FolioRecordDetail record={page.drafts[selected]} onChange={record => updatePage(item => ({ ...item, drafts: { ...item.drafts, [record.id]: record } }))} onSave={saveRecord} onCancel={cancelRecord} onClose={closeDetail} disabled={disabled} />}\n      </div>\n    </div>\n  </div>;\n}\n"
+  }
+]

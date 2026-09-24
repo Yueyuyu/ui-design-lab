@@ -1,0 +1,799 @@
+[
+  {
+    "id": "button",
+    "suffix": "Button",
+    "exportName": "SignalButton",
+    "kind": "basic",
+    "title": "按钮",
+    "description": "触发一个明确动作。",
+    "anatomy": "文字标签、可选图标、交互表面",
+    "usage": "主要动作保持唯一；提交中阻止重复操作。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalButton(props:ComponentPropsWithoutRef<\"button\">&StateProps&{variant?:\"primary\"|\"secondary\"|\"ghost\"|\"danger\";icon?:Icon}):JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function SignalButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"ss-button ss-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function SignalField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"ss-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function SignalSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"ss-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function SignalToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"ss-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function SignalPanel({title,eyebrow,action,children}) {return <section className=\"ss-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function SignalBadge({children}) {return <span className=\"ss-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "field",
+    "suffix": "Field",
+    "exportName": "SignalField",
+    "kind": "basic",
+    "title": "输入框",
+    "description": "录入单行文本。",
+    "anatomy": "标签、输入区、提示或错误",
+    "usage": "value 由调用方持有；错误说明放在字段附近。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalField(props:ComponentPropsWithoutRef<\"input\">&StateProps&{label:string;hint?:string}):JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function SignalButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"ss-button ss-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function SignalField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"ss-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function SignalSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"ss-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function SignalToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"ss-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function SignalPanel({title,eyebrow,action,children}) {return <section className=\"ss-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function SignalBadge({children}) {return <span className=\"ss-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "select",
+    "suffix": "Select",
+    "exportName": "SignalSelect",
+    "kind": "basic",
+    "title": "选择器",
+    "description": "从固定选项中选择一个值。",
+    "anatomy": "标签、原生 select、选项",
+    "usage": "少量选项优先使用；大量候选使用可搜索选择。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalSelect(props:ComponentPropsWithoutRef<\"select\">&StateProps&{label:string;hint?:string;options:Array<{label:string;value:string;disabled?:boolean}>}):JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function SignalButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"ss-button ss-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function SignalField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"ss-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function SignalSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"ss-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function SignalToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"ss-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function SignalPanel({title,eyebrow,action,children}) {return <section className=\"ss-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function SignalBadge({children}) {return <span className=\"ss-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "toggle",
+    "suffix": "Toggle",
+    "exportName": "SignalToggle",
+    "kind": "basic",
+    "title": "开关",
+    "description": "立即开启或关闭一个设置。",
+    "anatomy": "名称、说明、开关轨道",
+    "usage": "checked 与 onChange 配套，保存行为由页面负责。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalToggle(props:StateProps&{label:string;description?:string;checked:boolean;onChange?:(value:boolean)=>void}):JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function SignalButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"ss-button ss-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function SignalField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"ss-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function SignalSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"ss-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function SignalToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"ss-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function SignalPanel({title,eyebrow,action,children}) {return <section className=\"ss-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function SignalBadge({children}) {return <span className=\"ss-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "panel",
+    "suffix": "Panel",
+    "exportName": "SignalPanel",
+    "kind": "basic",
+    "title": "面板容器",
+    "description": "承载一个相关的信息区域。",
+    "anatomy": "标题区、动作槽、内容区",
+    "usage": "业务数据与请求由上层组件管理。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalPanel(props:{title?:ReactNode;eyebrow?:string;action?:ReactNode;children?:ReactNode}):JSX.Element;",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function SignalButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"ss-button ss-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function SignalField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"ss-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function SignalSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"ss-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function SignalToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"ss-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function SignalPanel({title,eyebrow,action,children}) {return <section className=\"ss-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function SignalBadge({children}) {return <span className=\"ss-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "badge",
+    "suffix": "Badge",
+    "exportName": "SignalBadge",
+    "kind": "basic",
+    "title": "标签",
+    "description": "表达一个短分类或状态。",
+    "anatomy": "短文本、语义底色",
+    "usage": "静态标记不应加入 Tab 顺序。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalBadge(props:{children?:ReactNode}):JSX.Element;",
+    "source": "web/primitives.jsx",
+    "sourceCode": "import { useId } from \"react\";\nimport { CircleNotch, WarningCircle } from \"@phosphor-icons/react\";\nexport function SignalButton({children,variant=\"primary\",loading=false,disabled=false,error=false,type=\"button\",icon:Icon,...props}) {return <button {...props} type={type} className={\"ss-button ss-button--\"+variant} disabled={disabled||loading} aria-busy={loading||undefined} data-error={!!error}>{loading?<CircleNotch size={16}/>:error?<WarningCircle size={16}/>:Icon?<Icon size={16}/>:null}{children}</button>;}\nexport function SignalField({label,hint,error,loading,disabled,...props}) {const id=useId();return <label className=\"ss-control\">{label}<input {...props} aria-describedby={id} aria-invalid={!!error} disabled={disabled||loading}/><small id={id} role={error?\"alert\":undefined}>{error || (loading?\"正在加载…\":hint)}</small></label>;}\nexport function SignalSelect({label,options,error,hint,disabled,loading,...props}) {const id=useId();return <label className=\"ss-control\">{label}<select {...props} aria-label={props[\"aria-label\"] ?? label} disabled={disabled||loading} aria-invalid={!!error} aria-describedby={id}>{options.map(o=><option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><small id={id} role={error?\"alert\":undefined}>{error||hint}</small></label>;}\nexport function SignalToggle({label,description,checked,onChange,disabled,loading,error}) {return <label className=\"ss-check\"><input type=\"checkbox\" role=\"switch\" checked={checked} disabled={disabled||loading} onChange={e=>onChange?.(e.target.checked)}/><span>{label}<small>{error||description}</small></span></label>;}\nexport function SignalPanel({title,eyebrow,action,children}) {return <section className=\"ss-panel\">{title||action?<header><span>{eyebrow?<small>{eyebrow}</small>:null}<h3>{title}</h3></span>{action}</header>:null}{children}</section>;}\nexport function SignalBadge({children}) {return <span className=\"ss-badge\">{children}</span>;}\n"
+  },
+  {
+    "id": "bar-chart",
+    "suffix": "BarChart",
+    "exportName": "SignalBarChart",
+    "kind": "basic",
+    "title": "柱状图",
+    "description": "比较离散类别的数值。",
+    "anatomy": "标题、带标签的数据、柱体、读数",
+    "usage": "传入实际单位与范围；负值保留方向，缺失不补零。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error",
+      "empty"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalBarChart(props:{title?:string;description?:string;period?:string;source?:string;updatedAt?:string;data?:Array<{label:string;value:number}>;unit?:string;state?:InteractionState|\"empty\";disabled?:boolean;onRetry?:()=>void}):JSX.Element;\n\nexport type InteractionState = \"default\"|\"hover\"|\"pressed\"|\"focus\"|\"disabled\"|\"loading\"|\"error\";",
+    "source": "web/Chart.jsx",
+    "sourceCode": "import { barGeometry, validSeries } from \"./chart-data.js\";\nimport { SignalButton } from \"./primitives.jsx\";\nexport function SignalBarChart({ title, description, data = [], unit = \"\", period, source, updatedAt, state = \"default\", disabled = false, onRetry }) {\n  const invalid = !validSeries(data), bars = barGeometry(data);\n  const ready = !invalid && bars.length > 0 && ![\"empty\",\"loading\",\"error\"].includes(state);\n  return <figure className=\"ss-chart\" data-state={disabled ? \"disabled\" : state} aria-busy={state === \"loading\" || undefined}>\n    <figcaption><span><strong>{title}</strong><small>{[description,period,source,updatedAt].filter(Boolean).join(\" · \")}</small></span></figcaption>\n    {!ready ? <div className=\"ss-chart__message\" role={invalid || state === \"error\" ? \"alert\" : \"status\"}>\n      <span>{state === \"loading\" ? \"正在加载数据…\" : invalid ? \"数据包含缺失或非法数值，请检查数据源。\" : state === \"error\" ? \"图表加载失败。请稍后重试。\" : \"当前筛选条件下暂无数据。\"}</span>\n      {state === \"error\" && onRetry ? <SignalButton onClick={onRetry}>重新加载</SignalButton> : null}\n    </div> : <div className=\"ss-signed-bars\">{bars.map((item,index) => <button type=\"button\" key={index} disabled={disabled || state === \"disabled\"} aria-label={item.label + \"：\" + item.value + unit}>\n      <b>{item.value}{unit}</b><span className=\"ss-signed-track\"><i style={{top:item.top+\"%\",height:item.height+\"%\"}} data-negative={item.value < 0}/><hr style={{top:item.baseline+\"%\"}}/></span><small>{item.label}</small>\n    </button>)}</div>}\n  </figure>;\n}\n"
+  },
+  {
+    "id": "textarea",
+    "suffix": "Textarea",
+    "exportName": "SignalTextarea",
+    "kind": "basic",
+    "title": "多行输入",
+    "description": "编辑一段说明或正文。",
+    "anatomy": "标签、多行输入、提示",
+    "usage": "不要把纯文本输入描述为富文本编辑器。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalTextarea(props: ComponentPropsWithoutRef<\"textarea\"> & StateProps & {label: string; hint?: string}): JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function SignalTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"ss-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function SignalCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"ss-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function SignalRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"ss-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function SignalCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function SignalMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"ss-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"ss-options\">{matches.map(o => <SignalCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function SignalDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"ss-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function SignalDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"ss-inline\"><SignalDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><SignalDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"ss-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "checkbox",
+    "suffix": "Checkbox",
+    "exportName": "SignalCheckbox",
+    "kind": "basic",
+    "title": "复选框",
+    "description": "独立勾选条件。",
+    "anatomy": "复选框、标签、可选提示",
+    "usage": "checked 是布尔值；多个选项可以同时成立。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalCheckbox(props: StateProps & {label: string; checked: boolean; onChange?: (value: boolean) => void; hint?: string}): JSX.Element;\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function SignalTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"ss-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function SignalCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"ss-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function SignalRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"ss-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function SignalCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function SignalMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"ss-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"ss-options\">{matches.map(o => <SignalCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function SignalDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"ss-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function SignalDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"ss-inline\"><SignalDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><SignalDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"ss-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "radio-group",
+    "suffix": "RadioGroup",
+    "exportName": "SignalRadioGroup",
+    "kind": "basic",
+    "title": "单选组",
+    "description": "同时展示互斥选项。",
+    "anatomy": "组名、单选项、选中反馈",
+    "usage": "同组只允许一个值；原生键盘行为。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalRadioGroup(props: SearchSelectProps): JSX.Element;\n\nexport interface SearchSelectProps extends StateProps {label: string; options: Choice[]; value: string; onChange?: (value: string) => void;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}\n\nexport interface Choice { value: string; label: string; disabled?: boolean; }",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function SignalTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"ss-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function SignalCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"ss-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function SignalRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"ss-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function SignalCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function SignalMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"ss-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"ss-options\">{matches.map(o => <SignalCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function SignalDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"ss-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function SignalDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"ss-inline\"><SignalDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><SignalDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"ss-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "combobox",
+    "suffix": "Combobox",
+    "exportName": "SignalCombobox",
+    "kind": "basic",
+    "title": "可搜索选择",
+    "description": "搜索后选中一个候选项。",
+    "anatomy": "搜索框、候选列表、当前值",
+    "usage": "value 是选项标识；空结果需要保留搜索文本。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalCombobox(props: SearchSelectProps): JSX.Element;\n\nexport interface SearchSelectProps extends StateProps {label: string; options: Choice[]; value: string; onChange?: (value: string) => void;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}\n\nexport interface Choice { value: string; label: string; disabled?: boolean; }",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function SignalTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"ss-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function SignalCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"ss-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function SignalRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"ss-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function SignalCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function SignalMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"ss-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"ss-options\">{matches.map(o => <SignalCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function SignalDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"ss-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function SignalDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"ss-inline\"><SignalDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><SignalDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"ss-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "multi-select",
+    "suffix": "MultiSelect",
+    "exportName": "SignalMultiSelect",
+    "kind": "basic",
+    "title": "多项选择",
+    "description": "从候选中组合多个值。",
+    "anatomy": "组名、复选项、已选值",
+    "usage": "value 为数组；提交时由调用方校验选择范围。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalMultiSelect(props: Omit<SearchSelectProps,\"value\"|\"onChange\"> & {value: string[]; onChange?: (value: string[])=>void}): JSX.Element;\n\nexport interface SearchSelectProps extends StateProps {label: string; options: Choice[]; value: string; onChange?: (value: string) => void;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}\n\nexport interface Choice { value: string; label: string; disabled?: boolean; }",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function SignalTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"ss-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function SignalCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"ss-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function SignalRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"ss-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function SignalCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function SignalMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"ss-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"ss-options\">{matches.map(o => <SignalCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function SignalDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"ss-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function SignalDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"ss-inline\"><SignalDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><SignalDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"ss-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "date-picker",
+    "suffix": "DatePicker",
+    "exportName": "SignalDatePicker",
+    "kind": "basic",
+    "title": "日期选择",
+    "description": "选择单个日期。",
+    "anatomy": "标签、原生日期输入",
+    "usage": "使用 YYYY-MM-DD；不要把日期当作带时区时间戳。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalDatePicker(props: DatePickerProps): JSX.Element;\n\nexport interface DatePickerProps extends StateProps {label: string; value?: string; onChange?: (value: string)=>void; min?: string; max?: string;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function SignalTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"ss-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function SignalCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"ss-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function SignalRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"ss-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function SignalCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function SignalMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"ss-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"ss-options\">{matches.map(o => <SignalCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function SignalDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"ss-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function SignalDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"ss-inline\"><SignalDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><SignalDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"ss-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "date-range",
+    "suffix": "DateRange",
+    "exportName": "SignalDateRange",
+    "kind": "basic",
+    "title": "日期范围",
+    "description": "选择起止日期。",
+    "anatomy": "起始日期、结束日期、顺序校验",
+    "usage": "value 包含 start 和 end；跨时区统计规则由业务定义。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalDateRange(props: Omit<DatePickerProps,\"value\"|\"onChange\"> & {value: DateRangeValue; onChange?: (value:DateRangeValue)=>void}): JSX.Element;\n\nexport interface DatePickerProps extends StateProps {label: string; value?: string; onChange?: (value: string)=>void; min?: string; max?: string;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}\n\nexport interface DateRangeValue {start: string; end: string;}",
+    "source": "web/Inputs.jsx",
+    "sourceCode": "import { useId, useState } from \"react\";\nfunction Hint({\n  id,\n  error,\n  hint\n}) {\n  return error || hint ? <small id={id} role={error ? \"alert\" : undefined}>{error || hint}</small> : null;\n}\nexport function SignalTextarea({\n  label,\n  hint,\n  error,\n  loading,\n  disabled,\n  ...props\n}) {\n  const id = useId();\n  return <label className=\"ss-control\">{label}<textarea {...props} aria-label={props[\"aria-label\"] ?? label} aria-describedby={id} aria-invalid={!!error} disabled={disabled || loading} /><Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></label>;\n}\nexport function SignalCheckbox({\n  label,\n  checked,\n  onChange,\n  disabled,\n  loading,\n  error,\n  hint\n}) {\n  const id = useId();\n  return <label className=\"ss-check\"><input type=\"checkbox\" checked={checked} onChange={e => onChange?.(e.target.checked)} disabled={disabled || loading} aria-invalid={!!error} aria-describedby={id} /><span>{label}<Hint id={id} error={error} hint={loading ? \"正在加载…\" : hint} /></span></label>;\n}\nexport function SignalRadioGroup({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const name = useId();\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend>{options.map(o => <label className=\"ss-check\" key={o.value}><input type=\"radio\" name={name} value={o.value} checked={value === o.value} onChange={() => onChange?.(o.value)} disabled={o.disabled} />{o.label}</label>)}<Hint error={error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\nexport function SignalCombobox({\n  label,\n  options,\n  value,\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const filtered = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input aria-label={\"搜索\" + label} type=\"search\" value={query} onChange={e => setQuery(e.target.value)} /><select aria-label={label} value={value} onChange={e => onChange?.(e.target.value)}><option value=\"\">请选择</option>{options.filter(o => filtered.includes(o) || o.value === value).map(o => <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>)}</select><Hint error={error} hint={loading ? \"正在加载选项…\" : filtered.length ? \"输入关键词筛选，方向键选择。\" : \"没有匹配的选项。当前选择已保留。\"} /></fieldset>;\n}\nexport function SignalMultiSelect({\n  label,\n  options,\n  value = [],\n  onChange,\n  disabled,\n  loading,\n  error\n}) {\n  const [query, setQuery] = useState(\"\");\n  const matches = options.filter(o => o.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()));\n  const toggle = v => onChange?.(value.includes(v) ? value.filter(x => x !== v) : [...value, v]);\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><input type=\"search\" aria-label={\"搜索\" + label} value={query} onChange={e => setQuery(e.target.value)} /><div className=\"ss-chips\">{value.map(v => <button type=\"button\" key={v} onClick={() => toggle(v)} aria-label={\"移除\" + (options.find(o => o.value === v)?.label ?? v)}>{options.find(o => o.value === v)?.label ?? v} ×</button>)}</div><div className=\"ss-options\">{matches.map(o => <SignalCheckbox key={o.value} label={o.label} checked={value.includes(o.value)} onChange={() => toggle(o.value)} disabled={o.disabled} />)}</div><Hint error={error} hint={loading ? \"正在加载选项…\" : matches.length ? \"已选 \" + value.length + \" 项\" : \"没有匹配的选项。\"} /></fieldset>;\n}\nexport function SignalDatePicker({\n  label,\n  value = \"\",\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  return <label className=\"ss-control\">{label}<input type=\"date\" value={value} min={min} max={max} disabled={disabled || loading} onChange={e => onChange?.(e.target.value)} aria-invalid={!!error} /><Hint error={error} hint={loading ? \"正在加载…\" : \"日期按本地日历解释，不转换为 UTC。\"} /></label>;\n}\nexport function SignalDateRange({\n  label = \"日期范围\",\n  value = {\n    start: \"\",\n    end: \"\"\n  },\n  onChange,\n  min,\n  max,\n  disabled,\n  loading,\n  error\n}) {\n  const [draft, setDraft] = useState(null);\n  const current = draft ?? value;\n  const invalid = current.start && current.end && current.start > current.end || [current.start, current.end].some(date => date && (min && date < min || max && date > max));\n  const preset = days => {\n    const end = new Date(),\n      start = new Date();\n    start.setDate(end.getDate() - days + 1);\n    const fmt = d => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, \"0\"), String(d.getDate()).padStart(2, \"0\")].join(\"-\");\n    setDraft({\n      start: fmt(start),\n      end: fmt(end)\n    });\n  };\n  return <fieldset className=\"ss-control\" disabled={disabled || loading}><legend>{label}</legend><div className=\"ss-inline\"><SignalDatePicker label=\"开始日期\" value={current.start} onChange={start => setDraft({\n        ...current,\n        start\n      })} min={min} max={max} /><SignalDatePicker label=\"结束日期\" value={current.end} onChange={end => setDraft({\n        ...current,\n        end\n      })} min={min} max={max} /></div><div className=\"ss-inline\"><button type=\"button\" onClick={() => preset(7)}>最近7天</button><button type=\"button\" onClick={() => preset(30)}>最近30天</button><button type=\"button\" disabled={!!invalid} onClick={() => {\n        onChange?.(current);\n        setDraft(null);\n      }}>应用日期</button><button type=\"button\" onClick={() => setDraft(null)}>取消日期修改</button><button type=\"button\" onClick={() => {\n        onChange?.({\n          start: \"\",\n          end: \"\"\n        });\n        setDraft(null);\n      }}>清空日期</button></div><Hint error={invalid ? \"请检查起止顺序及允许的日期范围。\" : error} hint={loading ? \"正在加载…\" : \"\"} /></fieldset>;\n}\n"
+  },
+  {
+    "id": "shell",
+    "suffix": "Shell",
+    "exportName": "SignalShell",
+    "kind": "pattern",
+    "title": "工作区框架",
+    "description": "组织导航、上下文和内容区域。",
+    "anatomy": "套系导航、页面头、动作区、children",
+    "usage": "框架是页面骨架；导航内容由调用方定义。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalShell(props: {brand: ReactNode; navigation:Array<{id:string;label:string}>; activeId:string; onNavigate?:(id:string)=>void; title:ReactNode; actions?:ReactNode; children?:ReactNode}): JSX.Element;",
+    "source": "web/Navigation.jsx",
+    "sourceCode": "import { useId } from \"react\";\nexport function SignalShell({\n  brand,\n  navigation,\n  activeId,\n  onNavigate,\n  title,\n  actions,\n  children\n}) {\n  return <div className=\"ss-shell\"><aside><strong>{brand}</strong><nav aria-label=\"工作台导航\">{navigation.map(item => <button type=\"button\" key={item.id} aria-current={activeId === item.id ? \"page\" : undefined} onClick={() => onNavigate?.(item.id)}>{item.label}</button>)}</nav><div className=\"ss-shell-actions\">{actions}</div></aside><div className=\"ss-shell-main\"><header><h2>{title}</h2></header><main>{children}</main></div></div>;\n}\nexport function SignalTabs({\n  items,\n  value,\n  onChange,\n  label = \"页面分区\",\n  disabled = false\n}) {\n  const id = useId(),\n    active = items.find(item => item.id === value) ?? items[0];\n  const change = (e, index) => {\n    const enabled = items.filter(i => !i.disabled);\n    const pos = enabled.findIndex(i => i.id === items[index].id);\n    const offset = e.key === \"ArrowRight\" ? 1 : e.key === \"ArrowLeft\" ? -1 : 0;\n    const next = e.key === \"Home\" ? enabled[0] : e.key === \"End\" ? enabled.at(-1) : offset ? enabled[(pos + offset + enabled.length) % enabled.length] : null;\n    if (next) {\n      e.preventDefault();\n      onChange?.(next.id);\n      document.getElementById(id + \"-\" + next.id)?.focus();\n    }\n  };\n  return <div><div className=\"ss-tabs\" role=\"tablist\" aria-label={label}>{items.map((item, index) => <button type=\"button\" role=\"tab\" id={id + \"-\" + item.id} aria-controls={id + \"-panel\"} key={item.id} aria-selected={active?.id === item.id} tabIndex={active?.id === item.id ? 0 : -1} disabled={disabled || item.disabled} onKeyDown={e => change(e, index)} onClick={() => onChange?.(item.id)}>{item.label}</button>)}</div><section role=\"tabpanel\" id={id + \"-panel\"} aria-labelledby={id + \"-\" + active?.id} tabIndex={0}>{active?.content}</section></div>;\n}\nexport function SignalBreadcrumb({\n  items,\n  label = \"当前位置\"\n}) {\n  return <nav className=\"ss-breadcrumb\" aria-label={label}><ol>{items.map((item, index) => <li key={index}>{index === items.length - 1 ? <span aria-current=\"page\">{item.label}</span> : <a href={item.href} onClick={item.onClick}>{item.label}</a>}</li>)}</ol></nav>;\n}\nexport function SignalPagination({\n  page,\n  pageCount,\n  onChange,\n  disabled\n}) {\n  const total = Math.max(1, pageCount),\n    current = Math.min(total, Math.max(1, page));\n  return <nav className=\"ss-pagination\" aria-label=\"分页\"><button type=\"button\" disabled={disabled || current <= 1} onClick={() => onChange?.(current - 1)}>上一页</button><span aria-live=\"polite\">第 {current} / {total} 页</span><button type=\"button\" disabled={disabled || current >= total} onClick={() => onChange?.(current + 1)}>下一页</button></nav>;\n}\n"
+  },
+  {
+    "id": "tabs",
+    "suffix": "Tabs",
+    "exportName": "SignalTabs",
+    "kind": "basic",
+    "title": "标签页",
+    "description": "在同一上下文中切换内容。",
+    "anatomy": "tablist、当前标签、内容面板",
+    "usage": "value 受控，切换不能冒充保存。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalTabs(props: {items:Array<{id:string;label:string;content?:ReactNode;disabled?:boolean}>; value:string; onChange?:(id:string)=>void; label?:string; disabled?:boolean}): JSX.Element;",
+    "source": "web/Navigation.jsx",
+    "sourceCode": "import { useId } from \"react\";\nexport function SignalShell({\n  brand,\n  navigation,\n  activeId,\n  onNavigate,\n  title,\n  actions,\n  children\n}) {\n  return <div className=\"ss-shell\"><aside><strong>{brand}</strong><nav aria-label=\"工作台导航\">{navigation.map(item => <button type=\"button\" key={item.id} aria-current={activeId === item.id ? \"page\" : undefined} onClick={() => onNavigate?.(item.id)}>{item.label}</button>)}</nav><div className=\"ss-shell-actions\">{actions}</div></aside><div className=\"ss-shell-main\"><header><h2>{title}</h2></header><main>{children}</main></div></div>;\n}\nexport function SignalTabs({\n  items,\n  value,\n  onChange,\n  label = \"页面分区\",\n  disabled = false\n}) {\n  const id = useId(),\n    active = items.find(item => item.id === value) ?? items[0];\n  const change = (e, index) => {\n    const enabled = items.filter(i => !i.disabled);\n    const pos = enabled.findIndex(i => i.id === items[index].id);\n    const offset = e.key === \"ArrowRight\" ? 1 : e.key === \"ArrowLeft\" ? -1 : 0;\n    const next = e.key === \"Home\" ? enabled[0] : e.key === \"End\" ? enabled.at(-1) : offset ? enabled[(pos + offset + enabled.length) % enabled.length] : null;\n    if (next) {\n      e.preventDefault();\n      onChange?.(next.id);\n      document.getElementById(id + \"-\" + next.id)?.focus();\n    }\n  };\n  return <div><div className=\"ss-tabs\" role=\"tablist\" aria-label={label}>{items.map((item, index) => <button type=\"button\" role=\"tab\" id={id + \"-\" + item.id} aria-controls={id + \"-panel\"} key={item.id} aria-selected={active?.id === item.id} tabIndex={active?.id === item.id ? 0 : -1} disabled={disabled || item.disabled} onKeyDown={e => change(e, index)} onClick={() => onChange?.(item.id)}>{item.label}</button>)}</div><section role=\"tabpanel\" id={id + \"-panel\"} aria-labelledby={id + \"-\" + active?.id} tabIndex={0}>{active?.content}</section></div>;\n}\nexport function SignalBreadcrumb({\n  items,\n  label = \"当前位置\"\n}) {\n  return <nav className=\"ss-breadcrumb\" aria-label={label}><ol>{items.map((item, index) => <li key={index}>{index === items.length - 1 ? <span aria-current=\"page\">{item.label}</span> : <a href={item.href} onClick={item.onClick}>{item.label}</a>}</li>)}</ol></nav>;\n}\nexport function SignalPagination({\n  page,\n  pageCount,\n  onChange,\n  disabled\n}) {\n  const total = Math.max(1, pageCount),\n    current = Math.min(total, Math.max(1, page));\n  return <nav className=\"ss-pagination\" aria-label=\"分页\"><button type=\"button\" disabled={disabled || current <= 1} onClick={() => onChange?.(current - 1)}>上一页</button><span aria-live=\"polite\">第 {current} / {total} 页</span><button type=\"button\" disabled={disabled || current >= total} onClick={() => onChange?.(current + 1)}>下一页</button></nav>;\n}\n"
+  },
+  {
+    "id": "breadcrumb",
+    "suffix": "Breadcrumb",
+    "exportName": "SignalBreadcrumb",
+    "kind": "basic",
+    "title": "面包屑",
+    "description": "表达当前位置的层级。",
+    "anatomy": "祖先链接、分隔符、当前位置",
+    "usage": "当前项不重复跳转；items 提供可用链接或动作。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalBreadcrumb(props:{items:Array<{label:string;href?:string;onClick?:()=>void}>;label?:string}):JSX.Element;",
+    "source": "web/Navigation.jsx",
+    "sourceCode": "import { useId } from \"react\";\nexport function SignalShell({\n  brand,\n  navigation,\n  activeId,\n  onNavigate,\n  title,\n  actions,\n  children\n}) {\n  return <div className=\"ss-shell\"><aside><strong>{brand}</strong><nav aria-label=\"工作台导航\">{navigation.map(item => <button type=\"button\" key={item.id} aria-current={activeId === item.id ? \"page\" : undefined} onClick={() => onNavigate?.(item.id)}>{item.label}</button>)}</nav><div className=\"ss-shell-actions\">{actions}</div></aside><div className=\"ss-shell-main\"><header><h2>{title}</h2></header><main>{children}</main></div></div>;\n}\nexport function SignalTabs({\n  items,\n  value,\n  onChange,\n  label = \"页面分区\",\n  disabled = false\n}) {\n  const id = useId(),\n    active = items.find(item => item.id === value) ?? items[0];\n  const change = (e, index) => {\n    const enabled = items.filter(i => !i.disabled);\n    const pos = enabled.findIndex(i => i.id === items[index].id);\n    const offset = e.key === \"ArrowRight\" ? 1 : e.key === \"ArrowLeft\" ? -1 : 0;\n    const next = e.key === \"Home\" ? enabled[0] : e.key === \"End\" ? enabled.at(-1) : offset ? enabled[(pos + offset + enabled.length) % enabled.length] : null;\n    if (next) {\n      e.preventDefault();\n      onChange?.(next.id);\n      document.getElementById(id + \"-\" + next.id)?.focus();\n    }\n  };\n  return <div><div className=\"ss-tabs\" role=\"tablist\" aria-label={label}>{items.map((item, index) => <button type=\"button\" role=\"tab\" id={id + \"-\" + item.id} aria-controls={id + \"-panel\"} key={item.id} aria-selected={active?.id === item.id} tabIndex={active?.id === item.id ? 0 : -1} disabled={disabled || item.disabled} onKeyDown={e => change(e, index)} onClick={() => onChange?.(item.id)}>{item.label}</button>)}</div><section role=\"tabpanel\" id={id + \"-panel\"} aria-labelledby={id + \"-\" + active?.id} tabIndex={0}>{active?.content}</section></div>;\n}\nexport function SignalBreadcrumb({\n  items,\n  label = \"当前位置\"\n}) {\n  return <nav className=\"ss-breadcrumb\" aria-label={label}><ol>{items.map((item, index) => <li key={index}>{index === items.length - 1 ? <span aria-current=\"page\">{item.label}</span> : <a href={item.href} onClick={item.onClick}>{item.label}</a>}</li>)}</ol></nav>;\n}\nexport function SignalPagination({\n  page,\n  pageCount,\n  onChange,\n  disabled\n}) {\n  const total = Math.max(1, pageCount),\n    current = Math.min(total, Math.max(1, page));\n  return <nav className=\"ss-pagination\" aria-label=\"分页\"><button type=\"button\" disabled={disabled || current <= 1} onClick={() => onChange?.(current - 1)}>上一页</button><span aria-live=\"polite\">第 {current} / {total} 页</span><button type=\"button\" disabled={disabled || current >= total} onClick={() => onChange?.(current + 1)}>下一页</button></nav>;\n}\n"
+  },
+  {
+    "id": "pagination",
+    "suffix": "Pagination",
+    "exportName": "SignalPagination",
+    "kind": "basic",
+    "title": "分页",
+    "description": "按页浏览一个集合。",
+    "anatomy": "上页、页码、下页",
+    "usage": "page 从 1 起；总页数由数据集计算。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalPagination(props:{page:number;pageCount:number;onChange?:(page:number)=>void;disabled?:boolean}):JSX.Element;",
+    "source": "web/Navigation.jsx",
+    "sourceCode": "import { useId } from \"react\";\nexport function SignalShell({\n  brand,\n  navigation,\n  activeId,\n  onNavigate,\n  title,\n  actions,\n  children\n}) {\n  return <div className=\"ss-shell\"><aside><strong>{brand}</strong><nav aria-label=\"工作台导航\">{navigation.map(item => <button type=\"button\" key={item.id} aria-current={activeId === item.id ? \"page\" : undefined} onClick={() => onNavigate?.(item.id)}>{item.label}</button>)}</nav><div className=\"ss-shell-actions\">{actions}</div></aside><div className=\"ss-shell-main\"><header><h2>{title}</h2></header><main>{children}</main></div></div>;\n}\nexport function SignalTabs({\n  items,\n  value,\n  onChange,\n  label = \"页面分区\",\n  disabled = false\n}) {\n  const id = useId(),\n    active = items.find(item => item.id === value) ?? items[0];\n  const change = (e, index) => {\n    const enabled = items.filter(i => !i.disabled);\n    const pos = enabled.findIndex(i => i.id === items[index].id);\n    const offset = e.key === \"ArrowRight\" ? 1 : e.key === \"ArrowLeft\" ? -1 : 0;\n    const next = e.key === \"Home\" ? enabled[0] : e.key === \"End\" ? enabled.at(-1) : offset ? enabled[(pos + offset + enabled.length) % enabled.length] : null;\n    if (next) {\n      e.preventDefault();\n      onChange?.(next.id);\n      document.getElementById(id + \"-\" + next.id)?.focus();\n    }\n  };\n  return <div><div className=\"ss-tabs\" role=\"tablist\" aria-label={label}>{items.map((item, index) => <button type=\"button\" role=\"tab\" id={id + \"-\" + item.id} aria-controls={id + \"-panel\"} key={item.id} aria-selected={active?.id === item.id} tabIndex={active?.id === item.id ? 0 : -1} disabled={disabled || item.disabled} onKeyDown={e => change(e, index)} onClick={() => onChange?.(item.id)}>{item.label}</button>)}</div><section role=\"tabpanel\" id={id + \"-panel\"} aria-labelledby={id + \"-\" + active?.id} tabIndex={0}>{active?.content}</section></div>;\n}\nexport function SignalBreadcrumb({\n  items,\n  label = \"当前位置\"\n}) {\n  return <nav className=\"ss-breadcrumb\" aria-label={label}><ol>{items.map((item, index) => <li key={index}>{index === items.length - 1 ? <span aria-current=\"page\">{item.label}</span> : <a href={item.href} onClick={item.onClick}>{item.label}</a>}</li>)}</ol></nav>;\n}\nexport function SignalPagination({\n  page,\n  pageCount,\n  onChange,\n  disabled\n}) {\n  const total = Math.max(1, pageCount),\n    current = Math.min(total, Math.max(1, page));\n  return <nav className=\"ss-pagination\" aria-label=\"分页\"><button type=\"button\" disabled={disabled || current <= 1} onClick={() => onChange?.(current - 1)}>上一页</button><span aria-live=\"polite\">第 {current} / {total} 页</span><button type=\"button\" disabled={disabled || current >= total} onClick={() => onChange?.(current + 1)}>下一页</button></nav>;\n}\n"
+  },
+  {
+    "id": "data-table",
+    "suffix": "DataTable",
+    "exportName": "SignalDataTable",
+    "kind": "business",
+    "title": "数据表格",
+    "description": "搜索、排序、选择和分页一组记录。",
+    "anatomy": "搜索、基础表格、复选、分页、批量动作",
+    "usage": "rows 受控；远端分页与服务端排序需调用方接入。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error",
+      "empty"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalDataTable<T extends Row>(props: {rows:T[];columns:Array<Omit<Column<T>,\"render\">&{sortable?:boolean;render?:(value:T[keyof T],row:T)=>ReactNode}>;caption?:string;pageSize?:number;showToolbar?:boolean;selectable?:boolean;selection?:T[\"id\"][];onSelectionChange?:(ids:T[\"id\"][])=>void;onBulkAction?:(ids:T[\"id\"][])=>void;onRowActivate?:(row:T)=>void;loading?:boolean;disabled?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;\n\nexport interface Row {id:string|number;disabled?:boolean;}\n\nexport interface Column<T> {key:Extract<keyof T,string>;label:string;render?:(row:T)=>ReactNode;}",
+    "source": "web/DataTable.jsx",
+    "sourceCode": "import { useMemo, useState } from \"react\";\nimport { SignalPagination } from \"./Navigation.jsx\";\nexport function SignalDataTable({\n  rows,\n  columns,\n  caption = \"数据列表\",\n  pageSize = 5,\n  showToolbar = true,\n  selectable = true,\n  selection,\n  onSelectionChange,\n  onRowActivate,\n  onBulkAction,\n  loading = false,\n  disabled = false,\n  error,\n  onRetry\n}) {\n  const [query, setQuery] = useState(\"\"),\n    [sort, setSort] = useState(null),\n    [page, setPage] = useState(1),\n    [hidden, setHidden] = useState([]),\n    [localSelection, setLocalSelection] = useState([]);\n  const selected = (selection ?? localSelection).filter(id => rows.some(r => r.id === id && !r.disabled)),\n    inert = loading || disabled;\n  const select = ids => {\n    setLocalSelection(ids);\n    onSelectionChange?.(ids);\n  };\n  const filtered = useMemo(() => {\n    const list = rows.filter(row => columns.some(c => String(row[c.key] ?? \"\").toLocaleLowerCase().includes(query.toLocaleLowerCase())));\n    if (sort) list.sort((a, b) => {\n      const x = a[sort.key],\n        y = b[sort.key];\n      return (typeof x === \"number\" && typeof y === \"number\" ? x - y : String(x ?? \"\").localeCompare(String(y ?? \"\"), \"zh-CN\", {\n        numeric: true\n      })) * sort.direction;\n    });\n    return list;\n  }, [rows, columns, query, sort]);\n  const size = Math.max(1, Math.floor(Number.isFinite(pageSize) ? pageSize : 5));\n  const count = Math.max(1, Math.ceil(filtered.length / size)),\n    current = Math.min(page, count),\n    visible = filtered.slice((current - 1) * size, current * size),\n    eligible = visible.filter(r => !r.disabled).map(r => r.id);\n  const shown = columns.filter(c => !hidden.includes(c.key));\n  return <section className=\"ss-data-table\" aria-busy={loading || undefined}>{showToolbar && <div className=\"ss-table-toolbar\"><label>筛选 <input type=\"search\" aria-label={\"筛选\" + caption} value={query} onChange={e => {\n          setQuery(e.target.value);\n          setPage(1);\n        }} disabled={inert} /></label><details><summary>显示列</summary>{columns.map(c => <label key={c.key}><input type=\"checkbox\" checked={!hidden.includes(c.key)} disabled={inert || shown.length === 1 && !hidden.includes(c.key)} onChange={() => setHidden(v => v.includes(c.key) ? v.filter(x => x !== c.key) : [...v, c.key])} />{c.label}</label>)}</details></div>}\n <p role=\"status\">{loading ? \"正在加载数据…\" : \"匹配 \" + filtered.length + \" 条；已选择 \" + selected.length + \" 条（跨页保留）\"}</p>\n {error ? <div role=\"alert\">{error}{onRetry ? <button type=\"button\" onClick={onRetry} disabled={inert}>重新加载</button> : null}</div> : <div className=\"ss-table-scroll\"><table><caption>{caption}</caption><thead><tr>{selectable && <th><input type=\"checkbox\" aria-label=\"选择本页全部\" disabled={inert || !eligible.length} checked={!!eligible.length && eligible.every(id => selected.includes(id))} onChange={e => select(e.target.checked ? [...new Set([...selected, ...eligible])] : selected.filter(id => !eligible.includes(id)))} /></th>}{shown.map(c => <th key={c.key} aria-sort={sort?.key === c.key ? sort.direction === 1 ? \"ascending\" : \"descending\" : \"none\"}><button type=\"button\" disabled={inert || c.sortable === false} onClick={() => {\n                setSort({\n                  key: c.key,\n                  direction: sort?.key === c.key ? -sort.direction : 1\n                });\n                setPage(1);\n              }}>{c.label}{sort?.key === c.key ? sort.direction === 1 ? \" ↑\" : \" ↓\" : \"\"}</button></th>)}{onRowActivate ? <th>详情</th> : null}</tr></thead><tbody>{visible.map(row => <tr key={row.id} data-selected={selected.includes(row.id)}>{selectable && <td><input type=\"checkbox\" aria-label={\"选择 \" + String(row[columns[0].key])} disabled={inert || row.disabled} checked={selected.includes(row.id)} onChange={e => select(e.target.checked ? [...selected, row.id] : selected.filter(id => id !== row.id))} /></td>}{shown.map(c => <td key={c.key}>{c.render ? c.render(row[c.key], row) : String(row[c.key] ?? \"—\")}</td>)}{onRowActivate ? <td><button type=\"button\" disabled={inert || row.disabled} onClick={() => onRowActivate(row)}>查看 {String(row[columns[0].key])}</button></td> : null}</tr>)}</tbody></table>{!visible.length ? <p>当前筛选条件下暂无数据。</p> : null}</div>}\n <div className=\"ss-inline\">{onBulkAction ? <button type=\"button\" disabled={inert || !selected.length} onClick={() => onBulkAction(selected)}>批量处理（{selected.length}）</button> : null}{selectable && !!selected.length && <button type=\"button\" disabled={inert} onClick={() => select([])}>清除选择</button>}{count > 1 && <SignalPagination page={current} pageCount={count} onChange={setPage} disabled={inert} />}</div></section>;\n}\n"
+  },
+  {
+    "id": "drawer",
+    "suffix": "Drawer",
+    "exportName": "SignalDrawer",
+    "kind": "basic",
+    "title": "抽屉",
+    "description": "在临时侧层查看或编辑详情。",
+    "anatomy": "标题、内容、关闭、动作区",
+    "usage": "open 受控；保存与取消应由调用方区分。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalDrawer(props:DialogProps):JSX.Element;\n\nexport interface DialogProps extends StateProps {open:boolean;onOpenChange:(open:boolean)=>void;title:string;children?:ReactNode;actions?:ReactNode;}\n\nexport interface StateProps {disabled?:boolean;loading?:boolean;error?:string|boolean;}",
+    "source": "web/Overlays.jsx",
+    "sourceCode": "// 通过原生属性设置 inert，兼容 React 18/19 的布尔属性差异。\nimport { X } from \"@phosphor-icons/react\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { createPortal } from \"react-dom\";\nimport { useModalLifecycle } from \"./useModalLifecycle.js\";\nexport function SignalDrawer({\n  open,\n  onOpenChange,\n  title,\n  children,\n  actions,\n  loading,\n  disabled,\n  error\n}) {\n  const id = useId(),\n    {\n      anchorRef,\n      dialogRef,\n      scopeRef,\n      close\n    } = useModalLifecycle(open, onOpenChange);\n  return <><span ref={anchorRef} hidden />{open ? createPortal(<div data-ui-system=\"signal-studio\" ref={scopeRef} style={{\n      display: \"contents\"\n    }}><dialog ref={dialogRef} className=\"ss-drawer\" aria-labelledby={id} aria-busy={loading || undefined} onCancel={e => {\n        e.preventDefault();\n        close();\n      }}><header><h2 id={id}>{title}</h2><button type=\"button\" onClick={close} aria-label=\"关闭详情\"><X size={18} aria-hidden=\"true\" /></button></header>{loading ? <p role=\"status\">正在加载详情…</p> : null}{error ? <p role=\"alert\">{error}</p> : null}<div ref={element => { if (element) element.inert = Boolean(loading || disabled); }}>{children}<footer>{actions}</footer></div></dialog></div>, document.body) : null}</>;\n}\nexport function SignalDropdownMenu({\n  label = \"更多操作\",\n  items,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    root = useRef(null),\n    trigger = useRef(null),\n    id = useId();\n  const position = usePopupPosition(root, open);\n  const close = (focus = true) => {\n    setOpen(false);\n    if (focus) trigger.current?.focus();\n  };\n  useEffect(() => {\n    if (!open) return;\n    const away = e => {\n      if (!root.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", away);\n    root.current?.querySelector('[role=\"menuitem\"]:not(:disabled)')?.focus();\n    return () => document.removeEventListener(\"pointerdown\", away);\n  }, [open]);\n  const keys = e => {\n    const all = [...root.current.querySelectorAll('[role=\"menuitem\"]:not(:disabled)')],\n      i = all.indexOf(document.activeElement);\n    if (e.key === \"Escape\") {\n      e.preventDefault();\n      close();\n    } else if (e.key === \"Tab\") setOpen(false);else if ([\"ArrowDown\", \"ArrowUp\", \"Home\", \"End\"].includes(e.key)) {\n      e.preventDefault();\n      all[e.key === \"Home\" ? 0 : e.key === \"End\" ? all.length - 1 : (i + (e.key === \"ArrowDown\" ? 1 : -1) + all.length) % all.length]?.focus();\n    }\n  };\n  return <span className=\"ss-popover-anchor\" ref={root}><button type=\"button\" ref={trigger} aria-haspopup=\"menu\" aria-controls={id} aria-expanded={open} disabled={disabled} onClick={() => setOpen(!open)} onKeyDown={e => {\n      if (e.key === \"ArrowDown\") {\n        e.preventDefault();\n        setOpen(true);\n      }\n    }}>{label}</button>{open ? <div role=\"menu\" id={id} popover=\"manual\" style={position} className=\"ss-popup\" onKeyDown={keys}>{items.map(item => <button type=\"button\" role=\"menuitem\" key={item.id} disabled={item.disabled} data-danger={item.danger} onClick={() => {\n        close();\n        item.onSelect?.();\n      }}>{item.label}</button>)}</div> : null}</span>;\n}\nexport function SignalPopover({\n  label,\n  children,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    ref = useRef(null),\n    button = useRef(null),\n    id = useId();\n  const position = usePopupPosition(ref, open);\n  useEffect(() => {\n    if (!open) return;\n    const listener = e => {\n      if (e.type === \"keydown\" && e.key === \"Escape\") {\n        setOpen(false);\n        button.current?.focus();\n      } else if (e.type === \"pointerdown\" && !ref.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", listener);\n    document.addEventListener(\"keydown\", listener);\n    return () => {\n      document.removeEventListener(\"pointerdown\", listener);\n      document.removeEventListener(\"keydown\", listener);\n    };\n  }, [open]);\n  return <span className=\"ss-popover-anchor\" ref={ref}><button type=\"button\" ref={button} disabled={disabled} aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}>{label}</button>{open ? <section id={id} popover=\"manual\" style={position} className=\"ss-popup\" aria-label={label}>{children}<button type=\"button\" onClick={() => {\n        setOpen(false);\n        button.current?.focus();\n      }}>关闭</button></section> : null}</span>;\n}\nexport function SignalTooltip({\n  label,\n  children\n}) {\n  const id = useId(),\n    [open, setOpen] = useState(false),\n    ref = useRef(null);\n  const position = usePopupPosition(ref, open);\n  return <span ref={ref} className=\"ss-popover-anchor\" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}><button type=\"button\" aria-describedby={open ? id : undefined} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={e => {\n      if (e.key === \"Escape\") setOpen(false);\n    }} onClick={() => setOpen(!open)}>{label}</button>{open ? <span role=\"tooltip\" id={id} popover=\"manual\" style={position} className=\"ss-popup\">{children}</span> : null}</span>;\n}\n\n// 使用浏览器 top layer，避免宿主页面的 transform / overflow 截断浮层。\nfunction usePopupPosition(ref, open) {\n  const [position, setPosition] = useState({});\n  useEffect(() => {\n    if (!open) return;\n    const popup = ref.current?.querySelector('[popover]');\n    popup?.showPopover();\n    const update = () => {\n      const r = ref.current?.getBoundingClientRect();\n      if (!r || !popup) return;\n      const box = popup.getBoundingClientRect();\n      const left = Math.max(8, Math.min(r.left, innerWidth - box.width - 8));\n      const top = Math.max(8, Math.min(r.bottom + 8, innerHeight - box.height - 8));\n      setPosition({\n        position: \"fixed\",\n        margin: 0,\n        inset: \"auto\",\n        left,\n        top,\n        maxHeight: \"calc(100dvh - 16px)\",\n        overflow: \"auto\"\n      });\n    };\n    update();\n    window.addEventListener(\"resize\", update);\n    window.addEventListener(\"scroll\", update, true);\n    return () => {\n      window.removeEventListener(\"resize\", update);\n      window.removeEventListener(\"scroll\", update, true);\n      if (popup?.matches(\":popover-open\")) popup.hidePopover();\n    };\n  }, [open]);\n  return position;\n}\n"
+  },
+  {
+    "id": "dropdown-menu",
+    "suffix": "DropdownMenu",
+    "exportName": "SignalDropdownMenu",
+    "kind": "basic",
+    "title": "操作菜单",
+    "description": "收纳低频次级动作。",
+    "anatomy": "触发按钮、菜单项、禁用项",
+    "usage": "危险操作先进入确认流程，不在展开时执行。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalDropdownMenu(props:{label?:string;items:Array<{id:string;label:string;disabled?:boolean;danger?:boolean;onSelect?:()=>void}>;disabled?:boolean}):JSX.Element;",
+    "source": "web/Overlays.jsx",
+    "sourceCode": "// 通过原生属性设置 inert，兼容 React 18/19 的布尔属性差异。\nimport { X } from \"@phosphor-icons/react\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { createPortal } from \"react-dom\";\nimport { useModalLifecycle } from \"./useModalLifecycle.js\";\nexport function SignalDrawer({\n  open,\n  onOpenChange,\n  title,\n  children,\n  actions,\n  loading,\n  disabled,\n  error\n}) {\n  const id = useId(),\n    {\n      anchorRef,\n      dialogRef,\n      scopeRef,\n      close\n    } = useModalLifecycle(open, onOpenChange);\n  return <><span ref={anchorRef} hidden />{open ? createPortal(<div data-ui-system=\"signal-studio\" ref={scopeRef} style={{\n      display: \"contents\"\n    }}><dialog ref={dialogRef} className=\"ss-drawer\" aria-labelledby={id} aria-busy={loading || undefined} onCancel={e => {\n        e.preventDefault();\n        close();\n      }}><header><h2 id={id}>{title}</h2><button type=\"button\" onClick={close} aria-label=\"关闭详情\"><X size={18} aria-hidden=\"true\" /></button></header>{loading ? <p role=\"status\">正在加载详情…</p> : null}{error ? <p role=\"alert\">{error}</p> : null}<div ref={element => { if (element) element.inert = Boolean(loading || disabled); }}>{children}<footer>{actions}</footer></div></dialog></div>, document.body) : null}</>;\n}\nexport function SignalDropdownMenu({\n  label = \"更多操作\",\n  items,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    root = useRef(null),\n    trigger = useRef(null),\n    id = useId();\n  const position = usePopupPosition(root, open);\n  const close = (focus = true) => {\n    setOpen(false);\n    if (focus) trigger.current?.focus();\n  };\n  useEffect(() => {\n    if (!open) return;\n    const away = e => {\n      if (!root.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", away);\n    root.current?.querySelector('[role=\"menuitem\"]:not(:disabled)')?.focus();\n    return () => document.removeEventListener(\"pointerdown\", away);\n  }, [open]);\n  const keys = e => {\n    const all = [...root.current.querySelectorAll('[role=\"menuitem\"]:not(:disabled)')],\n      i = all.indexOf(document.activeElement);\n    if (e.key === \"Escape\") {\n      e.preventDefault();\n      close();\n    } else if (e.key === \"Tab\") setOpen(false);else if ([\"ArrowDown\", \"ArrowUp\", \"Home\", \"End\"].includes(e.key)) {\n      e.preventDefault();\n      all[e.key === \"Home\" ? 0 : e.key === \"End\" ? all.length - 1 : (i + (e.key === \"ArrowDown\" ? 1 : -1) + all.length) % all.length]?.focus();\n    }\n  };\n  return <span className=\"ss-popover-anchor\" ref={root}><button type=\"button\" ref={trigger} aria-haspopup=\"menu\" aria-controls={id} aria-expanded={open} disabled={disabled} onClick={() => setOpen(!open)} onKeyDown={e => {\n      if (e.key === \"ArrowDown\") {\n        e.preventDefault();\n        setOpen(true);\n      }\n    }}>{label}</button>{open ? <div role=\"menu\" id={id} popover=\"manual\" style={position} className=\"ss-popup\" onKeyDown={keys}>{items.map(item => <button type=\"button\" role=\"menuitem\" key={item.id} disabled={item.disabled} data-danger={item.danger} onClick={() => {\n        close();\n        item.onSelect?.();\n      }}>{item.label}</button>)}</div> : null}</span>;\n}\nexport function SignalPopover({\n  label,\n  children,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    ref = useRef(null),\n    button = useRef(null),\n    id = useId();\n  const position = usePopupPosition(ref, open);\n  useEffect(() => {\n    if (!open) return;\n    const listener = e => {\n      if (e.type === \"keydown\" && e.key === \"Escape\") {\n        setOpen(false);\n        button.current?.focus();\n      } else if (e.type === \"pointerdown\" && !ref.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", listener);\n    document.addEventListener(\"keydown\", listener);\n    return () => {\n      document.removeEventListener(\"pointerdown\", listener);\n      document.removeEventListener(\"keydown\", listener);\n    };\n  }, [open]);\n  return <span className=\"ss-popover-anchor\" ref={ref}><button type=\"button\" ref={button} disabled={disabled} aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}>{label}</button>{open ? <section id={id} popover=\"manual\" style={position} className=\"ss-popup\" aria-label={label}>{children}<button type=\"button\" onClick={() => {\n        setOpen(false);\n        button.current?.focus();\n      }}>关闭</button></section> : null}</span>;\n}\nexport function SignalTooltip({\n  label,\n  children\n}) {\n  const id = useId(),\n    [open, setOpen] = useState(false),\n    ref = useRef(null);\n  const position = usePopupPosition(ref, open);\n  return <span ref={ref} className=\"ss-popover-anchor\" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}><button type=\"button\" aria-describedby={open ? id : undefined} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={e => {\n      if (e.key === \"Escape\") setOpen(false);\n    }} onClick={() => setOpen(!open)}>{label}</button>{open ? <span role=\"tooltip\" id={id} popover=\"manual\" style={position} className=\"ss-popup\">{children}</span> : null}</span>;\n}\n\n// 使用浏览器 top layer，避免宿主页面的 transform / overflow 截断浮层。\nfunction usePopupPosition(ref, open) {\n  const [position, setPosition] = useState({});\n  useEffect(() => {\n    if (!open) return;\n    const popup = ref.current?.querySelector('[popover]');\n    popup?.showPopover();\n    const update = () => {\n      const r = ref.current?.getBoundingClientRect();\n      if (!r || !popup) return;\n      const box = popup.getBoundingClientRect();\n      const left = Math.max(8, Math.min(r.left, innerWidth - box.width - 8));\n      const top = Math.max(8, Math.min(r.bottom + 8, innerHeight - box.height - 8));\n      setPosition({\n        position: \"fixed\",\n        margin: 0,\n        inset: \"auto\",\n        left,\n        top,\n        maxHeight: \"calc(100dvh - 16px)\",\n        overflow: \"auto\"\n      });\n    };\n    update();\n    window.addEventListener(\"resize\", update);\n    window.addEventListener(\"scroll\", update, true);\n    return () => {\n      window.removeEventListener(\"resize\", update);\n      window.removeEventListener(\"scroll\", update, true);\n      if (popup?.matches(\":popover-open\")) popup.hidePopover();\n    };\n  }, [open]);\n  return position;\n}\n"
+  },
+  {
+    "id": "popover",
+    "suffix": "Popover",
+    "exportName": "SignalPopover",
+    "kind": "basic",
+    "title": "信息浮层",
+    "description": "就近解释数据口径或补充内容。",
+    "anatomy": "触发器、说明内容、关闭行为",
+    "usage": "适合短内容；长编辑表单使用抽屉。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalPopover(props:{label:string;children?:ReactNode;disabled?:boolean}):JSX.Element;",
+    "source": "web/Overlays.jsx",
+    "sourceCode": "// 通过原生属性设置 inert，兼容 React 18/19 的布尔属性差异。\nimport { X } from \"@phosphor-icons/react\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { createPortal } from \"react-dom\";\nimport { useModalLifecycle } from \"./useModalLifecycle.js\";\nexport function SignalDrawer({\n  open,\n  onOpenChange,\n  title,\n  children,\n  actions,\n  loading,\n  disabled,\n  error\n}) {\n  const id = useId(),\n    {\n      anchorRef,\n      dialogRef,\n      scopeRef,\n      close\n    } = useModalLifecycle(open, onOpenChange);\n  return <><span ref={anchorRef} hidden />{open ? createPortal(<div data-ui-system=\"signal-studio\" ref={scopeRef} style={{\n      display: \"contents\"\n    }}><dialog ref={dialogRef} className=\"ss-drawer\" aria-labelledby={id} aria-busy={loading || undefined} onCancel={e => {\n        e.preventDefault();\n        close();\n      }}><header><h2 id={id}>{title}</h2><button type=\"button\" onClick={close} aria-label=\"关闭详情\"><X size={18} aria-hidden=\"true\" /></button></header>{loading ? <p role=\"status\">正在加载详情…</p> : null}{error ? <p role=\"alert\">{error}</p> : null}<div ref={element => { if (element) element.inert = Boolean(loading || disabled); }}>{children}<footer>{actions}</footer></div></dialog></div>, document.body) : null}</>;\n}\nexport function SignalDropdownMenu({\n  label = \"更多操作\",\n  items,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    root = useRef(null),\n    trigger = useRef(null),\n    id = useId();\n  const position = usePopupPosition(root, open);\n  const close = (focus = true) => {\n    setOpen(false);\n    if (focus) trigger.current?.focus();\n  };\n  useEffect(() => {\n    if (!open) return;\n    const away = e => {\n      if (!root.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", away);\n    root.current?.querySelector('[role=\"menuitem\"]:not(:disabled)')?.focus();\n    return () => document.removeEventListener(\"pointerdown\", away);\n  }, [open]);\n  const keys = e => {\n    const all = [...root.current.querySelectorAll('[role=\"menuitem\"]:not(:disabled)')],\n      i = all.indexOf(document.activeElement);\n    if (e.key === \"Escape\") {\n      e.preventDefault();\n      close();\n    } else if (e.key === \"Tab\") setOpen(false);else if ([\"ArrowDown\", \"ArrowUp\", \"Home\", \"End\"].includes(e.key)) {\n      e.preventDefault();\n      all[e.key === \"Home\" ? 0 : e.key === \"End\" ? all.length - 1 : (i + (e.key === \"ArrowDown\" ? 1 : -1) + all.length) % all.length]?.focus();\n    }\n  };\n  return <span className=\"ss-popover-anchor\" ref={root}><button type=\"button\" ref={trigger} aria-haspopup=\"menu\" aria-controls={id} aria-expanded={open} disabled={disabled} onClick={() => setOpen(!open)} onKeyDown={e => {\n      if (e.key === \"ArrowDown\") {\n        e.preventDefault();\n        setOpen(true);\n      }\n    }}>{label}</button>{open ? <div role=\"menu\" id={id} popover=\"manual\" style={position} className=\"ss-popup\" onKeyDown={keys}>{items.map(item => <button type=\"button\" role=\"menuitem\" key={item.id} disabled={item.disabled} data-danger={item.danger} onClick={() => {\n        close();\n        item.onSelect?.();\n      }}>{item.label}</button>)}</div> : null}</span>;\n}\nexport function SignalPopover({\n  label,\n  children,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    ref = useRef(null),\n    button = useRef(null),\n    id = useId();\n  const position = usePopupPosition(ref, open);\n  useEffect(() => {\n    if (!open) return;\n    const listener = e => {\n      if (e.type === \"keydown\" && e.key === \"Escape\") {\n        setOpen(false);\n        button.current?.focus();\n      } else if (e.type === \"pointerdown\" && !ref.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", listener);\n    document.addEventListener(\"keydown\", listener);\n    return () => {\n      document.removeEventListener(\"pointerdown\", listener);\n      document.removeEventListener(\"keydown\", listener);\n    };\n  }, [open]);\n  return <span className=\"ss-popover-anchor\" ref={ref}><button type=\"button\" ref={button} disabled={disabled} aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}>{label}</button>{open ? <section id={id} popover=\"manual\" style={position} className=\"ss-popup\" aria-label={label}>{children}<button type=\"button\" onClick={() => {\n        setOpen(false);\n        button.current?.focus();\n      }}>关闭</button></section> : null}</span>;\n}\nexport function SignalTooltip({\n  label,\n  children\n}) {\n  const id = useId(),\n    [open, setOpen] = useState(false),\n    ref = useRef(null);\n  const position = usePopupPosition(ref, open);\n  return <span ref={ref} className=\"ss-popover-anchor\" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}><button type=\"button\" aria-describedby={open ? id : undefined} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={e => {\n      if (e.key === \"Escape\") setOpen(false);\n    }} onClick={() => setOpen(!open)}>{label}</button>{open ? <span role=\"tooltip\" id={id} popover=\"manual\" style={position} className=\"ss-popup\">{children}</span> : null}</span>;\n}\n\n// 使用浏览器 top layer，避免宿主页面的 transform / overflow 截断浮层。\nfunction usePopupPosition(ref, open) {\n  const [position, setPosition] = useState({});\n  useEffect(() => {\n    if (!open) return;\n    const popup = ref.current?.querySelector('[popover]');\n    popup?.showPopover();\n    const update = () => {\n      const r = ref.current?.getBoundingClientRect();\n      if (!r || !popup) return;\n      const box = popup.getBoundingClientRect();\n      const left = Math.max(8, Math.min(r.left, innerWidth - box.width - 8));\n      const top = Math.max(8, Math.min(r.bottom + 8, innerHeight - box.height - 8));\n      setPosition({\n        position: \"fixed\",\n        margin: 0,\n        inset: \"auto\",\n        left,\n        top,\n        maxHeight: \"calc(100dvh - 16px)\",\n        overflow: \"auto\"\n      });\n    };\n    update();\n    window.addEventListener(\"resize\", update);\n    window.addEventListener(\"scroll\", update, true);\n    return () => {\n      window.removeEventListener(\"resize\", update);\n      window.removeEventListener(\"scroll\", update, true);\n      if (popup?.matches(\":popover-open\")) popup.hidePopover();\n    };\n  }, [open]);\n  return position;\n}\n"
+  },
+  {
+    "id": "tooltip",
+    "suffix": "Tooltip",
+    "exportName": "SignalTooltip",
+    "kind": "basic",
+    "title": "提示",
+    "description": "补充简短帮助文字。",
+    "anatomy": "可聚焦触发器、辅助说明",
+    "usage": "不可放置唯一的关键说明或必需操作。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalTooltip(props:{label:string;children?:ReactNode}):JSX.Element;",
+    "source": "web/Overlays.jsx",
+    "sourceCode": "// 通过原生属性设置 inert，兼容 React 18/19 的布尔属性差异。\nimport { X } from \"@phosphor-icons/react\";\nimport { useEffect, useId, useRef, useState } from \"react\";\nimport { createPortal } from \"react-dom\";\nimport { useModalLifecycle } from \"./useModalLifecycle.js\";\nexport function SignalDrawer({\n  open,\n  onOpenChange,\n  title,\n  children,\n  actions,\n  loading,\n  disabled,\n  error\n}) {\n  const id = useId(),\n    {\n      anchorRef,\n      dialogRef,\n      scopeRef,\n      close\n    } = useModalLifecycle(open, onOpenChange);\n  return <><span ref={anchorRef} hidden />{open ? createPortal(<div data-ui-system=\"signal-studio\" ref={scopeRef} style={{\n      display: \"contents\"\n    }}><dialog ref={dialogRef} className=\"ss-drawer\" aria-labelledby={id} aria-busy={loading || undefined} onCancel={e => {\n        e.preventDefault();\n        close();\n      }}><header><h2 id={id}>{title}</h2><button type=\"button\" onClick={close} aria-label=\"关闭详情\"><X size={18} aria-hidden=\"true\" /></button></header>{loading ? <p role=\"status\">正在加载详情…</p> : null}{error ? <p role=\"alert\">{error}</p> : null}<div ref={element => { if (element) element.inert = Boolean(loading || disabled); }}>{children}<footer>{actions}</footer></div></dialog></div>, document.body) : null}</>;\n}\nexport function SignalDropdownMenu({\n  label = \"更多操作\",\n  items,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    root = useRef(null),\n    trigger = useRef(null),\n    id = useId();\n  const position = usePopupPosition(root, open);\n  const close = (focus = true) => {\n    setOpen(false);\n    if (focus) trigger.current?.focus();\n  };\n  useEffect(() => {\n    if (!open) return;\n    const away = e => {\n      if (!root.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", away);\n    root.current?.querySelector('[role=\"menuitem\"]:not(:disabled)')?.focus();\n    return () => document.removeEventListener(\"pointerdown\", away);\n  }, [open]);\n  const keys = e => {\n    const all = [...root.current.querySelectorAll('[role=\"menuitem\"]:not(:disabled)')],\n      i = all.indexOf(document.activeElement);\n    if (e.key === \"Escape\") {\n      e.preventDefault();\n      close();\n    } else if (e.key === \"Tab\") setOpen(false);else if ([\"ArrowDown\", \"ArrowUp\", \"Home\", \"End\"].includes(e.key)) {\n      e.preventDefault();\n      all[e.key === \"Home\" ? 0 : e.key === \"End\" ? all.length - 1 : (i + (e.key === \"ArrowDown\" ? 1 : -1) + all.length) % all.length]?.focus();\n    }\n  };\n  return <span className=\"ss-popover-anchor\" ref={root}><button type=\"button\" ref={trigger} aria-haspopup=\"menu\" aria-controls={id} aria-expanded={open} disabled={disabled} onClick={() => setOpen(!open)} onKeyDown={e => {\n      if (e.key === \"ArrowDown\") {\n        e.preventDefault();\n        setOpen(true);\n      }\n    }}>{label}</button>{open ? <div role=\"menu\" id={id} popover=\"manual\" style={position} className=\"ss-popup\" onKeyDown={keys}>{items.map(item => <button type=\"button\" role=\"menuitem\" key={item.id} disabled={item.disabled} data-danger={item.danger} onClick={() => {\n        close();\n        item.onSelect?.();\n      }}>{item.label}</button>)}</div> : null}</span>;\n}\nexport function SignalPopover({\n  label,\n  children,\n  disabled = false\n}) {\n  const [open, setOpen] = useState(false),\n    ref = useRef(null),\n    button = useRef(null),\n    id = useId();\n  const position = usePopupPosition(ref, open);\n  useEffect(() => {\n    if (!open) return;\n    const listener = e => {\n      if (e.type === \"keydown\" && e.key === \"Escape\") {\n        setOpen(false);\n        button.current?.focus();\n      } else if (e.type === \"pointerdown\" && !ref.current?.contains(e.target)) setOpen(false);\n    };\n    document.addEventListener(\"pointerdown\", listener);\n    document.addEventListener(\"keydown\", listener);\n    return () => {\n      document.removeEventListener(\"pointerdown\", listener);\n      document.removeEventListener(\"keydown\", listener);\n    };\n  }, [open]);\n  return <span className=\"ss-popover-anchor\" ref={ref}><button type=\"button\" ref={button} disabled={disabled} aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}>{label}</button>{open ? <section id={id} popover=\"manual\" style={position} className=\"ss-popup\" aria-label={label}>{children}<button type=\"button\" onClick={() => {\n        setOpen(false);\n        button.current?.focus();\n      }}>关闭</button></section> : null}</span>;\n}\nexport function SignalTooltip({\n  label,\n  children\n}) {\n  const id = useId(),\n    [open, setOpen] = useState(false),\n    ref = useRef(null);\n  const position = usePopupPosition(ref, open);\n  return <span ref={ref} className=\"ss-popover-anchor\" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}><button type=\"button\" aria-describedby={open ? id : undefined} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={e => {\n      if (e.key === \"Escape\") setOpen(false);\n    }} onClick={() => setOpen(!open)}>{label}</button>{open ? <span role=\"tooltip\" id={id} popover=\"manual\" style={position} className=\"ss-popup\">{children}</span> : null}</span>;\n}\n\n// 使用浏览器 top layer，避免宿主页面的 transform / overflow 截断浮层。\nfunction usePopupPosition(ref, open) {\n  const [position, setPosition] = useState({});\n  useEffect(() => {\n    if (!open) return;\n    const popup = ref.current?.querySelector('[popover]');\n    popup?.showPopover();\n    const update = () => {\n      const r = ref.current?.getBoundingClientRect();\n      if (!r || !popup) return;\n      const box = popup.getBoundingClientRect();\n      const left = Math.max(8, Math.min(r.left, innerWidth - box.width - 8));\n      const top = Math.max(8, Math.min(r.bottom + 8, innerHeight - box.height - 8));\n      setPosition({\n        position: \"fixed\",\n        margin: 0,\n        inset: \"auto\",\n        left,\n        top,\n        maxHeight: \"calc(100dvh - 16px)\",\n        overflow: \"auto\"\n      });\n    };\n    update();\n    window.addEventListener(\"resize\", update);\n    window.addEventListener(\"scroll\", update, true);\n    return () => {\n      window.removeEventListener(\"resize\", update);\n      window.removeEventListener(\"scroll\", update, true);\n      if (popup?.matches(\":popover-open\")) popup.hidePopover();\n    };\n  }, [open]);\n  return position;\n}\n"
+  },
+  {
+    "id": "progress",
+    "suffix": "Progress",
+    "exportName": "SignalProgress",
+    "kind": "basic",
+    "title": "进度条",
+    "description": "表达已知比例或进行中的任务。",
+    "anatomy": "任务标签、进度、当前值",
+    "usage": "value 与 max 同一量纲，未知进度不要编造百分比。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalProgress(props:{label:string;value?:number;max?:number}):JSX.Element;",
+    "source": "web/FeedbackControls.jsx",
+    "sourceCode": "export function SignalProgress({\n  label,\n  value,\n  max = 100\n}) {\n  const limit = Number.isFinite(max) && max > 0 ? max : 100;\n  const safe = typeof value === \"number\" && Number.isFinite(value) ? Math.max(0, Math.min(limit, value)) : undefined;\n  return <label className=\"ss-control\">{label}<progress value={safe} max={limit} /><small>{safe === undefined ? \"处理中…\" : Math.round(safe / limit * 100) + \"%\"}</small></label>;\n}\nexport function SignalSkeleton({\n  label = \"正在加载\",\n  rows = 3\n}) {\n  return <div className=\"ss-skeleton\" role=\"status\" aria-label={label}>{Array.from({\n      length: Math.max(1, Math.min(rows, 10))\n    }, (_, i) => <i key={i} aria-hidden=\"true\" />)}<span>{label}</span></div>;\n}\nexport function SignalToastQueue({\n  items,\n  onDismiss\n}) {\n  return <ol className=\"ss-toasts\" aria-label=\"通知队列\">{items.map(item => <li key={item.id} role={item.tone === \"error\" ? \"alert\" : \"status\"}><span>{item.message}</span>{item.onRetry ? <button type=\"button\" onClick={item.onRetry}>重试</button> : null}<button type=\"button\" onClick={() => onDismiss?.(item.id)} aria-label={\"关闭通知：\" + item.message}>×</button></li>)}</ol>;\n}\n"
+  },
+  {
+    "id": "skeleton",
+    "suffix": "Skeleton",
+    "exportName": "SignalSkeleton",
+    "kind": "basic",
+    "title": "加载占位",
+    "description": "等待数据时保留视觉节奏。",
+    "anatomy": "加载标签、占位行",
+    "usage": "只用于加载过程；错误要切换成解释和恢复动作。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalSkeleton(props:{label?:string;rows?:number}):JSX.Element;",
+    "source": "web/FeedbackControls.jsx",
+    "sourceCode": "export function SignalProgress({\n  label,\n  value,\n  max = 100\n}) {\n  const limit = Number.isFinite(max) && max > 0 ? max : 100;\n  const safe = typeof value === \"number\" && Number.isFinite(value) ? Math.max(0, Math.min(limit, value)) : undefined;\n  return <label className=\"ss-control\">{label}<progress value={safe} max={limit} /><small>{safe === undefined ? \"处理中…\" : Math.round(safe / limit * 100) + \"%\"}</small></label>;\n}\nexport function SignalSkeleton({\n  label = \"正在加载\",\n  rows = 3\n}) {\n  return <div className=\"ss-skeleton\" role=\"status\" aria-label={label}>{Array.from({\n      length: Math.max(1, Math.min(rows, 10))\n    }, (_, i) => <i key={i} aria-hidden=\"true\" />)}<span>{label}</span></div>;\n}\nexport function SignalToastQueue({\n  items,\n  onDismiss\n}) {\n  return <ol className=\"ss-toasts\" aria-label=\"通知队列\">{items.map(item => <li key={item.id} role={item.tone === \"error\" ? \"alert\" : \"status\"}><span>{item.message}</span>{item.onRetry ? <button type=\"button\" onClick={item.onRetry}>重试</button> : null}<button type=\"button\" onClick={() => onDismiss?.(item.id)} aria-label={\"关闭通知：\" + item.message}>×</button></li>)}</ol>;\n}\n"
+  },
+  {
+    "id": "toast-queue",
+    "suffix": "ToastQueue",
+    "exportName": "SignalToastQueue",
+    "kind": "basic",
+    "title": "通知队列",
+    "description": "按顺序呈现短操作反馈。",
+    "anatomy": "消息列表、关闭、可选重试",
+    "usage": "items 和 onDismiss 受控；关键错误需同时就地展示。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "标签、当前值、范围与操作入口同时显示。",
+      "hover": "所属按钮、输入和链接边界反馈；容器本身不增加伪交互。",
+      "pressed": "使用原生按下行为，选择更新受控值；容器由所属控件承载。",
+      "focus": "原生语义与方向键或 Tab 顺序；浮层关闭后恢复触发器焦点。",
+      "disabled": "禁用所属控件；信息与当前选择继续显示。无动作的容器由父流程控制。",
+      "loading": "异步控件显示加载文案并阻止重复提交；导航和布局由所在流程禁用操作。",
+      "error": "字段显示原因；上传、保存和数据页保留输入并提供恢复入口；导航由父流程呈现错误。"
+    },
+    "api": "export declare function SignalToastQueue(props:{items:Array<{id:string;message:string;tone?:string;onRetry?:()=>void}>;onDismiss?:(id:string)=>void}):JSX.Element;",
+    "source": "web/FeedbackControls.jsx",
+    "sourceCode": "export function SignalProgress({\n  label,\n  value,\n  max = 100\n}) {\n  const limit = Number.isFinite(max) && max > 0 ? max : 100;\n  const safe = typeof value === \"number\" && Number.isFinite(value) ? Math.max(0, Math.min(limit, value)) : undefined;\n  return <label className=\"ss-control\">{label}<progress value={safe} max={limit} /><small>{safe === undefined ? \"处理中…\" : Math.round(safe / limit * 100) + \"%\"}</small></label>;\n}\nexport function SignalSkeleton({\n  label = \"正在加载\",\n  rows = 3\n}) {\n  return <div className=\"ss-skeleton\" role=\"status\" aria-label={label}>{Array.from({\n      length: Math.max(1, Math.min(rows, 10))\n    }, (_, i) => <i key={i} aria-hidden=\"true\" />)}<span>{label}</span></div>;\n}\nexport function SignalToastQueue({\n  items,\n  onDismiss\n}) {\n  return <ol className=\"ss-toasts\" aria-label=\"通知队列\">{items.map(item => <li key={item.id} role={item.tone === \"error\" ? \"alert\" : \"status\"}><span>{item.message}</span>{item.onRetry ? <button type=\"button\" onClick={item.onRetry}>重试</button> : null}<button type=\"button\" onClick={() => onDismiss?.(item.id)} aria-label={\"关闭通知：\" + item.message}>×</button></li>)}</ol>;\n}\n"
+  },
+  {
+    "id": "content-board",
+    "suffix": "ContentBoard",
+    "exportName": "SignalContentBoard",
+    "kind": "pattern",
+    "title": "内容工作台示例",
+    "description": "通过不等宽画布编辑内容。",
+    "anatomy": "横向导航、内容卡片、修订列表、抽屉",
+    "usage": "内置原创示例素材；编辑和修订记录仅在内存中。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "默认演示数据；支持受控集合、异步保存回调和读取状态。",
+      "hover": "由卡片、导航和编辑动作反馈。",
+      "pressed": "编辑草稿；确认保存成功后回写集合，取消丢弃当前草稿。",
+      "focus": "导航、卡片、抽屉可键盘访问。",
+      "disabled": "readOnly 或没有变更回调的受控集合禁止编辑；保留阅读和关闭。",
+      "loading": "loading 表达读取；保存请求中禁用重复提交，关闭仍可用。",
+      "error": "读取失败支持 onRetry；保存失败保留草稿并重试，不更新原记录。"
+    },
+    "api": "export declare function SignalContentBoard(props?:SignalContentBoardProps):JSX.Element;\n\nexport interface SignalContentBoardProps {\n  stories?:SignalStory[]; defaultStories?:SignalStory[]; onStoriesChange?:(stories:SignalStory[])=>void;\n  onSaveStory?:(story:SignalStory,context:{signal:AbortSignal})=>SignalStory|Promise<SignalStory>;\n  loading?:boolean; error?:string; onRetry?:()=>void; readOnly?:boolean;\n}\n\nexport interface SignalStory {id:string;title:string;description:string;status:string;owner:string;image:string;updatedAt?:string;}",
+    "source": "web/ContentBoard.jsx",
+    "sourceCode": "// 通过原生属性设置 inert，兼容 React 18/19 的布尔属性差异。\nimport { SignalStoryCard, SignalRevisionList } from './ContentComponents.jsx';\nimport { Plus, Sparkle } from '@phosphor-icons/react';\nimport { useEffect, useRef, useState } from 'react';\nimport { SignalShell } from './Navigation.jsx';\nimport { SignalButton, SignalField, SignalSelect, SignalPanel } from './primitives.jsx';\nimport { SignalTextarea } from './Inputs.jsx';\nimport { SignalDrawer } from './Overlays.jsx';\nimport { storyExamples } from './demo-data.js';\n\nexport function SignalContentBoard({ stories: controlledStories, defaultStories = storyExamples, onStoriesChange, onSaveStory, loading = false, error: loadError, onRetry, readOnly = false } = {}) {\n  const [localStories, setLocalStories] = useState(defaultStories);\n  const stories = controlledStories ?? localStories;\n  const [view, setView] = useState('board');\n  const [nav, setNav] = useState('stories');\n  const [draft, setDraft] = useState(null);\n  const [error, setError] = useState('');\n  const [saving, setSaving] = useState(false);\n  const [message, setMessage] = useState('');\n  const [revisions, setRevisions] = useState([]);\n  const request = useRef(null);\n  const latestStories = useRef(stories); latestStories.current = stories;\n  const editable = !readOnly && (controlledStories === undefined || !!onStoriesChange);\n  const blocked = saving || loading || !!loadError || !editable;\n  useEffect(() => () => request.current?.abort(), []);\n  const close = () => { request.current?.abort(); request.current = null; setSaving(false); setDraft(null); setError(''); };\n  const edit = story => { setDraft({ ...story }); setError(''); setMessage(''); };\n  const create = () => edit({ id: crypto.randomUUID(), title: '', description: '', status: 'Draft', owner: 'You', image: storyExamples[1].image });\n  const save = async () => {\n    if (!draft || blocked || request.current) return;\n    if (!draft.title.trim()) { setError('请输入内容标题'); return; }\n    const controller = new AbortController(); request.current = controller;\n    const submitted = { ...draft, title: draft.title.trim() };\n    setSaving(true); setError('');\n    try {\n      const saved = onSaveStory ? await onSaveStory(submitted, { signal: controller.signal }) : { ...submitted, updatedAt: new Date().toLocaleString('zh-CN') };\n      // 服务可能忽略取消信号，关闭后的返回值不能更新新打开的草稿。\n      if (controller.signal.aborted || request.current !== controller) return;\n      if (!saved || saved.id !== submitted.id || ['title', 'description', 'status', 'owner', 'image'].some(key => typeof saved[key] !== 'string')) throw new Error('保存服务没有返回完整内容，请检查接入接口。');\n      const current = latestStories.current;\n      const next = current.some(story => story.id === saved.id) ? current.map(story => story.id === saved.id ? saved : story) : [...current, saved];\n      onStoriesChange?.(next);\n      if (controlledStories === undefined) setLocalStories(next);\n      setRevisions(items => [{ ...saved, id: saved.id + ':' + crypto.randomUUID(), sourceId: saved.id }, ...items]);\n      setDraft(null); setMessage(onSaveStory ? '内容已保存。' : '已更新本次演示；刷新后恢复示例。');\n    } catch (failure) {\n      if (!controller.signal.aborted) setError(failure instanceof Error ? failure.message : '内容保存失败，请重试。');\n    } finally {\n      if (request.current === controller) { request.current = null; setSaving(false); }\n    }\n  };\n  return <SignalShell brand={<><Sparkle size={24} aria-hidden=\"true\" /> Signal Studio</>} navigation={[\n    { id: 'stories', label: 'Stories' }, { id: 'assets', label: 'Assets' }, { id: 'revisions', label: 'Revisions' },\n  ]} activeId={nav} onNavigate={setNav} title={nav === 'stories' ? 'Stories in motion' : nav === 'assets' ? 'Asset library' : 'Recent revisions'}\n    actions={<SignalButton disabled={blocked} onClick={create}><Plus size={18} aria-hidden=\"true\" /> Create story</SignalButton>}>\n    <p className=\"ss-board-subtitle\">Words, ideas, and design—shaped for impact.</p>\n    {(loading || loadError) && <SignalPanel title={loading ? '正在加载内容…' : '内容加载失败'}><p role={loadError ? 'alert' : 'status'}>{loadError || '请稍候，当前内容暂不可编辑。'}</p>{loadError && onRetry && <SignalButton onClick={onRetry}>重新加载内容</SignalButton>}</SignalPanel>}\n    {message && <p role=\"status\">{message}</p>}\n    <div ref={element => { if (element) element.inert = Boolean(loading || !!loadError); }}>\n      {nav === 'revisions' ? <><p>仅记录本次会话中成功保存的版本。</p><SignalRevisionList stories={revisions} onOpen={revision => { const original = stories.find(story => story.id === revision.sourceId); if (original) edit(original); }} /></>\n        : nav === 'assets' ? <div className=\"ss-asset-library\"><p>当前内容使用的封面。上传与远程素材管理由接入项目提供。</p><div className=\"ss-content-list\">{stories.map(story => <SignalStoryCard key={story.id} story={story} onOpen={edit} disabled={!editable} />)}</div></div>\n        : <><div className=\"ss-view-switch\"><SignalButton variant=\"secondary\" aria-pressed={view === 'board'} onClick={() => setView('board')}>Board</SignalButton><SignalButton variant=\"secondary\" aria-pressed={view === 'list'} onClick={() => setView('list')}>List</SignalButton></div>\n          {!stories.length ? <SignalPanel title=\"还没有内容\"><p>新建第一篇草稿，组织标题、说明与封面。</p><SignalButton disabled={!editable} onClick={create}>新建内容</SignalButton></SignalPanel>\n            : <div className={view === 'board' ? 'ss-content-board' : 'ss-content-list'}>{stories.map((story, index) => <SignalStoryCard key={story.id} story={story} featured={index === 0 && view === 'board'} onOpen={edit} disabled={!editable} />)}</div>}\n          <h3 className=\"ss-revision-heading\">Recent revisions</h3><SignalRevisionList stories={revisions} onOpen={revision => { const original = stories.find(story => story.id === revision.sourceId); if (original) edit(original); }} />\n        </>}\n    </div>\n    <SignalDrawer open={!!draft} onOpenChange={open => { if (!open) close(); }} title=\"Edit story\">\n      {saving && <p role=\"status\">正在保存内容…</p>}\n      {error && <p className=\"ss-save-error\" role=\"alert\">{error} 草稿已保留。</p>}\n      {draft && <form className=\"ss-story-editor\" onSubmit={event => { event.preventDefault(); save(); }}>\n        <SignalField label=\"内容标题\" disabled={blocked} value={draft.title} error={error && !draft.title.trim() ? error : undefined} onChange={event => setDraft({ ...draft, title: event.target.value })} />\n        <SignalTextarea label=\"内容说明\" disabled={blocked} value={draft.description} onChange={event => setDraft({ ...draft, description: event.target.value })} />\n        <SignalSelect label=\"内容状态\" disabled={blocked} value={draft.status} options={['Draft', 'In review', 'Featured'].map(value => ({ value, label: value }))} onChange={event => setDraft({ ...draft, status: event.target.value })} />\n        <div className=\"ss-editor-actions\"><SignalButton type=\"submit\" loading={saving} disabled={loading || !!loadError || !editable}>{error ? '重试保存内容' : '保存内容'}</SignalButton><SignalButton variant=\"secondary\" onClick={close}>取消编辑</SignalButton></div>\n      </form>}\n    </SignalDrawer>\n  </SignalShell>;\n}\n"
+  },
+  {
+    "id": "story-card",
+    "suffix": "StoryCard",
+    "exportName": "SignalStoryCard",
+    "kind": "business",
+    "title": "内容卡片",
+    "description": "展示一条内容的封面、标题和编辑入口。",
+    "anatomy": "原创封面、状态、文案、行动区",
+    "usage": "story 来自调用方；featured 仅改变卡片构图。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "显示调用方传入的标题、描述与封面。",
+      "hover": "可打开时整卡跟随套系按钮反馈。",
+      "pressed": "onOpen 返回当前 story。",
+      "focus": "有 onOpen 时是原生按钮；无回调时是静态 article。",
+      "disabled": "disabled 禁用卡片按钮。",
+      "loading": "不提供 loading；图片加载由浏览器处理，数据加载由父页面负责。",
+      "error": "不提供 error；内容读取失败由父页面替换说明。"
+    },
+    "api": "export declare function SignalStoryCard(props:{story:SignalStory;featured?:boolean;onOpen?:(story:SignalStory)=>void;disabled?:boolean}):JSX.Element;\n\nexport interface SignalStory {id:string;title:string;description:string;status:string;owner:string;image:string;updatedAt?:string;}",
+    "source": "web/ContentComponents.jsx",
+    "sourceCode": "import { ArrowRight } from '@phosphor-icons/react';\n\nexport function SignalStoryCard({ story, featured = false, onOpen, disabled = false }) {\n  const Surface = onOpen ? 'button' : 'article';\n  return <Surface className=\"ss-story\" type={onOpen ? 'button' : undefined} data-featured={featured} disabled={onOpen ? disabled : undefined} onClick={onOpen ? () => onOpen(story) : undefined}>\n    {featured ? <img src={story.image} alt={`${story.title} 原创内容封面`}/> : <><span className=\"ss-story-copy\"><small>{story.status.toUpperCase()}</small><strong>{story.title}</strong><span>{story.description}</span></span><img src={story.image} alt={`${story.title} 原创内容封面`}/></>}\n    {featured && <span className=\"ss-feature-action\"><strong>{story.title}</strong><span>{story.description}</span><span><ArrowRight size={18} aria-hidden=\"true\"/> Continue story</span></span>}\n  </Surface>;\n}\nexport function SignalRevisionList({ stories = [], onOpen }) {\n  return <ul className=\"ss-revisions\">{stories.length ? stories.map(story => <li key={story.id}><img src={story.image} alt=\"\"/>{onOpen ? <button type=\"button\" onClick={() => onOpen(story)}>{story.title}</button> : <strong>{story.title}</strong>}<span>{story.description}</span><span>{story.owner}</span><time>{story.updatedAt ?? '更新时间未记录'}</time></li>) : <li>还没有修订记录。</li>}</ul>;\n}\n"
+  },
+  {
+    "id": "revision-list",
+    "suffix": "RevisionList",
+    "exportName": "SignalRevisionList",
+    "kind": "business",
+    "title": "内容修订列表",
+    "description": "紧凑浏览内容摘要并进入编辑。",
+    "anatomy": "缩略图、标题、说明、作者、更新时间",
+    "usage": "展示 supplied updatedAt；没有时间时明确未记录。",
+    "previewStates": [
+      "default"
+    ],
+    "states": {
+      "default": "每项显示作者和实际更新时间；无时间明确未记录。",
+      "hover": "由标题按钮反馈。",
+      "pressed": "onOpen 返回当前条目。",
+      "focus": "有回调时标题可聚焦；静态元数据不加入 Tab。",
+      "disabled": "不提供 disabled；无回调时显示静态标题。",
+      "loading": "不提供 loading；父页面负责加载边界。",
+      "error": "不提供 error；父页面说明读取失败。"
+    },
+    "api": "export declare function SignalRevisionList(props:{stories?:SignalStory[];onOpen?:(story:SignalStory)=>void}):JSX.Element;\n\nexport interface SignalStory {id:string;title:string;description:string;status:string;owner:string;image:string;updatedAt?:string;}",
+    "source": "web/ContentComponents.jsx",
+    "sourceCode": "import { ArrowRight } from '@phosphor-icons/react';\n\nexport function SignalStoryCard({ story, featured = false, onOpen, disabled = false }) {\n  const Surface = onOpen ? 'button' : 'article';\n  return <Surface className=\"ss-story\" type={onOpen ? 'button' : undefined} data-featured={featured} disabled={onOpen ? disabled : undefined} onClick={onOpen ? () => onOpen(story) : undefined}>\n    {featured ? <img src={story.image} alt={`${story.title} 原创内容封面`}/> : <><span className=\"ss-story-copy\"><small>{story.status.toUpperCase()}</small><strong>{story.title}</strong><span>{story.description}</span></span><img src={story.image} alt={`${story.title} 原创内容封面`}/></>}\n    {featured && <span className=\"ss-feature-action\"><strong>{story.title}</strong><span>{story.description}</span><span><ArrowRight size={18} aria-hidden=\"true\"/> Continue story</span></span>}\n  </Surface>;\n}\nexport function SignalRevisionList({ stories = [], onOpen }) {\n  return <ul className=\"ss-revisions\">{stories.length ? stories.map(story => <li key={story.id}><img src={story.image} alt=\"\"/>{onOpen ? <button type=\"button\" onClick={() => onOpen(story)}>{story.title}</button> : <strong>{story.title}</strong>}<span>{story.description}</span><span>{story.owner}</span><time>{story.updatedAt ?? '更新时间未记录'}</time></li>) : <li>还没有修订记录。</li>}</ul>;\n}\n"
+  },
+  {
+    "id": "slider",
+    "suffix": "Slider",
+    "exportName": "SignalSlider",
+    "kind": "basic",
+    "title": "数值滑块",
+    "description": "拖动或用方向键调整一个数值。",
+    "anatomy": "标签、当前值、轨道、滑块、提示",
+    "usage": "value 受控，onChange 返回数值；min/max/step 定义范围，保存由页面负责。",
+    "previewStates": [
+      "default",
+      "disabled",
+      "loading",
+      "error"
+    ],
+    "states": {
+      "default": "显示当前数值、单位和可调范围；value 由调用方持有。",
+      "hover": "轨道提供轻量反馈，不改变当前数值。",
+      "pressed": "拖动滑块更新数值，停止拖动不等于保存。",
+      "focus": "方向键按 step 调整，Home/End 到最小/最大值；保留可见焦点。",
+      "disabled": "禁用原生 range，保留当前读数。",
+      "loading": "禁用调整并说明正在读取，保留已有值。",
+      "error": "显示错误文字并通过 aria-describedby 关联输入；由调用方处理恢复。"
+    },
+    "api": "export declare function SignalSlider(props:{label:string;value:number;min?:number;max?:number;step?:number;unit?:string;onChange?:(value:number)=>void;hint?:string;error?:string;loading?:boolean;disabled?:boolean}):JSX.Element;",
+    "source": "web/Slider.jsx",
+    "sourceCode": "import {useId} from 'react';\nexport function SignalSlider({label,value,min=0,max=100,step=1,unit='',onChange,hint,error,loading=false,disabled=false}) {\n  const id=useId();\n  const fill=max>min?Math.min(100,Math.max(0,(value-min)/(max-min)*100)):0;\n  return <label className=\"ss-slider\"><span className=\"ss-slider-heading\"><span>{label}</span><output htmlFor={id}>{value}{unit}</output></span><input id={id} type=\"range\" aria-label={label} value={value} min={min} max={max} step={step} disabled={disabled||loading} aria-invalid={!!error} aria-busy={loading||undefined} aria-describedby={error||hint||loading?id+'-hint':undefined} aria-valuetext={value+unit} style={{'--ss-slider-fill':fill+'%'}} onChange={event=>onChange?.(Number(event.target.value))}/>{(error||hint||loading)&&<small id={id+'-hint'} role={error?'alert':loading?'status':undefined}>{error||(loading?'正在读取设置…':hint)}</small>}</label>;\n}\n"
+  }
+]

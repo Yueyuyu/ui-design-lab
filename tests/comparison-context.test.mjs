@@ -30,8 +30,12 @@ test("不同场景导出自己的数据，详情沿用编辑后的名称和负�
 });
 test("全量目录搜索包含精选套系及新增第三套，不改变注册顺序", () => {
   const suites = [1, 2, 3].map((id) => ({ id: "suite-" + id, displayName: "Suite " + id, status: "stable", tags: [] }));
+  suites[1].selection = { scenePreview: { title: "库存工作表" } };
+  suites[1].modes = ["dark"];
   assert.deepEqual(filterSuites(suites, "suite-1"), [suites[0]]);
   assert.deepEqual(filterSuites(suites, "suite-3"), [suites[2]]);
   assert.deepEqual(filterSuites(suites, "稳定"), suites);
   assert.deepEqual(filterSuites(suites, "不存在"), []);
+  assert.deepEqual(filterSuites(suites, "库存"), [suites[1]]);
+  assert.deepEqual(filterSuites(suites, "深色"), [suites[1]]);
 });

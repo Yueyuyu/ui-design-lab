@@ -1,0 +1,95 @@
+@import './editor.css';
+@import './database.css';
+@import './control-styles.css';
+[data-ui-system="folio-workspace"] { color:var(--fw-ink); background:var(--fw-paper); font:var(--fw-body-size)/1.6 var(--fw-font); color-scheme:light; }
+[data-ui-system="folio-workspace"] *, [data-ui-system="folio-workspace"] *::before, [data-ui-system="folio-workspace"] *::after { box-sizing:border-box; }
+[data-ui-system="folio-workspace"] button, [data-ui-system="folio-workspace"] input, [data-ui-system="folio-workspace"] textarea, [data-ui-system="folio-workspace"] select { font:inherit; color:inherit; }
+[data-ui-system="folio-workspace"] button { cursor:pointer; }
+[data-ui-system="folio-workspace"] button:disabled, [data-ui-system="folio-workspace"] input:disabled, [data-ui-system="folio-workspace"] textarea:disabled { opacity:.5; cursor:not-allowed; }
+[data-ui-system="folio-workspace"] :focus-visible { outline:2px solid var(--fw-focus); outline-offset:2px; }
+[data-ui-system="folio-workspace"] .fw-sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+[data-ui-system="folio-workspace"] .fw-button { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:30px; padding:4px 8px; border:1px solid transparent; border-radius:var(--fw-radius); background:transparent; text-decoration:none; font-size:13px; font-weight:500; line-height:1.5; transition:background var(--fw-motion); }
+[data-ui-system="folio-workspace"] .fw-button svg { flex-shrink:0; }
+[data-ui-system="folio-workspace"] .fw-button:hover:not(:disabled) { background:var(--fw-hover); }
+[data-ui-system="folio-workspace"] .fw-button:active:not(:disabled) { background:var(--fw-pressed); }
+[data-ui-system="folio-workspace"] .fw-button--solid { color:var(--fw-paper); background:var(--fw-ink); border-color:var(--fw-ink); }
+[data-ui-system="folio-workspace"] .fw-button--solid:hover:not(:disabled) { background:#50504b; }
+[data-ui-system="folio-workspace"] .fw-button--solid:active:not(:disabled) { background:#121211; }
+[data-ui-system="folio-workspace"] .fw-button--danger, [data-ui-system="folio-workspace"] .fw-error { color:var(--fw-error); }
+[data-ui-system="folio-workspace"] .fw-muted { color:var(--fw-muted); font-size:12px; }
+[data-ui-system="folio-workspace"] .fw-workspace { display:grid; grid-template-columns:200px minmax(0,1fr); min-height:720px; border:1px solid var(--fw-line); border-radius:var(--fw-radius); overflow:clip; background:var(--fw-paper); }
+[data-ui-system="folio-workspace"] .fw-page-tree { background:var(--fw-sidebar); padding:22px 10px 18px; display:flex; flex-direction:column; border-right:1px solid var(--fw-line); min-width:0; }
+[data-ui-system="folio-workspace"] .fw-workspace-name { display:flex; align-items:center; gap:9px; padding:0 10px 24px; }
+[data-ui-system="folio-workspace"] .fw-workspace-name strong { font-size:17px; line-height:1.3; letter-spacing:-.3px; }
+[data-ui-system="folio-workspace"] .fw-workspace-name strong span { display:block; font-size:11px; color:var(--fw-muted); font-weight:400; letter-spacing:0; margin-top:4px; }
+[data-ui-system="folio-workspace"] .fw-search { display:flex; align-items:center; gap:7px; color:var(--fw-muted); min-width:0; }
+[data-ui-system="folio-workspace"] .fw-search input { width:100%; min-width:0; border:0; background:transparent; font-size:12px; padding:6px 2px; }
+[data-ui-system="folio-workspace"] .fw-search input::placeholder { color:var(--fw-muted); opacity:1; }
+[data-ui-system="folio-workspace"] .fw-page-tree>.fw-search { padding:0 10px 16px; }
+[data-ui-system="folio-workspace"] .fw-tree-label { display:flex; justify-content:space-between; align-items:center; font-size:11px; color:var(--fw-muted); padding:10px 8px 4px; }
+[data-ui-system="folio-workspace"] .fw-page-tree ul { margin:0; padding:0; list-style:none; }
+[data-ui-system="folio-workspace"] .fw-page-tree li ul { padding-left:12px; }
+[data-ui-system="folio-workspace"] .fw-tree-row { display:flex; min-width:0; border-radius:var(--fw-radius); margin:1px 0; }
+[data-ui-system="folio-workspace"] .fw-tree-row[data-active="true"] { background:var(--fw-hover); }
+[data-ui-system="folio-workspace"] .fw-tree-row>.fw-button:first-child { padding:1px; }
+[data-ui-system="folio-workspace"] .fw-tree-spacer { flex:0 0 17px; }
+[data-ui-system="folio-workspace"] .fw-tree-link { justify-content:flex-start; text-align:left; min-width:0; flex:1; padding:5px 4px; font-size:12px; }
+[data-ui-system="folio-workspace"] .fw-tree-link span { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+[data-ui-system="folio-workspace"] .fw-child-page { justify-content:flex-start; color:var(--fw-muted); margin:14px 0 0 12px; font-size:12px; }
+[data-ui-system="folio-workspace"] .fw-tree-footer { margin-top:auto; padding:50px 12px 0; font-size:12px; color:var(--fw-muted); }
+[data-ui-system="folio-workspace"] .fw-tree-footer small { display:block; font-size:11px; margin-top:4px; }
+[data-ui-system="folio-workspace"] .fw-workspace-main { min-width:0; }
+[data-ui-system="folio-workspace"] .fw-workspace-top { display:flex; align-items:center; gap:8px; min-height:48px; padding:7px 16px; border-bottom:1px solid var(--fw-line); }
+[data-ui-system="folio-workspace"] .fw-breadcrumbs { display:flex; align-items:center; gap:6px; min-width:0; flex:1; font-size:12px; color:var(--fw-muted); overflow:hidden; }
+[data-ui-system="folio-workspace"] .fw-breadcrumbs>span { display:flex; align-items:center; gap:4px; min-width:0; flex-shrink:1; }
+[data-ui-system="folio-workspace"] .fw-breadcrumbs .fw-button { display:block; padding:2px; font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
+[data-ui-system="folio-workspace"] .fw-save-status { color:var(--fw-muted); font-size:11px; white-space:nowrap; }
+[data-ui-system="folio-workspace"] .fw-mobile-menu { display:none; }
+[data-ui-system="folio-workspace"] .fw-writing-layout { display:grid; grid-template-columns:minmax(0,1fr); align-items:start; }
+[data-ui-system="folio-workspace"] .fw-writing-layout[data-detail-open="true"] { grid-template-columns:minmax(0,1fr) 280px; }
+[data-ui-system="folio-workspace"] .fw-document { min-width:0; width:100%; max-width:920px; margin:0 auto; padding:34px 42px 24px; }
+[data-ui-system="folio-workspace"] .fw-page-header { margin-bottom:22px; }
+[data-ui-system="folio-workspace"] .fw-page-mark { font-size:38px; line-height:1; display:block; margin-bottom:12px; color:var(--fw-muted); }
+[data-ui-system="folio-workspace"] .fw-page-title { display:block; border:0; background:transparent; font-size:32px; font-weight:720; letter-spacing:-1px; width:100%; min-width:0; padding:0; line-height:1.35; border-radius:2px; }
+[data-ui-system="folio-workspace"] .fw-page-title:hover:not(:disabled) { background:var(--fw-sidebar); }
+[data-ui-system="folio-workspace"] .fw-page-meta { display:flex; flex-wrap:wrap; gap:10px 24px; color:var(--fw-muted); font-size:11px; margin-top:12px; }
+[data-ui-system="folio-workspace"] .fw-page-meta span { display:flex; align-items:center; gap:6px; }
+[data-ui-system="folio-workspace"] .fw-callout { display:flex; align-items:flex-start; gap:10px; background:var(--fw-sidebar); border-radius:var(--fw-radius); padding:12px 14px; margin:14px 0; font-size:13px; }
+[data-ui-system="folio-workspace"] .fw-callout>svg { flex-shrink:0; margin-top:2px; }
+[data-ui-system="folio-workspace"] .fw-callout>div { flex:1; min-width:0; }
+[data-ui-system="folio-workspace"] .fw-callout[data-tone="error"] { background:var(--fw-error-surface); color:var(--fw-error); flex-wrap:wrap; }
+[data-ui-system="folio-workspace"] .fw-drafts { display:flex; flex-wrap:wrap; gap:6px; align-items:center; padding:14px 0 0; font-size:12px; color:var(--fw-muted); }
+[data-ui-system="folio-workspace"] .fw-notice { margin:18px 0 0; color:var(--fw-muted); font-size:11px; }
+@media (prefers-reduced-motion: reduce) {
+  [data-ui-system="folio-workspace"] .fw-button { transition:none; }
+}
+@media (max-width:1200px) {
+  [data-ui-system="folio-workspace"] .fw-workspace { grid-template-columns:174px minmax(0,1fr); }
+  [data-ui-system="folio-workspace"] .fw-document { padding:28px 25px; }
+  [data-ui-system="folio-workspace"] .fw-writing-layout[data-detail-open="true"] { grid-template-columns:minmax(0,1fr); }
+  [data-ui-system="folio-workspace"] .fw-record-detail { border-top:1px solid var(--fw-line); border-left:0; margin:0 25px 25px; }
+}
+@media (max-width:760px) {
+  [data-ui-system="folio-workspace"] .fw-workspace { grid-template-columns:minmax(0,1fr); min-height:650px; }
+  [data-ui-system="folio-workspace"] .fw-workspace>.fw-page-tree { display:none; border-right:0; border-bottom:1px solid var(--fw-line); }
+  [data-ui-system="folio-workspace"] .fw-workspace[data-tree-open="true"]>.fw-page-tree { display:flex; }
+  [data-ui-system="folio-workspace"] .fw-tree-footer { padding-top:16px; }
+  [data-ui-system="folio-workspace"] .fw-mobile-menu { display:inline-flex; }
+  [data-ui-system="folio-workspace"] .fw-document { padding:24px 14px; }
+  [data-ui-system="folio-workspace"] .fw-workspace-top { padding:6px 8px; gap:4px; }
+  [data-ui-system="folio-workspace"] .fw-save-status { font-size:11px; white-space:normal; max-width:66px; }
+  [data-ui-system="folio-workspace"] .fw-page-title { font-size:25px; letter-spacing:-.5px; }
+  [data-ui-system="folio-workspace"] .fw-record-detail { margin:0 14px 14px; }
+}
+
+/* 纸面宽度与集合宽度分开，侧开记录按实际可用宽度转换。 */
+[data-ui-system="folio-workspace"] .fw-workspace{container-type:inline-size}
+[data-ui-system="folio-workspace"] .fw-document>:is(.fw-page-header,.fw-callout,.fw-block-editor){max-width:var(--fw-reading-width);margin-inline:auto}
+[data-ui-system="folio-workspace"] .fw-database{margin-top:28px}
+[data-ui-system="folio-workspace"] .fw-database-title{margin-bottom:14px}
+[data-ui-system="folio-workspace"] .fw-database-controls{gap:8px 14px;padding-block:10px}
+[data-ui-system="folio-workspace"] .fw-database-controls>label{font-size:12px}
+[data-ui-system="folio-workspace"] .fw-record-detail{overflow-wrap:anywhere}
+[data-ui-system="folio-workspace"] .fw-record-detail form{gap:16px}
+@container(max-width:1000px){[data-ui-system="folio-workspace"] .fw-writing-layout[data-detail-open="true"]{grid-template-columns:minmax(0,1fr)}[data-ui-system="folio-workspace"] .fw-record-detail{border-left:0;border-top:1px solid var(--fw-line);margin:0 14px 14px}[data-ui-system="folio-workspace"] .fw-document{padding-inline:24px}}
+@media(max-width:760px){[data-ui-system="folio-workspace"] .fw-document{padding-inline:14px}[data-ui-system="folio-workspace"] .fw-database{margin-top:20px}[data-ui-system="folio-workspace"] .fw-record-detail input{min-height:36px}}

@@ -29,6 +29,33 @@
     "tokenBindings"
   ],
   "properties": {
+    "starter": {
+      "type": "object",
+      "required": [
+        "component"
+      ],
+      "properties": {
+        "component": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Za-z0-9]*$"
+        },
+        "props": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][A-Za-z0-9]*$"
+          },
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
     "id": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
@@ -217,7 +244,8 @@
               "data-table",
               "settings-form",
               "detail-page",
-              "empty-state"
+              "empty-state",
+              "record-workflow"
             ]
           }
         },
@@ -230,7 +258,8 @@
               "metrics",
               "chart",
               "form",
-              "buttons"
+              "buttons",
+              "record-detail"
             ]
           }
         }
@@ -262,14 +291,43 @@
           }
         },
         "previewKind": {
-          "enum": ["reference", "components"]
+          "enum": [
+            "reference",
+            "components",
+            "scene-concept"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scenePreview": {
+          "type": "object",
+          "required": ["image", "title"],
+          "properties": {
+            "image": {
+              "type": "string",
+              "pattern": "^references/scene-covers/[a-z0-9-]+\\.(webp|png)$"
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
         },
         "thumbnail": {
           "type": "string",
           "pattern": "^references/thumbnails/[a-z0-9-]+\\.(webp|png)$"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": { "properties": { "previewKind": { "const": "scene-concept" } }, "required": ["previewKind"] },
+          "then": { "required": ["scenePreview"] }
+        }
+      ]
     }
   },
   "additionalProperties": true

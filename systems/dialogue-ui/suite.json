@@ -1,0 +1,119 @@
+{
+  "$schema": "../../schemas/suite.schema.json",
+  "id": "dialogue-ui",
+  "order": 7,
+  "displayName": "Dialogue UI",
+  "localizedName": "对谈 · ChatGPT 风格",
+  "shortCode": "DU",
+  "prefix": "du",
+  "componentPrefix": "Dialogue",
+  "version": "0.1.0",
+  "status": "experimental",
+  "description": "源于 ChatGPT 的内容优先与轻量工具，适合对话、搜索、研究与写作。",
+  "styleLabel": "ChatGPT Inspired Component System",
+  "platforms": [
+    "web"
+  ],
+  "modes": [
+    "light"
+  ],
+  "densities": [
+    "comfortable",
+    "compact"
+  ],
+  "tags": [
+    "chatgpt-inspired",
+    "components",
+    "conversation"
+  ],
+  "swatches": [
+    "#ffffff",
+    "#f9f9f9",
+    "#202020",
+    "#dedede"
+  ],
+  "scope": "[data-ui-system=\"dialogue-ui\"]",
+  "designDocument": "./DESIGN.md",
+  "tokens": "./foundations/tokens.json",
+  "tokensCss": "./foundations/tokens.css",
+  "tokenBindings": "./foundations/token-bindings.json",
+  "components": "./web/index.js",
+  "showcase": "./showcase/index.jsx",
+  "comparison": null,
+  "selection": {
+    "suitableFor": [
+      "AI 对话、研究助手、写作工具"
+    ],
+    "limitations": [
+      "首版仅浅色；舒适与紧凑密度",
+      "演示仅内存保存，业务服务由消费项目提供",
+      "尚未提供同场景对比与原生系统能力"
+    ],
+    "previewKind": "scene-concept",
+    "thumbnail": "references/thumbnails/dialogue-ui.png",
+    "summary": "让内容与问题，成为界面的中心。",
+    "scenePreview": {
+      "image": "references/scene-covers/dialogue-ui.png",
+      "title": "内容搜索"
+    }
+  },
+  "referenceImage": "references/dialogue-ui-source.png",
+  "starter": {
+    "component": "DialogueChatWorkspace"
+  },
+  "capabilities": {
+    "foundations": [
+      "color",
+      "typography",
+      "spacing",
+      "shape",
+      "motion"
+    ],
+    "components": [
+      "button",
+      "icon-button",
+      "field",
+      "textarea",
+      "select",
+      "toggle",
+      "checkbox",
+      "slider",
+      "tabs",
+      "segmented-control",
+      "badge",
+      "card",
+      "dropdown-menu",
+      "dialog",
+      "progress",
+      "empty-state",
+      "notification",
+      "message",
+      "composer",
+      "conversation-list",
+      "prompt-suggestions"
+    ],
+    "patterns": [
+      "chat-workspace"
+    ],
+    "standards": [
+      "accessibility",
+      "component-states",
+      "icons",
+      "chinese-copy",
+      "motion",
+      "composition",
+      "extension"
+    ]
+  },
+  "galleryShell": {
+    "surface": "#ffffff",
+    "sidebar": "#f9f9f9",
+    "topbar": "#ffffff",
+    "text": "#202020",
+    "muted": "#656565",
+    "border": "#dedede",
+    "active": "#f0f0f0",
+    "accent": "#202020",
+    "onAccent": "#ffffff"
+  }
+}

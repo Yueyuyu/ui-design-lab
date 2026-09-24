@@ -8,6 +8,7 @@ import {
 } from "@phosphor-icons/react";
 
 export const comparisonScenarios = [
+  { id: "record-workflow", label: "记录整理", shortLabel: "记录整理", eyebrow: "RECORD WORKFLOW", description: "共享记录、草稿和筛选，在不同结构中完成编辑。", icon: FileText },
   {
     id: "monthly-review",
     label: "月度经营复盘",
@@ -57,6 +58,7 @@ export const comparisonStates = [
 ];
 
 export const comparisonModules = [
+  { id: "record-detail", label: "记录详情" },
   { id: "metrics", label: "指标" },
   { id: "chart", label: "图表" },
   { id: "form", label: "表单" },
@@ -76,7 +78,7 @@ export function getStateLabel(id) {
 
 export function getSuiteFeatureLabels(suite, density = "comfortable") {
   const mode = suite.modes?.includes("dark") ? "深色优先" : "浅色优先";
-  const densityLabel = density === "compact" ? "紧凑密度" : "舒适密度";
+  const densityLabel = !suite.densities?.includes(density) ? "不支持当前密度" : density === "compact" ? "紧凑密度" : "舒适密度";
   const style = suite.tags?.includes("editorial")
     ? "编辑型工具"
     : suite.tags?.includes("financial")

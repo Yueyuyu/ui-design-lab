@@ -1,0 +1,62 @@
+[data-ui-system="orchard-ui"] .ou-workspace {container-type:inline-size;display:grid;grid-template-columns:210px minmax(0,1fr);min-height:610px;border:1px solid var(--ou-border);border-radius:16px;overflow:hidden;background:var(--ou-canvas);}
+[data-ui-system="orchard-ui"] .ou-workspace-nav {background:var(--ou-sidebar);padding:22px 14px;display:flex;flex-direction:column;gap:24px;border-right:1px solid var(--ou-border);}
+[data-ui-system="orchard-ui"] .ou-workspace-brand {display:flex;gap:10px;align-items:center;padding:0 4px;font-size:17px;}
+[data-ui-system="orchard-ui"] .ou-workspace-brand svg {color:var(--ou-accent);}
+[data-ui-system="orchard-ui"] .ou-profile {display:flex;align-items:center;gap:10px;}
+[data-ui-system="orchard-ui"] .ou-profile svg {color:var(--ou-muted);flex-shrink:0;}
+[data-ui-system="orchard-ui"] .ou-profile strong {font-size:13px;}
+[data-ui-system="orchard-ui"] .ou-profile small {display:block;font-size:12px;color:var(--ou-muted);margin-top:3px;}
+[data-ui-system="orchard-ui"] .ou-navigation {display:grid;gap:4px;}
+[data-ui-system="orchard-ui"] .ou-navigation button {display:flex;align-items:center;gap:10px;border:0;padding:9px 10px;border-radius:8px;background:transparent;color:var(--ou-text);text-align:left;}
+[data-ui-system="orchard-ui"] .ou-navigation button>span {flex:1;}
+[data-ui-system="orchard-ui"] .ou-navigation button>svg:first-child {color:var(--ou-accent);}
+[data-ui-system="orchard-ui"] .ou-navigation small {display:block;font-size:12px;color:var(--ou-muted);}
+[data-ui-system="orchard-ui"] .ou-navigation button[aria-current="page"] {background:var(--ou-accent);color:var(--ou-on-accent);}
+[data-ui-system="orchard-ui"] .ou-navigation button[aria-current="page"] svg, [data-ui-system="orchard-ui"] .ou-navigation button[aria-current="page"] small {color:inherit;}
+[data-ui-system="orchard-ui"] .ou-navigation button:hover:not([aria-current="page"]) {background:var(--ou-soft);}
+[data-ui-system="orchard-ui"] .ou-local-note {font-size:12px;color:var(--ou-muted);margin-top:auto;}
+[data-ui-system="orchard-ui"] .ou-workspace-main {padding:30px 34px;min-width:0;}
+[data-ui-system="orchard-ui"] .ou-workspace-heading {display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:26px;}
+[data-ui-system="orchard-ui"] .ou-workspace-heading h2 {font-size:28px;line-height:1.2;margin:8px 0 10px;font-weight:650;letter-spacing:-.03em;}
+[data-ui-system="orchard-ui"] .ou-workspace-heading p {font-size:13px;color:var(--ou-muted);margin:0;}
+[data-ui-system="orchard-ui"] .ou-workspace-heading>div>span {font-size:12px;letter-spacing:.08em;font-weight:600;color:var(--ou-muted);}
+[data-ui-system="orchard-ui"] .ou-workspace-heading>.ou-badge {margin-top:28px;}
+[data-ui-system="orchard-ui"] .ou-settings-fields {border:0;padding:0;margin:0;min-width:0;display:grid;gap:24px;}
+[data-ui-system="orchard-ui"] .ou-settings-group {min-width:0;}
+[data-ui-system="orchard-ui"] .ou-settings-group>h3 {font-size:13px;margin:0 0 8px 2px;font-weight:600;}
+[data-ui-system="orchard-ui"] .ou-settings-group>div {background:var(--ou-surface);border:1px solid var(--ou-border);border-radius:11px;overflow:hidden;}
+[data-ui-system="orchard-ui"] .ou-settings-group>p {font-size:12px;color:var(--ou-muted);margin:7px 3px 0;}
+[data-ui-system="orchard-ui"] .ou-setting-row {display:flex;align-items:center;gap:14px;padding:var(--ou-row-gap) 18px;min-height:64px;}
+[data-ui-system="orchard-ui"] .ou-setting-row+.ou-setting-row {border-top:1px solid var(--ou-border);}
+[data-ui-system="orchard-ui"] .ou-setting-label {flex:1;min-width:0;}
+[data-ui-system="orchard-ui"] .ou-setting-label strong {font-size:14px;font-weight:500;}
+[data-ui-system="orchard-ui"] .ou-setting-label p {margin:3px 0 0;color:var(--ou-muted);font-size:12px;}
+[data-ui-system="orchard-ui"] .ou-setting-icon {color:var(--ou-accent);display:flex;align-items:center;}
+[data-ui-system="orchard-ui"] .ou-setting-control {max-width:55%;min-width:150px;}
+[data-ui-system="orchard-ui"] .ou-setting-control .ou-field>label {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);}
+[data-ui-system="orchard-ui"] .ou-reading-sample {padding:16px 18px;border-top:1px solid var(--ou-border);color:var(--ou-muted);line-height:1.6;}
+[data-ui-system="orchard-ui"] .ou-save-bar {display:flex;gap:8px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--ou-border);padding-top:18px;}
+[data-ui-system="orchard-ui"] .ou-save-bar>span {flex:1;}
+[data-ui-system="orchard-ui"] .ou-save-status {font-size:12px;color:var(--ou-success);min-height:20px;margin:12px 0;}
+[data-ui-system="orchard-ui"] .ou-summary {display:grid;grid-template-columns:auto 1fr;gap:12px;}
+[data-ui-system="orchard-ui"] .ou-summary dt {color:var(--ou-muted);}
+[data-ui-system="orchard-ui"] .ou-summary dd {margin:0;text-align:right;overflow-wrap:anywhere;}
+[data-ui-system="orchard-ui"] .ou-cover .ou-workspace {min-height:590px;}
+[data-ui-system="orchard-ui"] .ou-save-status:empty {display:none;}
+[data-ui-system="orchard-ui"] .ou-save-bar {margin-top:18px;}
+[data-ui-system="orchard-ui"] .ou-cover .ou-workspace-main {padding:22px 28px;}
+[data-ui-system="orchard-ui"] .ou-cover .ou-workspace-heading {margin-bottom:18px;}
+[data-ui-system="orchard-ui"] .ou-cover .ou-settings-fields {gap:16px;}
+[data-ui-system="orchard-ui"] .ou-cover .ou-setting-row {min-height:56px;}
+[data-ui-system="orchard-ui"] .ou-cover .ou-reading-sample {padding:12px 18px;}
+[data-ui-system="orchard-ui"] .ou-cover .ou-workspace-heading>div>span, [data-ui-system="orchard-ui"] .ou-cover .ou-workspace-heading p {display:none;}
+@container (max-width:680px) {
+ [data-ui-system="orchard-ui"] .ou-workspace-nav {grid-column:1/-1;padding:12px;gap:12px;border-right:0;border-bottom:1px solid var(--ou-border);}
+ [data-ui-system="orchard-ui"] .ou-workspace-main {grid-column:1/-1;padding:22px 16px;}
+ [data-ui-system="orchard-ui"] .ou-profile, [data-ui-system="orchard-ui"] .ou-local-note {display:none;}
+ [data-ui-system="orchard-ui"] .ou-navigation {display:flex;flex-wrap:wrap;gap:4px;}
+ [data-ui-system="orchard-ui"] .ou-workspace-heading {flex-wrap:wrap;}
+ [data-ui-system="orchard-ui"] .ou-workspace-heading>.ou-badge {margin-top:0;}
+ [data-ui-system="orchard-ui"] .ou-setting-row {flex-wrap:wrap;padding:14px;}
+ [data-ui-system="orchard-ui"] .ou-setting-control {max-width:100%;width:100%;min-width:0;}
+}

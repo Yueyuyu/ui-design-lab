@@ -1,0 +1,35 @@
+[data-ui-system="dialogue-ui"] {
+  --du-canvas: #ffffff;
+  --du-surface: #ffffff;
+  --du-sidebar: #f9f9f9;
+  --du-text: #202020;
+  --du-muted: #656565;
+  --du-border: #dedede;
+  --du-accent: #202020;
+  --du-on-accent: #ffffff;
+  --du-soft: #f0f0f0;
+  --du-error: #b42318;
+  --du-success: #237346;
+  --du-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei UI", sans-serif;
+  --du-font-size: 14px;
+  --du-line-height: 1.55;
+  --du-radius: 20px;
+  --du-panel-radius: 24px;
+  --du-control-height: 40px;
+  --du-control-x: 14px;
+  --du-row-gap: 16px;
+  --du-motion: 140ms;
+  --du-space-1: 4px;
+  --du-space-2: 8px;
+  --du-space-3: 12px;
+  --du-space-4: 16px;
+  --du-space-6: 24px;
+}
+[data-ui-system="dialogue-ui"][data-density="compact"], [data-ui-system="dialogue-ui"] [data-density="compact"] {
+ --du-control-height: 34px; --du-row-gap: 10px;
+}
+@media (prefers-reduced-motion: reduce) {
+[data-ui-system="dialogue-ui"] { --du-motion: 0ms; }
+}
+
+[data-ui-system="dialogue-ui"][data-density="comfortable"], [data-ui-system="dialogue-ui"] [data-density="comfortable"] { --du-control-height: 40px; --du-row-gap: 16px; }

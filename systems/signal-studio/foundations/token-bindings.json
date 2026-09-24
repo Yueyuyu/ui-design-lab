@@ -14,5 +14,10 @@
     "--ss-control": "values.control",
     "--ss-row": "values.row",
     "--ss-duration": "values.duration"
+  },
+  "compact": {
+    "--ss-control": "density.compact.control",
+    "--ss-row": "density.compact.row",
+    "--ss-space": "density.compact.space"
   }
 }

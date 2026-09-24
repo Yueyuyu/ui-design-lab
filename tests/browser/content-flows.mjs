@@ -47,7 +47,7 @@ export async function researchFlow({ p, goto, id = "quiet-workspace" }) {
 }
 
 export async function choicesFlow({ p, goto, id }) {
-  await goto("/#systems/" + id + "/components-plus");
+  await goto("/#systems/" + id + "/playground/controls");
   await p.getByRole("combobox", { name: "默认模板", exact: true }).selectOption("month");
   await p.getByRole("searchbox", { name: "搜索默认模板", exact: true }).fill("无匹配词");
   ensure(await p.evaluate(() => document.querySelector('select[aria-label="默认模板"]').value) === "month", "搜索丢失已选项");

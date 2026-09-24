@@ -1,3 +1,4 @@
+@import './control-styles.css';
 [data-ui-system="midnight-ledger"] *,
 [data-ui-system="midnight-ledger"] *::before,
 [data-ui-system="midnight-ledger"] *::after { box-sizing: border-box; }
@@ -26,13 +27,13 @@
 [data-ui-system="midnight-ledger"] .ml-icon-button:disabled { opacity: .4; }
 [data-ui-system="midnight-ledger"] .ml-icon-button[data-state="error"] { border-color: var(--ml-negative); color: var(--ml-negative); }
 
-[data-ui-system="midnight-ledger"] .ml-status { min-height: 22px; padding: 2px 8px; border-radius: var(--ml-radius-pill); display: inline-flex; align-items: center; gap: 5px; background: var(--ml-surface-raised); color: var(--ml-text-secondary); font-size: var(--ml-font-caption); font-weight: 650; white-space: nowrap; }
+[data-ui-system="midnight-ledger"] .ml-status { min-height:22px; padding:1px 7px; border:1px solid transparent; border-radius:5px; display:inline-flex; align-items:center; gap:5px; background:color-mix(in srgb,var(--ml-text-secondary) 8%,transparent); color:var(--ml-text-secondary); font-size:var(--ml-font-label); line-height:18px; font-weight:500; white-space:nowrap; }
 [data-ui-system="midnight-ledger"] .ml-status i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-[data-ui-system="midnight-ledger"] .ml-status--positive { background: var(--ml-positive-soft); color: var(--ml-positive); }
-[data-ui-system="midnight-ledger"] .ml-status--negative { background: var(--ml-negative-soft); color: var(--ml-negative); }
-[data-ui-system="midnight-ledger"] .ml-status--warning { background: var(--ml-warning-soft); color: var(--ml-warning); }
-[data-ui-system="midnight-ledger"] .ml-status--info { background: var(--ml-info-soft); color: var(--ml-info); }
-[data-ui-system="midnight-ledger"] .ml-status--option { background: #463357; color: var(--ml-option); }
+[data-ui-system="midnight-ledger"] .ml-status--positive { background:color-mix(in srgb,var(--ml-positive) 10%,transparent); color:var(--ml-positive); }
+[data-ui-system="midnight-ledger"] .ml-status--negative { background:color-mix(in srgb,var(--ml-negative) 10%,transparent); color:var(--ml-negative); }
+[data-ui-system="midnight-ledger"] .ml-status--warning { background:color-mix(in srgb,var(--ml-warning) 10%,transparent); color:var(--ml-warning); }
+[data-ui-system="midnight-ledger"] .ml-status--info { background:color-mix(in srgb,var(--ml-info) 10%,transparent); color:var(--ml-info); }
+[data-ui-system="midnight-ledger"] .ml-status--option { background:color-mix(in srgb,var(--ml-option) 10%,transparent); color:var(--ml-option); }
 [data-ui-system="midnight-ledger"] .ml-status[data-state="disabled"] { opacity: .45; }
 [data-ui-system="midnight-ledger"] .ml-status[data-visual-state="hover"] { filter: brightness(1.12); }
 [data-ui-system="midnight-ledger"] .ml-status[data-visual-state="pressed"] { transform: translateY(1px); }
@@ -50,7 +51,7 @@
 [data-ui-system="midnight-ledger"] .ml-field__icon { position: absolute; right: 11px; top: 50%; transform: translateY(-50%); color: var(--ml-negative); }
 [data-ui-system="midnight-ledger"] .ml-field__message { color: var(--ml-text-muted); font-size: var(--ml-font-caption); line-height: 15px; }
 [data-ui-system="midnight-ledger"] .ml-field[data-state="error"] .ml-field__message { color: var(--ml-negative); }
-[data-ui-system="midnight-ledger"] .ml-select__control { appearance: auto; color-scheme: dark; }
+[data-ui-system="midnight-ledger"] .ml-select__control { color-scheme: dark; }
 
 [data-ui-system="midnight-ledger"] .ml-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 [data-ui-system="midnight-ledger"] .ml-toggle-row__copy { display: grid; gap: 3px; }
@@ -73,6 +74,7 @@
 [data-ui-system="midnight-ledger"] .ml-panel__body { padding: var(--ml-panel-padding); }
 [data-ui-system="midnight-ledger"] .ml-panel__header + .ml-panel__body { padding-top: 8px; }
 [data-ui-system="midnight-ledger"] .ml-panel--ledger { background: var(--ml-surface-ledger); border-color: var(--ml-border-ledger); color: var(--ml-text-on-ledger); }
+[data-ui-system="midnight-ledger"] .ml-panel--ledger .ml-panel__header :is(h3,small) { color:var(--ml-text-on-ledger); }
 [data-ui-system="midnight-ledger"] .ml-panel[data-visual-state="hover"] { background: var(--ml-surface-raised); border-color: var(--ml-border-strong); }
 [data-ui-system="midnight-ledger"] .ml-panel[data-visual-state="pressed"] { background: var(--ml-surface-selected); }
 [data-ui-system="midnight-ledger"] .ml-panel[data-visual-state="focus"] { outline: 2px solid var(--ml-focus-ring); outline-offset: 2px; }
@@ -231,8 +233,10 @@
 [data-ui-system="midnight-ledger"] .ml-terminal__asset-total strong { color: #3b6648; font-size: 21px; }
 [data-ui-system="midnight-ledger"] .ml-terminal__asset-actions { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 [data-ui-system="midnight-ledger"] .ml-terminal__performance .ml-panel__body { min-height: 356px; position: relative; }
-[data-ui-system="midnight-ledger"] .ml-terminal__metrics { padding-right: 164px; display: grid; grid-template-columns: repeat(4, minmax(78px, 1fr)); gap: 12px; }
-[data-ui-system="midnight-ledger"] .ml-terminal__periods { position: absolute; right: 16px; top: 12px; padding: 3px; border-radius: var(--ml-radius-pill); display: flex; background: var(--ml-surface-raised); }
+/* 周期与指标一起参与排版，独立面板在窄容器中也不会互相覆盖。 */
+[data-ui-system="midnight-ledger"] .ml-performance-summary { display:flex; flex-wrap:wrap; align-items:flex-start; gap:16px; }
+[data-ui-system="midnight-ledger"] .ml-terminal__metrics { flex:1 1 360px; min-width:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(84px,1fr)); gap:12px; }
+[data-ui-system="midnight-ledger"] .ml-terminal__periods { flex:none; margin-left:auto; padding:3px; border-radius:var(--ml-radius-pill); display:flex; background:var(--ml-surface-raised); }
 [data-ui-system="midnight-ledger"] .ml-terminal__periods button { min-width: 48px; height: 28px; border: 0; border-radius: var(--ml-radius-pill); background: transparent; color: var(--ml-text-muted); font-size: var(--ml-font-caption); cursor: pointer; }
 [data-ui-system="midnight-ledger"] .ml-terminal__periods button[data-active="true"] { background: var(--ml-surface-selected); color: var(--ml-text-primary); }
 [data-ui-system="midnight-ledger"] .ml-terminal__performance .ml-line-chart { margin-top: 34px; }
@@ -489,3 +493,27 @@
 [data-ui-system="midnight-ledger"] .ml-pagination {display:flex;gap:10px;margin:0;}
 
 [data-ui-system="midnight-ledger"] .ml-control progress{accent-color:var(--ml-brand);max-width:100%;}
+
+/* 可复用业务面板的内部布局，不依赖整页网格。 */
+[data-ui-system="midnight-ledger"] .ml-terminal__asset .ml-data-panel-content { display:flex; flex:1; flex-direction:column; min-width:0; }
+[data-ui-system="midnight-ledger"] .ml-terminal__asset-value { overflow-wrap:anywhere; }
+[data-ui-system="midnight-ledger"] .ml-exposure-rings circle.ml-exposure-value { stroke:var(--ml-positive); }
+[data-ui-system="midnight-ledger"] .ml-calendar-grid > span { min-height:30px; display:grid; place-items:center; }
+[data-ui-system="midnight-ledger"] .ml-calendar-grid button[aria-pressed="true"] { outline:2px solid var(--ml-text-primary); outline-offset:1px; }
+[data-ui-system="midnight-ledger"] .ml-data-panel-content[aria-disabled="true"] { opacity:.55; }
+[data-ui-system="midnight-ledger"] .ml-terminal__strategy .ml-line-chart__plot { height:92px; }
+[data-ui-system="midnight-ledger"] .ml-terminal__strategy .ml-line-chart__plot > svg { height:76px; }
+[data-ui-system="midnight-ledger"] .ml-terminal__bars .ml-bar-chart > figcaption { display:none; }
+[data-ui-system="midnight-ledger"] .ml-chart-legend { border:1px solid var(--ml-border-hairline); background:transparent; color:var(--ml-text-muted); padding:5px 8px; border-radius:5px; font:inherit; font-size:12px; }
+
+/* 读数对齐与局部密度优先，反转资产面保留自身层级。 */
+[data-ui-system="midnight-ledger"] :is(.ml-metric,.ml-holding-row,.ml-data-table,.ml-asset-value){font-variant-numeric:tabular-nums}
+[data-ui-system="midnight-ledger"] .ml-holding-row{grid-template-columns:minmax(0,1fr) 32px minmax(74px,auto)}
+[data-ui-system="midnight-ledger"] .ml-holding-row>span{min-width:0;overflow-wrap:anywhere}
+[data-ui-system="midnight-ledger"] .ml-shell-main>header{gap:12px;flex-wrap:wrap}
+[data-ui-system="midnight-ledger"] .ml-shell-main>main{padding:var(--ml-panel-padding)}
+[data-ui-system="midnight-ledger"] .ml-data-table td{height:var(--ml-row-height)}
+[data-ui-system="midnight-ledger"][data-density="compact"] .ml-terminal-grid{gap:8px}
+[data-ui-system="midnight-ledger"][data-density="compact"] .ml-holding-row{min-height:52px;padding-block:6px;gap:6px}
+[data-ui-system="midnight-ledger"][data-density="compact"] .ml-performance-summary{gap:10px}
+[data-ui-system="midnight-ledger"][data-density="compact"] .ml-data-table td{padding-block:6px}

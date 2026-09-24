@@ -28,7 +28,7 @@ export declare function SignalShell(props: {brand: ReactNode; navigation:Array<{
 export declare function SignalTabs(props: {items:Array<{id:string;label:string;content?:ReactNode;disabled?:boolean}>; value:string; onChange?:(id:string)=>void; label?:string; disabled?:boolean}): JSX.Element;
 export declare function SignalBreadcrumb(props:{items:Array<{label:string;href?:string;onClick?:()=>void}>;label?:string}):JSX.Element;
 export declare function SignalPagination(props:{page:number;pageCount:number;onChange?:(page:number)=>void;disabled?:boolean}):JSX.Element;
-export declare function SignalDataTable<T extends Row>(props: {rows:T[];columns:Array<Omit<Column<T>,"render">&{sortable?:boolean;render?:(value:T[keyof T],row:T)=>ReactNode}>;caption?:string;pageSize?:number;selection?:T["id"][];onSelectionChange?:(ids:T["id"][])=>void;onBulkAction?:(ids:T["id"][])=>void;onRowActivate?:(row:T)=>void;loading?:boolean;disabled?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;
+export declare function SignalDataTable<T extends Row>(props: {rows:T[];columns:Array<Omit<Column<T>,"render">&{sortable?:boolean;render?:(value:T[keyof T],row:T)=>ReactNode}>;caption?:string;pageSize?:number;showToolbar?:boolean;selectable?:boolean;selection?:T["id"][];onSelectionChange?:(ids:T["id"][])=>void;onBulkAction?:(ids:T["id"][])=>void;onRowActivate?:(row:T)=>void;loading?:boolean;disabled?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;
 export declare function SignalDrawer(props:DialogProps):JSX.Element;
 export declare function SignalDropdownMenu(props:{label?:string;items:Array<{id:string;label:string;disabled?:boolean;danger?:boolean;onSelect?:()=>void}>;disabled?:boolean}):JSX.Element;
 export declare function SignalPopover(props:{label:string;children?:ReactNode;disabled?:boolean}):JSX.Element;
@@ -36,4 +36,14 @@ export declare function SignalTooltip(props:{label:string;children?:ReactNode}):
 export declare function SignalProgress(props:{label:string;value?:number;max?:number}):JSX.Element;
 export declare function SignalSkeleton(props:{label?:string;rows?:number}):JSX.Element;
 export declare function SignalToastQueue(props:{items:Array<{id:string;message:string;tone?:string;onRetry?:()=>void}>;onDismiss?:(id:string)=>void}):JSX.Element;
-export declare function SignalContentBoard():JSX.Element;
+export interface SignalContentBoardProps {
+  stories?:SignalStory[]; defaultStories?:SignalStory[]; onStoriesChange?:(stories:SignalStory[])=>void;
+  onSaveStory?:(story:SignalStory,context:{signal:AbortSignal})=>SignalStory|Promise<SignalStory>;
+  loading?:boolean; error?:string; onRetry?:()=>void; readOnly?:boolean;
+}
+export declare function SignalContentBoard(props?:SignalContentBoardProps):JSX.Element;
+export interface SignalStory {id:string;title:string;description:string;status:string;owner:string;image:string;updatedAt?:string;}
+export declare function SignalStoryCard(props:{story:SignalStory;featured?:boolean;onOpen?:(story:SignalStory)=>void;disabled?:boolean}):JSX.Element;
+export declare function SignalRevisionList(props:{stories?:SignalStory[];onOpen?:(story:SignalStory)=>void}):JSX.Element;
+
+export declare function SignalSlider(props:{label:string;value:number;min?:number;max?:number;step?:number;unit?:string;onChange?:(value:number)=>void;hint?:string;error?:string;loading?:boolean;disabled?:boolean}):JSX.Element;

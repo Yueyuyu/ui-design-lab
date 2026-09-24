@@ -122,7 +122,7 @@ Auxiliary text never goes below 11px. Control labels and critical compact inform
 
 The spacing system uses a 4px base. Comfortable density uses 40px controls, 52px rows, and 20px panel padding. Compact density uses 32px controls, 40px rows, and 12px panel padding. Density changes geometry and spacing, not critical text size.
 
-Desktop tools use a stable navigation region, one primary content axis, and local status feedback. On narrow screens, secondary navigation collapses and content returns to one column.
+Desktop tools keep one primary content axis and local status feedback. Navigation follows the task: a reading page may use a top index, while repeated access to hierarchical material may need a resource rail. On narrow screens, secondary navigation collapses and content returns to one column.
 
 ## Elevation & Depth
 
@@ -162,4 +162,12 @@ The primary target is desktop web. Tablet layouts reduce grid columns and keep c
 
 ## Agent Usage
 
-When the user requests suite `quiet-workspace`, read `suite.json`, this file, the foundation tokens, standards, and component exports. Treat `tokens.json` and the component implementation as canonical if prose and code ever differ. Wrap the implementation in `data-ui-system="quiet-workspace"`, use only `--qw-` tokens, and run the suite validation before handoff.
+先读 `suite.json`、本文、`standards/extension.md`、基础 Token 和相关标准，再读 API、类型与相近组件源码。数值与现有行为以 `tokens.json` 和组件实现为准。使用 `data-ui-system="quiet-workspace"` 作用域，复用本套 Token；缺少的组件可在业务项目内实现。消费项目运行自身构建与交互检查；修改实验室时运行 `npm run suite:check`。
+
+## 阅读层级与密度补充
+
+研究场景以 160–210px 资料栏和最多 760px 编辑区组合，长文编辑行高 1.8。窄屏先资料后正文；紧凑模式改变表格行高和内边距，不缩小正文。
+
+## 设计延伸
+
+本套是一套可用于继续设计的视觉与交互语言，现有组件是可复用的起点。先读 [扩展规范](standards/extension.md)，根据任务选择布局，再决定直接复用、组合或在业务项目内新增组件。新增组件沿用本套 Token、字阶、间距、表面与交互规则，使用项目自己的名称和样式类；不能编造包导出，也不必复制示例页面的导航和业务字段。

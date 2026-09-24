@@ -1,0 +1,53 @@
+[data-ui-system="folio-workspace"] .fw-database { min-width:0; margin-top:4px; }
+[data-ui-system="folio-workspace"] .fw-database-title { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
+[data-ui-system="folio-workspace"] .fw-database-title h2 { margin:0; font-size:18px; font-weight:650; }
+[data-ui-system="folio-workspace"] .fw-database-title h2 span { font-size:12px; color:var(--fw-muted); font-weight:400; margin-left:7px; }
+[data-ui-system="folio-workspace"] .fw-view-tabs { display:flex; gap:16px; border-bottom:1px solid var(--fw-line); }
+[data-ui-system="folio-workspace"] .fw-view-tabs button { display:flex; align-items:center; gap:6px; font-size:12px; background:none; border:0; border-bottom:2px solid transparent; padding:9px 1px; color:var(--fw-muted); }
+[data-ui-system="folio-workspace"] .fw-view-tabs button:hover { background:var(--fw-sidebar); }
+[data-ui-system="folio-workspace"] .fw-view-tabs button[aria-selected="true"] { border-color:var(--fw-ink); color:var(--fw-ink); font-weight:600; }
+[data-ui-system="folio-workspace"] .fw-database-controls { display:flex; flex-wrap:wrap; gap:4px 14px; align-items:center; padding:8px 0; }
+[data-ui-system="folio-workspace"] .fw-database-controls>.fw-search { flex:1 1 110px; }
+[data-ui-system="folio-workspace"] .fw-database-controls>label { font-size:11px; display:flex; align-items:center; gap:3px; color:var(--fw-muted); }
+[data-ui-system="folio-workspace"] .fw-database-controls select { border:0; background:transparent; font-size:12px; padding:4px 1px; max-width:110px; }
+[data-ui-system="folio-workspace"] .fw-table-scroll { overflow:auto; }
+[data-ui-system="folio-workspace"] .fw-database table { width:100%; border-collapse:collapse; font-size:12px; text-align:left; }
+[data-ui-system="folio-workspace"] .fw-database th { font-weight:400; color:var(--fw-muted); font-size:11px; border-top:1px solid var(--fw-line); }
+[data-ui-system="folio-workspace"] .fw-database th, [data-ui-system="folio-workspace"] .fw-database td { padding:7px 9px; border-bottom:1px solid var(--fw-line); border-right:1px solid var(--fw-line); }
+[data-ui-system="folio-workspace"] .fw-database td:first-child, [data-ui-system="folio-workspace"] .fw-database th:first-child { padding-left:2px; }
+[data-ui-system="folio-workspace"] .fw-database td:last-child, [data-ui-system="folio-workspace"] .fw-database th:last-child { border-right:0; }
+[data-ui-system="folio-workspace"] .fw-database [data-selected="true"] { background:var(--fw-hover); }
+[data-ui-system="folio-workspace"] .fw-database .fw-record-link { width:100%; justify-content:flex-start; text-align:left; font-size:12px; padding:1px 2px; }
+[data-ui-system="folio-workspace"] .fw-record-link span { overflow-wrap:anywhere; }
+[data-ui-system="folio-workspace"] .fw-record-link small { color:var(--fw-muted); font-size:11px; flex-shrink:0; }
+[data-ui-system="folio-workspace"] .fw-status { display:inline-flex; align-items:center; font-size:11px; line-height:1.6; border-radius:3px; padding:1px 6px; white-space:nowrap; color:var(--fw-muted); background:var(--fw-hover); }
+[data-ui-system="folio-workspace"] .fw-status[data-status="进行中"] { color:var(--fw-progress-text); background:var(--fw-progress-surface); }
+[data-ui-system="folio-workspace"] .fw-status[data-status="已完成"] { color:var(--fw-success-text); background:var(--fw-success-surface); }
+[data-ui-system="folio-workspace"] .fw-database-footer { display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; color:var(--fw-muted); font-size:11px; padding-top:10px; }
+[data-ui-system="folio-workspace"] .fw-board { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; padding:8px 0; }
+[data-ui-system="folio-workspace"] .fw-board>section { min-width:0; background:var(--fw-sidebar); border-radius:var(--fw-radius); padding:9px; }
+[data-ui-system="folio-workspace"] .fw-board header { display:flex; justify-content:space-between; align-items:center; font-size:11px; color:var(--fw-muted); padding-bottom:8px; }
+[data-ui-system="folio-workspace"] .fw-board article { padding:10px 8px; margin-bottom:8px; border:1px solid var(--fw-line); border-radius:var(--fw-radius); background:var(--fw-paper); }
+[data-ui-system="folio-workspace"] .fw-board article>.fw-muted { display:block; margin-top:9px; font-size:11px; }
+[data-ui-system="folio-workspace"] .fw-record-list { list-style:none; margin:0; padding:0; }
+[data-ui-system="folio-workspace"] .fw-record-list li { display:flex; gap:12px; align-items:center; padding:8px 0; border-bottom:1px solid var(--fw-line); }
+[data-ui-system="folio-workspace"] .fw-record-list .fw-record-link { flex:1; min-width:0; }
+[data-ui-system="folio-workspace"] .fw-record-list .fw-muted { font-size:11px; }
+[data-ui-system="folio-workspace"] .fw-empty { padding:26px 12px; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center; }
+[data-ui-system="folio-workspace"] .fw-empty p { margin:0; color:var(--fw-muted); font-size:12px; }
+[data-ui-system="folio-workspace"] .fw-record-detail { border-left:1px solid var(--fw-line); min-width:0; padding:18px; background:var(--fw-paper); }
+[data-ui-system="folio-workspace"] .fw-record-detail>header { display:flex; align-items:center; justify-content:space-between; font-size:12px; }
+[data-ui-system="folio-workspace"] .fw-record-detail>header span { display:flex; align-items:center; gap:6px; }
+[data-ui-system="folio-workspace"] .fw-record-detail form { display:grid; gap:15px; margin-top:24px; }
+[data-ui-system="folio-workspace"] .fw-record-detail form label { display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--fw-muted); }
+[data-ui-system="folio-workspace"] .fw-record-detail input, [data-ui-system="folio-workspace"] .fw-record-detail textarea, [data-ui-system="folio-workspace"] .fw-record-detail select { border:1px solid var(--fw-line); border-radius:var(--fw-radius); background:var(--fw-paper); color:var(--fw-ink); padding:7px 9px; width:100%; min-width:0; font-size:13px; }
+[data-ui-system="folio-workspace"] .fw-record-detail textarea { resize:vertical; }
+[data-ui-system="folio-workspace"] .fw-record-detail [aria-invalid="true"] { border-color:var(--fw-error); }
+[data-ui-system="folio-workspace"] .fw-record-detail footer { display:flex; flex-wrap:wrap; gap:6px; }
+[data-ui-system="folio-workspace"] .fw-record-detail .fw-error { margin:0; font-size:12px; }
+@media (max-width:760px) {
+  [data-ui-system="folio-workspace"] .fw-board { grid-template-columns:minmax(0,1fr); }
+  [data-ui-system="folio-workspace"] .fw-database table { min-width:400px; }
+  [data-ui-system="folio-workspace"] .fw-record-list li { gap:7px; flex-wrap:wrap; }
+  [data-ui-system="folio-workspace"] .fw-record-list .fw-record-link { flex-basis:60%; }
+}

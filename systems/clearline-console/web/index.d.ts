@@ -28,7 +28,7 @@ export declare function ClearShell(props: {brand: ReactNode; navigation:Array<{i
 export declare function ClearTabs(props: {items:Array<{id:string;label:string;content?:ReactNode;disabled?:boolean}>; value:string; onChange?:(id:string)=>void; label?:string; disabled?:boolean}): JSX.Element;
 export declare function ClearBreadcrumb(props:{items:Array<{label:string;href?:string;onClick?:()=>void}>;label?:string}):JSX.Element;
 export declare function ClearPagination(props:{page:number;pageCount:number;onChange?:(page:number)=>void;disabled?:boolean}):JSX.Element;
-export declare function ClearDataTable<T extends Row>(props: {rows:T[];columns:Array<Omit<Column<T>,"render">&{sortable?:boolean;render?:(value:T[keyof T],row:T)=>ReactNode}>;caption?:string;pageSize?:number;selection?:T["id"][];onSelectionChange?:(ids:T["id"][])=>void;onBulkAction?:(ids:T["id"][])=>void;onRowActivate?:(row:T)=>void;loading?:boolean;disabled?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;
+export declare function ClearDataTable<T extends Row>(props: {rows:T[];columns:Array<Omit<Column<T>,"render">&{sortable?:boolean;render?:(value:T[keyof T],row:T)=>ReactNode}>;caption?:string;pageSize?:number;showToolbar?:boolean;selectable?:boolean;selection?:T["id"][];onSelectionChange?:(ids:T["id"][])=>void;onBulkAction?:(ids:T["id"][])=>void;onRowActivate?:(row:T)=>void;loading?:boolean;disabled?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;
 export declare function ClearDrawer(props:DialogProps):JSX.Element;
 export declare function ClearDropdownMenu(props:{label?:string;items:Array<{id:string;label:string;disabled?:boolean;danger?:boolean;onSelect?:()=>void}>;disabled?:boolean}):JSX.Element;
 export declare function ClearPopover(props:{label:string;children?:ReactNode;disabled?:boolean}):JSX.Element;
@@ -36,4 +36,14 @@ export declare function ClearTooltip(props:{label:string;children?:ReactNode}):J
 export declare function ClearProgress(props:{label:string;value?:number;max?:number}):JSX.Element;
 export declare function ClearSkeleton(props:{label?:string;rows?:number}):JSX.Element;
 export declare function ClearToastQueue(props:{items:Array<{id:string;message:string;tone?:string;onRetry?:()=>void}>;onDismiss?:(id:string)=>void}):JSX.Element;
-export declare function ClearProjectWorkspace():JSX.Element;
+export interface ClearProjectWorkspaceProps {
+  rows?:ClearProject[]; defaultRows?:ClearProject[]; onRowsChange?:(rows:ClearProject[])=>void;
+  onSaveProject?:(project:ClearProject,context:{signal:AbortSignal})=>ClearProject|Promise<ClearProject>;
+  loading?:boolean; error?:string; onRetry?:()=>void; readOnly?:boolean;
+}
+export declare function ClearProjectWorkspace(props?:ClearProjectWorkspaceProps):JSX.Element;
+export interface ClearProject {id:string;name:string;owner:string;status:string;date:string;description?:string;}
+export declare function ClearProjectTable(props:{rows:ClearProject[];selectedId?:string;onSelect?:(project:ClearProject|null)=>void;loading?:boolean;error?:string;onRetry?:()=>void}):JSX.Element;
+export declare function ClearProjectDetails(props:{project:ClearProject|null;onStatusChange?:(status:string)=>void;onClose?:()=>void;disabled?:boolean}):JSX.Element;
+
+export declare function ClearSlider(props:{label:string;value:number;min?:number;max?:number;step?:number;unit?:string;onChange?:(value:number)=>void;hint?:string;error?:string;loading?:boolean;disabled?:boolean}):JSX.Element;

@@ -25,11 +25,17 @@ const consumerDir = await mkdtemp(resolve(tmpdir(), "ui-design-lab-consumer-"));
 await cp(resolve(root, "examples/consumer"), consumerDir, { recursive: true, filter: (path) => !/[\\/](node_modules|dist)([\\/]|$)/.test(path) });
 const manifestPath = resolve(consumerDir, "package.json");
 const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+const reactVersion = process.argv.find(arg => arg.startsWith('--react='))?.slice(8) ?? '19.2.0';
+if (!['18.2.0', '19.2.0'].includes(reactVersion)) throw new Error('消费验收只支持 React 18.2.0 或 19.2.0');
+manifest.dependencies.react = reactVersion;
+manifest.dependencies['react-dom'] = reactVersion;
+manifest.devDependencies['@types/react'] = reactVersion.startsWith('18.') ? '^18.3.0' : '^19.2.0';
+manifest.devDependencies['@types/react-dom'] = reactVersion.startsWith('18.') ? '^18.3.0' : '^19.2.0';
 manifest.dependencies["ui-design-lab"] = "file:" + resolve(root, packed.filename).replaceAll("\\", "/");
 await writeFile(manifestPath, JSON.stringify(manifest, null, 2));
 npm(["install", "--ignore-scripts", "--no-audit", "--no-fund"], consumerDir);
 console.log(npm(["run", "test:types"], consumerDir));
 console.log(npm(["run", "build"], consumerDir));
-console.log("独立安装和构建通过：" + consumerDir);
+console.log(`React ${reactVersion} 独立安装和构建通过：${consumerDir}`);
 
 if (process.env.GITHUB_ENV) await appendFile(process.env.GITHUB_ENV, "UI_LAB_CONSUMER_DIR=" + consumerDir + "\n");

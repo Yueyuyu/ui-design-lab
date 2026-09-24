@@ -1,0 +1,88 @@
+{
+  "date": "2026-09-22",
+  "source": "用户在对话中选择的八张附件",
+  "homepage": "references/homepage-gallery-selected-20260922.png",
+  "kind": "scene-concept",
+  "selections": [
+    {
+      "id": "quiet-workspace",
+      "number": 5,
+      "title": "个人复盘",
+      "layout": "横向报告式复盘",
+      "image": "references/scene-covers/quiet-workspace.png",
+      "generatedResult": "exec-440b09f0-f7db-4cc6-95c7-52d7c2d29362.png",
+      "candidate": "quiet-workspace/personal-review-v2.png",
+      "sha256": "1b8c70ea7351156bf073076362277ecdd1ce268d2077b727c93a1f1816dde943"
+    },
+    {
+      "id": "midnight-ledger",
+      "number": 1,
+      "title": "交易工作台",
+      "layout": "多面板交易驾驶舱",
+      "image": "references/scene-covers/midnight-ledger.png",
+      "generatedResult": "exec-6fed158b-14b8-4c3d-a86b-edcbd66aa041.png",
+      "candidate": "midnight-ledger/market-terminal.png",
+      "sha256": "0d3c996a1b204a5eaa74ee8a77ac52ab40b21710e089ec280554736662cee727"
+    },
+    {
+      "id": "clearline-console",
+      "number": 3,
+      "title": "库存工作表",
+      "layout": "全宽工作表与行内补货",
+      "image": "references/scene-covers/clearline-console.png",
+      "generatedResult": "exec-3a3b4fae-0ffa-4603-af51-536aaeb37880.png",
+      "candidate": "clearline-console/inventory-workspace-v2.png",
+      "sha256": "42ea1517c5dcf654070b288ca6bb96dea55239b97198450944954e59e94a7f94"
+    },
+    {
+      "id": "signal-studio",
+      "number": 3,
+      "title": "独立杂志网站",
+      "layout": "公开阅读首页",
+      "image": "references/scene-covers/signal-studio.png",
+      "generatedResult": "exec-6c4ce830-d4dc-4ed5-80c6-765b3059d8d7.png",
+      "candidate": "signal-studio/public-journal.png",
+      "sha256": "77b0fd6bff79ce0442ad09a4d102ac20a674349405057c31ef062e2afed2dbdd"
+    },
+    {
+      "id": "folio-workspace",
+      "number": 1,
+      "title": "团队知识库",
+      "layout": "页面树与开放纸面",
+      "image": "references/scene-covers/folio-workspace.png",
+      "generatedResult": "exec-71aea7f9-3c16-4cb9-b014-023cb2ba3bee.png",
+      "candidate": "folio-workspace/knowledge-home.png",
+      "sha256": "1f11deb5c8fc9d19eb0cf603bb66845467c43526a47485555c1d31e7d3b32652"
+    },
+    {
+      "id": "orchard-ui",
+      "number": 2,
+      "title": "个人文件库",
+      "layout": "顶部工具栏与文件内容区",
+      "image": "references/scene-covers/orchard-ui.png",
+      "generatedResult": "exec-d88ae5ed-d691-4414-871d-37d619057a9e.png",
+      "candidate": "orchard-ui/file-library.png",
+      "sha256": "a15711e4f1bcb4a5a2cd782ec26cf4420f3e0c9309025f41483a76e4a22b16a9"
+    },
+    {
+      "id": "dialogue-ui",
+      "number": 3,
+      "title": "内容搜索",
+      "layout": "大搜索框与答案结果",
+      "image": "references/scene-covers/dialogue-ui.png",
+      "generatedResult": "exec-5e4fd8a8-c2d6-4e83-b2df-483e7af8e989.png",
+      "candidate": "dialogue-ui/content-search.png",
+      "sha256": "184f5c62bf9ad58728273f232d3867dfc08701e9b7572c84ed61b68bb37ff370"
+    },
+    {
+      "id": "pulse-desktop",
+      "number": 1,
+      "title": "开发中的状态查看",
+      "layout": "代码工作区与右侧展开面板",
+      "image": "references/scene-covers/pulse-desktop.png",
+      "generatedResult": "exec-641a615e-b01b-471b-a214-3adc889b27c5.png",
+      "candidate": "pulse-desktop/coding-checkpoint.png",
+      "sha256": "432ee93a17b8179cc18fafde34ceb9e02ff5a51728cc0db8fc18a57bfee75b67"
+    }
+  ]
+}

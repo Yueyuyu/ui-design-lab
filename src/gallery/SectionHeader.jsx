@@ -19,7 +19,7 @@ export function GalleryBlock({ eyebrow, title, description, children, className 
           {eyebrow ? <p>{eyebrow}</p> : null}
           <h2>{title}</h2>
         </span>
-        {description ? <span>{description}</span> : null}
+        {description ? <span className="gallery-block__description">{description}</span> : null}
       </header>
       {children}
     </section>

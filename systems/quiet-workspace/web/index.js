@@ -23,3 +23,5 @@ export * from "./FeedbackControls.jsx";
 
 export { QuietFileUpload } from "./FileUpload.jsx";
 export { QuietTree } from "./Tree.jsx";
+
+export { QuietSlider } from './Slider.jsx';

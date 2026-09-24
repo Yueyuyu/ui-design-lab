@@ -1,0 +1,123 @@
+{
+  "$schema": "../../schemas/suite.schema.json",
+  "id": "orchard-ui",
+  "order": 6,
+  "displayName": "Orchard UI",
+  "localizedName": "果序 · Apple 风格",
+  "shortCode": "OU",
+  "prefix": "ou",
+  "componentPrefix": "Orchard",
+  "version": "0.1.0",
+  "status": "experimental",
+  "description": "从应用图标、命令菜单到分组控件，构建清晰、顺手的个人工具。",
+  "styleLabel": "Apple Inspired Component System",
+  "platforms": [
+    "web"
+  ],
+  "modes": [
+    "light"
+  ],
+  "densities": [
+    "comfortable",
+    "compact"
+  ],
+  "tags": [
+    "apple-inspired",
+    "components",
+    "settings"
+  ],
+  "swatches": [
+    "#f5f5f7",
+    "#f0f0f3",
+    "#0066cc",
+    "#dedee3"
+  ],
+  "scope": "[data-ui-system=\"orchard-ui\"]",
+  "designDocument": "./DESIGN.md",
+  "tokens": "./foundations/tokens.json",
+  "tokensCss": "./foundations/tokens.css",
+  "tokenBindings": "./foundations/token-bindings.json",
+  "components": "./web/index.js",
+  "showcase": "./showcase/index.jsx",
+  "comparison": null,
+  "selection": {
+    "suitableFor": [
+      "偏好设置、资料管理、个人工具"
+    ],
+    "limitations": [
+      "首版仅浅色；舒适与紧凑密度",
+      "演示仅内存保存，业务服务由消费项目提供",
+      "尚未提供同场景对比与原生系统能力"
+    ],
+    "previewKind": "scene-concept",
+    "thumbnail": "references/thumbnails/orchard-ui.png",
+    "summary": "用熟悉的层次，构建顺手的个人工具。",
+    "scenePreview": {
+      "image": "references/scene-covers/orchard-ui.png",
+      "title": "个人文件库"
+    }
+  },
+  "referenceImage": "references/orchard-ui-source.png",
+  "starter": {
+    "component": "OrchardSettingsWorkspace"
+  },
+  "capabilities": {
+    "foundations": [
+      "color",
+      "typography",
+      "spacing",
+      "shape",
+      "motion"
+    ],
+    "components": [
+      "button",
+      "icon-button",
+      "field",
+      "textarea",
+      "select",
+      "toggle",
+      "checkbox",
+      "slider",
+      "tabs",
+      "segmented-control",
+      "badge",
+      "card",
+      "dropdown-menu",
+      "dialog",
+      "progress",
+      "empty-state",
+      "notification",
+      "navigation-list",
+      "setting-row",
+      "settings-group",
+      "symbol",
+      "app-icon",
+      "icon-picker",
+      "app-launcher",
+      "command-menu"
+    ],
+    "patterns": [
+      "settings-workspace"
+    ],
+    "standards": [
+      "accessibility",
+      "component-states",
+      "icons",
+      "chinese-copy",
+      "motion",
+      "composition",
+      "extension"
+    ]
+  },
+  "galleryShell": {
+    "surface": "#f5f5f7",
+    "sidebar": "#f0f0f3",
+    "topbar": "#ffffff",
+    "text": "#202124",
+    "muted": "#626268",
+    "border": "#dedee3",
+    "active": "#e8f1fd",
+    "accent": "#0066cc",
+    "onAccent": "#ffffff"
+  }
+}

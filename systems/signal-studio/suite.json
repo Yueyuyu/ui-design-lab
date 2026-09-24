@@ -70,8 +70,6 @@
       "panel",
       "badge",
       "bar-chart",
-      "shell",
-      "data-table",
       "textarea",
       "checkbox",
       "radio-group",
@@ -82,18 +80,23 @@
       "tabs",
       "breadcrumb",
       "pagination",
-      "dropdown-menu",
-      "tooltip",
-      "popover",
+      "data-table",
       "drawer",
+      "dropdown-menu",
+      "popover",
+      "tooltip",
       "progress",
       "skeleton",
-      "toast-queue"
+      "toast-queue",
+      "story-card",
+      "revision-list",
+      "slider"
     ],
     "patterns": [
       "project-workbench",
       "task-workflow",
-      "content-board"
+      "content-board",
+      "shell"
     ],
     "standards": [
       "accessibility",
@@ -101,7 +104,9 @@
       "icons",
       "data-visualization",
       "chinese-copy",
-      "motion"
+      "motion",
+      "composition",
+      "extension"
     ]
   },
   "comparison": {
@@ -129,8 +134,13 @@
       "新增实验套系，API 可能调整",
       "仅浅色；暂未提供上传与目录树"
     ],
-    "previewKind": "components",
-    "thumbnail": "references/thumbnails/signal-studio.png"
+    "previewKind": "scene-concept",
+    "thumbnail": "references/thumbnails/signal-studio.png",
+    "summary": "用内容，连接更多可能。",
+    "scenePreview": {
+      "image": "references/scene-covers/signal-studio.png",
+      "title": "独立杂志网站"
+    }
   },
   "themeControls": [
     {
@@ -170,5 +180,9 @@
         "system-ui, sans-serif"
       ]
     }
-  ]
+  ],
+  "starter": {
+    "component": "SignalContentBoard",
+    "props": {}
+  }
 }
