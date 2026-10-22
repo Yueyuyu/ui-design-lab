@@ -5,6 +5,80 @@ import {tmpdir} from 'node:os';
 const signedOut={schemaVersion:1,source:'companion-live',remaining:null,quotaState:'signed-out',tasksState:'unsupported',tasks:[],notice:'',quotaLabel:'账户额度',quotaWindows:[],authState:'signed-out',canAuthorize:true,canDisconnect:false};
 const packet={schemaVersion:2,source:'companion-live',sequence:1,applications:[{id:'codex',iconMode:'brand',state:{schemaVersion:1,source:'companion-live',sequence:1,remaining:49,quotaState:'ready',tasksState:'ready',tasks:[]}},...['cursor','claude','grok-bot','zcode','kimi','doubao-work','workbuddy'].map(id=>({id,iconMode:'brand',state:{...signedOut,...(['cursor','claude','grok-bot'].includes(id)?{}:{quotaState:'unsupported',authState:'unsupported',canAuthorize:false})}}))]};
 
+async function mountQuotaSnapshot(page, applications) {
+  await page.addInitScript(data => {
+    window.__PULSE_HOST_MODE__ = 'live';
+    const listeners = new Set();
+    window.chrome = {webview: {
+      addEventListener: (_, listener) => listeners.add(listener),
+      removeEventListener: (_, listener) => listeners.delete(listener),
+      postMessage: message => {
+        if (message.type === 'ready') setTimeout(() => {
+          for (const listener of listeners) listener({data: {type: 'snapshot', value: data}});
+        }, 0);
+      },
+    }};
+  }, {...packet, applications});
+  await page.goto('/systems/pulse-desktop/desktop/index.html');
+  await expect(page).toHaveTitle('Pulse · 应用状态');
+}
+
+for (const width of [420, 390]) {
+  for (const quotaState of ['ready', 'error']) {
+    test(`额度颜色按应用隔离：选中${quotaState === 'ready' ? '耗尽' : '未知'}应用不染色其他应用 ${width}`, async ({page}) => {
+      const errors = [];
+      page.on('pageerror', error => errors.push(error.message));
+      page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+      await page.setViewportSize({width, height: 580});
+      const remaining = quotaState === 'ready' ? 0 : null;
+      const applications = [
+        {...packet.applications[0], state: {...packet.applications[0].state, remaining, quotaState}},
+        ...[['cursor', 100], ['grok-bot', 96]].map(([id, value]) => ({
+          id, iconMode: 'brand', state: {
+            ...signedOut, remaining: value, quotaState: 'ready', authState: 'connected',
+            quotaWindows: [{label: '账户剩余额度', remaining: value, resetsAt: null}],
+          },
+        })),
+      ];
+      await mountQuotaSnapshot(page, applications);
+      await expect(page.locator('.pd-summary')).toHaveCount(3);
+      for (const selectedId of ['codex', 'cursor', 'grok-bot', 'codex']) {
+        await page.locator(`.pd-summary[data-application="${selectedId}"]`).focus();
+        await page.keyboard.press('Enter');
+        for (const app of applications) {
+          const item = page.locator(`.pd-summary[data-application="${app.id}"]`);
+          const codex = app.id === 'codex';
+          const codexColor = quotaState === 'ready' ? 'rgb(217, 23, 33)' : 'rgb(160, 160, 160)';
+          await expect(item.locator('.pd-value')).toHaveText(app.state.remaining === null ? '—' : `${app.state.remaining}%`);
+          await expect(item.locator('.pd-value')).toHaveCSS('color', codex ? codexColor : 'rgb(255, 255, 255)');
+          await expect(item.locator('.pd-ring')).toHaveCSS('color', codex ? codexColor : 'rgb(0, 230, 140)');
+        }
+      }
+      await page.locator('.pd-rail').screenshot({path: join(tmpdir(), `pulse-quota-colors-${quotaState}-${width}.png`)});
+      await expect(page.locator('vite-error-overlay')).toHaveCount(0);
+      expect(errors).toEqual([]);
+    });
+  }
+}
+
+for (const primaryRemaining of [0, 20, 40]) {
+  test(`额度颜色按周期隔离：主周期 ${primaryRemaining}% 不覆盖其他周期`, async ({page}) => {
+    const values = [primaryRemaining, 0, 20, 40, 100];
+    await mountQuotaSnapshot(page, [{id: 'cursor', iconMode: 'brand', state: {
+      ...signedOut, remaining: primaryRemaining, quotaState: 'ready', authState: 'connected',
+      quotaWindows: values.map((remaining, index) => ({label: `测试周期 ${index + 1}`, remaining, resetsAt: null})),
+    }}]);
+    await page.locator('.pd-summary').focus();
+    await page.keyboard.press('Enter');
+    const cards = page.locator('.pd-quota-card');
+    await expect(cards.locator('strong')).toHaveText(values.map(value => `${value}%`));
+    const colors = {0: 'rgb(217, 23, 33)', 20: 'rgb(255, 79, 66)', 40: 'rgb(255, 194, 38)', 100: 'rgb(0, 230, 140)'};
+    for (const [index, value] of values.entries()) {
+      await expect(cards.nth(index).locator('.pd-quota-track > span')).toHaveCSS('background-color', colors[value]);
+    }
+  });
+}
+
 test('打开才显示、关闭选中项后回退、重开不抢选择、全部关闭为空',async({page})=>{
   const errors=[];page.on('pageerror',error=>errors.push(error.message));page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
   await page.setViewportSize({width:390,height:844});

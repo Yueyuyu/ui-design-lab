@@ -54,11 +54,12 @@
 [data-ui-system="pulse-desktop"] .pd-ring[data-tone="caution"] { color:var(--pd-amber); }
 [data-ui-system="pulse-desktop"] .pd-ring[data-tone="critical"] { color:var(--pd-red); }
 [data-ui-system="pulse-desktop"] .pd-ring[data-tone="spent"] { color:var(--pd-spent); }
-[data-ui-system="pulse-desktop"] [data-tone="spent"] .pd-value { color:var(--pd-spent); }
-[data-ui-system="pulse-desktop"] .pd-ring[data-tone="unknown"], [data-ui-system="pulse-desktop"] [data-tone="unknown"] .pd-value { color:var(--pd-muted); }
-[data-ui-system="pulse-desktop"] [data-tone="caution"] .pd-quota-track > span { background:var(--pd-amber); }
-[data-ui-system="pulse-desktop"] [data-tone="critical"] .pd-quota-track > span { background:var(--pd-red); }
-[data-ui-system="pulse-desktop"] [data-tone="spent"] .pd-quota-track > span { background:var(--pd-spent); }
+/* 状态色只属于当前应用项或额度周期，不能继承选中应用的 dock 状态。 */
+[data-ui-system="pulse-desktop"] .pd-summary[data-tone="spent"] > .pd-value { color:var(--pd-spent); }
+[data-ui-system="pulse-desktop"] .pd-ring[data-tone="unknown"], [data-ui-system="pulse-desktop"] .pd-summary[data-tone="unknown"] > .pd-value { color:var(--pd-muted); }
+[data-ui-system="pulse-desktop"] .pd-quota-card[data-tone="caution"] > .pd-quota-track > span { background:var(--pd-amber); }
+[data-ui-system="pulse-desktop"] .pd-quota-card[data-tone="critical"] > .pd-quota-track > span { background:var(--pd-red); }
+[data-ui-system="pulse-desktop"] .pd-quota-card[data-tone="spent"] > .pd-quota-track > span { background:var(--pd-spent); }
 @media(hover:hover) and (pointer:fine) {
   [data-ui-system="pulse-desktop"] .pd-task:hover, [data-ui-system="pulse-desktop"] .pd-icon-button:hover { background:#ffffff16; }
   [data-ui-system="pulse-desktop"] .pd-rail:hover .pd-grab-mark { opacity:1; }
