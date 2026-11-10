@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "id": "rounded-brush-wordmark",
+  "name": "圆润连笔手写字标",
+  "version": "1.0.0",
+  "category": "wordmark",
+  "recordedOn": "2026-11-10",
+  "approval": {
+    "status": "user-approved",
+    "brand": "AppRoute",
+    "asset": "assets/approute-approved.png"
+  },
+  "description": "圆润连笔、自然粗细变化、略右倾、中等偏饱满；轻盈来自笔势与留白。",
+  "documents": {
+    "style": "STYLE.md",
+    "prompts": "PROMPTS.md",
+    "history": "HISTORY.md",
+    "validation": "validation/README.md"
+  },
+  "capabilities": {
+    "installableFont": false,
+    "suite": false,
+    "galleryIntegrated": false,
+    "packageDistributed": false
+  },
+  "referencePolicy": "外部 easy vibe 截图只保留本机忽略目录；当前新名称验证仅用本库确认稿。",
+  "validation": {
+    "brand": "FlowNest",
+    "generationCount": 1,
+    "prompt": "validation/prompt.zh.txt",
+    "reference": "assets/approute-approved.png",
+    "output": "validation/flownest-v1.png",
+    "status": "agent-reviewed-user-pending",
+    "checkedDisplayWidthsPx": [
+      156,
+      116
+    ],
+    "preview": "validation/preview.html"
+  },
+  "assets": [
+    {
+      "path": "assets/approute-approved.png",
+      "role": "user-approved",
+      "source": {
+        "kind": "image_gen.imagegen",
+        "originalFileName": "exec-1bc767b4-d6f1-4509-83a6-62a2d1fc192a.png"
+      },
+      "sha256": "1291a1e1d59062d91d9b367288bf2b9136228e2ecceecd48050b92504c0dfb34",
+      "mimeType": "image/png",
+      "width": 1983,
+      "height": 793
+    },
+    {
+      "path": "assets/approute-rejected-block.png",
+      "role": "rejected",
+      "source": {
+        "kind": "image_gen.imagegen",
+        "originalFileName": "exec-ff31a5f7-6516-44d2-be82-9ec65897cec9.png"
+      },
+      "sha256": "01e091e663209c5e81a18e9e65b27c80136366237e20d18da238a50620dd312a",
+      "mimeType": "image/png",
+      "width": 2172,
+      "height": 724
+    },
+    {
+      "path": "assets/approute-rejected-monoline.png",
+      "role": "rejected",
+      "source": {
+        "kind": "image_gen.imagegen",
+        "originalFileName": "exec-30fc1b87-92cb-411f-b36c-364a75f06bb7.png"
+      },
+      "sha256": "79b149b2412bd618e6664e97853a985dfa6f582b05fd68d411e03b7b716ce40e",
+      "mimeType": "image/png",
+      "width": 2172,
+      "height": 724
+    },
+    {
+      "path": "assets/approute-rejected-outline.png",
+      "role": "not-selected",
+      "source": {
+        "kind": "image_gen.imagegen",
+        "originalFileName": "exec-adb023fd-fcd2-40ee-b81c-2ab94c80f232.png"
+      },
+      "sha256": "7552adcd9022057cd7fa0b968cd5ba8c555e48e3e697a87c3f9c92ebbad11e4e",
+      "mimeType": "image/png",
+      "width": 2172,
+      "height": 724
+    },
+    {
+      "path": "assets/approute-intermediate-thin-script.png",
+      "role": "partially-aligned",
+      "source": {
+        "kind": "image_gen.imagegen",
+        "originalFileName": "exec-10db0ca2-5cf0-469d-bbf7-5fe849af209e.png"
+      },
+      "sha256": "1b411f645edf979b712c7ff26b60cbde8ce08ea8aed83ab0620c55727293ab78",
+      "mimeType": "image/png",
+      "width": 2172,
+      "height": 724
+    },
+    {
+      "path": "assets/approute-intermediate-brush.png",
+      "role": "intermediate",
+      "source": {
+        "kind": "image_gen.imagegen",
+        "originalFileName": "exec-e968afce-db6a-4fc8-a627-ae5b7967c713.png"
+      },
+      "sha256": "d14f90989a6b6634dbb8f9bd3507c3fdd027a31bb3bf6b63956142abf0d2d57d",
+      "mimeType": "image/png",
+      "width": 1983,
+      "height": 793
+    },
+    {
+      "path": "validation/flownest-v1.png",
+      "role": "reuse-sample-pending-user",
+      "source": {
+        "kind": "image_gen.imagegen",
+        "originalFileName": "exec-ef66d169-98d6-4c40-b1b6-4add3a0a420e.png"
+      },
+      "sha256": "0b5f03e782ab33f0b7d61b41cef710448a29493c44ea04b7880d323a86e5492a",
+      "mimeType": "image/png",
+      "width": 1983,
+      "height": 793
+    },
+    {
+      "path": "validation/comparison.jpg",
+      "role": "browser-evidence",
+      "source": {
+        "kind": "browser-screenshot",
+        "originalFileName": null
+      },
+      "sha256": "a71f43aa5ac90f07b37f8f11d4f4a33ba9b5debce005013f750798bd98ebb9ae",
+      "mimeType": "image/jpeg"
+    }
+  ]
+}

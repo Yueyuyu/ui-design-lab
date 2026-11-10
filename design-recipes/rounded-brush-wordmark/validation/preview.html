@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>圆润连笔字标 · 复用验证</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 32px 24px; background: #f5f7fa; color: #202938; font: 15px/1.7 "Segoe UI", "Microsoft YaHei", sans-serif; }
+  main { max-width: 980px; margin: auto; }
+  h1 { margin: 0 0 8px; font-size: 27px; }
+  p { color: #667084; margin: 0 0 24px; }
+  .examples { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  article { background: white; border: 1px solid #e5e9ef; border-radius: 14px; padding: 20px; }
+  h2 { margin: 0; font-size: 18px; }
+  .state { display: block; margin: 4px 0 18px; color: #68768d; font-size: 13px; }
+  svg { display: block; width: 100%; height: auto; overflow: hidden; }
+  .small-sizes { display: grid; gap: 20px; margin-top: 22px; border-top: 1px solid #edf0f5; padding-top: 20px; }
+  .small-sizes div { min-height: 42px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .small-sizes span { font-size: 12px; color: #68768d; white-space: nowrap; }
+  .notes { margin-top: 24px; color: #667084; }
+  @media (max-width: 650px) { .examples { grid-template-columns: 1fr; } body { padding: 22px 16px; } }
+</style>
+<main>
+  <h1>圆润连笔字标 · 换名称复用</h1>
+  <p>同一份中文描述 + 一张确认稿；仅将名称替换成 FlowNest。原文件不裁切，下面通过显示视窗收起留白。</p>
+  <div class="examples">
+    <article>
+      <h2>AppRoute</h2><span class="state">用户确认稿 · 风格基准</span>
+      <svg viewBox="112 172 1756 466" role="img" aria-label="AppRoute 确认稿"><image href="../assets/approute-approved.png" width="1983" height="793" /></svg>
+      <div class="small-sizes">
+        <div><svg style="width:156px" viewBox="112 172 1756 466" role="img" aria-label="AppRoute 156 像素"><image href="../assets/approute-approved.png" width="1983" height="793" /></svg><span>156 px</span></div>
+        <div><svg style="width:116px" viewBox="112 172 1756 466" role="img" aria-label="AppRoute 116 像素"><image href="../assets/approute-approved.png" width="1983" height="793" /></svg><span>116 px</span></div>
+      </div>
+    </article>
+    <article>
+      <h2>FlowNest</h2><span class="state">一次生成样本 · 待用户选稿</span>
+      <svg viewBox="125 185 1720 390" role="img" aria-label="FlowNest 复用样本"><image href="flownest-v1.png" width="1983" height="793" /></svg>
+      <div class="small-sizes">
+        <div><svg style="width:156px" viewBox="125 185 1720 390" role="img" aria-label="FlowNest 156 像素"><image href="flownest-v1.png" width="1983" height="793" /></svg><span>156 px</span></div>
+        <div><svg style="width:116px" viewBox="125 185 1720 390" role="img" aria-label="FlowNest 116 像素"><image href="flownest-v1.png" width="1983" height="793" /></svg><span>116 px</span></div>
+      </div>
+    </article>
+  </div>
+  <p class="notes">此页只验证字标视觉，不连接账户或业务数据。样本不是可安装字体，也不代表所有名称都可一次定稿。完整输入与检查结论见同目录 README.md。</p>
+</main>
+</html>

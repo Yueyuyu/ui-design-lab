@@ -18,6 +18,12 @@
 
 参考材料保留用于溯源和研究。拟将第三方截图、标识或相似产品外观用于对外产品时，应自行取得所需权利；可移除参考图片，组件包本身不分发这些材料。
 
+## 视觉风格库
+
+`design-recipes/rounded-brush-wordmark/assets/*.png` 为 2026-11-10 通过内置图像生成工具制作的 AppRoute 字标探索与定稿；`validation/flownest-v1.png` 为同日换名称复用的生成样本。完整生成来源、文件哈希、用户选择与 Agent 检查状态见案例 manifest、HISTORY 和 validation 记录。它们是栅格字标图片，不包含字体软件、套系组件或第三方截图。
+
+用户提供的第三方 `easy vibe` 参考截图只保留在忽略目录 `.local-cache/design-recipes/` 供本机研究，不包含在公开风格目录或组件分发中。参考来源不代表第三方品牌授权；新的名字只作为验证文本，未进行商标核验。
+
 ## 依赖和字体
 
 - React / React DOM、Vite、Phosphor React 图标等依赖遵循各自随包附带的许可证。项目许可证不替代依赖许可证。

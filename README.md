@@ -10,6 +10,8 @@ Beta 接入：收到 Starter 后解压，运行 `npm install` 和 `npm run dev`�
 
 ## 使用设计套系
 
+需要复用艺术字、图标等局部视觉效果时，先看 [视觉风格库](design-recipes/README.md)。首个案例提供 AppRoute 圆润连笔字标的确认稿、反例、完整可复制描述和换名称验证；它是独立的源码资料库，尚未接入 Gallery 或组件包。
+
 在 `#/usage` 选择套系，复制简短指令并交给 Codex、Claude Code、Cursor 等 Agent。Agent 从 [接入指南](skills/consume-suite/SKILL.md) 获取同一 GitHub 提交的套系规范，按项目技术栈完成接入，再根据业务需求设计页面与组件。用户无需复制完整文档或类型声明。
 
 当前目录包含七套可接入设计语言和一套开发中的 Pulse Desktop。`#/systems` 浏览全部套系，套系内的“应用示例”展示真实可操作场景；旧 `#/kits` 兼容回到目录，`#/scenes/<场景 ID>` 深链保留。使用页默认只需选套系与复制指令，组件包、Starter 和手动步骤收在“手动接入”。
