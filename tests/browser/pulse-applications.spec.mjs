@@ -1,6 +1,9 @@
 import {test,expect} from '@playwright/test';
 import {join} from 'node:path';
 import {tmpdir} from 'node:os';
+import {existsSync} from 'node:fs';
+const botSource = ['grok-bot-engine.js','original-data.js','catalog.js','template.js']
+  .every(file => existsSync(join('.local-cache/pulse-bot', file))) ? 'pulse-upstream' : 'pulse-brand';
 
 test('多应用独立图标、额度、关注及任务操作；贴边保持条目',async({page})=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
@@ -22,7 +25,7 @@ test('多应用独立图标、额度、关注及任务操作；贴边保持条�
   await expect(page.locator('.pd-panel h2')).toHaveText('Cursor · 示例');
   await expect(page.locator('.pd-quota-card strong')).toHaveText('37%');
   await page.getByRole('group',{name:'Cursor · 示例图标样式'}).getByRole('button',{name:'机器人',exact:true}).click();
-  await expect(cursor.locator('.pd-bot')).toHaveAttribute('data-source','pulse-upstream');
+  await expect(cursor.locator('.pd-bot')).toHaveAttribute('data-source',botSource);
   await expect(codex.locator('.pd-brand')).toBeVisible();
   await page.getByRole('button',{name:'关注：Cursor 示例 · 检查页面',exact:true}).click();
   await expect(page.getByRole('button',{name:'取消关注：Cursor 示例 · 检查页面'})).toBeVisible();

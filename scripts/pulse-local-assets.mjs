@@ -4,7 +4,11 @@ import { resolve, sep } from 'node:path';
 // 未明确授权的几何数据只在本机预览提供，不经 public/ 或生产打包器发布。
 export function pulseLocalAssets() {
   const root = resolve('.local-cache/pulse-bot');
-  return { name: 'pulse-local-only', configureServer(server) {
+  const available = ['grok-bot-engine.js', 'original-data.js', 'catalog.js', 'template.js']
+    .every(file => existsSync(resolve(root, file)));
+  return { name: 'pulse-local-only',
+    config: () => ({define: {'import.meta.env.PULSE_LOCAL_ASSETS_AVAILABLE': JSON.stringify(available)}}),
+    configureServer(server) {
     server.middlewares.use('/__pulse-local__', (request, response) => {
       const local = ['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(request.socket.remoteAddress);
       const pathname = (request.url || '').split('?')[0];

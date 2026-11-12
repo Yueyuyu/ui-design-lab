@@ -3,7 +3,8 @@ import openai from '../assets/openai.svg';
 import { mountPulseBot } from './upstream/runtime-adapter.js';
 import './bot-mark.css';
 
-const localRoot = import.meta.env.DEV ? '/__pulse-local__/' : import.meta.env.MODE === 'pulse-local' ? '/pulse-local/' : null;
+// 干净检出没有本机素材，直接使用公开品牌回退，避免先发出四个必然 404 的请求。
+const localRoot = import.meta.env.DEV && import.meta.env.PULSE_LOCAL_ASSETS_AVAILABLE ? '/__pulse-local__/' : import.meta.env.MODE === 'pulse-local' ? '/pulse-local/' : null;
 let modules;
 function loadRuntime() {
   if (!localRoot) return Promise.reject(new Error('机器人仅限本机预览'));
