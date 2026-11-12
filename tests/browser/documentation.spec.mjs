@@ -2,7 +2,26 @@ import {test,expect} from '@playwright/test';
 import {readFileSync,readdirSync} from 'node:fs';
 const suites=readdirSync('systems',{withFileTypes:true}).filter(item=>item.isDirectory()).map(item=>({id:item.name,entries:JSON.parse(readFileSync(`systems/${item.name}/showcase/catalog.generated.json`,'utf8'))}));
 
-for(const suite of suites) test(`${suite.id} 每个公开 UI 导出都能独立查看并有真实预览`,async({page})=>{
+test('Pulse 本机组件说明、状态合同和手机入口可访问',async({page})=>{
+ const suite=suites.find(item=>item.id==='pulse-desktop');
+ for(const width of [1440,390]) {
+  await page.setViewportSize({width,height:900});
+  await page.goto('/#/systems/pulse-desktop/components');
+  await expect(page.getByRole('heading',{name:'三个组件，一套桌面语言。',exact:true})).toBeVisible();
+  for(const entry of suite.entries) {
+   await page.goto(`/#/systems/pulse-desktop/components/${entry.id}`);
+   await expect(page.getByRole('heading',{name:entry.title,exact:true,level:1})).toBeVisible();
+   await expect(page.getByRole('heading',{name:'七态合同',exact:true})).toBeVisible();
+   await expect(page.locator('.pd-document dl dt')).toHaveCount(7);
+   await expect(page.locator('.pd-component-grid')).toBeVisible();
+   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  }
+ }
+});
+
+// Pulse 是独立的本机桌面示例，不属于可安装的公开组件包；单独验证它的真实合同。
+const packageSuites=suites.filter(suite=>suite.id!=='pulse-desktop');
+for(const suite of packageSuites) test(`${suite.id} 每个公开 UI 导出都能独立查看并有真实预览`,async({page})=>{
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   await page.goto(`/#/systems/${suite.id}/components`);
   await expect(page.getByRole('heading',{name:'组件目录',exact:true})).toBeVisible();
@@ -66,7 +85,7 @@ test('目录搜索、旧链接、应用示例、浏览器返回和错误链接',
 
 test('所有套系目录和组件详情在手机完整重排',async({page})=>{
   await page.setViewportSize({width:390,height:844});
-  for(const suite of suites) {
+  for(const suite of packageSuites) {
     for(const suffix of ['components',`components/${suite.entries.find(entry=>entry.kind==='business').id}`,'foundations','guidelines','patterns','usage']) {
       await page.goto(`/#/systems/${suite.id}/${suffix}`);
       await page.locator('.lab-content h1').first().waitFor();
@@ -75,7 +94,7 @@ test('所有套系目录和组件详情在手机完整重排',async({page})=>{
         const composition=readFileSync(`systems/${suite.id}/standards/composition.md`,'utf8');
         const headings=[...composition.matchAll(/^## (.+)\r?$/gm)].map(match=>match[1].trim());
         await expect(page.locator('#composition h3')).toHaveText(headings);
-        await expect(page.locator('#composition li')).toHaveCount(4);
+        await expect(page.locator('#composition li')).toHaveCount([...composition.matchAll(/^\s*[-*+]\s+/gm)].length);
         expect(await page.locator('.doc-standards li').evaluateAll(items=>items.every(item=>item.textContent.trim().length>0))).toBe(true);
         if(suite.id==='quiet-workspace') await expect(page.locator('#status-semantics table tbody tr')).toHaveCount(4);
       }

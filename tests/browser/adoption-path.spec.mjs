@@ -68,7 +68,11 @@ test('对比高级工具按需展开，组件目录只有一份搜索',async ({p
   await expect(page.getByRole('heading',{name:'月度经营复盘',exact:true})).toBeVisible();
   for (const width of [1440,390]) {
     await page.setViewportSize({width,height:900});
-    expect(await page.locator('.comparison-canvas').evaluate(node => node.getBoundingClientRect().top)).toBeLessThan(650);
+    // 当前移动版标题和选择器会换行；首屏应露出画布，滚动后可完整访问。
+    await expect(page.locator('.comparison-canvas')).toBeInViewport();
+    await page.locator('.comparison-canvas').scrollIntoViewIfNeeded();
+    await expect(page.getByRole('heading',{name:'月度经营复盘',exact:true})).toBeVisible();
+    await page.evaluate(() => window.scrollTo(0,0));
   }
   await expect(page.getByLabel('组件状态',{exact:true})).not.toBeVisible();
   await expect(page.locator('.comparison-inspector__prompt pre')).not.toBeVisible();

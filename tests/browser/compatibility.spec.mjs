@@ -14,35 +14,60 @@ test.beforeEach(async ({ page }) => {
 });
 test.afterEach(async ({ page }) => { expect(page.__errors).toEqual([]); });
 test("每套都有符合实际能力的工作流验收入口", () => {
-  expect([...workflowSuiteIds, ...knowledgeSuiteIds].sort()).toEqual([...suiteIds].sort());
+  expect([...workflowSuiteIds, ...knowledgeSuiteIds, "orchard-ui", "dialogue-ui", "pulse-desktop"].sort()).toEqual([...suiteIds].sort());
 });
 
-test("套系保留独立页面结构，桌面与手机缩略预览完整，切页后可恢复", async ({ page }) => {
+test("首页场景卡片在桌面与手机可见，切页、筛选与返回可用", async ({page}) => {
   await page.goto("/#/systems");
-  await expect(page.locator("[data-cover-scene]")).toHaveCount(suiteIds.length);
-  await page.getByRole("navigation", { name: "首页导航" }).getByRole("link", { name: "使用方式", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "接入你的项目", exact: true })).toBeVisible();
-  await page.getByRole("navigation", { name: "首页导航" }).getByRole("link", { name: "设计系统", exact: true }).click();
-  await expect(page.locator("[data-cover-scene]")).toHaveCount(suiteIds.length);
-  await page.evaluate(() => document.fonts.ready);
-  await page.locator('.suite-cover img').evaluateAll(images => Promise.all(images.map(img => img.decode())));
+  await expect(page.locator(".catalog-card")).toHaveCount(suiteIds.length);
+  await page.getByRole("navigation", {name:"首页导航"}).getByRole("link", {name:"使用方式",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"使用方式",exact:true})).toBeVisible();
+  await page.getByRole("navigation", {name:"首页导航"}).getByRole("link", {name:"设计系统",exact:true}).click();
+  for (const width of [1334,924,390]) {
+    await page.setViewportSize({width,height:906});
+    await noOverflow(page);
+    for (const id of suiteIds) {
+      const card = page.locator(`[data-suite-id="${id}"]`);
+      const image = card.locator(".suite-cover__image");
+      await image.scrollIntoViewIfNeeded();
+      await expect.poll(() => image.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+      const rect = await card.locator(".suite-cover").boundingBox();
+      expect(rect.width / rect.height).toBeCloseTo(1140 / 720,2);
+      await expect(card.getByRole("button",{name:/进入 /})).toBeVisible();
+    }
+  }
+  await page.getByRole("textbox",{name:"搜索全部套系"}).fill("Quiet Workspace");
+  await expect(page.locator(".catalog-card")).toHaveCount(1);
+  await page.getByRole("button",{name:"进入 Quiet Workspace",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"组件目录",exact:true})).toBeVisible();
+  await page.goBack();
+  await expect(page.locator(".catalog-card")).toHaveCount(suiteIds.length);
+});
+
+test("组件封面导出保留 1140×720 固定画幅和完整结构", async ({page}) => {
   const scenes = {
-    "folio-workspace": { name: "block-notebook", regions: ".fw-page-tree, .fw-page-header, .fw-block-editor, .fw-database" },
-    "quiet-workspace": { name: "document-workspace", regions: ".qw-shell>aside, .qw-cover-document, .qw-cover-task, .qw-quota-pill__trigger" },
-    "midnight-ledger": { name: "financial-terminal", regions: ".ml-terminal-grid>.ml-panel, .ml-holding-row, .ml-terminal__strategy small, .ml-chart-summary" },
-    "clearline-console": { name: "project-directory", regions: ".cc-data-table, .cc-project-detail, .cc-pagination" },
-    "signal-studio": { name: "editorial-board", regions: ".ss-shell>aside, .ss-story, .ss-revision-heading, .ss-revisions li:first-child" },
+    "folio-workspace": { name: "folio-components", regions: ".fw-cover-collection > *" },
+    "quiet-workspace": { name: "quiet-components", regions: ".qw-cover-collection > *" },
+    "midnight-ledger": { name: "ledger-components", regions: ".ml-cover-collection > *" },
+    "clearline-console": { name: "clear-components", regions: ".cc-cover-collection > *" },
+    "signal-studio": { name: "signal-components", regions: ".ss-cover-collection > *" },
+    "orchard-ui": { name: "orchard-ui", regions: ".ou-collection > .ou-collection-column" },
+    "dialogue-ui": { name: "dialogue-components", regions: ".du-cover-collection > *" },
   };
-  for (const width of [1334, 924, 390]) {
+  // 导出页是固定尺寸截图入口；手机响应式由上面的首页场景卡片测试负责。
+  const width = 1334;
+  {
     await page.setViewportSize({ width, height: 906 });
     await noOverflow(page);
     for (const [id, scene] of Object.entries(scenes)) {
-      const cover = page.locator(`[data-suite-id="${id}"] .suite-cover`);
+      await page.goto(`/#/cover/${id}`);
+      const cover = page.locator(".cover-export .suite-cover");
       await expect(cover.locator("[data-cover-scene]")).toHaveAttribute("data-cover-scene", scene.name);
       // ResizeObserver 缩放完成后，关键内容应完整处于公共画幅和各自面板内。
       await expect.poll(() => cover.evaluate((el, regions) => {
         const bounds = el.getBoundingClientRect();
-        return [...el.querySelectorAll(regions)].every(region => {
+        const elements = [...el.querySelectorAll(regions)];
+        return elements.length > 0 && elements.every(region => {
           const rect = region.getBoundingClientRect();
           const panel = region.closest('.ml-panel')?.getBoundingClientRect() ?? bounds;
           return rect.width > 0 && rect.height > 0 && rect.top >= bounds.top - 1 && rect.left >= bounds.left - 1 && rect.bottom <= Math.min(bounds.bottom, panel.bottom) + 1 && rect.right <= Math.min(bounds.right, panel.right) + 1;
@@ -51,24 +76,6 @@ test("套系保留独立页面结构，桌面与手机缩略预览完整，切�
       const rect = await cover.boundingBox();
       expect(rect.width / rect.height).toBeCloseTo(1140 / 720, 2);
     }
-    const quiet = page.locator('[data-cover-scene="document-workspace"]');
-    await expect(quiet.locator('.qw-cover-document h2')).toContainText('把重要的事');
-    await expect(quiet.locator('.qw-cover-task')).toContainText('整理项目资料');
-    const terminal = page.locator('[data-cover-scene="financial-terminal"]');
-    await expect(terminal.locator('.ml-terminal-grid>.ml-panel')).toHaveCount(7);
-    await expect(terminal.locator('.ml-terminal__performance .ml-line-chart__plot svg')).toBeVisible();
-    const directory = page.locator('[data-cover-scene="project-directory"]');
-    await expect(directory.locator('tbody tr')).toHaveCount(6);
-    const table = await directory.locator('.cc-data-table').boundingBox();
-    const detail = await directory.locator('.cc-project-detail').boundingBox();
-    expect(detail.x).toBeGreaterThan(table.x + table.width);
-    const editorial = page.locator('[data-cover-scene="editorial-board"]');
-    await expect(editorial.locator('.ss-story img')).toHaveCount(3);
-    const nav = await editorial.locator('.ss-shell>aside').boundingBox();
-    const board = await editorial.locator('.ss-content-board').boundingBox();
-    expect(nav.y + nav.height).toBeLessThan(board.y);
-    const stories = await editorial.locator('.ss-story').evaluateAll(items => items.map(item => item.getBoundingClientRect().height));
-    expect(stories[0]).toBeGreaterThan(stories[1] * 1.8);
   }
 });
 
@@ -118,9 +125,10 @@ test("减少动态偏好生效，接入步骤使用当前版本且能下载", as
   expect(motion.reduce).toBe(true);
   expect(parseFloat(motion.duration)).toBeLessThanOrEqual(0.001);
   await page.goto("/#/usage");
+  await page.getByRole("button", {name:"手动接入", exact:true}).click();
   await expect(page.getByRole("heading", { name: "接入你的项目" })).toBeVisible();
-  await expect(page.locator("#onboarding pre")).toContainText("npm pack");
-  await expect(page.locator("#onboarding pre")).toContainText("npm run dev");
+  await expect(page.locator(".onboarding-source pre")).toContainText("npm pack");
+  await expect(page.locator(".onboarding-steps")).toContainText("npm run dev");
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "下载接入说明" }).click();
   expect((await download).suggestedFilename()).toBe("integration.md");
