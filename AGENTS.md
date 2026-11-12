@@ -143,3 +143,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - 桌面/移动、明暗与密度属于套内适配，按实际实现声明；不能把缩窄桌面页面当成移动语言。基础组件、业务组件与 patterns 分层，Agent 与外部项目沿现有 manifest、规范、API、消费校验路径使用。方向与验收见 docs/SUITE-PHILOSOPHIES.md。
 
 - 2026-09-18 首批理念套系扩展：Orchard UI / 果序（orchard-ui、ou-、Orchard*）参考 Apple HIG 与 macOS 设置的分组和主从导航；Dialogue UI / 对谈（dialogue-ui、du-、Dialogue*）参考 ChatGPT 公开未登录界面与设置。来源日期与适配说明保存在 docs/design-references，第三方截图不分发。两套均为 experimental，浅色、舒适/紧凑密度，分别提供 20/21 个组件与 1 个页面组合；设置/对话只是验证组合，套系可覆盖其他业务。默认内存数据和示例回复不代表云端采用；同场景比较暂未支持并显式声明。
+
+
+## 提交与推送固定流程
+
+提交前先读 [.github/PREFLIGHT.md](.github/PREFLIGHT.md)，新检出先启用仓库 hooks。精确暂存、检查暂存 diff，运行 `node .github/scripts/preflight.mjs verify --staged`，通过后才提交和推送。检查脚本/工作流引用与漏提交，任何命令失败立即停止；验证记录绑定实际 Git 树，不借用工作目录或旧提交的通过结果。每次一个逻辑改动，其他任务的改动留在原处，必要时隔离工作树验证。发布资格检查仍遵循本项目原有要求。
