@@ -8,6 +8,7 @@
 - PanelSurface、DockLayout、DockBerthShape、UsageBubbleShape、UsageTint、BotMarkTint、BotMarkPersona、BotMarkChoreography 和 CardReveal 为样式/数值/编排来源。
 - `web/upstream/choreography.json` 从 Swift 作者编排表机械转写；`pulse.js`、`motion.js` 为 JavaScript/SVG 平台移植，注明修改。Pulse Apache-2.0 见 `licenses/Pulse-Apache-2.0.txt`。
 - `assets/openai.svg`、`cursor.svg`、`claude.svg`、`grok.svg`、`kimi.svg` 原样来自上述 Pulse commit 的 `Sources/Pulse/Resources/`；Lobe Icons MIT 和品牌说明见 `licenses/Pulse-THIRD-PARTY-NOTICES.md`。品牌标识不代表相关产品已完整接入；ZCode、豆包工作、WorkBuddy 暂用名称缩写，不拿其他产品标识替代。
+- `assets/antigravity.svg` 按用户 2026-11-25 确认保留彩色品牌原貌，原样来自同源 [Lobe Icons 彩色版](https://github.com/lobehub/lobe-icons/blob/fa2d80fa2b8c65f053b389ad05750090f62abeff/packages/static-svg/icons/antigravity-color.svg)，固定 commit `fa2d80fa2b8c65f053b389ad05750090f62abeff`，沿用上述 MIT 许可与品牌声明。胶囊及详情标题禁用单色滤镜，其他应用与额度环不受影响。
 - 动态机器人沿用 Pulse 同源 [iduu/grokbot-animation](https://github.com/iduu/grokbot-animation) Web 引擎，固定 `6c27d9640c37e02e1eab0c4f7d98fa01196c66b8`。原始几何、物理、粒子、SVG 变形代码不重画；适配层接入 Pulse 人格/节奏和生命周期管理，不包含语音模块。
 - Windows 系统字体与 continuous 圆角采样属于平台适配。Companion 任务列表并非 Pulse 本身提供的业务，不冒充官方移植或背书。
 

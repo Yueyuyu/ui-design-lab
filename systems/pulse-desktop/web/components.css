@@ -21,7 +21,9 @@
 [data-ui-system="pulse-desktop"] :is(.pd-panel-header,.pd-service-title,.pd-actions) { display:flex; align-items:center; }
 [data-ui-system="pulse-desktop"] .pd-panel-header { justify-content:space-between; gap:4px; margin-bottom:14px; height:24px; }
 [data-ui-system="pulse-desktop"] .pd-service-title { gap:8px; }
-[data-ui-system="pulse-desktop"] .pd-service-title img { width:16px; height:16px; filter:brightness(0) invert(1); }
+[data-ui-system="pulse-desktop"] .pd-service-title img { width:16px; height:16px; filter:var(--pd-brand-filter, brightness(0) invert(1)); }
+/* Antigravity 使用原版彩色品牌素材；只影响当前应用，不改变其他图标与额度环。 */
+[data-ui-system="pulse-desktop"] [data-application="antigravity"] { --pd-brand-filter:none; }
 [data-ui-system="pulse-desktop"] .pd-panel h2 { margin:0; font-size:14px; font-weight:600; }
 [data-ui-system="pulse-desktop"] .pd-actions { gap:2px; }
 [data-ui-system="pulse-desktop"] .pd-icon-button { display:grid; place-items:center; width:24px; height:28px; flex:none; border:0; background:none; color:var(--pd-muted); border-radius:6px; padding:0; }

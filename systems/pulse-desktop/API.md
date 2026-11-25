@@ -28,11 +28,11 @@ Host 负责真实数据、位置、Windows 通知及任务跳转。Gallery/Playg
 
 ## 独立账户与限高分项
 
-- `applications` 每项隔离身份、额度、任务和图标；最多 8 个注册应用，浮条每页 3 项，翻页不移动原生窗口。详情面板最高 400px，内容区滚动，固定与关闭始终可见。
+- `applications` 每项隔离身份、额度、任务和图标；目前 9 个注册应用（含 Antigravity），浮条每页 3 项，翻页不移动原生窗口。详情面板最高 400px，内容区滚动，固定与关闭始终可见。
 - `quotaLabel` 与 `quotaWindows: {label,remaining,resetLabel}[]` 保留产品周期和独立额度池；不能将 Cursor 月度池统称周额度，不能平均多个池。侧轨展示首个有效窗口，详情显示全部。
-- `authState`：signed-out / authorizing / connected / error / unsupported。`canAuthorize`、`canDisconnect` 与 `authorizationBlocked` 由宿主受控；损坏备用凭据阻止覆盖，仍可停止读取。
+- `authState`：signed-out / authorizing / connected / error / unsupported。`canRead` 表示只读能力，与备用网页登录 `canAuthorize` 分开；Antigravity 可停止/恢复读取，但没有网页登录入口。`canDisconnect` 与 `authorizationBlocked` 由宿主受控；损坏备用凭据阻止覆盖，仍可停止读取。
 - `readMode`：auto / web / off。默认自动读取，不弹登录页；自动读取中隐藏备用登录入口，off 只在显式 `resume-auto` 后恢复。`disconnect-account` 现在表示停止读取并清除备用授权；其持久化由宿主负责，页面不保存凭据。
-- 业务快照 `quotaSource` 仅允许 none / desktop-cache / desktop-session / web-login，适配器生成受控来源标签，不透传 Token、Cookie 或文件路径。备用网页账户可能与桌面不同，必须标记；Lab 示例不能访问真实登录。
-- `onApplicationAccountAction(applicationId, action)` 的 action 仅 authorize / cancel-authorization / disconnect-account。Gallery 不实现真实账户请求；桌面 bridge 不接受网页给出的 URL。
+- 业务快照 `quotaSource` 仅允许 none / desktop-cache / desktop-session / desktop-local / official-cli / web-login，适配器生成受控来源标签，不透传 Token、Cookie 或文件路径。Antigravity 的本机服务与官方 agy CLI 分开标记；CLI、备用网页账户可能与桌面不同，必须标记。Lab 示例不能访问真实登录。
+- `onApplicationAccountAction(applicationId, action)` 的 action 仅 authorize / cancel-authorization / disconnect-account / resume-auto。Gallery 不实现真实账户请求；桌面 bridge 不接受网页给出的 URL。
 - `quotaState` 增加 signed-out / authorizing / unsupported / unavailable / rate-limited；非 ready 不展示健康百分比。`taskState=unsupported` 明确未接入，不显示“暂无任务”、星标或完成通知。
 - `desktop/account-state.js` 校验各产品能力与状态，只构造显示 DTO，丢弃额外账户字段、Token 和远程图标 URL。品牌 SVG 由构建时固定；暂缺产品标识使用名称缩写，不能回退成 OpenAI。

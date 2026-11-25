@@ -12,7 +12,8 @@ import cursor from '../assets/cursor.svg';
 import claude from '../assets/claude.svg';
 import grok from '../assets/grok.svg';
 import kimi from '../assets/kimi.svg';
-const brands={codex:openai,cursor,claude,'grok-bot':grok,kimi};
+import antigravity from '../assets/antigravity.svg';
+const brands={codex:openai,cursor,claude,'grok-bot':grok,kimi,antigravity};
 const brandLabels={claude:'Cl','grok-bot':'G',zcode:'Z',kimi:'K','doubao-work':'豆',workbuddy:'W'};
 
 const live=window.__PULSE_HOST_MODE__==='live';

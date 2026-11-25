@@ -16,6 +16,21 @@ test('拒绝未注册应用、重复应用、乱序、非法图标与非法任�
 });
 
 const account={id:'cursor',iconMode:'brand',state:{schemaVersion:1,source:'companion-live',remaining:null,quotaState:'signed-out',tasksState:'unsupported',tasks:[],notice:'',quotaLabel:'账户额度',quotaWindows:[],authState:'signed-out',canAuthorize:true,canDisconnect:false}};
+test('Antigravity 本机接口额度可显示，但不提供网页登录或虚构任务',()=>{
+  const state={...account.state,quotaState:'ready',authState:'connected',canAuthorize:false,canDisconnect:true,readMode:'auto',quotaSource:'desktop-local',remaining:75,quotaWindows:[{label:'Gemini · 周剩余',remaining:75,resetsAt:null}]};
+  const receive=change=>receiveApplicationSnapshot(emptyApplicationState,{...packet,applications:[{id:'antigravity',iconMode:'brand',state:{...state,...change}}]});
+  const result=receive({});
+  assert.equal(result.applications[0]?.name,'Antigravity');
+  assert.equal(result.applications[0].sourceLabel,'桌面本机接口 · 只读');
+  assert.equal(result.applications[0].canRead,true);
+  assert.equal(result.applications[0].canAuthorize,false);
+  assert.equal(result.applications[0].taskState,'unsupported');
+  assert.equal(receive({readMode:'web'}),emptyApplicationState);
+  assert.equal(receive({canAuthorize:true}),emptyApplicationState);
+  assert.equal(receive({quotaSource:'official-cli'}).applications[0].sourceLabel,'官方 agy CLI · 只读');
+  const stopped=receive({readMode:'off',quotaState:'unavailable',authState:'signed-out',remaining:null,quotaWindows:[],canDisconnect:false});
+  assert.equal(stopped.applications[0].sourceLabel,'已停止读取');
+});
 test('独立授权与未支持能力不冒充空闲，过期窗口隐藏',()=>{
   const receive=change=>receiveApplicationSnapshot(emptyApplicationState,{...packet,applications:[{...account,state:{...account.state,...change}}]});
   const value=receive({});assert.equal(value.applications[0].remaining,null);assert.equal(value.applications[0].taskState,'unsupported');
@@ -37,4 +52,8 @@ test('八个应用白名单，禁止未支持产品伪报额度',()=>{
   const unsupported=value.applications.find(app=>app.id==='kimi');assert.equal(unsupported.name,'Kimi');assert.equal(expireApplicationState(value).applications.find(app=>app.id==='kimi').quotaState,'unsupported');
   applications[4]={...applications[4],state:{...account.state}};
   assert.equal(receiveApplicationSnapshot(emptyApplicationState,{...packet,applications}),emptyApplicationState);
+});
+test('九个已注册应用可同时接收，不把 Antigravity 作为第九项丢弃',()=>{
+  const applications=[entry,...['cursor','claude','grok-bot','zcode','kimi','doubao-work','workbuddy','antigravity'].map(id=>({...account,id,state:{...account.state,...(id==='antigravity'?{quotaState:'unavailable',canAuthorize:false}:['cursor','claude','grok-bot'].includes(id)?{}:{quotaState:'unsupported',authState:'unsupported',canAuthorize:false})}}))];
+  assert.equal(receiveApplicationSnapshot(emptyApplicationState,{...packet,applications}).applications.length,9);
 });

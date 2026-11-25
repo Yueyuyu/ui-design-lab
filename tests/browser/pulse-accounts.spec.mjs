@@ -9,10 +9,12 @@ async function mountQuotaSnapshot(page, applications) {
   await page.addInitScript(data => {
     window.__PULSE_HOST_MODE__ = 'live';
     const listeners = new Set();
+    window.__pulseQuotaTest={send:value=>listeners.forEach(listener=>listener({data:value})),sent:[]};
     window.chrome = {webview: {
       addEventListener: (_, listener) => listeners.add(listener),
       removeEventListener: (_, listener) => listeners.delete(listener),
       postMessage: message => {
+        window.__pulseQuotaTest.sent.push(message);
         if (message.type === 'ready') setTimeout(() => {
           for (const listener of listeners) listener({data: {type: 'snapshot', value: data}});
         }, 0);
@@ -22,6 +24,26 @@ async function mountQuotaSnapshot(page, applications) {
   await page.goto('/systems/pulse-desktop/desktop/index.html');
   await expect(page).toHaveTitle('Pulse · 应用状态');
 }
+
+test('Antigravity 独立品牌、真实来源和多周期，只有停止与恢复而无网页登录',async({page})=>{
+  await mountQuotaSnapshot(page,[{id:'antigravity',iconMode:'brand',state:{...signedOut,canAuthorize:false,canDisconnect:true,readMode:'auto',quotaSource:'official-cli',quotaState:'ready',authState:'connected',remaining:99,quotaWindows:[{label:'Gemini · 5 小时剩余',remaining:99,resetsAt:null},{label:'Gemini · 周剩余',remaining:96.78,resetsAt:null}],notice:'来源为官方 agy CLI 的当前登录账户。'}}]);
+  await page.locator('.pd-summary[data-application="antigravity"]').focus();await page.keyboard.press('Enter');
+  await expect(page.locator('.pd-panel h2')).toHaveText('Antigravity');
+  await expect(page.locator('.pd-service-title img')).toHaveAttribute('src',/Antigravity|antigravity\.svg/);
+  await expect(page.locator('.pd-service-title img')).toHaveCSS('filter','none');
+  await expect(page.locator('.pd-summary[data-application="antigravity"] .pd-brand')).toHaveCSS('filter','none');
+  await expect(page.locator('.pd-quota-card strong')).toHaveText(['99%','97%']);
+  await expect(page.locator('.pd-panel-footer')).toContainText('官方 agy CLI');
+  await expect(page.locator('.pd-panel')).toContainText('任务状态、关注和完成通知尚未接入');
+  await expect(page.getByRole('button',{name:'备用网页登录',exact:true})).toHaveCount(0);
+  await page.getByRole('button',{name:'停止读取',exact:true}).click();
+  expect(await page.evaluate(()=>window.__pulseQuotaTest.sent.some(message=>message.type==='disconnect-account'&&message.applicationId==='antigravity'))).toBe(true);
+  await page.locator('.pd-dock').screenshot({path:join(tmpdir(),'pulse-antigravity.png')});
+  await page.evaluate(state=>window.__pulseQuotaTest.send({type:'snapshot',value:{schemaVersion:2,source:'companion-live',sequence:2,applications:[{id:'antigravity',iconMode:'brand',state}]}}),{...signedOut,canAuthorize:false,canDisconnect:false,readMode:'off',quotaSource:'none',quotaState:'unavailable'});
+  await expect(page.getByRole('button',{name:'备用网页登录',exact:true})).toHaveCount(0);
+  await page.getByRole('button',{name:'恢复自动读取',exact:true}).click();
+  expect(await page.evaluate(()=>window.__pulseQuotaTest.sent.some(message=>message.type==='resume-auto'&&message.applicationId==='antigravity'))).toBe(true);
+});
 
 for (const width of [420, 390]) {
   for (const quotaState of ['ready', 'error']) {
